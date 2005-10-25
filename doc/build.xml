@@ -39,6 +39,9 @@ the documentation thus taking care of issues such as escaping.
 
   <property name="com.sun.tools.jar" value="${java.home}/../lib/tools.jar"/>
 
+  <property name="stage.dir" value="site" />
+  <property name="site.dir" value="" />
+
   <fileset id="build-files" dir="${build.dir}"/>
   <fileset id="servlet-build-files" dir="${build.classes.dir}"/>
 
@@ -328,6 +331,30 @@ the documentation thus taking care of issues such as escaping.
       <sysproperty key="catalina.home" value="."/>
       <arg line="-config server.xml start" />
     </java>
+  </target>
+  
+  <target name="stage" depends="build" >
+    <mkdir dir="${stage.dir}" />
+    <copy todir="${stage.dir}" >
+      <fileset dir="${doc.dir}" />
+      <fileset dir="../jamon/core/build" includes="javadoc/**" />
+    </copy>
+  </target>
+
+  <target name="push"
+          depends="stage"
+          description="Push the current workspace live">
+    <exec dir="${stage.dir}" executable="rsync">
+      <arg value="--rsh=ssh" />
+      <arg value="--verbose" />
+      <arg value="--recursive" />
+      <arg value="--relative" />
+      <arg value="--cvs-exclude" />
+      <arg value="--delete" />
+      <arg value="--compress" />
+      <arg value="." />
+      <arg value="jamon@www.jamon.org:/home/jamon/www${site.dir}" />
+    </exec>
   </target>
 
 </project>

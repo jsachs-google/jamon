@@ -7,19 +7,9 @@
 <h2>Download</h2>
 
 <h4>Current release</h4>
-Version <% org.jamon.Version.CURRENT %>:
-<ul>
-  <li>Binary <a href="dist/<& BinTgzName &>">[tgz]</a>
-  <a href="dist/<& BinZipName &>">[zip]</a></li>
-  <li>Source <a href="dist/<& SrcTgzName &>">[tgz]</a>
-      <a href="dist/<& SrcZipName &>">[zip]</a></li>
-</ul>
-
-
-<h4>Older releases</h4>
-Browse the <a href="dist">distribution directory</a>.
+Version 2.0: Available at <a href="http://sf.net/projects/jamon">SourceForge</a>.
 
 <h4>CVS access</h4>
 
-Anonymous CVS access is not yet available. The source is viewable
-<a href="cvs">online</a>.
+Anonymous CVS access is available. See the instructions at <a href="">SourceForge</a>.
+The source is browsable <a href="">online at SourceForge</a>.
