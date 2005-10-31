@@ -509,8 +509,23 @@ a good sign for you, <% name %>.
     For example <& _TemplateInclude:
       "/templates/org/jamon/doc/reference/paramFragExample" &>
     produces
-    <pre class="tty"><&| escape//Html &><& reference/paramFragExample &>\
-    </&></pre>
+    <pre class="tty"><&| escape//Html &><& reference/paramFragExample &></&></pre>
+
+  <li><span class="concept">Generics</span>
+    Templates can have parameterized types, otherwise known as
+    <em>generics</em>.  This is primarily usefull for templates
+    accepting parameterized fragments.  For example, if map.jamon
+    contains <& _TemplateInclude:
+      "/templates/org/jamon/doc/reference/map" &> then
+    <& _TemplateInclude:
+      "/templates/org/jamon/doc/reference/mapCaller" &> produces
+    <pre class="tty"><&| escape//Html &><& reference/mapCaller &></&></pre>
+
+    <p>
+
+	Note that abstract templates cannot have parameterized types, nor can
+	subtemplates.  However, if a template has a parameterized type, that type
+	is available to any subtemplates of that template.
 
   <li><span class="concept">Path aliases</span>
 

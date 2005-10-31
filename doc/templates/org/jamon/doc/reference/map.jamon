@@ -1,0 +1,8 @@
+<%import>java.util.Map;</%import>
+<%generic>K, V</%generic>
+<%args>Map<K, V> map;</%args>
+<%frag key>K key;</%frag>
+<%frag value>V value;</%frag>
+% for (Map.Entry<K, V> entry : map.entrySet()) {
+<& key: entry.getKey() &>: <& value: entry.getValue() &>
+% }
