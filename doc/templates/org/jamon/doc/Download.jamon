@@ -7,9 +7,12 @@
 <h2>Download</h2>
 
 <h4>Current release</h4>
-Version 2.0: Available at <a href="http://sf.net/projects/jamon">SourceForge</a>.
+Version 2.0: Available at
+<a href="https://sourceforge.net/project/showfiles.php?group_id=138569">SourceForge</a>.
 
 <h4>CVS access</h4>
 
-Anonymous CVS access is available. See the instructions at <a href="">SourceForge</a>.
-The source is browsable <a href="">online at SourceForge</a>.
+Anonymous CVS access is available. See the instructions at
+<a href="https://sourceforge.net/cvs/?group_id=138569">SourceForge</a>.
+The source is also browsable
+<a href="http://cvs.sourceforge.net/viewcvs.py/jamon/jamon">online at SourceForge</a>.
