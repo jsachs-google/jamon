@@ -21,7 +21,8 @@
 
     This excludes whitespace inside <& code: "<%args>" &>,
     <& code: "<%xargs>" &>, <& code: "<%import>" &>, <& code: "<%alias>" &>,
-     <& code: "<%absmeth>" &>, and <& code: "<%frag>" &> declarations.
+    <& code: "<%absmeth>" &>, <& code: "<%generic>"
+    and <& code: "<%frag>" &> declarations.
 
     Other ignored white space includes whitespace immediately after
     the following tags:
@@ -34,6 +35,7 @@
       <li><& code: "</%class>" &></li>
       <li><& code: "</%import>" &></li>
       <li><& code: "</%implements>" &></li>
+      <li><& code: "</%generic>" &></li>
       <li><& code: "</%java>" &></li>
       <li><& code: "<%def ...>" &> and <& code: "</%def>" &></li>
       <li><& code: "</%absmeth>" &></li>
