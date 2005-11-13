@@ -277,9 +277,10 @@ the documentation thus taking care of issues such as escaping.
 
   <target name="cvsignores">
     <echo file=".cvsignore">
-      .cvsignore
-      ${build.dir}
-      build.properties
+.cvsignore
+${build.dir}
+${stage.dir}
+build.properties
     </echo>
   </target>
 
@@ -332,7 +333,7 @@ the documentation thus taking care of issues such as escaping.
       <arg line="-config server.xml start" />
     </java>
   </target>
-  
+
   <target name="stage" depends="build" >
     <mkdir dir="${stage.dir}" />
     <copy todir="${stage.dir}" >
