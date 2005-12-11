@@ -49,19 +49,20 @@ contained the declarations
 </%LITERAL>
 </&>
 
-  <li><span class="concept">Class scope declarations</span>
-    The Java code included in the template by the <code>%</code> and
-    <code>&lt;%java></code> ... <code>&lt;/%java></code> escapes
-    is translated into statements inside methods on a Java class
-    created from the template.
+  <li><span class="concept">Class scope declarations</span> The Java
+    code included in the template by the <code>%</code> and
+    <code>&lt;%java></code> ... <code>&lt;/%java></code> escapes, as
+    well as that in the <code>&lt;%if...%></code>,
+    <code>&lt;%elseif...%></code>, <code>&lt;%for...%></code>, and
+    <code>&lt;%whilte...%></code> tags, is translated into statements
+    inside methods on a Java class created from the template.
     <p>
     For example, the template fragment below
       <&| ../_Template &>
 <%LITERAL>
 % int count = 3;
-% while (count-- > 0) {
-    Hello world!
-% }
+<%while count-- > 0 %>Hello world!
+</%while>
 </%LITERAL>
 </&>
     is translated into Java code inside a method that looks something like:
@@ -69,7 +70,7 @@ contained the declarations
 <pre class="code">
     int count = 3;
     while (count-- > 0) {
-    this.write("    Hello world!\n");
+      this.write("Hello world!\n");
     }
 </pre>
     To add variables or methods to the class which contains these

@@ -8,14 +8,11 @@
     <title>Hello World</title>
   </head>
   <body>
-% for (int i = 0; i < num; i++) {
-    Hello world!
-% }
+<%for int i = 0; i < num; i++ %>    Hello world!
+</%for>
     <hr>
     <form method="GET" action="hello">
-% if (error) {
-      <b>The data you entered was invalid</b><br>
-% }
+<%if error %><b>The data you entered was invalid</b><br></%if>
       How many times would you like to be greeted?
       <input type="text" name="<% HelloServlet.NUM_KEY %>" />
       <br>

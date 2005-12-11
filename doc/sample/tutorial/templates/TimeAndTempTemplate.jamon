@@ -1,16 +1,17 @@
-% int count = 3;
-% while (count-- > 0) {
-    Hello world!
-% }
-
+% String dayOfWeek = new java.text.SimpleDateFormat("EEEE").format(new java.util.Date());
 <%java>
   String[] forecasts = new String[] {
-    "partly cloudy", "mostly cloudy", "sunny", "rain", "night" };
+    "partly cloudy", "mostly cloudy", "sunny", "rain", "snow" };
   int whichForecast = (int) (Math.random() * 5);
   String forecast = forecasts[whichForecast];
 </%java>
-
 Welcome to the free weather site.
-Today's date is <% new java.util.Date() %>.
-Tonight's forecast is <% forecast %>.
-To get a better forcast, please sign up for our premium service.
+The weather for <% dayOfWeek %> is <% forecast %>.
+To get a better forecast, please sign up for our premium service.
+<%if forecast.equals("sunny") %>Go to the beach!<%else>Stay home and read a book!</%if>
+Our premium service can forecast
+<%for int i = 1; i < 5; i++ %><% i %>, </%for>5 and 6 days ahead.  Check it out!
+
+Note: Around here, the weather is always one of:
+<%for String possibility : forecasts %>  <% possibility %>
+</%for>

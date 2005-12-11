@@ -10,13 +10,12 @@
 <%class>
   private static int iterationCount = 0;
   private static DateFormat dateFormat = new SimpleDateFormat();
-  private String formatDate(Date date)
-  {
+  private String formatDate(Date date) {
     return dateFormat.format(date);
   }
 </%class>
 
-%  for (int i = 1; i <= count; ++i) {
+<%for int i = 1; i <= count; ++i %>\
         Hello world! The time is <% formatDate(currentTime) %>.
         This template type has been called <% ++iterationCount %> times.
-%  }
+</%for>

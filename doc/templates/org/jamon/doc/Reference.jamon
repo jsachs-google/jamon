@@ -21,7 +21,7 @@
 
     This excludes whitespace inside <& code: "<%args>" &>,
     <& code: "<%xargs>" &>, <& code: "<%import>" &>, <& code: "<%alias>" &>,
-    <& code: "<%absmeth>" &>, <& code: "<%generic>"
+    <& code: "<%absmeth>" &>, <& code: "<%generic>" &>
     and <& code: "<%frag>" &> declarations.
 
     Other ignored white space includes whitespace immediately after
@@ -139,6 +139,43 @@
     An attempt to emit a disallowed type will result in a Java
     compilation error when the template is compiled.
 
+  <li><span class="concept">Flow control</span>
+    <p>
+      Jamon the following tags to handle flow control:
+      <ul>
+        <li>Basic for statement:
+          <&| _Template &><%LITERAL>
+<%for int i = 10; i >= 0; i-- %><% %i %>... </%for>
+Ready or not, here I come!
+</%LITERAL></&></li>
+        <li>Enhanced for statement:
+          <&| _Template &><%LITERAL>
+<%for Employee employee : employees %><% employee.getName() %> earns <% employee.getSalary() %>
+</%for>
+</%LITERAL></&></li>
+        <li>While loops
+          <&| _Template &><%LITERAL>
+<%while throwable != null %>
+Exception: throwable.getMessage()
+% throwable = throwable.getCause();
+</%while>
+</%LITERAL></&></li>
+        <li>If, ifelse and else statements
+          <&| _Template &><%LITERAL>
+There will be
+<%if attending < 5 %>a few<%elseif attending < 10%>some<%else>lots of</%if>
+people attending.
+</%while>
+</%LITERAL></&>
+          Note that there can be zero or more
+          <& code: "<%elseif ...%>" &> tags, and zero or one
+          <& code: "<%else>" &> tags.  The <& code: "</%if>" &> tag
+          is mandetory.</li>
+        </ul>
+</li>
+
+
+
   <li><span class="concept">Arbitrary Java code</span>
 
     <p>
@@ -146,25 +183,18 @@
       <code><% "<%java>...</%java>" %></code>, e.g.
     <&| _Template &><%LITERAL>
 <%java>
-  while (iter.hasNext()) {
-    Person p = (Person) iter.next();
-    if (p.getLastName().startsWith("S")) {
+  SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM d, yyyy");
+  Date birthday = person.getBirthDay();
 </%java>
-      <% p.getLastName() %>'s last name doesn't start with 'X'.
-<%java>
-    }
-  }
-</%java></%LITERAL></&>
+<% p.name() %> was born on <% dateFormat.format(birthday) %>.
+</%LITERAL></&>
     Alternatively, any line beginning with '<code>%</code>' also is
     assumed to contain valid Java code. The previous example could
     be equivalently (and perhaps more clearly) written as
     <&| _Template &><%LITERAL>
-%  while (iter.hasNext()) {
-%    Person p = (Person) iter.next();
-%    if (p.getLastName().startsWith("S")) {
-      <% p.getLastName() %>'s last name doesn't start with 'X'.
-%    }
-%  }
+% SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM d, yyyy");
+% Date birthday = person.getBirthDay();
+<% p.name() %> was born on <% dateFormat.format(birthday) %>.
 </%LITERAL></&>
     <p>
 
@@ -250,7 +280,7 @@ This component has been accessed <% pageViews++ %> times.
     Arguments are usable inside any java escape or java expression
     in the template, including those in subtemplates. Top-level
     visible arguments are also usable inside
-    <code><% "<%class>...<%/class>" %></code>
+    <code><% "<%class>...</%class>" %></code>
     blocks.  Technically, arguments are declared
     "<code>final</code>", so it is not possible to (re)assign a
     value to an argument.
@@ -266,16 +296,16 @@ This component has been accessed <% pageViews++ %> times.
 </%args>
 Your nicknames are
 <ul>
-% for (int i = 0; i < nicknames.length; ++i) {
+<%for int i = 0; i < nicknames.length; ++i %>
     <li> <% nicknames[i] %>
-% }
+</%for>
 </ul>
-% while (friends.hasNext()) {
+<%while friends.hasNext()%>
 %   Person p = (Person) friends.next();
-%   if (p.getAddress().getPostalCode().equals(address.getPostalCode())) {
+    <%if p.getAddress().getPostalCode().equals(address.getPostalCode()) %>
       Hey, guess what? <% p.getName() %> lives close by!
-%   }
-% }
+    </%if>
+</%while>
 </%LITERAL></&>
     Note that for this template to compile, the <code>Address</code>
     class would need to appear in an
@@ -330,10 +360,7 @@ Remember, today's lucky number is <% luckyNumber %>.
 </%xargs>
 Today's temperature is
 <font color="<% favoriteColor %>"><% temperature %></font>, which is
-% if(temperature != luckyNumber) {
-  not
-%}
-a good sign for you, <% name %>.
+<%if temperature != luckyNumber %> not </%if> a good sign for you, <% name %>.
 </%LITERAL></&>
 
     Note that it would be an error if <code>/child</code> tried

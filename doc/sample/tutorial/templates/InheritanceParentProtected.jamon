@@ -12,11 +12,11 @@
     <h1>Jamon</h1>
     <h3>a typed template engine for Java</h3>
     <hr>
-% if (userAccount.isAuthorized()) {
-      <& *CHILD &>
-% } else {
-      <em>Not authorized to view this page.</em>
-% }
+<%if userAccount.isAuthorized()%>
+  <& *CHILD &>
+<%else>
+  <em>Not authorized to view this page.</em>
+</%if>
     <%doc> could also include a footer here</%doc>
   </body>
 </html>

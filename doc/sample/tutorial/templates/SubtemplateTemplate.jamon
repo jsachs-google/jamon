@@ -9,11 +9,10 @@
     <th>Customer Name</th>
     <th>Account Page</th>
   </tr>
-% for (int i=0; i<names.length; i++) {
+<%for String name : names %>
     <%doc>Call a subtemplate to build each row of the table.</%doc>
-    <& row; name => names[i]; link => externalLink;
-        cgiParam => cgiParamName &>
-% }
+    <& row; name => name; link => externalLink; cgiParam => cgiParamName &>
+</%for>
 
 <%doc>A sub-template to construct each row of the table.</%doc>
 <%def row>

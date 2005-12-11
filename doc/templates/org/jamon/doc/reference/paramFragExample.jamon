@@ -6,19 +6,15 @@
     double[] temps;
   </%args>
 <ul>
-% for (int i = 0; i < temps.length; i++) {
+<%for int i = 0; i < temps.length; i++ %>\
   <li><& display; temperature => temps[i] &>
-% }
+</%for>\
 </ul>
 </%def>
 
-<&| _list; temps => new double[] { -13.0, 34.0 }  &>
+<&| _list; temps => new double[] { -13.0, 34.0 }  &>\
   <%args>
     double temperature;
   </%args>
-% if (temperature > 0.0) {
-  water at <% temperature %> degrees
-% } else {
-  <b>ice</b>
-% }
+  <%if temperature > 0.0 %>water at <% temperature %> degrees<%else><b>ice</b></%if>\
 </&>

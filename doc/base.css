@@ -296,3 +296,8 @@ dt
   background-color: #0f2f7f;
   color: white;
 }
+
+.variable
+{
+  font-style: italic
+}

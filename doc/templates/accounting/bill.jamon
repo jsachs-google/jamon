@@ -3,7 +3,4 @@
   String payee;
   boolean overdue => false;
 </%args>
-You owe <% payee %> $<% amount %>.\
-% if (overdue) {
-  Pay now, or else!\
-% }
+You owe <% payee %> $<% amount %>.  <%if overdue%>Pay now, or else!</%if>

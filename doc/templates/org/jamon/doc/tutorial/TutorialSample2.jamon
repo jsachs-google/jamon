@@ -7,7 +7,9 @@
 
 Without the ability to compute text to display, Jamon would have no more capability than HTML. Fortunately, Jamon has an expressive structure to specify what gets returned to the user.
 <p>
-Jamon allows the inclusion of any Java code in the template. Through the use of the following tags, Java can be used either to determine for flow of control of processing or to generate text to return from the template.
+Jamon allows the inclusion of any Java code in the template. Through
+the use of the following tags, Java can be used process data or to
+generate text to return from the template.
 
 <p>
 <%LITERAL>
@@ -37,22 +39,19 @@ Jamon allows the inclusion of any Java code in the template. Through the use of 
 For small amounts of Java code, using <code>%</code> escaping is useful.
       <&| ../_Template &>
 <%LITERAL>
-% int count = 3;
-% while (count-- > 0) {
-    Hello world!
-% }
+% String dayOfWeek = new java.text.SimpleDateFormat("EEEE").format(new java.util.Date());
 </%LITERAL>
 </&>
 
 <p>
 For larger chunks of Java code, using <code>&lt;%java></code> ...
-<code>&lt/%java></code> tags may be preferable:
+<code>&lt;/%java></code> tags may be preferable:
 
       <&| ../_Template &>
 <%LITERAL>
 <%java>
   String[] forecasts = new String[] {
-    "partly cloudy", "mostly cloudy", "sunny", "rain", "night" };
+    "partly cloudy", "mostly cloudy", "sunny", "rain", "snow" };
   int whichForecast = (int) (Math.random() * 5);
   String forecast = forecasts[whichForecast];
 </%java>
@@ -67,10 +66,45 @@ template, you must use the <em>emit</em> operator. This is the
       <&| ../_Template &>
 <%LITERAL>
 Welcome to the free weather site.
-<% buf.toString() %>.
+The weather for <% dayOfWeek %> is <% forecast %>.
 To get a better forecast, please sign up for our premium service.
 </%LITERAL>
 </&>
+
+Jamon also has the following tags to help with flow control; they
+behave analogously to their java counterparts.
+
+<%def it><%frag f/><span class="variable"><& f &></span></%def>
+<p>
+<table>
+  <tr>
+    <td><pre>&lt;%while <&| it &>conditional</&>>...&lt;/%while></pre></td>
+  </tr>
+  <tr>
+    <td><pre>&lt;%for <&| it &>init</&>; <&| it &>conditional</&>; <&| it &>update</&> %>...&lt;/%for></pre></td>
+  </tr>
+  <tr>
+    <td><pre>&lt;%for <&| it &>Type</&> <&| it &>variable</&>: <&| it &>iterable</&>>...&lt;/%for></pre></td>
+  </tr>
+  <tr>
+    <td><pre>&lt;%if <&| it &>condition1</&> %>..&lt;%elseif <&| it &>condition2</&> %>...&lt;%else>....&lt;/%if></pre></td>
+  </tr>
+</table>
+<p>
+
+For example:
+      <&| ../_Template &>
+<%LITERAL>
+<%if forecast.equals("sunny") %>Go to the beach!<%else>Stay home and read a book!</%if>
+Our premium service can forecast <%for int i = 1; i < 5; i++ %><% i %>, </%for>5 and 6 days ahead.  Check it out!
+
+Note: Around here, the weather is always one of:
+<%for String possibility : forecasts %>  <% possibility %>
+</%for>
+</%LITERAL>
+</&>
+
+
 <h3> Creating a template with dynamic content. </h3>
 <p>
 <ol>

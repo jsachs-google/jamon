@@ -6,11 +6,7 @@
   <tr>
     <td align="left"><% name %></td>
     <td>&nbsp;</td>
-    <td align="center"
-%     if (age < 18) {
-        bgcolor="red"
-%     }
-    >
+    <td align="center"<%if age < 18 %> bgcolor="red"</%if>>
       <% age %>
     </td>
   </tr>

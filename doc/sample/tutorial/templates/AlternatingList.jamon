@@ -9,10 +9,9 @@
 </%args>
 % int row = 0;
 <table>
-% while (items.hasNext())
-% {
+<%while items.hasNext() %>
     <tr bgcolor="<% row++ % 2 == 0 ? "white" : "grey" %>">
       <& content; renderable => items.next() &>
     </tr>
-% }
+</%while>
 </table>
