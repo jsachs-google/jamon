@@ -34,7 +34,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServlet;
 
 import org.jamon.JamonException;
-import org.jamon.JamonTemplateException;
+import org.jamon.JamonRuntimeException;
 import org.jamon.RecompilingTemplateManager;
 import org.jamon.TemplateInspector;
 import org.jamon.TemplateManager;
@@ -55,13 +55,6 @@ public class JamonDocServlet
         {
             new TemplateInspector(m_manager, "/org/jamon/doc" + templatePath)
                 .render(writer, m_parameters, true);
-        }
-        catch (JamonTemplateException e)
-        {
-            dumpException(writer, e,
-                          "In " + e.getFileName()
-                          + ", line " + e.getLine()
-                          + ", column " + e.getColumn());
         }
         catch (JamonException e)
         {
@@ -98,8 +91,7 @@ public class JamonDocServlet
                               .getAttribute("javax.servlet.context.tempdir")
                               .toString())
                  .setClassLoader(getClass().getClassLoader())
-                 .setSourceDir("templates")
-                 .setJavaCompiler("jikes"));
+                 .setSourceDir("templates"));
     }
 
     private void expireResponse(HttpServletResponse p_response)
