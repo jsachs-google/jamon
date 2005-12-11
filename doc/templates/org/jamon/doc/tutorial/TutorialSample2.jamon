@@ -96,7 +96,8 @@ For example:
       <&| ../_Template &>
 <%LITERAL>
 <%if forecast.equals("sunny") %>Go to the beach!<%else>Stay home and read a book!</%if>
-Our premium service can forecast <%for int i = 1; i < 5; i++ %><% i %>, </%for>5 and 6 days ahead.  Check it out!
+Our premium service can forecast
+<%for int i = 1; i < 5; i++ %><% i %>, </%for>5 and 6 days ahead.  Check it out!
 
 Note: Around here, the weather is always one of:
 <%for String possibility : forecasts %>  <% possibility %>
