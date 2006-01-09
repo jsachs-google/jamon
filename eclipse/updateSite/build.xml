@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<project name="project" default="push">
+  <description>Script for pushing features to the site</description>
+
+  <property name="site.dir" value=""/>
+
+  <target name="push" description="Push the current workspace live">
+    <exec executable="rsync">
+      <arg value="--rsh=ssh" />
+      <arg value="--verbose" />
+      <arg value="--recursive" />
+      <arg value="--relative" />
+      <arg value="--compress" />
+      <arg value="--exclude=.cvsignore"/>
+      <arg value="--exclude=.project"/>
+      <arg value="--exclude=CVS"/>
+      <arg value="."/>
+      <arg value="jamon@www.jamon.org:/home/jamon/www${site.dir}/eclipse/updates" />
+    </exec>
+  </target>
+
+</project>
+
