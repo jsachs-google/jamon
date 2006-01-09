@@ -2,7 +2,7 @@
 <feature
       id="org.jamon.feature"
       label="jamon"
-      version="1.0.0">
+      version="1.9.0">
 
    <description url="http://www.jamon.org/">
       Feature to assist in working with jamon templates in eclipse
