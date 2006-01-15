@@ -93,6 +93,6 @@ Run it:
 
 <li>
 You should see:
-<& _RunJava; className => "JamonQs";
-             args => new String[] {"one", "two", "three"} &>
+<& _RunJava; className = "JamonQs";
+             args = new String[] {"one", "two", "three"} &>
 </ol>

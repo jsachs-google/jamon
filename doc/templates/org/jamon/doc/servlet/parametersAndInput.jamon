@@ -10,14 +10,14 @@ Suppose we want a servlet that will print out the above message an
 arbitrary number of times.  We can do this with the following
 template.
 
-<& _showTemplateDiff; oldName => "HelloTemplate";
-                      newName => "HelloTemplate2" &>
+<& _showTemplateDiff; oldName = "HelloTemplate";
+                      newName = "HelloTemplate2" &>
 
 (You should be able to distinguish lines that are <span class="changed">new or
 changed</span><span class="deleted"> or deleted</span>).
 
-<& _showSourceDiff; oldName => "HelloServlet";
-                    newName => "HelloServletSnippet" &>
+<& _showSourceDiff; oldName = "HelloServlet";
+                    newName = "HelloServletSnippet" &>
 
 (note that Java code identical to the previous example has been
 omitted.)  The above code will result in "Hello World!" being printed
@@ -27,13 +27,13 @@ out ten times.
 Suppose we want the user to be able to specify the number times the message is
 displayed.  We can achieve that with a template such as:
 
-<& _showTemplateDiff; oldName => "HelloTemplate2";
-                      newName => "HelloTemplate3" &>
+<& _showTemplateDiff; oldName = "HelloTemplate2";
+                      newName = "HelloTemplate3" &>
 
 The corresponding servlet would look like:
 
-<& _showSourceDiff; oldName => "HelloServletSnippet";
-                    newName => "HelloServletSnippet2" &>
+<& _showSourceDiff; oldName = "HelloServletSnippet";
+                    newName = "HelloServletSnippet2" &>
 
 However, there is something unsatisfactory about this:
 
@@ -48,13 +48,13 @@ Since the object responsible for parsing the parameter seems like the
 natural owner of the name of the parameter, for the moment we reduce
 the smell by doing this:
 
-<& _showTemplateDiff; oldName => "HelloTemplate3";
-                      newName => "HelloTemplate4" &>
+<& _showTemplateDiff; oldName = "HelloTemplate3";
+                      newName = "HelloTemplate4" &>
 
 and
 
-<& _showSourceDiff; oldName => "HelloServletSnippet2";
-                    newName => "HelloServletSnippet3" &>
+<& _showSourceDiff; oldName = "HelloServletSnippet2";
+                    newName = "HelloServletSnippet3" &>
 
 The next problem to address is the fact that no validation is
 performed on the data coming from the web.  For example a user may
@@ -63,13 +63,13 @@ cause the <span class="code">doGet</span> method to throw a <span
 class="code">NumberFormatException</span>.  Thus we need to catch this
 as follows (unchanged code is omitted).  In the servlet we need:
 
-<& _showSourceDiff; oldName => "HelloServletSnippet3";
-                    newName => "HelloServletSnippet4" &>
+<& _showSourceDiff; oldName = "HelloServletSnippet3";
+                    newName = "HelloServletSnippet4" &>
 
 and the template needs an additional error parameter:
 
-<& _showTemplateDiff; oldName => "HelloTemplate4";
-                      newName => "HelloTemplate5" &>
+<& _showTemplateDiff; oldName = "HelloTemplate4";
+                      newName = "HelloTemplate5" &>
 
 However, in spite of all this the servlet leaves a great deal to be
 desired.  For example invalid input should be returned to the user for
@@ -94,8 +94,8 @@ The next section presents solutions to these problems.
   </%args>
 
 <pre class="template">\
-<& _showDiff; oldName => "/sample/servlet/templates/" + oldName + ".jamon";
-              newName => "/sample/servlet/templates/" + newName + ".jamon" &>\
+<& _showDiff; oldName = "/sample/servlet/templates/" + oldName + ".jamon";
+              newName = "/sample/servlet/templates/" + newName + ".jamon" &>\
 </pre>
 </%def>
 
@@ -106,7 +106,7 @@ The next section presents solutions to these problems.
   </%args>
 
 <pre class="template">\
-<& _showDiff; oldName => "/sample/servlet/src/" + oldName + ".java";
-              newName => "/sample/servlet/src/" + newName + ".java" &>\
+<& _showDiff; oldName = "/sample/servlet/src/" + oldName + ".java";
+              newName = "/sample/servlet/src/" + newName + ".java" &>\
 </pre>
 </%def>

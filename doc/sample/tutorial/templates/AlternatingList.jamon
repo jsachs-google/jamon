@@ -11,7 +11,7 @@
 <table>
 <%while items.hasNext() %>
     <tr bgcolor="<% row++ % 2 == 0 ? "white" : "grey" %>">
-      <& content; renderable => items.next() &>
+      <& content; renderable = items.next() &>
     </tr>
 </%while>
 </table>

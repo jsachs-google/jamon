@@ -1,7 +1,7 @@
 <%frag content/>
 <%args>
   String href;
-  String style => null;
+  String style = null;
 </%args>
 <li>
   <a href="<% href %>"<%if style != null %> class="<% style %>"</%if>><& content &></a>

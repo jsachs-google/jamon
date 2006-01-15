@@ -1,7 +1,7 @@
 <%args>
   String[] names;
   String externalLink;
-  String cgiParamName => null;
+  String cgiParamName = null;
 </%args>
 
 <table>
@@ -11,7 +11,7 @@
   </tr>
 <%for String name : names %>
     <%doc>Call a subtemplate to build each row of the table.</%doc>
-    <& row; name => name; link => externalLink; cgiParam => cgiParamName &>
+    <& row; name = name; link = externalLink; cgiParam = cgiParamName &>
 </%for>
 
 <%doc>A sub-template to construct each row of the table.</%doc>
@@ -23,8 +23,8 @@
   </%args>
   <tr>
     <td align="left"> <% name %> </td>
-    <td> <& generateLink; link => link; name => cgiParam;
-            value => name &> </td>
+    <td> <& generateLink; link = link; name = cgiParam;
+            value = name &> </td>
   </tr>
 </%def>
 
@@ -32,7 +32,7 @@
 <%def generateLink>
 <%args>
     String link;
-    String name => null;
+    String name = null;
     String value;
 </%args>
 <%doc> The following emit tags use '#u' to force URL style

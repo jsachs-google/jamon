@@ -4,8 +4,8 @@
 </%args>
 
 <&|| /org/jamon/doc/util/HighlightChanges &>
-  <|oldContent><& ../_ReadFile; fileName => oldName &></|>
-  <|newContent><& ../_ReadFile; fileName => newName &></|>
+  <|oldContent><& ../_ReadFile: oldName &></|>
+  <|newContent><& ../_ReadFile: newName &></|>
   <|insertedRenderer><%args>
       Object text;
     </%args><span class='changed'><% text %></span></|>

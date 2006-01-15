@@ -79,4 +79,4 @@ required by that instance.
 
 The result of executing this class and template is below.
 
-<& ../_RunJava; className => "User2" &>
+<& ../_RunJava; className = "User2" &>

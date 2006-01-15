@@ -18,11 +18,11 @@ Arguments to a Jamon template are declared between
       <&| ../_Template &>
 <%LITERAL>
 <%args>
-  String         title => "Account Summary";
+  String         title = "Account Summary";
   java.util.Date effectiveDate;
   String         userName;
   java.math.BigDecimal totalBalance;
-  String         alertMessage => "";
+  String         alertMessage = "";
 </%args>
 </%LITERAL>
 </&>
@@ -113,7 +113,7 @@ AccountSummaryTut3.java</a>:
 </pre>
 
 <li> You should see:
-<& ../_RunJava; className => "AccountSummaryTut3" &>
+<& ../_RunJava; className = "AccountSummaryTut3" &>
 
 </ol>
 

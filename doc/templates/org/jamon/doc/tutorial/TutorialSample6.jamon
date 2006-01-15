@@ -20,8 +20,8 @@ are shown below.
   </%import>
 
   <& header &>
-  <& /org/foo/weather/ForecastTemplate; time => new Date();
-     message => "Thank you for using our wearther service!" &>
+  <& /org/foo/weather/ForecastTemplate; time = new Date();
+     message = "Thank you for using our wearther service!" &>
   <& /com/tripleclick/ads/Advertisement &>
   <& footer &></%LITERAL></&>
 
@@ -81,4 +81,4 @@ from being output, each Jamon line must end with a backslash.
 </pre>
 
 <li> You should see:
-<& ../_RunJava; className => "JamonCallerTut6" &>
+<& ../_RunJava; className = "JamonCallerTut6" &>

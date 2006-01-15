@@ -1,9 +1,9 @@
 <%args>
-  String         title => "Account Summary";
+  String         title = "Account Summary";
   java.util.Date effectiveDate;
   String         userName;
   java.math.BigDecimal totalBalance;
-  String         alertMessage => "";
+  String         alertMessage = "";
 </%args>
 
 Title:             <% title %>

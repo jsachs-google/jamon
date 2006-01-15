@@ -14,8 +14,8 @@
 
 <table>
 <%doc>named parameter syntax</%doc>
-  <& _row; name => "Mickey"; age => 46 &>
-  <& _row; name => "Junior"; age => 8 &>
+  <& _row; name = "Mickey"; age = 46 &>
+  <& _row; name = "Junior"; age = 8 &>
 <%doc>positional parameter syntax</%doc>
   <& _row: "Minnie"; 25 &>
 </table>

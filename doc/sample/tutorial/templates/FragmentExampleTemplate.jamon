@@ -14,7 +14,7 @@ dateFormat MUST be declared final so the fragment can access it.
 </%doc>
 % final DateFormat dateFormat = new SimpleDateFormat("MM/dd");
 We offer the following holidays:
-<&| AlternatingList; items => holidays.iterator() &>
+<&| AlternatingList; items = holidays.iterator() &>
   <%args>
     Object holidayObj;
   </%args>

@@ -37,7 +37,7 @@
     <pre class="template"><&| /org/jamon/escape/Html &><%LITERAL>
 <%args>
   int count;
-  String name => "Somebody";
+  String name = "Somebody";
   String greeting;
 </%args>
 <html>
@@ -108,7 +108,7 @@ follows:
 <%escape #n>
 <%args>
   int count;
-  String name => "Somebody";
+  String name = "Somebody";
   String greeting;
 </%args>
     Many Greetings

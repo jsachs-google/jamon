@@ -63,7 +63,7 @@ Run it:
 
 <li>
 You should see:
-<& ../_RunJava; className => "HelloTut1" &>
+<& ../_RunJava; className = "HelloTut1" &>
 
 </ol>
 <p>

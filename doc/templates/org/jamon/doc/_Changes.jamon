@@ -16,7 +16,7 @@
 <%method change>
   <%frag content />
   <%args>
-    boolean incompatible => false;
+    boolean incompatible = false;
   </%args>
   <li>
 %   if (incompatible) {

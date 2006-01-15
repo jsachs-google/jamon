@@ -149,7 +149,7 @@ Run it:
 
 <li>
 You should see:
-<& ../_RunJava; className => "TimeAndTempTut2" &>
+<& ../_RunJava; className = "TimeAndTempTut2" &>
 
 </ol>
 

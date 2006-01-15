@@ -116,6 +116,6 @@ When this template is called by the java code
 <& ../_JavaInclude: "/sample/tutorial/src/ClassExampleTut5" &>
 
 the output of the template's <code>render</code> method will be
-<& ../_RunJava; className => "ClassExampleTut5" &>
+<& ../_RunJava; className = "ClassExampleTut5" &>
 
 <p>

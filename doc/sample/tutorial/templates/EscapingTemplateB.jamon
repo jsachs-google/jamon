@@ -1,7 +1,7 @@
 <%escape #n>
 
 <%args>
-  String name => "Somebody";
+  String name = "Somebody";
   String greeting;
 </%args>
 

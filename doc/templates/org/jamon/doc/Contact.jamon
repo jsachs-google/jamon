@@ -7,9 +7,9 @@
 <h2>Mailing lists</h2>
 
 <ul>
-    <&| _list; name => "announce" &>Announcements-only list.</&>
-    <&| _list; name => "users" &>Questions, suggestions, problems.</&>
-    <&| _list; name => "hackers" &>Developers' list.</&>
+    <&| _list: "announce" &>Announcements-only list.</&>
+    <&| _list: "users" &>Questions, suggestions, problems.</&>
+    <&| _list: "hackers" &>Developers' list.</&>
 </ul>
 
 <%def _list>

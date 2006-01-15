@@ -1,7 +1,7 @@
 <%abstract>
 <%extends _TutorialBase>
 <%alias>
-  logic => /org/jamon/logic;
+  logic = /org/jamon/logic;
 </%alias>
 
 <& tutorialNavBar &>
@@ -14,13 +14,13 @@
 <%def tutorialNavBar>
   <div class="tutorialNav">
     <span class="tutorialNavNeighbor">
-      <&| stageLink; index => tutorialStage() - 1 &>Previous</&>
+      <&| stageLink; index = tutorialStage() - 1 &>Previous</&>
     </span>
     <span class="tutorialNavContents">
       <a href="TutorialPath.html">Tutorial contents</a>
     </span>
     <span class="tutorialNavNeighbor">
-      <&| stageLink; index => tutorialStage() + 1 &>Next</&>
+      <&| stageLink; index = tutorialStage() + 1 &>Next</&>
     </span>
   </div>
 </%def>
@@ -30,7 +30,7 @@
   <%args>
     int index;
   </%args>
-  <&|| logic//IfElse; condition => index >= 1 && index <= 10 &>
+  <&|| logic//IfElse; condition = index >= 1 && index <= 10 &>
     <|Then><a href="TutorialSample<% index %>.html"><& name &></a></|>
     <|Else>&nbsp;</|>
   </&>

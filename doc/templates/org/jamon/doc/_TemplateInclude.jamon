@@ -2,4 +2,4 @@
   String path;
 </%args>
 
-<& _FileInclude; path => path + ".jamon"; cssClass => "jamon" &>
+<& _FileInclude; path = path + ".jamon"; cssClass = "jamon" &>

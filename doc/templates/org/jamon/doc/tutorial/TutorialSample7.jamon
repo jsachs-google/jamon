@@ -67,7 +67,7 @@ same file or other top level templates.
 
   <li>
     The output should be
-    <& ../_RunJava; className => "SubtemplateTut7" &>
+    <& ../_RunJava; className = "SubtemplateTut7" &>
   </li>
 </ol>
 <p>

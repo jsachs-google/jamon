@@ -4,7 +4,7 @@
 </%args>
 <%xargs>
   userAccount;
-  title => "special of the week";
+  title = "special of the week";
 </%xargs>
 
 <h2>Weekly Special</h2>

@@ -55,7 +55,7 @@ InheritanceSimpleTut9.java</a>
     <& ../_JavaInclude: "/sample/tutorial/src/InheritanceSimpleTut9" &>
 
 The output from the template is
-<& ../_RunJava; className => "InheritanceSimpleTut9" &>
+<& ../_RunJava; className = "InheritanceSimpleTut9" &>
 
 <h2>Inheritance with template arguments</h2>
 Both the parent and child templates may take arguments. To specify
@@ -80,7 +80,7 @@ The child template can only access these arguments by including
 <%LITERAL>
 <%xargs>
   userAccount;
-  title => "special of the week";
+  title = "special of the week";
 &lt/%xargs>
 </%LITERAL>
 </pre>
@@ -127,6 +127,6 @@ invoking the child template through the second approach described above.
 <& ../_JavaInclude: "/sample/tutorial/src/User" &>
 <p>
 The output from the template is
-<& ../_RunJava; className => "User" &>
+<& ../_RunJava; className = "User" &>
 
 <p>

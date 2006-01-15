@@ -10,7 +10,7 @@
 
 <%args>
   String className;
-  String[] args => new String[0];
+  String[] args = new String[0];
 </%args>
 
 <pre class="tty"><&| /org/jamon/escape/Html &>

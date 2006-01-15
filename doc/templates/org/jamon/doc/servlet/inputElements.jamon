@@ -15,7 +15,7 @@ and pass it into a template which can render it as follows:
 <%args>
   SelectableInput checkboxInput;
 </%args>
-Would you like fries? <& /org/jamon/html/Checkbox; input => checkboxInput &></%LITERAL></&>
+Would you like fries? <& /org/jamon/html/Checkbox; input = checkboxInput &></%LITERAL></&>
 </pre>
 
 which will generate output which looks like:
@@ -26,7 +26,7 @@ which will generate output which looks like:
 <pre class="tty">\
 <&| /org/jamon/escape/Html &>\
 Would you like fries? <& /org/jamon/html/Checkbox;
-                         input => new SelectableInput("someName", "1", true) &>
+                         input = new SelectableInput("someName", "1", true) &>
 </&>\
 </pre>
 
@@ -55,9 +55,9 @@ and passing them into a template like
 </%args>
 Which primary color would you like?
 <ul>
-  <li>Red <& /org/jamon/html/RadioButton; input => redRadio &></li>
-  <li>Green <& /org/jamon/html/RadioButton; input => greenRadio &></li>
-  <li>Blue <& /org/jamon/html/RadioButton; input => blueRadio &></li>
+  <li>Red <& /org/jamon/html/RadioButton; input = redRadio &></li>
+  <li>Green <& /org/jamon/html/RadioButton; input = greenRadio &></li>
+  <li>Blue <& /org/jamon/html/RadioButton; input = blueRadio &></li>
 </ul>
 </%LITERAL>\
 </&>\
@@ -74,9 +74,9 @@ SelectableInput blueRadio = new SelectableInput("color", "2");
 </%java>
 Which primary color would you like?
 <ul>
-  <li>Red <& /org/jamon/html/RadioButton; input => redRadio &></li>
-  <li>Green <& /org/jamon/html/RadioButton; input => greenRadio &></li>
-  <li>Blue <& /org/jamon/html/RadioButton; input => blueRadio &></li>
+  <li>Red <& /org/jamon/html/RadioButton; input = redRadio &></li>
+  <li>Green <& /org/jamon/html/RadioButton; input = greenRadio &></li>
+  <li>Blue <& /org/jamon/html/RadioButton; input = blueRadio &></li>
 </ul>
 </&>\
 </pre>

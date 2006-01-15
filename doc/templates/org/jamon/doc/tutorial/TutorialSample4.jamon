@@ -92,7 +92,7 @@ EscapingTut4a.java</a>:
 <& ../_JavaInclude: "/sample/tutorial/src/EscapingTut4a" &>
 
 Then the output of the template's <code>render</code> method will be
-<& ../_RunJava; className => "EscapingTut4a" &>
+<& ../_RunJava; className = "EscapingTut4a" &>
 
 <p>
 In contrast, if the template
@@ -107,4 +107,4 @@ is called by the java code
 <& ../_JavaInclude: "/sample/tutorial/src/EscapingTut4b" &>
 
 Then the output of the template's <code>render</code> method will be
-<& ../_RunJava; className => "EscapingTut4b" &>
+<& ../_RunJava; className = "EscapingTut4b" &>

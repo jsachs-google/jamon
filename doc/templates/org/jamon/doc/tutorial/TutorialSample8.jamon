@@ -11,9 +11,9 @@
 In addition to template arguments, Jamon allows passing a block, or
 "fragment," of Jamon text to a template. When passing a template
 fragment, the invocation syntax must look like <nobr><code>&lt;&amp;|
-target; arg1 => ... &amp;> [fragment of Jamon text] &lt;/&amp;></code></nobr>,
+target; arg1 = ... &amp;> [fragment of Jamon text] &lt;/&amp;></code></nobr>,
 and any template content after the start tag, <nobr><code>&lt;&amp;| target;
-arg1 => ... &amp;></code></nobr>, up to the closing tag,
+arg1 = ... &amp;></code></nobr>, up to the closing tag,
 <code>&lt;/&amp;></code>, is considered the fragment argument.
 <p>
 In this example,
@@ -81,7 +81,7 @@ tag at the beginning of the fragment.
 <&| ../_Template &><%LITERAL>
 % DateFormat dateFormat = new SimpleDateFormat("MM/dd");
 We offer the following holidays:
-<&| AlternatingList; items => holidays.iterator() &>
+<&| AlternatingList; items = holidays.iterator() &>
   <%args>
     Object holidayObj;
   </%args>
@@ -144,6 +144,6 @@ The example template is executed by the
 <& ../_JavaInclude: "/sample/tutorial/src/Holiday" &>
 <p>
 The output from the template is
-<& ../_RunJava; className => "Holiday" &>
+<& ../_RunJava; className = "Holiday" &>
 
 </ol>

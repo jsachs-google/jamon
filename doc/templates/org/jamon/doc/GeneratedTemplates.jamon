@@ -44,8 +44,8 @@ declarations
 
 <pre class="jamon""><&| /org/jamon/escape/Html &><%LITERAL><%args>
   int i;
-  String s => "yes";
-  java.math.BigDecimal someNumber => null;
+  String s = "yes";
+  java.math.BigDecimal someNumber = null;
   boolean b;
 </%args></%LITERAL></&></pre>
 
@@ -139,7 +139,7 @@ declarations
 
 <pre class="jamon"><&| /org/jamon/escape/Html &><%LITERAL><%args>
   int i;
-  String s => "yes";
+  String s = "yes";
   Integer count;
 </%args></%LITERAL></&></pre>
 
@@ -172,7 +172,7 @@ declarations
 ><&| /org/jamon/escape/Html &><%LITERAL><%extends ParentTemplate>
 <%args>
   long t;
-  java.math.BigDecimal amount => new BigDecimal(0);
+  java.math.BigDecimal amount = new BigDecimal(0);
   double x;
 </%args></%LITERAL></&></pre>
 

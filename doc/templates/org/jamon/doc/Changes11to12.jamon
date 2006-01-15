@@ -6,30 +6,30 @@
     and subtemplates.
 </&>
 
-<&| change; incompatible => true &>
+<&| change; incompatible = true &>
     The writer is publicly accessible as <code>jamonWriter</code>
     variable, and is no longer an instance on the template.
 </&>
 
-<&| change; incompatible => true &>
+<&| change; incompatible = true &>
     Fixed and refactored reflective template invocation, adding
     facilities to introspect on template arguments and types.
     <code>Invoker</code> becomes <code>TemplateInspector</code>.
 </&>
 
-<&| change; incompatible => true &>
+<&| change; incompatible = true &>
     <code>Renderer</code> becomes an
     interface, <code>AbstractRenderer</code> replaces it as the
     abstract superclass.
 </&>
 
-<&| change; incompatible => true &>
+<&| change; incompatible = true &>
     Default escaping is no longer set at runtime
     via <code>escapeWith</code>, but statically declared
     via <code>&lt;%escaping ...&gt;</code> directive.
 </&>
 
-<&| change; incompatible => true &>
+<&| change; incompatible = true &>
     Flushing the writer after rendering is now done via
     <code>autoFlush()</code> method, but done by default unless call
     <code>renderNoFlush()</code>.
