@@ -68,6 +68,19 @@
        <extension
              point="org.eclipse.ui.popupMenus">
           <viewerContribution
+                id="org.jamon.project.popup.switchToProxy"
+                targetID="org.jamon.project.editorContext">
+             <action
+                   class="org.jamon.eclipse.popup.SwitchToProxyAction"
+                   enablesFor="*"
+                   id="org.jamon.eclipse.popup.actions.switchToProxy"
+                   label="Switch to Proxy"
+                   menubarPath="additions"/>
+          </viewerContribution>
+       </extension>
+       <extension
+             point="org.eclipse.ui.popupMenus">
+          <viewerContribution
                 id="org.jamon.project.popup.switchToImpl"
                 targetID="org.jamon.project.editorContext">
              <action
