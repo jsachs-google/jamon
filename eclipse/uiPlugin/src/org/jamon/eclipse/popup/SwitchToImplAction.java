@@ -22,14 +22,9 @@ public class SwitchToImplAction implements IEditorActionDelegate
 {
     private IEditorPart m_editor;
 
-    public SwitchToImplAction()
-    {
-        EclipseUtils.logInfo("constructor for SwitchToImpl");
-    }
     public void setActiveEditor(IAction p_action, IEditorPart p_targetEditor)
     {
         m_editor = p_targetEditor;
-        EclipseUtils.logInfo("setting active editor for SwitchToImpl");
     }
 
     public void run(IAction p_action)
@@ -41,8 +36,6 @@ public class SwitchToImplAction implements IEditorActionDelegate
             try
             {
                 cursorLocation = jamonEditor.getCursorLocation();
-                EclipseUtils.logInfo("cursor is at: " + cursorLocation.getLine()
-                        + " : " + cursorLocation.getColumn());
                 TemplateResources  templateResources =
                     jamonEditor.getTemplateResources();
                 IEditorPart editorPart = IDE.openEditor(
