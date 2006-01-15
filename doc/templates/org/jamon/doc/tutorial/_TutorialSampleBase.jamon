@@ -1,8 +1,5 @@
 <%abstract>
 <%extends _TutorialBase>
-<%alias>
-  logic = /org/jamon/logic;
-</%alias>
 
 <& tutorialNavBar &>
 
@@ -30,10 +27,11 @@
   <%args>
     int index;
   </%args>
-  <&|| logic//IfElse; condition = index >= 1 && index <= 10 &>
-    <|Then><a href="TutorialSample<% index %>.html"><& name &></a></|>
-    <|Else>&nbsp;</|>
-  </&>
+  <%if index >= 1 && index <= 10 %>
+    <a href="TutorialSample<% index %>.html"><& name &></a>
+  <%else>
+    &nbsp;
+  </%if>
 </%def>
 
 <%class>
