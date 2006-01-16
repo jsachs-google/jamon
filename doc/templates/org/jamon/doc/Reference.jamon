@@ -252,18 +252,21 @@ This component has been accessed <% pageViews++ %> times.
   <li><span class="concept">Imports</span>
 
     Java classes or packages to be imported and used in a template
-    should be placed inside an <code><% "<%import>...</%import>" %></code>
-    block. Each package or class should be separated by a semicolon
-    ('<code>;</code>').  Note that imports are not inherited, so if you
-    use an import to aid in the declaration of an argument type in a
-    parent template, you must use the same import in all descendants
-    of that template.
+    should be placed inside an <code><% "<%import>...</%import>"
+    %></code> block. Each package or class should be separated by a
+    semicolon ('<code>;</code>').  Static imports are accomplished by
+    preceding the imported element with the <code>static</code>
+    keyword.  Note that imports are not inherited, so if you use an
+    import to aid in the declaration of an argument type in a parent
+    template, you must use the same import in all descendants of that
+    template.
     <p>
     For example:
     <&| _Template &><%LITERAL>
 <%import>
   java.util.Iterator;
-  org.modusponens.myapp.data.*;
+  org.myorg.myapp.data.*;
+  static org.myorg.myapp.Constants.*;
 </%import></%LITERAL></&>
 
   <li><span class="concept">Arguments</span>

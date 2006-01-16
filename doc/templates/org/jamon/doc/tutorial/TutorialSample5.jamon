@@ -48,6 +48,16 @@ contained the declarations
 </%args>
 </%LITERAL>
 </&>
+Static imports can be acheived with the <code>static</code> keyword;
+for example:
+      <&| ../_Template &>
+<%LITERAL>
+<%import>
+  static java.lang.math.abs;
+</%import>
+The difference between 2 and 4 is <% abs(2 - 4) %>.
+</%LITERAL>
+</&>
 
   <li><span class="concept">Class scope declarations</span> The Java
     code included in the template by the <code>%</code> and
