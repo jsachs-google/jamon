@@ -129,6 +129,7 @@ build
 
   <target name="spotless" depends="clean">
     <delete file=".cvsignore" />
+    <delete file="tests/.cvsignore"/>
   </target>
 
   <target name="jar" depends="test">
