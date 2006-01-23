@@ -2,10 +2,10 @@
   boolean b;
 </%args>
 <%alias>
-  logic => /org/jamon/logic;
+  logic = /org/jamon/logic;
 </%alias>
 
-<&|| logic//IfElse; condition => b &>
+<&|| logic//IfElse; condition = b &>
   <|Then>then</|>
   <|Else>else</|>
 </&>

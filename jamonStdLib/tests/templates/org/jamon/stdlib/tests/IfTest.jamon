@@ -2,7 +2,7 @@
   boolean b;
 </%args>
 <%alias>
-  logic => /org/jamon/logic;
+  logic = /org/jamon/logic;
 </%alias>
 
-<&| logic//If; condition => b &>then</&>
+<&| logic//If; condition = b &>then</&>

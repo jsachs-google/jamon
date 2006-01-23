@@ -2,7 +2,7 @@
   java.util.Iterator<Object> i;
 </%args>
 <%alias>
-  logic => /org/jamon/logic;
+  logic = /org/jamon/logic;
 </%alias>
 
-<&| logic//Iterate<Object>; iterator => i &><%args>Object value;</%args><% value %><% value %></&>
+<&| logic//Iterate<Object>; iterator = i &><%args>Object value;</%args><% value %><% value %></&>
