@@ -18,7 +18,7 @@
  * Contributor(s):
  */
 
-package org.jamon.templates.html;
+package org.jamon.templates;
 
 import org.jamon.render.html.SelectableInput;
 import org.jamon.html.Checkbox;

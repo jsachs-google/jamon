@@ -18,12 +18,14 @@
  * Contributor(s):
  */
 
-package org.jamon.integration;
+package org.jamon.templates;
 
-import java.util.ArrayList;
-import test.jamon.IterateTest;
-import test.jamon.IfTest;
-import test.jamon.IfElseTest;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import org.jamon.stdlib.tests.IterateTest;
+import org.jamon.stdlib.tests.IfTest;
+import org.jamon.stdlib.tests.IfElseTest;
 
 /**
  * Test Jamon's standard library logic templates.
@@ -35,17 +37,15 @@ public class LogicTest
     public void testIterateEmpty()
         throws Exception
     {
-        new IterateTest().render(getWriter(), new ArrayList().iterator());
+        new IterateTest().render(
+            getWriter(), Collections.<Object>emptyList().iterator());
         checkOutput("");
     }
 
     public void testIterateNotEmpty()
         throws Exception
     {
-        ArrayList<String> list = new ArrayList<String>();
-        list.add("a");
-        list.add("b");
-        list.add("c");
+        List<Object> list = Arrays.asList(new Object[] {"a", "b", "c"});
         new IterateTest().render(getWriter(), list.iterator());
         checkOutput("aabbcc");
     }

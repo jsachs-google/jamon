@@ -18,23 +18,25 @@
  * Contributor(s):
  */
 
-package org.jamon.templates.html;
+package org.jamon.templates;
 
-import org.jamon.render.html.TextInput;
+import org.jamon.stdlib.tests.ExplicitEscapings;
 
-public class TextInputTest
+/**
+ * Test Jamon's escaping mechanisms.
+ **/
+
+public class ExplicitEscapingsTest
     extends TestBase
 {
-    public void testSimple()
+    public void testIt()
         throws Exception
     {
-        TextInput input = new TextInput("foo", "bar");
-        new org.jamon.html.TextInput(getTemplateManager())
-            .render(getWriter(), input);
-        checkOutput("<input type='text'\n       name='"
-                    + input.getName()
-                    + "'\n       value='"
-                    + input.getValue()
-                    +"'\n/>");
+        new ExplicitEscapings().render(getWriter());
+        checkOutput("HTML:\nit's \"quoted\" &amp; &lt;b&gt;bold&lt;/b&gt;\n\n"
+                    + "XML:\nit&apos;s &quot;quoted&quot; &amp; &lt;b&gt;bold&lt;/b&gt;\n\n"
+                    + "URL:\nit%27s+%22quoted%22+%26+%3Cb%3Ebold%3C%2Fb%3E%0A\n"
+                    + "Strict HTML:\nit&#39;s &quot;quoted&quot; &amp; &lt;b&gt;bold&lt;/b&gt;\n\n"
+                    + "Double HTML:\nit's \"quoted\" &amp;amp; &amp;lt;b&amp;gt;bold&amp;lt;/b&amp;gt;\n");
     }
 }

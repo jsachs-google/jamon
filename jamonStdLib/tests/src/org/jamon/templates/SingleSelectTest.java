@@ -1,18 +1,17 @@
-package org.jamon.integration;
+package org.jamon.templates;
 
-import test.jamon.SelectCaller;
+import org.jamon.stdlib.tests.SelectCaller;
 
 public class SingleSelectTest extends TestBase
 {
    public void testRender() throws Exception
    {
       new SelectCaller().render(getWriter());
-      assertEquals(
+      checkOutput(
          "<select name=\"name\" >\n" +
          "    <option value=\"_1\" selected>1</option>\n" +
          "    <option value=\"_2\">2</option>\n" +
-         "</select>",
-         getOutput());
+         "</select>");
    }
 
 
