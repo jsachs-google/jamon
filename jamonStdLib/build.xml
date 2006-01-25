@@ -114,6 +114,7 @@
 .cvsignore
 build
 build.properties
+${jarfile}
 </echo>
     <echo file="tests/.cvsignore">
 build
