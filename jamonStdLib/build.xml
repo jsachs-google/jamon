@@ -138,4 +138,40 @@ build
       <fileset dir="${classes.dir}" />
     </jar>
   </target>
+
+  <property name="org.jamon.stdlib.version" value="1.0"/>
+  <property name="jarfile.versioned"
+            value="jamon-stdlib-${org.jamon.stdlib.version}.jar"/>
+  <target name="bindist" depends="jar">
+    <copy file="${jarfile}" tofile="${jarfile.versioned}"/>
+  </target>
+
+  <target name="srcdist">
+    <tar tarfile="jamon-stdlib-${org.jamon.stdlib.version}-src.tgz" compression="gzip" >
+      <tarfileset dir="." prefix="jamon-stdlib-${org.jamon.stdlib.version}" >
+        <exclude name="${jarfile}"/>
+        <exclude name="${jarfile.versioned}"/>
+        <exclude name="*.tgz" />
+        <exclude name="*.jar" />
+        <exclude name="*.zip" />
+        <exclude name="**/.cvsignore" />
+        <exclude name="**/build" />
+        <exclude name="**/build/**" />
+      </tarfileset>
+    </tar>
+    <zip destfile="${zip.src}" >
+      <zipfileset dir="." prefix="${archive.base}" >
+        <exclude name="${jarfile}"/>
+        <exclude name="${jarfile.versioned}"/>
+        <exclude name="*.tgz" />
+        <exclude name="*.jar" />
+        <exclude name="*.zip" />
+        <exclude name="**/.cvsignore" />
+        <exclude name="**/build" />
+        <exclude name="**/build/**" />
+      </zipfileset>
+    </zip>
+  </target>
+
+  <target name="dist" depends="srcdist,bindist"/>
 </project>
