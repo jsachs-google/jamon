@@ -8,11 +8,11 @@
 
 <ul>
   <li>
-    2005-11-01: Jamon 2.0 release.
-    [changes]
+    2006-01-25: Jamon 2.0 release.
+    <a href='<& docRootUrl: "Changes13to20.html" &>'>[changes]</a>
   </li>
   <li>
-    2005-07-31: Jamon moves to <a href="">SourceForce</a>.
+    2005-07-31: Jamon moves to <a href="http://sourceforge.net/projects/jamon/">SourceForge</a>.
   </li>
   <li>
     2004-04-28: Jamon 1.3 released.
