@@ -22,8 +22,8 @@ the documentation thus taking care of issues such as escaping.
   <property name="overview.samples.dir" value="${samples.dir}/overview"/>
   <property name="classes.dir" value="${www.dir}/classes"/>
   <property name="java.lib.jamon" location="${jamon.dir}/jamon.jar"/>
-  <property name="java.lib.jamon.stdlib" location="${jamon.dir}/jamon-stdlib.jar"/>
   <property name="java.lib.jamon.anttask" location="${jamon.dir}/jamon-anttask.jar"/>
+  <property name="java.lib.jamon.stdlib" location="../jamonStdLib/jamon-stdlib.jar"/>
   <property name="java.lib.diff" value="/usr/local/share/java/diff.jar"/>
   <property name="invoker.class" value="org.jamon.InvokerTool" />
 
