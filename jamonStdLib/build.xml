@@ -118,7 +118,7 @@ ${jarfile}
 </echo>
     <echo file="tests/.cvsignore">
 build
-.cvsingore
+.cvsignore
 </echo>
   </target>
 
