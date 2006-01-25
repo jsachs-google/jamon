@@ -96,9 +96,6 @@ the documentation thus taking care of issues such as escaping.
     <taskdef name="invoker"
              classname="org.jamon.ant.InvokerTask"
              classpath="${java.lib.jamon}:${java.lib.jamon.stdlib}:${java.lib.jamon.anttask}" />
-    <condition property="org.jamon.invoker.compiler" value="jikes">
-      <equals arg1="${invoker.compiler}" arg2="jikes"/>
-    </condition>
     <condition property="org.jamon.invoker.compiler" value="javac">
       <not><equals arg1="${invoker.compiler}" arg2="jikes"/></not>
     </condition>

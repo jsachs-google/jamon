@@ -23,7 +23,7 @@ To become an expert in Jamon, work through the tutorial.
 
 -->
 
-<project name="Jamon documentation" default="build">
+<project name="Jamon documentation" default="run">
 
   <description> Builds the Jamon tutorial samples. </description>
 
@@ -55,9 +55,6 @@ To become an expert in Jamon, work through the tutorial.
     <taskdef name="invoker"
              classname="org.jamon.ant.InvokerTask"
              classpath="${java.lib.jamon}" />
-    <condition property="org.jamon.invoker.compiler" value="jikes">
-      <equals arg1="${invoker.compiler}" arg2="jikes"/>
-    </condition>
     <condition property="org.jamon.invoker.compiler" value="javac">
       <not><equals arg1="${invoker.compiler}" arg2="jikes"/></not>
     </condition>
