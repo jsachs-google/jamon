@@ -154,7 +154,13 @@ public class TemplateBuilder extends IncrementalProjectBuilder {
 		BuildVisitor() throws CoreException  {
 			m_templateDir = getNature().getTemplateSourceFolder();
 			m_source = new ResourceTemplateSource(m_templateDir);
-			m_describer = new TemplateDescriber(m_source, classLoader());
+            try {
+              m_describer = new TemplateDescriber(
+                m_source, classLoader(), EmitMode.STANDARD);
+            }
+            catch (IOException e) {
+              throw EclipseUtils.createCoreException(e);
+            }
 			m_outFolder = getNature().getTemplateOutputFolder();
 			m_changed = new HashSet<IPath>();
 		}
@@ -268,7 +274,7 @@ public class TemplateBuilder extends IncrementalProjectBuilder {
 		private byte[] generateImpl(TemplateUnit templateUnit, IFile file) throws CoreException {
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			try {
-				new ImplGenerator(baos, m_describer, templateUnit, EmitMode.STANDARD).generateSource();
+				new ImplGenerator(baos, m_describer, templateUnit).generateSource();
 			}
             catch (ParserErrors e) {
                 addMarkers(e);
