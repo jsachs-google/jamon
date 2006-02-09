@@ -16,7 +16,6 @@ public class TemplateResources
             .removeFirstSegments(
                 p_templateFolder.getFullPath().segmentCount())
             .removeFileExtension();
-        EclipseUtils.logInfo("translating Jamon template /" + m_path);
         m_proxy = p_outFolder.getFile(m_path.addFileExtension("java"));
         m_impl = p_outFolder.getFile(
             m_path.removeLastSegments(1)

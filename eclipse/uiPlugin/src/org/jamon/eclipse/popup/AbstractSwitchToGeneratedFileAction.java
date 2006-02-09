@@ -79,8 +79,5 @@ public abstract class AbstractSwitchToGeneratedFileAction
 
     public void selectionChanged(IAction p_action, ISelection p_selection)
     {
-        EclipseUtils.logInfo("selectionChanged for SwitchToImpl");
-        // TODO Auto-generated method stub
-
     }
 }

@@ -132,7 +132,6 @@ public class TemplateBuilder extends IncrementalProjectBuilder {
 		BuildVisitor visitor = new BuildVisitor();
 		delta.accept(visitor);
 		@SuppressWarnings("unchecked") Set<IPath> changed = visitor.getChanged();
-		EclipseUtils.logInfo("Changed templates are " + changed);
 		IFolder templateDir = getNature().getTemplateSourceFolder();
 		for (Iterator<IPath> i = changed.iterator(); i.hasNext(); )
         {
@@ -172,11 +171,9 @@ public class TemplateBuilder extends IncrementalProjectBuilder {
 		private List<URL> classpathUrlsForProject(IJavaProject p_project)
             throws CoreException
         {
-			EclipseUtils.logInfo("Computing classpath for project " + p_project.getProject().getName());
 			List<URL> urls = new ArrayList<URL>();
 			String[] entries = JavaRuntime.computeDefaultRuntimeClassPath(p_project);
 			for (int i = 0; i < entries.length; ++i) {
-				EclipseUtils.logInfo("Found entry " + entries[i]);
 				try {
 					urls.add(new File(entries[i]).toURL());
 				}
@@ -188,9 +185,6 @@ public class TemplateBuilder extends IncrementalProjectBuilder {
 			for (int i = 0; i < dependencies.length; ++i) {
 				if (dependencies[i].hasNature(JavaCore.NATURE_ID)) {
 					urls.addAll(classpathUrlsForProject((IJavaProject) dependencies[i].getNature(JavaCore.NATURE_ID)));
-				}
-				else {
-					EclipseUtils.logInfo("Skipping non-java referenced project " + dependencies[i].getName());
 				}
 			}
 			return urls;
