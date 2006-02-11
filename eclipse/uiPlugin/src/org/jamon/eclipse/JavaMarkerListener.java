@@ -55,6 +55,10 @@ public class JavaMarkerListener implements IResourceChangeListener
             {
                 return false;
             }
+            if (p_delta.getKind() == IResourceDelta.REMOVED)
+            {
+                return false;
+            }
             if (p_delta.getResource().getType() == IResource.FILE
                 && "java".equals(p_delta.getFullPath().getFileExtension()))
             {

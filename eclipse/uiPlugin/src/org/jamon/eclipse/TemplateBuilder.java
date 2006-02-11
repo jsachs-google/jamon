@@ -41,6 +41,7 @@ import org.jamon.JamonRuntimeException;
 import org.jamon.codegen.Analyzer;
 import org.jamon.codegen.ImplGenerator;
 import org.jamon.codegen.ProxyGenerator;
+import org.jamon.codegen.SourceGenerator;
 import org.jamon.codegen.TemplateDescriber;
 import org.jamon.codegen.TemplateUnit;
 import org.jamon.emit.EmitMode;
@@ -247,31 +248,17 @@ public class TemplateBuilder extends IncrementalProjectBuilder {
 			}
 		}
 
-		private byte[] generateProxy(TemplateUnit templateUnit, IFile file) throws CoreException {
+		private byte[] generateSource(
+          TemplateUnit templateUnit, IFile file, SourceGenerator sourceGenerator)
+          throws CoreException {
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			try {
-				new ProxyGenerator(baos, m_describer, templateUnit).generateClassSource();
-			}
-			catch (ParserErrors e)
-            {
-			    addMarkers(e);
-            }
-            catch (IOException e) {
-				throw EclipseUtils.createCoreException(e);
-			}
-			catch (JamonRuntimeException e) {
-				throw EclipseUtils.createCoreException(e);
-			}
-			return baos.toByteArray();
-		}
-
-		private byte[] generateImpl(TemplateUnit templateUnit, IFile file) throws CoreException {
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			try {
-				new ImplGenerator(baos, m_describer, templateUnit).generateSource();
+                sourceGenerator.generateSource(baos);
+                return baos.toByteArray();
 			}
             catch (ParserErrors e) {
                 addMarkers(e);
+                return null;
             }
             catch (IOException e) {
 				throw EclipseUtils.createCoreException(e);
@@ -279,7 +266,6 @@ public class TemplateBuilder extends IncrementalProjectBuilder {
 			catch (JamonRuntimeException e) {
 				throw EclipseUtils.createCoreException(e);
 			}
-			return baos.toByteArray();
 		}
 
         private TemplateResources makeResources(IResource p_resource)
@@ -296,10 +282,20 @@ public class TemplateBuilder extends IncrementalProjectBuilder {
             return null;
         }
 
-        private void createSourceFile(byte[] contents, IFile p_file) throws CoreException {
-            createParents(p_file.getParent());
-            p_file.create(new ByteArrayInputStream(contents), true, null);
-            // p_file.setReadOnly(true);
+        private void createSourceFile(byte[] contents, IFile p_file) throws CoreException
+        {
+            if (contents != null)
+            {
+                createParents(p_file.getParent());
+                p_file.create(new ByteArrayInputStream(contents), true, null);
+            }
+            else
+            {
+                if (p_file.exists())
+                {
+                    p_file.delete(true, false, null);
+                }
+            }
         }
 
 		public boolean visit(IResource p_resource) throws CoreException
@@ -316,9 +312,15 @@ public class TemplateBuilder extends IncrementalProjectBuilder {
                         path.toString(), templateUnit.getTemplateDependencies());
                     m_changed.add(path);
                     createSourceFile(
-                        generateProxy(templateUnit, resources.getTemplate()), resources.getProxy());
+                        generateSource(templateUnit,
+                                       resources.getTemplate(),
+                                       new ProxyGenerator(m_describer, templateUnit)),
+                        resources.getProxy());
                     createSourceFile(
-                        generateImpl(templateUnit, resources.getTemplate()), resources.getImpl());
+                        generateSource(templateUnit,
+                                       resources.getTemplate(),
+                                       new ImplGenerator(m_describer, templateUnit)),
+                        resources.getImpl());
                 }
             }
             return true;
