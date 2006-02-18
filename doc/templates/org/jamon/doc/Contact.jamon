@@ -6,6 +6,10 @@
 
 <h2>Mailing lists</h2>
 
+Please see the <a href="http://sourceforge.net/mail/?group_id=138569"
+>mailing list page at SourceForge</a>
+for more complete information.
+
 <ul>
     <&| _list: "announce" &>Announcements-only list.</&>
     <&| _list: "users" &>Questions, suggestions, problems.</&>
@@ -18,8 +22,8 @@
     String name;
   </%args>
 <li>
-  <a href="mailman/listinfo/jamon-<% name %>">jamon-<% name %></a>:
+  <a href="http://lists.sourceforge.net/mailman/listinfo/jamon-<% name %>">jamon-<% name %></a>:
   <& description &>
-  <a href="pipermail/jamon-<% name %>">[archives]</a>
+  <a href="http://sourceforge.net/mailarchive/forum.php?forum=jamon-<% name %>">[archives]</a>
 </li>
 </%def>
