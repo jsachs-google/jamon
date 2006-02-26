@@ -59,13 +59,6 @@
       </editor>
    </extension>
        <extension
-             id="javaMarker"
-             name="Java marker"
-             point="org.eclipse.core.resources.markers">
-          <super type="org.eclipse.core.resources.problemmarker"/>
-          <persistent value="true"/>
-       </extension>
-       <extension
              point="org.eclipse.ui.popupMenus">
           <viewerContribution
                 id="org.jamon.project.popup.switchToProxy"
@@ -90,5 +83,25 @@
                    label="Switch to Impl"
                    menubarPath="additions"/>
           </viewerContribution>
+       </extension>
+       <extension
+             id="javaMarker"
+             name="Java marker"
+             point="org.eclipse.core.resources.markers">
+          <super type="org.eclipse.core.resources.problemmarker"/>
+          <persistent value="true"/>
+       </extension>
+       <extension
+             id="parentMarker"
+             name="Parent Marker"
+             point="org.eclipse.core.resources.markers">
+          <super type="org.eclipse.core.resources.problemmarker"/>
+       </extension>
+       <extension
+             id="jamonMarker"
+             name="Jamon Marker"
+             point="org.eclipse.core.resources.markers">
+          <super type="org.jamon.project.parentMarker"/>
+          <persistent value="true"/>
        </extension>
 </plugin>

@@ -198,5 +198,5 @@ public class JavaMarkerListener implements IResourceChangeListener
 
     private final IFolder m_templateFolder, m_generatedSourcesFolder;
     private final String javaMarkerId =
-        JamonProjectPlugin.getDefault().pluginId() + ".javaMarker";
+        JamonProjectPlugin.getCopiedJavaMarkerType();
 }

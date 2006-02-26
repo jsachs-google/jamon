@@ -37,6 +37,18 @@ public class JamonProjectPlugin extends AbstractUIPlugin {
 		return plugin;
 	}
 
+    public static String getCopiedJavaMarkerType() {
+      return getDefault().pluginId() + ".javaMarker";
+    }
+
+    public static String getJamonMarkerType() {
+      return getDefault().pluginId() + ".jamonMarker";
+    }
+
+    public static String getParentMarkerType() {
+      return getDefault().pluginId() + ".parentMarker";
+    }
+
 	public void logInfo(String p_message) {
 		getLog().log(new Status(IStatus.INFO, pluginId(), 0, p_message, null));
 	}

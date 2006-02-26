@@ -91,6 +91,15 @@ public class TemplateBuilder extends IncrementalProjectBuilder {
 	@Override
     protected IProject[] build(int kind, Map args, IProgressMonitor monitor)
 			throws CoreException {
+	    if (kind == CLEAN_BUILD || kind == FULL_BUILD)
+        {
+	        EclipseUtils.logInfo("deleting all jamon parent markers");
+            getProject().deleteMarkers(
+                JamonProjectPlugin.getParentMarkerType(),
+                true,
+                IResource.DEPTH_INFINITE);
+        }
+
 		if (m_dependencies == null) {
 			loadDependencies();
 		}
@@ -223,7 +232,7 @@ public class TemplateBuilder extends IncrementalProjectBuilder {
         {
             EclipseUtils.populateProblemMarker(
                 ((ResourceTemplateLocation) e.getLocation().getTemplateLocation())
-                    .getFile().createMarker(IMarker.PROBLEM),
+                    .getFile().createMarker(JamonProjectPlugin.getJamonMarkerType()),
                 e.getLocation().getLine(),
                 e.getMessage(), IMarker.SEVERITY_ERROR);
 		}
@@ -237,7 +246,7 @@ public class TemplateBuilder extends IncrementalProjectBuilder {
         }
 
 		private TemplateUnit analyze(IPath path, IFile file) throws CoreException {
-			file.deleteMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE);
+			file.deleteMarkers(JamonProjectPlugin.getParentMarkerType(), true, IResource.DEPTH_ZERO);
 			try {
 				return new Analyzer(
                     "/" + StringUtils.filePathToTemplatePath(path.toString()),
