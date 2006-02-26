@@ -208,6 +208,14 @@ public class TemplateBuilder extends IncrementalProjectBuilder {
 			if (! p_container.exists()) {
 				createParents(p_container.getParent());
 				((IFolder) p_container).create(true, true, null);
+                if (getNature().getTemplateOutputFolder().equals(p_container)) {
+                  // If the template output folder doesn't exist (which might
+                  // be the case, for example, if a project is checked out from
+                  // source control), then Eclipse will mark this as a problem,
+                  // and not realize that it has been fixed unless we
+                  // explicitely revalidate the classpath.
+                  getNature().revalidateClasspath();
+                }
 			}
 		}
 

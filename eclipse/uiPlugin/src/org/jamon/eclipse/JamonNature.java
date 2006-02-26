@@ -147,6 +147,11 @@ public class JamonNature implements IProjectNature {
 		jp.setRawClasspath(e.toArray(new IClasspathEntry[e.size()]), null);
     }
 
+    public void revalidateClasspath() throws CoreException {
+      IJavaProject jp = getJavaProject();
+      jp.setRawClasspath(jp.getRawClasspath(), null);
+    }
+
 	private IJavaProject getJavaProject() throws CoreException {
 		return (IJavaProject) (getProject().getNature(JavaCore.NATURE_ID));
 	}
