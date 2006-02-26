@@ -34,9 +34,12 @@ public class MarkerUpdaterBuilder extends IncrementalProjectBuilder {
                 JamonNature.templateSourceFolder(getProject()),
                 JamonNature.templateOutputFolder(getProject()));
         }
+        // FIXME - addResourceChangeListener is idempotent, but not efficiently
+        // so.
         ResourcesPlugin.getWorkspace()
             .addResourceChangeListener(
                 m_javaMarkerListener, IResourceChangeEvent.POST_BUILD);
+
         return null;
 	}
 
