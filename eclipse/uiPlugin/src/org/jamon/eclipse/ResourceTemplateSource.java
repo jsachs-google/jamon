@@ -49,14 +49,15 @@ public class ResourceTemplateSource implements TemplateSource {
         return new ResourceTemplateLocation(resourceFor(p_templatePath));
     }
 
-    public Properties getProperties() throws IOException {
-        Properties properties = new Properties();
-        IFile resource = (IFile) m_templateFolder.findMember("jamon.properties");
+    public void loadProperties(String p_path, Properties p_properties)
+      throws IOException {
+        IFile resource = (IFile) m_templateFolder.findMember(
+            p_path + "/" + "jamon.properties");
         if (resource != null && resource.isAccessible()) {
           InputStream contents = null;
           try {
             contents = resource.getContents();
-            properties.load(contents);
+            p_properties.load(contents);
           }
           catch (CoreException e) {
               throw new IOException(e.getMessage());
@@ -67,7 +68,6 @@ public class ResourceTemplateSource implements TemplateSource {
               }
           }
         }
-        return properties;
     }
 
 

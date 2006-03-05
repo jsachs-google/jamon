@@ -44,7 +44,6 @@ import org.jamon.codegen.ProxyGenerator;
 import org.jamon.codegen.SourceGenerator;
 import org.jamon.codegen.TemplateDescriber;
 import org.jamon.codegen.TemplateUnit;
-import org.jamon.emit.EmitMode;
 import org.jamon.ParserError;
 import org.jamon.ParserErrors;
 import org.jamon.util.StringUtils;
@@ -163,13 +162,7 @@ public class TemplateBuilder extends IncrementalProjectBuilder {
 		BuildVisitor() throws CoreException  {
 			m_templateDir = getNature().getTemplateSourceFolder();
 			m_source = new ResourceTemplateSource(m_templateDir);
-            try {
-              m_describer = new TemplateDescriber(
-                m_source, classLoader(), EmitMode.STANDARD);
-            }
-            catch (IOException e) {
-              throw EclipseUtils.createCoreException(e);
-            }
+            m_describer = new TemplateDescriber(m_source, classLoader());
 			m_outFolder = getNature().getTemplateOutputFolder();
 			m_changed = new HashSet<IPath>();
 		}
