@@ -124,16 +124,14 @@
     <h4><a name="emitMode">Mode</a></h4>
 
     It is possible to restrict the allowable types that can appear in
-    emit directives by supplying the appropriate attribute in the <a
-    href="JamonTask.html">JamonTask</a> definition, and also in the
-    corresponding attribute in the <a
-    href="javadoc/org/jamon/RecompilingTemplateManager.html"
-    >RecompilingTemplateManager</a>. The following levels are available:
+    emit directives by assigning a value to the <code>org.jamon.emitMode</code>
+    in the <a href="#jamonProperties">jamon.properties<a> file.  The following
+    values are allowed:
 
     <ul>
-      <li><b>Standard</b> - all types allowed
-      <li><b>Limited</b> - Strings, primitives, and boxed primitives
-      <li><b>Strict</b> - Strings only
+      <li><b>standard</b> - all types allowed
+      <li><b>limited</b> - Strings, primitives, and boxed primitives
+      <li><b>strict</b> - Strings only
     </ul>
 
     An attempt to emit a disallowed type will result in a Java
@@ -549,6 +547,62 @@ Today's temperature is
       "/templates/org/jamon/doc/reference/paramFragExample" &>
     produces
     <pre class="tty"><&| escape//Html &><& reference/paramFragExample &></&></pre>
+
+  <li><span class="concept">Context</span>
+    In addition to explicit arguments, a special variable called
+    <code>jamonContext</code> can optionally be passed around between some or
+    all templates in a project.  To do this, first assign a value to the
+    <code>org.jamon.contextType</code> property via a
+    <a href="#jamonProperties">jamon.properties<a> file; this value should be a
+    java type, or the empty string to have no jamonContext.  All templates with
+    a jamonContext will have a <code>setJamonContext</code> method on their
+    proxies, and a variable named <code>jamonContext</code> will be visible in
+    the template.  It is an error to try calling a template that expects context
+    from one that does not have a context object.  If a template inherits from
+    another template which has a context variable, the child template will
+    automatically have a context variable of the same type, regardless of what
+    settings are specified via jamon.properties.
+
+    <p>
+    For example, to supply the protocol to use for image urls, one might include
+    in <a href="#jamonProperties">jamon.properties<a> the line:
+   	<pre class="properties">
+org.jamon.jamonContext=String
+</pre>
+    and then have a template image.jamon contain
+   <&| _Template &><%LITERAL>
+<%args>String path;</%args>
+<img href="<% jamonContext %>://www.somehost.org/<% path %>"/>
+</%LITERAL></&>
+
+  Since in general, one can expect to have more than one piece of data needed in
+  context, it is advised that the type chosen for jamonContext be a user-defined
+  java bean that can be extended with additional properties as needed.  Third
+  party libraries wishing to take advantage of context should chose an interface
+  for their context type, so that clients of the library can implement that
+  interface, and still provide any additional context information they might
+  need.
+
+  <li><a name="jamonProperties"><span class="concept">jamon.properties</span></a>
+  Certain options in template processing are expressed by properties files.
+  If a file called "jamon.properties" is present in the template directory, or
+  one of it's subdirectories, then all jamon templates within that directory and
+  its subdirectories will be processed according to the properties set.  If a
+  descendant subdirectory also contains a jamon.properties file, then properties
+  set there will override properties set above.
+
+  <p>
+
+  Currently, there are two properties jamon knows about:
+  <ul>
+	  <li><b>org.jamon.emitMode</b> - can be one of <code>standard</code>,
+	  <code>limited</code> or <code>strict</code>.  See the section on
+	  <a href="emitMode">Emit Modes</a> for more information.
+	  <li><b>org.jamon.contextType</b> - sets the type for the jamon context
+	  variable; if this property is the empty string, then there is no context
+	  variable.  See the section on <a href="#jamonContext">Context</a> for more
+	  information.
+  </ul>
 
   <li><span class="concept">Generics</span>
     Templates can have parameterized types, otherwise known as
