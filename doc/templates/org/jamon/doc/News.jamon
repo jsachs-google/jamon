@@ -8,7 +8,11 @@
 
 <ul>
   <li>
-    2006-01-25: Jamon 2.0 release.
+    2006-03-22: Jamon 2.1 released.
+    <a href='<& docRootUrl: "Changes20to21.html" &>'>[changes]</a>
+  </li>
+  <li>
+    2006-01-25: Jamon 2.0 released.
     <a href='<& docRootUrl: "Changes13to20.html" &>'>[changes]</a>
   </li>
   <li>
