@@ -153,6 +153,11 @@ pre
   background-color: #efffdf
 }
 
+pre.properties
+{
+  background-color: #ffdfff
+}
+
 .incompatible
 {
   color: #ff0000;
