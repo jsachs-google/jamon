@@ -20,12 +20,12 @@ file</a>.
 
 <li>
 Create a Jamon template
-<a href="HelloTemplate.jamon" class="file">HelloTemplate.jamon</a>:
+<& _FileLink: "HelloTemplate.jamon" &>:
 <& ../_TemplateInclude: "/sample/tutorial/templates/HelloTemplate" &>
 
 
 <li>
-Create a java file <a class="file" href="HelloTut1.java">HelloTut1.java</a>:
+Create a java file <& _FileLink: "HelloTut1.java" &>:
 <& ../_JavaInclude: "/sample/tutorial/src/HelloTut1" &>
 The code then calls the
 <code>render()</code> method on the template, providing a

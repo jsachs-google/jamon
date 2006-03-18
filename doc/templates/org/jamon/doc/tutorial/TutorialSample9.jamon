@@ -25,8 +25,7 @@ Then, where the parent template wants to include the output of a derived, or chi
 <pre class="template"> <code>&lt;&amp;* CHILD &amp;></code></pre>
 
 <p>
-For example, the template <a href="InheritanceParent.jamon" class="file">
-<code>InheritanceParent</code></a>, shown below, declares the
+For example, the template <& _FileLink: "InheritanceParent.jamon" &>, shown below, declares the
 <code>&lt;&amp; *CHILD &amp;></code> where it wants to include the
 child template's output. The parent template takes care of the
 HTML header as well as the page's header banner while the child
@@ -43,15 +42,13 @@ If the parent template is in a different directory, then the <code>extends</code
 <code>&lt;%extends ../InheritanceParent></code>
 </pre>
 The example template below,
-<a href="InheritanceChild.jamon" class="file">
-<code>InheritanceChild</code></a> extends <code>InheritanceTemplate</code>
+<& _FileLink: "InheritanceChild.jamon" &> extends <code>InheritanceTemplate</code>
 and provides subject text that is included in the output of the parent template.
 
     <& ../_TemplateInclude: "/sample/tutorial/templates/InheritanceChild" &>
 
 This template would be invoked from Java with the class
-<a href="InheritanceSimpleTut9.java" class="file">
-InheritanceSimpleTut9.java</a>
+<& _FileLink: "InheritanceSimpleTut9.java" &>
     <& ../_JavaInclude: "/sample/tutorial/src/InheritanceSimpleTut9" &>
 
 The output from the template is
@@ -69,8 +66,7 @@ They can be made visible to code in the child
       ... <code>&lt;/%xargs&gt;</code> blocks.
 <p>
 For example, consider the parent template
-<a href="InheritanceParentWArgs.jamon" class="file">
-<code>InheritanceParentWArgs</code></a>. It defines arguments
+<& _FileLink: "InheritanceParentWArgs.jamon" &>. It defines arguments
 <code>userAccount</code> and <code>title</code>.
 
     <& ../_TemplateInclude: "/sample/tutorial/templates/InheritanceParentWArgs" &>
@@ -92,8 +88,7 @@ specified in the parent class. Also note, however, that any
 the child template.
 <p>
 A complete example of a child template,
-<a href="InheritanceChildWArgs.jamon" class="file">
-<code>InheritanceChildWArgs</code></a>, is below.
+<& _FileLink: "InheritanceChildWArgs.jamon" &>, is below.
 
     <& ../_TemplateInclude: "/sample/tutorial/templates/InheritanceChildWArgs" &>
 
@@ -121,7 +116,7 @@ while the specific processing of the child templates can be handled in
 separate Java classes.
 
 <p>
-The class <a href="User.java" class="file"><code>User</code></a> implements
+The class <& _FileLink: "User.java" &> implements
 invoking the child template through the second approach described above.
 
 <& ../_JavaInclude: "/sample/tutorial/src/User" &>

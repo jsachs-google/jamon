@@ -94,14 +94,12 @@ values to the template arguments.</div>
 <ol>
 <li>
 Create a Jamon template
- <a href="AccountSummaryTemplate.jamon" type="text/plain" class="file">
-AccountSummaryTemplate.jamon</a>:
+ <& _FileLink: "AccountSummaryTemplate.jamon" &>:
 <& ../_TemplateInclude: "/sample/tutorial/templates/AccountSummaryTemplate" &>
 
 
 <li> Write a java class to call the template:
-<a class="file" href="AccountSummaryTut3.java" type="text/plain" >
-AccountSummaryTut3.java</a>:
+<& _FileLink: "AccountSummaryTut3.java" &>:
 <& ../_JavaInclude: "/sample/tutorial/src/AccountSummaryTut3" &>
 
 <li> Set the classpath, process the template, compile, and run the program:

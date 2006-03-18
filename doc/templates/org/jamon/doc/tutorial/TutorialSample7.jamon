@@ -36,8 +36,7 @@ same file or other top level templates.
 <h3>An Example</h3>
 <ol>
   <li>
-    The template <a href="SubtemplateTemplate.jamon" class="file">
-    <code>SubtemplateTemplate</code></a>, shown below, uses two
+    The template <& _FileLink: "SubtemplateTemplate.jamon" &>, shown below, uses two
     subtemplates to help format a table of user account information.
     The top level template builds a table with a row for each entry
     in an array of names provided as an argument to the top level
@@ -51,7 +50,7 @@ same file or other top level templates.
 
   <li>
     This template is called from the Java class
-     <a class="file" href="SubtemplateTut7.java">SubtemplateTut7.java</a>:
+     <& _FileLink: "SubtemplateTut7.java" &>:
      <& ../_JavaInclude: "/sample/tutorial/src/SubtemplateTut7" &>
   </li>
 

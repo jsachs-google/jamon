@@ -6,7 +6,7 @@
 <%override tutorialName>Template Inheritance: Overriding Inherited Methods/Subtemplates</%override>
 
 As explained in the section on
-<a href="TutorialSample7.html">subtemplates</a>, a subtemplate can
+<& _FileLink: "TutorialSample7.html"&>, a subtemplate can
 either be <em>private</em> or <em>protected</em>. Subtemplates defined
 with the <code>&lt;%def <var>subTempName</var>></code> ... <code>&lt;/%def></code> tag are
 <em>private</em> and can be accessed <strong>only</strong> within the
@@ -23,8 +23,7 @@ simply invokes it like any other subtemplate
 Usually, however, it is the parent template that invokes the subtemplate,
 and the parent makes the template protected so that the child can
 override it. For example, the template
-<a href="InheritanceParentProtected.jamon" class="file">
-InheritanceParentProtected</a> declares a <code>title</code> subtemplate
+<& _FileLink: "InheritanceParentProtected.jamon" &> declares a <code>title</code> subtemplate
 for the expressed purpose of allowing the child template to
 override the subtemplate in order to replace the title.
 
@@ -53,18 +52,15 @@ only the names of the arguments are listed within the
 because the types of the arguments are declared in the parent template's
 definition.
 <p>
-The template <a href="InheritanceChildProtected.jamon" class="file">
-InheritanceChildProtected</a>, below, extends
-<a href="InheritanceParentProtected.jamon" class="file">
-InheritanceParentProtected</a> and overrides the subtemplate
+The template <& _FileLink: "InheritanceChildProtected.jamon" &>, below, extends
+<& _FileLink: "InheritanceParentProtected.jamon" &> and overrides the subtemplate
 <code>title</code>. By overriding the <code>title</code> method
 <code>InheritanceChildProtected</code> replaces the title that the
 parent template generates.
 
 <& ../_TemplateInclude: "/sample/tutorial/templates/InheritanceChildProtected" &>
 
-<p>The class <a href="User2.java" class="file">
-User2.java</a> takes advantage of the fact that the
+<p>The class <& _FileLink: "User2.java" &> takes advantage of the fact that the
 <code>InheritanceParentProtected</code> supports inheritance by
 delegating the choice of which derived template to invoke to a
 separate method and then simply calling the <code>render()</code>

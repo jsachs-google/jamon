@@ -81,14 +81,12 @@ Templates usually construct text in a structured language such as HTML or XML, o
     <h4>Example</h4>
 
     Suppose the template
-     <a href="EscapingTemplateA.jamon" class="file"
-        type="text/plain" ><code>EscapingTemplateA</code></a> contains
+     <& _FileLink: "EscapingTemplateA.jamon" &> contains
     <& ../_TemplateInclude: "/sample/tutorial/templates/EscapingTemplateA" &>
 
 <p>
 If this template is called by the java code
-<a class="file" href="EscapingTut4a.java" type="text/plain" >
-EscapingTut4a.java</a>:
+<& _FileLink: "EscapingTut4a.java" &>:
 <& ../_JavaInclude: "/sample/tutorial/src/EscapingTut4a" &>
 
 Then the output of the template's <code>render</code> method will be
@@ -96,14 +94,12 @@ Then the output of the template's <code>render</code> method will be
 
 <p>
 In contrast, if the template
-     <a href="EscapingTemplateB.jamon" class="file"
-        type="text/plain" ><code>EscapingTemplateB</code></a> containing
+     <& _FileLink: "EscapingTemplateB.jamon" &> containing
     <& ../_TemplateInclude: "/sample/tutorial/templates/EscapingTemplateB" &>
 
 <p>
 is called by the java code
-<a class="file" href="EscapingTut4b.java"
-   type="text/plain">EscapingTut4b.java</a>:
+<& _FileLink:  "EscapingTut4b.java" &>:
 <& ../_JavaInclude: "/sample/tutorial/src/EscapingTut4b" &>
 
 Then the output of the template's <code>render</code> method will be

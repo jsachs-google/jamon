@@ -111,11 +111,11 @@ Note: Around here, the weather is always one of:
 <ol>
 <li>
 Putting this all together in a Jamon template produces
- <a href="TimeAndTempTemplate.jamon" class="file">TimeAndTempTemplate.jamon</a>:
+ <& _FileLink: "TimeAndTempTemplate.jamon" &>:
 <& ../_TemplateInclude: "/sample/tutorial/templates/TimeAndTempTemplate" &>
 
 <li> To call the template, create a java class such as:
-<a class="file" href="TimeAndTempTut2.java">TimeAndTempTut2.java</a>:
+<& _FileLink: "TimeAndTempTut2.java" &>:
 <& ../_JavaInclude: "/sample/tutorial/src/TimeAndTempTut2" &>
 
 <li>

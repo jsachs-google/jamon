@@ -17,8 +17,7 @@ arg1 = ... &amp;></code></nobr>, up to the closing tag,
 <code>&lt;/&amp;></code>, is considered the fragment argument.
 <p>
 In this example,
-<a href="FragmentCallerTemplate.jamon" class="file">
-     <code>FragmentCallerTemplate</code></a>,
+<& _FileLink: "FragmentCallerTemplate.jamon" &>,
     <& ../_TemplateInclude: "/sample/tutorial/templates/FragmentCallerTemplate" &>
 
 the block of HTML text "<code>Account information for &lt;% userName %></code>"
@@ -64,8 +63,7 @@ the <code>&lt;%frag <em>fragmentName</em>/&gt;</code> tag. The
 fragment template. The template that accepts the fragment
 calls the fragment as it would any other template to output its contents.
 <p>
-The template below, <a href="LiRef.jamon" class="file">
-     <code>LiRef</code></a>, is a more elaborate version of the
+The template below, <& _FileLink: "LiRef.jamon" &>, is a more elaborate version of the
 subtemplate in the above example.
     <& ../_TemplateInclude: "/sample/tutorial/templates/LiRef" &>
 
@@ -115,8 +113,8 @@ Thus
 
     <& ../_TemplateInclude: "/sample/tutorial/templates/AlternatingList" &>
 
-This template, <a href="AlternatingList.jamon" >
-AltneratingList</a>, loops through all the objects that were passed to
+This template, <& _FileLink: "AlternatingList.jamon" &>, 
+loops through all the objects that were passed to
 it by the <nobr><code>items Iterator</code></nobr>,
 and assigns each one in turn to the fragment parameter
 <code>renderable</code> when it calls the template fragment.
@@ -127,11 +125,10 @@ to fill in each row.
 <p>
 <li><span class="concept">A Template Fragment Example</span>
 
-The template <a href="FragmentExampleTemplate.jamon" class = "file">
-<code>FragmentExampleTemplate</code></a>, below, produces a table listing
-the name and date of the holidays recognized by the template author.
-The template formats the row it would like to see for each line of
-output, and then passes this fragment of Jamon text to the
+The template <& _FileLink: "FragmentExampleTemplate.jamon" &>, below, 
+produces a table listing the name and date of the holidays recognized by the 
+template author. The template formats the row it would like to see for each 
+line of output, and then passes this fragment of Jamon text to the
 <code>AlternatingList</code> template to format into a
 table with alternating background colors.
 <p>
@@ -140,7 +137,7 @@ table with alternating background colors.
 
 <p>
 The example template is executed by the
-<a href="Holiday.java" class="file"> <code>Holiday</code></a> Java class.
+<& _FileLink: "Holiday.java" &> Java class.
 <& ../_JavaInclude: "/sample/tutorial/src/Holiday" &>
 <p>
 The output from the template is
