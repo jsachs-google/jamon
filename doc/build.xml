@@ -254,6 +254,9 @@ the documentation thus taking care of issues such as escaping.
     <antcall target="grind">
       <param name="template" value="tutorial/TutorialSample10" />
     </antcall>
+    <antcall target="grind">
+      <param name="template" value="tutorial/TutorialSample11" />
+    </antcall>
   </target>
 
   <target name="war" depends="doc">
