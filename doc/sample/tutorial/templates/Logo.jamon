@@ -1,0 +1,1 @@
+<img href="http<%if jamonContext.isSecure() %>s</%if>://logo.jpg"/>

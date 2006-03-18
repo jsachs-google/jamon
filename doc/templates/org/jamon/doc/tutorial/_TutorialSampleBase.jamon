@@ -27,7 +27,7 @@
   <%args>
     int index;
   </%args>
-  <%if index >= 1 && index <= 10 %>
+  <%if index >= 1 && index <= 11 %>
     <a href="TutorialSample<% index %>.html"><& name &></a>
   <%else>
     &nbsp;

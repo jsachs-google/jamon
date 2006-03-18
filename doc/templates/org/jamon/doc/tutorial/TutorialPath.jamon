@@ -1,11 +1,11 @@
 <%extends _TutorialBase>
-<%override title>Ten Step Tutorial</%override>
+<%override title>Tutorial</%override>
 
-<h2>Ten Step Tutorial</h2>
+<h2>Tutorial</h2>
 
-    <h3>Ten Jamon Programming Examples</h3>
+    <h3>Jamon Programming Examples</h3>
 
-    This sequence shows ten examples of using Jamon to display
+    This sequence shows examples of using Jamon to display
 progressively more complex content. The first example, of course, is a
 template that displays "Hello world!" By the end of the tutorial
 sequence, you will know how to use advanced Jamon features such as
@@ -45,5 +45,8 @@ yourself!  <p>
       </li>
       <li>
         <a href="TutorialSample10.html">Template inheritance - inheriting subtemplates</a>
+      </li>
+      <li>
+        <a href="TutorialSample11.html">Jamon Context - providing data to all templates at once</a>
       </li>
     </ol>

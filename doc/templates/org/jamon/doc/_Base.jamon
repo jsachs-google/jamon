@@ -106,7 +106,7 @@
     public static Section ABOUT = new Section("About");
 
     public static Section DOC_OVERVIEW = new Section("Overview");
-    public static Section DOC_TUTORIAL = new Section("10 Step Tutorial");
+    public static Section DOC_TUTORIAL = new Section("Tutorial");
     public static Section DOC_GENERATED = new Section("Generated classes");
     public static Section DOC_USERGUIDE = new Section("User's Guide");
     public static Section DOC_PROJECTS = new Section("Ant integration");
