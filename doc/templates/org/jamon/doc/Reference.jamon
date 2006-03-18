@@ -567,7 +567,7 @@ Today's temperature is
     For example, to supply the protocol to use for image urls, one might include
     in <a href="#jamonProperties">jamon.properties<a> the line:
    	<pre class="properties">
-org.jamon.jamonContext=String
+org.jamon.contextType=String
 </pre>
     and then have a template image.jamon contain
    <&| _Template &><%LITERAL>
