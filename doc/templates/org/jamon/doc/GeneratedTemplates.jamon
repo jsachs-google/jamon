@@ -35,6 +35,11 @@ template sources:
     Optional arguments in the template
     generate <code>setXXX</code> methods in the class.
   </li>
+  <li>
+    If a value for the <code>org.jamon.contextType</code> property has been set via
+    <a href="Reference.html#jamonProperties"><code>jamon.properties</code></a>,
+    then there is a <code>setJamonContext</code> method in the class.
+  </li>
 </ul>
 
 For example, suppose there is a template <code>MyTemplate</code> in the
@@ -42,14 +47,19 @@ directory <code>tmpls/org/foo</code>, the template source directory is
 set to <code>tmpls</code>, and <code>MyTemplate</code> contains the
 declarations
 
-<pre class="jamon""><&| /org/jamon/escape/Html &><%LITERAL><%args>
+<pre class="jamon"><&| /org/jamon/escape/Html &><%LITERAL><%args>
   int i;
   String s = "yes";
   java.math.BigDecimal someNumber = null;
   boolean b;
 </%args></%LITERAL></&></pre>
 
-A simplified sketch (showing only the pertinent public methods) of the
+Suppose further that in <code>tmpls</code> is a <code>jamon.properties</code> file containing
+<pre class="properties">
+org.jamon.contextType=org.foo.MyContext
+</pre>
+
+Then a simplified sketch (showing only the pertinent public methods) of the
 generated class would be:
 
 <pre class="java"><&| /org/jamon/escape/Html &>\
@@ -73,6 +83,8 @@ generated class would be:
     public MyTemplate setS(String s) { ... }
 
     public MyTemplate setSomeNumber(java.math.BigDecimal someNumber) { ... }
+    
+    public MyTemplate setJamonContext(org.foo.MyContext jamonContext() { ... }
   }</&></pre>
 
 If one template inherits from another, then:
@@ -110,6 +122,12 @@ If one template inherits from another, then:
         <code>setXXX</code> methods for each of the parent template's
         optional arguments (including any optional arguments for the
         parent template's ancestors, if any).
+      </li>
+      
+      <li>
+        If a <a href="Reference.html#jamonProperties"><code>jamon.properties</code></a> file has
+        declared a value for <code>org.jamon.contextType</code>, then there will be a 
+        <code>setJamonContext</code> method.
       </li>
 
       <li>
@@ -158,7 +176,9 @@ something like:
 
     public abstract class ParentRenderer
     {
-      public ParentTemplate setS(String s) { ... }
+      public ParentRenderer setS(String s) { ... }
+      
+      public ParentRenderer setJamonContext(org.foo.MyContext jamonContext) { ... }
 
       public void render(java.io.Writer writer, int i, Integer count)
         throws java.io.IOException { ... }
@@ -198,7 +218,9 @@ something like:
       throws java.io.IOException { ... }
 
     public ChildTemplate setAmount(java.math.BigDecimal amount) { ... }
-
+    
+    public ChildTemplate setJamonContext(org.foo.MyContext jamonContext) { ... }
+    
     public ParentTemplate.ParentRenderer makeParentRenderer(long t, double x)
       throws java.io.IOException { ... }
   }</&></pre>
