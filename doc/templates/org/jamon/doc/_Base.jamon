@@ -86,8 +86,25 @@
 
 <%class>
 
-  protected static class Section
+  protected static enum Section
   {
+	HOME("Home"),
+	NEWS("News"),
+	FEATURES("Features"),
+	DOWNLOAD("Download"),
+	CONTACT("Contact"),
+	ABOUT("About"),
+	
+	DOC_OVERVIEW("Overview"),
+	DOC_TUTORIAL("10 Step Tutorial"),
+	DOC_GENERATED("Generated classes"),
+	DOC_USERGUIDE("User's Guide"),
+	DOC_PROJECTS("Ant integration"),
+	DOC_JAMONTASK("JamonTask"),
+	DOC_INVOKERTASK("InvokerTask"),
+	DOC_SERVLETS("Servlet integration"),
+	DOC_REFERENCE("Reference manual");
+
     private Section(String p_name)
     {
       m_name = p_name;
@@ -97,23 +114,6 @@
     {
       return m_name;
     }
-
-    public static Section HOME = new Section("Home");
-    public static Section NEWS = new Section("News");
-    public static Section FEATURES = new Section("Features");
-    public static Section DOWNLOAD = new Section("Download");
-    public static Section CONTACT = new Section("Contact");
-    public static Section ABOUT = new Section("About");
-
-    public static Section DOC_OVERVIEW = new Section("Overview");
-    public static Section DOC_TUTORIAL = new Section("Tutorial");
-    public static Section DOC_GENERATED = new Section("Generated classes");
-    public static Section DOC_USERGUIDE = new Section("User's Guide");
-    public static Section DOC_PROJECTS = new Section("Ant integration");
-    public static Section DOC_JAMONTASK = new Section("JamonTask");
-    public static Section DOC_INVOKERTASK = new Section("InvokerTask");
-    public static Section DOC_SERVLETS = new Section("Servlet integration");
-    public static Section DOC_REFERENCE = new Section("Reference manual");
 
     private final String m_name;
   }
