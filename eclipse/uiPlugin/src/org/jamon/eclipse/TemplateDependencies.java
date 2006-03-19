@@ -53,7 +53,7 @@ public class TemplateDependencies {
 	
 	public Collection<String> getDependenciesOf(String p_callee) {
 		Collection<String> deps = m_dependenciesOf.get(p_callee);
-		return deps == null ? Collections.EMPTY_SET : deps;
+		return deps == null ? Collections.<String>emptySet() : deps;
 	}
 	
 	public TemplateDependencies(InputStream p_in) throws IOException {
