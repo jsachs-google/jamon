@@ -96,12 +96,25 @@ public class JavaMarkerListener implements IResourceChangeListener
             if (p_marker.isSubtypeOf(IMarker.PROBLEM))
             {
                 String message = p_marker.getAttribute(IMarker.MESSAGE, null);
+
+                // We place all imports in both the proxy and impl; in general, 
+                // the proxy will not need many of these.
                 if (!p_generatedResource.isImpl()
                     && message.startsWith("The import ")
                     && message.endsWith(" is never used"))
                 {
                     return;
                 }
+                
+                // It's not uncommon to have an empty method definition in a 
+                // parent; since there are no statements, it cannot throw an 
+                // IOException, but children might.  Eclipse is notsmart enough
+                // to not warn about this.
+                if (message.startsWith(
+                  "The declared exception IOException is not actually thrown by the method __jamon_innerUnit__")) {
+                  return;
+                }
+                
                 if (message != null && message.length() > 0)
                 {
                     EclipseUtils.populateProblemMarker(
