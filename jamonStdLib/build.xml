@@ -139,7 +139,7 @@ build
     </jar>
   </target>
 
-  <property name="org.jamon.stdlib.version" value="2.0"/>
+  <property name="org.jamon.stdlib.version" value="2.1"/>
   <property name="jarfile.versioned"
             value="jamon-stdlib-${org.jamon.stdlib.version}.jar"/>
   <target name="bindist" depends="jar">
