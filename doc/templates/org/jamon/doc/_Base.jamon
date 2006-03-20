@@ -96,7 +96,7 @@
 	ABOUT("About"),
 	
 	DOC_OVERVIEW("Overview"),
-	DOC_TUTORIAL("10 Step Tutorial"),
+	DOC_TUTORIAL("Tutorial"),
 	DOC_GENERATED("Generated classes"),
 	DOC_USERGUIDE("User's Guide"),
 	DOC_PROJECTS("Ant integration"),
