@@ -7,7 +7,7 @@
 </&>
 
 <&| change &>
-  Jamon templates may optionaly have a context variable which is passed from
+  Jamon templates may optionally have a context variable which is passed from
   template to template.
 </&>
 
