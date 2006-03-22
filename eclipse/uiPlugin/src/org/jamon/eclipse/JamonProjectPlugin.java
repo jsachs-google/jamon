@@ -37,8 +37,12 @@ public class JamonProjectPlugin extends AbstractUIPlugin {
 		return plugin;
 	}
 
-    public static String getCopiedJavaMarkerType() {
-      return getDefault().pluginId() + ".javaMarker";
+    public static String getProxyMarkerType() {
+      return getDefault().pluginId() + ".proxyMarker";
+    }
+
+    public static String getImplMarkerType() {
+      return getDefault().pluginId() + ".implMarker";
     }
 
     public static String getJamonMarkerType() {

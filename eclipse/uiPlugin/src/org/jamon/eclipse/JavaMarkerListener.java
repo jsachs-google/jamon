@@ -66,11 +66,10 @@ public class JavaMarkerListener implements IResourceChangeListener
                     new GeneratedResource((IFile) p_delta.getResource());
                 IMarkerDelta[] markerDeltas = p_delta.getMarkerDeltas();
 
-                if (markerDeltas.length > 0)
-                {
-                    generatedResource.getTemplateFile().deleteMarkers(
-                        javaMarkerId, true, IResource.DEPTH_ZERO);
-                }
+                String markerType = 
+                  generatedResource.isImpl() ? implMarkerId : proxyMarkerId;
+                generatedResource.getTemplateFile().deleteMarkers(
+                    markerType, true, IResource.DEPTH_ZERO);
 
                 for (IMarkerDelta markerDelta : markerDeltas)
                 {
@@ -80,7 +79,7 @@ public class JavaMarkerListener implements IResourceChangeListener
                     case IResourceDelta.CHANGED:
                     {
                         IMarker marker = markerDelta.getMarker();
-                        copyMarker(generatedResource, marker);
+                        copyMarker(generatedResource, marker, markerType);
                         marker.delete();
                     }
                     break;
@@ -91,7 +90,8 @@ public class JavaMarkerListener implements IResourceChangeListener
         }
 
         private void copyMarker(GeneratedResource p_generatedResource,
-                                IMarker p_marker) throws CoreException
+                                  IMarker p_marker, 
+                                  String p_markerType) throws CoreException
         {
             if (p_marker.isSubtypeOf(IMarker.PROBLEM))
             {
@@ -120,7 +120,7 @@ public class JavaMarkerListener implements IResourceChangeListener
                     EclipseUtils.populateProblemMarker(
                         p_generatedResource
                             .getTemplateFile()
-                            .createMarker(javaMarkerId),
+                            .createMarker(p_markerType),
                         p_generatedResource.getTemplateLineNumber(
                             p_marker.getAttribute(IMarker.LINE_NUMBER, 1)),
                         (p_generatedResource.isImpl() ? "Impl: " : "Proxy: ")
@@ -210,6 +210,6 @@ public class JavaMarkerListener implements IResourceChangeListener
     }
 
     private final IFolder m_templateFolder, m_generatedSourcesFolder;
-    private final String javaMarkerId =
-        JamonProjectPlugin.getCopiedJavaMarkerType();
+    private final String proxyMarkerId = JamonProjectPlugin.getProxyMarkerType();
+    private final String implMarkerId = JamonProjectPlugin.getImplMarkerType();
 }
