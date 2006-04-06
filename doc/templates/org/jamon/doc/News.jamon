@@ -7,6 +7,7 @@
 <h2>News</h2>
 
 <ul>
+  <li>2006-04-02: Jamon moved to from CVS to Subversion</li>
   <li>
     2006-03-19: Jamon 2.1 released.
     <a href='<& docRootUrl: "Changes20to21.html" &>'>[changes]</a>
