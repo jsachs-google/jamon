@@ -19,9 +19,6 @@
  */
 package org.jamon.eclipse;
 
-import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -33,14 +30,12 @@ import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IPath;
 
 public class JavaMarkerListener implements IResourceChangeListener
 {
     public JavaMarkerListener(final IFolder p_templateFolder,
-                              final IFolder p_generatedSourcesFolder)
+                               final IFolder p_generatedSourcesFolder)
     {
-        m_templateFolder = p_templateFolder;
         m_generatedSourcesFolder = p_generatedSourcesFolder;
     }
 
@@ -62,11 +57,11 @@ public class JavaMarkerListener implements IResourceChangeListener
             if (p_delta.getResource().getType() == IResource.FILE
                 && "java".equals(p_delta.getFullPath().getFileExtension()))
             {
-                GeneratedResource generatedResource =
-                    new GeneratedResource((IFile) p_delta.getResource());
+                GeneratedResource generatedResource = new GeneratedResource(
+                  (IFile) p_delta.getResource());
                 IMarkerDelta[] markerDeltas = p_delta.getMarkerDeltas();
 
-                String markerType = 
+                String markerType =
                   generatedResource.isImpl() ? implMarkerId : proxyMarkerId;
                 generatedResource.getTemplateFile().deleteMarkers(
                     markerType, true, IResource.DEPTH_ZERO);
@@ -89,7 +84,7 @@ public class JavaMarkerListener implements IResourceChangeListener
         }
 
         private void copyMarker(GeneratedResource p_generatedResource,
-                                  IMarker p_marker, 
+                                  IMarker p_marker,
                                   String p_markerType) throws CoreException
         {
             if (p_marker.isSubtypeOf(IMarker.PROBLEM))
@@ -116,85 +111,21 @@ public class JavaMarkerListener implements IResourceChangeListener
         }
 
         private boolean isMarkerIOExceptionNotThrownWarning(String message) {
-          // It's not uncommon to have an empty method definition in a 
-          // parent; since there are no statements, it cannot throw an 
+          // It's not uncommon to have an empty method definition in a
+          // parent; since there are no statements, it cannot throw an
           // IOException, but children might.  Eclipse is not smart enough
           // to not warn about this.
           return message.startsWith(
             "The declared exception IOException is not actually thrown by the method __jamon_innerUnit__");
         }
 
-        
+
         private boolean isMarkerProxyImportWarning(GeneratedResource p_generatedResource, String message) {
-          // We place all imports in both the proxy and impl; in general, 
+          // We place all imports in both the proxy and impl; in general,
           // the proxy will not need many of these.
           return !p_generatedResource.isImpl()
               && message.startsWith("The import ")
               && message.endsWith(" is never used");
-        }
-
-        private class GeneratedResource
-        {
-            public GeneratedResource(IFile p_generatedJavaFile)
-                throws CoreException
-            {
-                IPath path = p_generatedJavaFile.getFullPath();
-                String className = path.removeFileExtension().lastSegment();
-                if (className.endsWith("Impl"))
-                {
-                    className = className.substring(0, className.length() - 4);
-                    m_isImpl = true;
-                }
-                else
-                {
-                    m_isImpl = false;
-                }
-                m_templateFile = m_templateFolder.getFile(
-                    path
-                        .removeFirstSegments(
-                            m_generatedSourcesFolder.getFullPath().segmentCount())
-                        .removeLastSegments(1)
-                        .append(className)
-                        .addFileExtension(JamonNature.JAMON_EXTENSION));
-
-                try
-                {
-                    m_locations = JamonUtils.readLineNumberMappings(p_generatedJavaFile);
-                }
-                catch (IOException e)
-                {
-                    m_locations = Collections.emptyList();
-                    JamonProjectPlugin.getDefault().logError(e);
-                }
-            }
-
-
-            public int getTemplateLineNumber(int p_javaLineNumber)
-            {
-                if (m_locations.isEmpty())
-                {
-                    return 1;
-                }
-                else
-                {
-                    return m_locations.get(
-                        Math.min(p_javaLineNumber, m_locations.size() - 1));
-                }
-            }
-
-            public boolean isImpl()
-            {
-                return m_isImpl;
-            }
-
-            public IFile getTemplateFile()
-            {
-                return m_templateFile;
-            }
-
-            private final IFile m_templateFile;
-            private final boolean m_isImpl;
-            private List<Integer> m_locations;
         }
     }
 
@@ -210,7 +141,7 @@ public class JavaMarkerListener implements IResourceChangeListener
         }
     }
 
-    private final IFolder m_templateFolder, m_generatedSourcesFolder;
+    private final IFolder m_generatedSourcesFolder;
     private final String proxyMarkerId = JamonProjectPlugin.getProxyMarkerType();
     private final String implMarkerId = JamonProjectPlugin.getImplMarkerType();
 }

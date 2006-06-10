@@ -85,6 +85,20 @@
           </viewerContribution>
        </extension>
        <extension
+             id="org.jamon.project.popup.switchToTemplate"
+             point="org.eclipse.ui.popupMenus">
+          <viewerContribution
+                id="org.jamon.project.popup.switchToTemplate"
+                targetID="#CompilationUnitEditorContext">
+             <action
+                   class="org.jamon.eclipse.popup.SwitchToTemplateAction"
+                   icon="icons/jamon.gif"
+                   id="org.jamon.eclipse.popup.actions.switchToTemplate"
+                   label="Switch to Jamon Template"
+                   menubarPath="group.open"/>
+          </viewerContribution>
+       </extension>
+       <extension
              id="parentMarker"
              name="Parent Marker"
              point="org.eclipse.core.resources.markers">
