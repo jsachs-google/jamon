@@ -24,11 +24,11 @@ public abstract class AbstractSwitchToFileAction implements IEditorActionDelegat
 
           if (editorPart instanceof AbstractTextEditor)
           {
-              AbstractTextEditor jamonEditor = (AbstractTextEditor)editorPart;
-              IDocument jamonDocument = jamonEditor.getDocumentProvider()
-                  .getDocument(jamonEditor.getEditorInput());
-              int offset = jamonDocument.getLineOffset(targetLineNumber);
-              jamonEditor.selectAndReveal(offset, 0);
+              AbstractTextEditor editor = (AbstractTextEditor)editorPart;
+              IDocument document = editor.getDocumentProvider()
+                  .getDocument(editor.getEditorInput());
+              int offset = document.getLineOffset(targetLineNumber);
+              editor.selectAndReveal(offset, 0);
           }
       }
 
