@@ -10,7 +10,7 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.IDE;
-import org.eclipse.ui.texteditor.AbstractTextEditor;
+import org.eclipse.ui.texteditor.ITextEditor;
 
 public abstract class AbstractSwitchToFileAction implements IEditorActionDelegate
 {
@@ -22,15 +22,20 @@ public abstract class AbstractSwitchToFileAction implements IEditorActionDelegat
               PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage(),
               targetFile);
 
-          if (editorPart instanceof AbstractTextEditor)
+          if (editorPart instanceof ITextEditor)
           {
-              AbstractTextEditor editor = (AbstractTextEditor)editorPart;
-              IDocument document = editor.getDocumentProvider()
-                  .getDocument(editor.getEditorInput());
+              ITextEditor editor = (ITextEditor)editorPart;
+              IDocument document = getDocument(editor);
               int offset = document.getLineOffset(targetLineNumber);
               editor.selectAndReveal(offset, 0);
           }
       }
+
+    protected IDocument getDocument(ITextEditor editor)
+    {
+        return editor.getDocumentProvider()
+              .getDocument(editor.getEditorInput());
+    }
 
     public void selectionChanged(IAction p_action, ISelection p_selection)
     {}

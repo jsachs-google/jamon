@@ -9,15 +9,32 @@ import org.eclipse.core.runtime.IPath;
 public class TemplateResources
 {
     public static TemplateResources fromGeneratedSource(IFile p_javaFile) throws CoreException {
-      IProject project = p_javaFile.getProject();
-
-      JamonNature nature = (JamonNature) project.getNature(JamonNature.natureId());
+      JamonNature nature = getJamonNature(p_javaFile);
       if (nature == null) {
         return null;
       }
       return fromGeneratedSource(
         p_javaFile, nature.getTemplateOutputFolder(), nature.getTemplateSourceFolder());
 
+    }
+
+    public static TemplateResources fromTemplate(IFile p_templateFile) throws CoreException {
+        JamonNature nature = getJamonNature(p_templateFile);
+        if (nature == null) {
+          return null;
+        }
+        return new TemplateResources(
+            p_templateFile,
+            nature.getTemplateOutputFolder(),
+            nature.getTemplateSourceFolder());
+    }
+
+    private static JamonNature getJamonNature(IFile p_javaFile) throws CoreException
+    {
+        IProject project = p_javaFile.getProject();
+
+          JamonNature nature = (JamonNature) project.getNature(JamonNature.natureId());
+        return nature;
     }
 
     public static TemplateResources fromGeneratedSource(
