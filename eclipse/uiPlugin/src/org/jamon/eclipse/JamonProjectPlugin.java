@@ -11,31 +11,31 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
  * The main plugin class to be used in the desktop.
  */
 public class JamonProjectPlugin extends AbstractUIPlugin {
-	//The shared instance.
-	private static JamonProjectPlugin plugin;
-	//Resource bundle.
-	private ResourceBundle resourceBundle;
+  //The shared instance.
+  private static JamonProjectPlugin plugin;
+  //Resource bundle.
+  private ResourceBundle resourceBundle;
 
 
-	/**
-	 * The constructor.
-	 */
-	public JamonProjectPlugin() {
-		super();
-		plugin = this;
-		try {
-			resourceBundle = ResourceBundle.getBundle("org.jamon.JamonProjectPluginResources");
-		} catch (MissingResourceException x) {
-			resourceBundle = null;
-		}
-	}
+  /**
+   * The constructor.
+   */
+  public JamonProjectPlugin() {
+    super();
+    plugin = this;
+    try {
+      resourceBundle = ResourceBundle.getBundle("org.jamon.JamonProjectPluginResources");
+    } catch (MissingResourceException x) {
+      resourceBundle = null;
+    }
+  }
 
-	/**
-	 * Returns the shared instance.
-	 */
-	public static JamonProjectPlugin getDefault() {
-		return plugin;
-	}
+  /**
+   * Returns the shared instance.
+   */
+  public static JamonProjectPlugin getDefault() {
+    return plugin;
+  }
 
     public static String getProxyMarkerType() {
       return getDefault().pluginId() + ".proxyMarker";
@@ -53,35 +53,36 @@ public class JamonProjectPlugin extends AbstractUIPlugin {
       return getDefault().pluginId() + ".parentMarker";
     }
 
-	public void logInfo(String p_message) {
-		getLog().log(new Status(IStatus.INFO, pluginId(), 0, p_message, null));
-	}
+  public void logInfo(String p_message) {
+    getLog().log(new Status(IStatus.INFO, pluginId(), 0, p_message, null));
+  }
 
-	public void logError(Throwable p_error) {
-		getLog().log(new Status(IStatus.ERROR, pluginId(), 0, p_error.getMessage(), p_error));
-	}
+  public void logError(Throwable p_error) {
+    String message = p_error.getMessage();
+    getLog().log(new Status(IStatus.ERROR, pluginId(), 0, message != null ? message : "", p_error));
+  }
 
-	/**
-	 * Returns the string from the plugin's resource bundle,
-	 * or 'key' if not found.
-	 */
-	public static String getResourceString(String key) {
-		ResourceBundle bundle = JamonProjectPlugin.getDefault().getResourceBundle();
-		try {
-			return (bundle != null) ? bundle.getString(key) : key;
-		} catch (MissingResourceException e) {
-			return key;
-		}
-	}
+  /**
+   * Returns the string from the plugin's resource bundle,
+   * or 'key' if not found.
+   */
+  public static String getResourceString(String key) {
+    ResourceBundle bundle = JamonProjectPlugin.getDefault().getResourceBundle();
+    try {
+      return (bundle != null) ? bundle.getString(key) : key;
+    } catch (MissingResourceException e) {
+      return key;
+    }
+  }
 
-	/**
-	 * Returns the plugin's resource bundle,
-	 */
-	public ResourceBundle getResourceBundle() {
-		return resourceBundle;
-	}
+  /**
+   * Returns the plugin's resource bundle,
+   */
+  public ResourceBundle getResourceBundle() {
+    return resourceBundle;
+  }
 
-	public String pluginId() {
-		return getBundle().getSymbolicName();
-	}
+  public String pluginId() {
+    return getBundle().getSymbolicName();
+  }
 }
