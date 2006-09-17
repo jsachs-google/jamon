@@ -88,7 +88,8 @@ public class TemplateBuilder extends IncrementalProjectBuilder {
     }
 
     @Override
-    protected IProject[] build(int kind, Map args, IProgressMonitor monitor)
+    protected IProject[] build(
+            int kind, @SuppressWarnings("unchecked") Map args, IProgressMonitor monitor)
             throws CoreException {
         if (kind == CLEAN_BUILD || kind == FULL_BUILD)
         {
@@ -167,7 +168,7 @@ public class TemplateBuilder extends IncrementalProjectBuilder {
             m_changed = new HashSet<IPath>();
         }
 
-        Set getChanged() {
+        Set<IPath> getChanged() {
             return m_changed;
         }
 

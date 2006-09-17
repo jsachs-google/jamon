@@ -18,7 +18,8 @@ import org.eclipse.core.runtime.IProgressMonitor;
 public class MarkerUpdaterBuilder extends IncrementalProjectBuilder {
 
     @Override
-    protected IProject[] build(int kind, Map args, IProgressMonitor monitor)
+    protected IProject[] build(
+            int kind, @SuppressWarnings("unchecked") Map args, IProgressMonitor monitor)
     {
         //FIXME - there has to be a better way.  We don't want really want a
         // builder here, because it's not when the impl and proxies change, it's
