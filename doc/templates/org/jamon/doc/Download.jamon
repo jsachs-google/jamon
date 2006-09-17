@@ -7,8 +7,12 @@
 <h2>Download</h2>
 
 <h4>Current release</h4>
-Version 2.0: Available at
+Version 2.1: Available at
 <a href="https://sourceforge.net/project/showfiles.php?group_id=138569">SourceForge</a>.
+
+<h4>Eclipse plugin</h4>
+Set the update site to
+<code>http://www.jamon.org/eclipse/update/site.xml</code>
 
 <h4>Subversion access</h4>
 
