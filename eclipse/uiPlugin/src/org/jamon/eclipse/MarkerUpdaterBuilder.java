@@ -17,7 +17,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 
 public class MarkerUpdaterBuilder extends IncrementalProjectBuilder {
 
-	@Override
+    @Override
     protected IProject[] build(int kind, Map args, IProgressMonitor monitor)
     {
         //FIXME - there has to be a better way.  We don't want really want a
@@ -41,28 +41,28 @@ public class MarkerUpdaterBuilder extends IncrementalProjectBuilder {
                 m_javaMarkerListener, IResourceChangeEvent.POST_BUILD);
 
         return null;
-	}
+    }
 
-	private static String builderId() {
-		return JamonProjectPlugin.getDefault().pluginId() + ".markerUpdater";
-	}
+    private static String builderId() {
+        return JamonProjectPlugin.getDefault().pluginId() + ".markerUpdater";
+    }
 
 
-	public static void addToProject(IProject p_project) throws CoreException {
-		IProjectDescription description = p_project.getDescription();
-		ArrayList<ICommand> cmds = new ArrayList<ICommand>();
-		cmds.addAll(Arrays.asList(description.getBuildSpec()));
-		for (Iterator<ICommand> i = cmds.iterator(); i.hasNext();) {
-			if (i.next().getBuilderName().equals(builderId())) {
-				return;
-			}
-		}
-		ICommand jamonCmd = description.newCommand();
-		jamonCmd.setBuilderName(builderId());
-		cmds.add(jamonCmd);
-		description.setBuildSpec(cmds.toArray(new ICommand[cmds.size()]));
-		p_project.setDescription(description, null);
-	}
+    public static void addToProject(IProject p_project) throws CoreException {
+        IProjectDescription description = p_project.getDescription();
+        ArrayList<ICommand> cmds = new ArrayList<ICommand>();
+        cmds.addAll(Arrays.asList(description.getBuildSpec()));
+        for (Iterator<ICommand> i = cmds.iterator(); i.hasNext();) {
+            if (i.next().getBuilderName().equals(builderId())) {
+                return;
+            }
+        }
+        ICommand jamonCmd = description.newCommand();
+        jamonCmd.setBuilderName(builderId());
+        cmds.add(jamonCmd);
+        description.setBuildSpec(cmds.toArray(new ICommand[cmds.size()]));
+        p_project.setDescription(description, null);
+    }
 
     private IResourceChangeListener m_javaMarkerListener;
 }
