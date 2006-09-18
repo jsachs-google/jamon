@@ -10,7 +10,7 @@ the documentation thus taking care of issues such as escaping.
   <property file="build.properties"/>
   <property file="${user.home}/.ant.properties"/>
 
-  <property name="jamon.dir" value="../jamon"/>
+  <property name="jamon.dir" value="../eclipse/corePlugin"/>
 
   <property name="build.dir" value="build"/>
   <property name="work.dir" value="${build.dir}/work"/>
@@ -33,7 +33,7 @@ the documentation thus taking care of issues such as escaping.
 
   <property name="tomcat.home" value="${env.TOMCAT_HOME}"/>
   <property name="tomcat.common.lib" value="${tomcat.home}/common/lib"/>
-  <property name="java.lib.servlet" value="${tomcat.common.lib}/servlet.jar"/>
+  <property name="java.lib.servlet" value="${tomcat.common.lib}/servlet-api.jar"/>
 
   <property name="invoker.compiler" value="${build.compiler}"/>
 
