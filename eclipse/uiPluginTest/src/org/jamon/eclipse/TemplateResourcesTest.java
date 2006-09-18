@@ -87,7 +87,7 @@ public class TemplateResourcesTest extends TestCase {
     project.open(null);
     ((IJavaProject) project.getNature(JavaCore.NATURE_ID)).setRawClasspath(
       new IClasspathEntry[] { JavaCore.newSourceEntry(new Path("/foo/src")) }, null);
-    JamonNature.addToProject(project, "templates");
+    JamonNature.addToProject(project, "templates", "genSources");
     return project;
   }
 
