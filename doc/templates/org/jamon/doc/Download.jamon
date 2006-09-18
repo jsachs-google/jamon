@@ -12,7 +12,7 @@ Version 2.1: Available at
 
 <h4>Eclipse plugin</h4>
 Set the update site to
-<code>http://www.jamon.org/eclipse/update/site.xml</code>
+<code>http://www.jamon.org/eclipse/updates/site.xml</code>
 
 <h4>Subversion access</h4>
 
