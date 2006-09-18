@@ -15,11 +15,15 @@
     <extension
           point="org.eclipse.ui.propertyPages">
        <page
-             objectClass="org.eclipse.core.resources.IProject"
              adaptable="true"
              class="org.jamon.eclipse.JamonProjectPropertyPage"
+             id="org.jamon.project.JamonProjectPropertyPage"
              name="Jamon"
-             id="org.jamon.project.JamonProjectPropertyPage"/>
+             objectClass="org.eclipse.core.resources.IProject">
+          <filter
+                name="nature"
+                value="org.eclipse.jdt.core.javanature"/>
+       </page>
     </extension>
     <extension
           id="templateBuilder"
