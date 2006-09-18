@@ -56,23 +56,37 @@ public class JamonProjectPropertyPage extends PropertyPage {
 		separator.setLayoutData(gridData);
 	}
 
-	private Text templateSourceText;
+	private Text templateSourceDirInput;
+    private Text templateOutputDirInput;
 
 	private void addSecondSection(Composite parent) {
 		Composite composite = createDefaultComposite(parent);
 
 		Label templateSourceLabel = new Label(composite, SWT.NONE);
 		templateSourceLabel.setText("Template source folder:");
-		templateSourceText = new Text(composite, SWT.SINGLE | SWT.BORDER);
+		templateSourceDirInput = new Text(composite, SWT.SINGLE | SWT.BORDER);
 		GridData gd = new GridData();
 		gd.widthHint = convertWidthInCharsToPixels(50);
-		templateSourceText.setLayoutData(gd);
+		templateSourceDirInput.setLayoutData(gd);
 
-		String templateSourceFolder = JamonNature.templateSourceFolderName(getProject());
-		templateSourceText.setText(
-            (templateSourceFolder != null)
-            ? templateSourceFolder
+		String templateSourceDir = JamonNature.templateSourceFolderName(getProject());
+		templateSourceDirInput.setText(
+            (templateSourceDir != null)
+            ? templateSourceDir
             : JamonNature.DEFAULT_TEMPLATE_SOURCE);
+        
+        templateSourceLabel = new Label(composite, SWT.NONE);
+        templateSourceLabel.setText("Template output folder:");
+        templateOutputDirInput = new Text(composite, SWT.SINGLE | SWT.BORDER);
+        gd = new GridData();
+        gd.widthHint = convertWidthInCharsToPixels(50);
+        templateOutputDirInput.setLayoutData(gd);
+
+        String templateOutputDir = JamonNature.templateOutputFolderName(getProject());
+        templateOutputDirInput.setText(
+            (templateOutputDir != null)
+            ? templateOutputDir
+            : JamonNature.DEFAULT_OUTPUT_DIR);
 	}
 
     @Override protected Control createContents(Composite parent) {
@@ -109,7 +123,7 @@ public class JamonProjectPropertyPage extends PropertyPage {
     @Override public boolean performOk() {
 		try {
 			if (isJamonProjectCheckbox.getSelection()) {
-				JamonNature.addToProject(getJavaProject().getProject(), templateSourceText.getText());
+				JamonNature.addToProject(getJavaProject().getProject(), templateSourceDirInput.getText(), templateOutputDirInput.getText());
 			}
 			else {
 				JamonNature.removeFromProject(getJavaProject().getProject());

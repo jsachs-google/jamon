@@ -40,17 +40,17 @@ public class JamonNature implements IProjectNature {
 		p_description.setNatureIds(p_natures.toArray(new String[p_natures.size()]));
 	}
 
-	public static void addToProject(IProject p_project, String p_templateSourceDir) throws CoreException {
+	public static void addToProject(IProject p_project, String p_templateSourceDir, String p_templateOutputDir) throws CoreException {
 		IProjectDescription description = p_project.getDescription();
 		List<String> natures = naturesList(description);
 		if (! natures.contains(natureId())) {
 			natures.add(natureId());
 			setNatures(description, natures);
-			p_project.setDescription(description, null);
 		}
 		IEclipsePreferences projectNode = preferences(p_project);
         if (projectNode != null) {
-        	projectNode.put(TEMPLATE_SOURCE_DIR_PROPERTY, p_templateSourceDir);
+            projectNode.put(TEMPLATE_SOURCE_DIR_PROPERTY, p_templateSourceDir);
+            projectNode.put(TEMPLATE_OUTPUT_DIR_PROPERTY, p_templateOutputDir);
         	try {
         		projectNode.flush();
         	}
@@ -61,6 +61,7 @@ public class JamonNature implements IProjectNature {
         else {
         	System.err.println("Couldn't find preferences node");
         }
+        p_project.setDescription(description, null);
 	}
 
 	private static IEclipsePreferences preferences(IProject p_project) {
@@ -68,7 +69,8 @@ public class JamonNature implements IProjectNature {
 		return projectScope.getNode(JAMON_PREFERENCES_NODE);
 	}
 
-	private static final String TEMPLATE_SOURCE_DIR_PROPERTY = "templateSourceDir";
+    private static final String TEMPLATE_SOURCE_DIR_PROPERTY = "templateSourceDir";
+    private static final String TEMPLATE_OUTPUT_DIR_PROPERTY = "templateOutputDir";
 	private static final String JAMON_PREFERENCES_NODE = "org.jamon";
 
 	public static void removeFromProject(IProject p_project) throws CoreException
@@ -78,14 +80,13 @@ public class JamonNature implements IProjectNature {
 		if (natures.contains(natureId())) {
 			natures.remove(natureId());
 			setNatures(description, natures);
-			p_project.setDescription(description, null);
 		}
+        p_project.setDescription(description, null);
 	}
 
 	static IFolder templateOutputFolder(IProject p_project)
     {
-        // TODO: don't hardcode the generated template directory
-        return p_project.getFolder(new Path("tsrc"));
+        return p_project.getFolder(new Path(templateOutputFolderName(p_project)));
     }
 
     public IFolder getTemplateOutputFolder() {
@@ -93,9 +94,14 @@ public class JamonNature implements IProjectNature {
     }
 
     static String templateSourceFolderName(IProject p_project) {
-		return preferences(p_project)
+        return preferences(p_project)
             .get(TEMPLATE_SOURCE_DIR_PROPERTY, DEFAULT_TEMPLATE_SOURCE);
-	}
+    }
+
+    static String templateOutputFolderName(IProject p_project) {
+        return preferences(p_project)
+            .get(TEMPLATE_OUTPUT_DIR_PROPERTY, DEFAULT_OUTPUT_DIR);
+    }
 
     static IFolder templateSourceFolder(IProject p_project)
     {
@@ -170,6 +176,7 @@ public class JamonNature implements IProjectNature {
 
 	private IProject m_project;
     static final String JAMON_EXTENSION = "jamon";
-	static final String DEFAULT_TEMPLATE_SOURCE = "templates";
+    static final String DEFAULT_TEMPLATE_SOURCE = "templates";
+    static final String DEFAULT_OUTPUT_DIR = "tsrc";
 
 }
