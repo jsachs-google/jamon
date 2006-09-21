@@ -5,10 +5,6 @@
   <name>Jamon Plugin</name> 
   <currentVersion>1.0.0</currentVersion> 
 
-  <!-- 
-    You might want to include additional information here
-    eg the developers, organisation, and dependencies
-  -->
   <developers>
     <developer>
       <name>Jay Sachs</name>
@@ -22,29 +18,21 @@
       <groupId>jamon</groupId>
       <artifactId>jamon</artifactId>
       <version>2.1</version>
+      <properties>
+        <classloader>root</classloader>
+      </properties>
     </dependency>
     <dependency>
       <groupId>jamon</groupId>
       <artifactId>jamon-anttask</artifactId>
       <version>2.1</version>
       <properties>
-        <war.bundle>false</war.bundle>
+        <classloader>root</classloader>
       </properties>
     </dependency>
   </dependencies>
 
   <build> 
-    <!-- This is only required if you have Java code -->
-    <sourceDirectory>src/main/java</sourceDirectory> 
-    <!-- These are only required if you have unit tests for your Java code -->
-    <unitTestSourceDirectory>src/test/java</unitTestSourceDirectory> 
-    <unitTest> 
-      <includes> 
-        <include>**/*Test.java</include> 
-      </includes> 
-    </unitTest> 
- 
-    <!-- This section is compulsory -->
     <resources> 
       <resource> 
         <directory>${basedir}/src/plugin-resources</directory> 
