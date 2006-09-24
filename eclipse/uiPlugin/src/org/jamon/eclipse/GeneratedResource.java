@@ -12,7 +12,6 @@ public class GeneratedResource
     public GeneratedResource(IFile p_generatedJavaFile)
         throws CoreException, NotAGeneratedResourceException
     {
-        System.out.println(p_generatedJavaFile.getFullPath());
         TemplateResources resources = TemplateResources.fromGeneratedSource(p_generatedJavaFile);
         if (resources == null) {
             throw new NotAGeneratedResourceException();
