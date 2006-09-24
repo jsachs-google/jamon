@@ -1,10 +1,21 @@
 package org.jamon.eclipse;
 
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.fieldassist.DecoratedField;
+import org.eclipse.jface.fieldassist.FieldDecoration;
+import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
+import org.eclipse.jface.fieldassist.TextControlCreator;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -39,14 +50,31 @@ public class JamonProjectPropertyPage extends PropertyPage {
 			isJamonProjectCheckbox = new Button(isJamonProjectGroup, SWT.CHECK | SWT.LEFT);
 			isJamonProjectCheckbox.setText("Is Jamon Project");
 			isJamonProjectCheckbox.setEnabled(true);
-
 			try {
 				isJamonProjectCheckbox.setSelection(JamonNature.projectHasNature(getJavaProject().getProject()));
 			}
 			catch (CoreException ex) {
 				ex.printStackTrace();
 			}
+            isJamonProjectCheckbox.addSelectionListener(isJamonListener);
 	}
+
+    private IsJamonListener isJamonListener = new IsJamonListener();
+    
+    private class IsJamonListener implements SelectionListener {
+        public void widgetDefaultSelected(SelectionEvent e) {
+        }
+        
+        void setEnabled() {
+            final boolean enabled = isJamonProjectCheckbox.getSelection();
+            sourceField.getControl().setEnabled(enabled);
+            outputField.getControl().setEnabled(enabled);
+        }
+        
+        public void widgetSelected(SelectionEvent e) {
+            setEnabled();
+        }
+    }
 
 	private void addSeparator(Composite parent) {
 		Label separator = new Label(parent, SWT.SEPARATOR | SWT.HORIZONTAL);
@@ -58,36 +86,83 @@ public class JamonProjectPropertyPage extends PropertyPage {
 
 	private Text templateSourceDirInput;
     private Text templateOutputDirInput;
+    private DecoratedField sourceField;
+    private DecoratedField outputField;
 
 	private void addSecondSection(Composite parent) {
-		Composite composite = createDefaultComposite(parent);
+		final Composite composite = createDefaultComposite(parent);
 
-		Label templateSourceLabel = new Label(composite, SWT.NONE);
-		templateSourceLabel.setText("Template source folder:");
-		templateSourceDirInput = new Text(composite, SWT.SINGLE | SWT.BORDER);
-		GridData gd = new GridData();
-		gd.widthHint = convertWidthInCharsToPixels(50);
-		templateSourceDirInput.setLayoutData(gd);
+        addTemplateSourceInput(composite);
+		addTemplateOuputInput(composite);
+		isJamonListener.setEnabled();
+	}
 
-		String templateSourceDir = JamonNature.templateSourceFolderName(getProject());
-		templateSourceDirInput.setText(
+    private class OutputModified implements ModifyListener {
+        public void modifyText(ModifyEvent e) {
+        }
+    }
+    
+    private void addTemplateSourceInput(Composite composite) {
+        Label templateSourceLabel = new Label(composite, SWT.NONE);
+        templateSourceLabel.setText("Template source folder:");
+        sourceField = new DecoratedField(composite, SWT.SINGLE | SWT.BORDER, new TextControlCreator());
+        templateSourceDirInput = (Text) sourceField.getControl();
+        GridData gd = new GridData(IDialogConstants.ENTRY_FIELD_WIDTH + 
+                                   FieldDecorationRegistry.getDefault().getMaximumDecorationWidth(), SWT.DEFAULT);
+        sourceField.getLayoutControl().setLayoutData(gd);
+        FieldDecoration requiredFieldIndicator = FieldDecorationRegistry.getDefault().
+        getFieldDecoration(FieldDecorationRegistry.DEC_REQUIRED);
+        sourceField.addFieldDecoration(requiredFieldIndicator, SWT.CENTER | SWT.LEFT, false);        
+        templateSourceDirInput.addModifyListener(new SourceModified());
+        String templateSourceDir = JamonNature.templateSourceFolderName(getProject());
+        templateSourceDirInput.setText(
             (templateSourceDir != null)
             ? templateSourceDir
             : JamonNature.DEFAULT_TEMPLATE_SOURCE);
         
-        templateSourceLabel = new Label(composite, SWT.NONE);
-        templateSourceLabel.setText("Template output folder:");
-        templateOutputDirInput = new Text(composite, SWT.SINGLE | SWT.BORDER);
-        gd = new GridData();
-        gd.widthHint = convertWidthInCharsToPixels(50);
-        templateOutputDirInput.setLayoutData(gd);
+    }
 
+    private class SourceModified implements ModifyListener {
+        public void modifyText(ModifyEvent e) {
+            String srcDir = templateSourceDirInput.getText();
+            boolean ok = false;
+            try {
+                IFolder folder = getJavaProject().getProject().getFolder(new Path(srcDir));
+                ok = folder.isAccessible();
+            }
+            catch (CoreException ex) {
+                ex.printStackTrace();
+            }
+            FieldDecoration warning = FieldDecorationRegistry.getDefault().
+            getFieldDecoration(FieldDecorationRegistry.DEC_WARNING);
+            if (!ok) {
+                sourceField.addFieldDecoration(warning, SWT.CENTER | SWT.RIGHT, false);
+            }
+            else {
+                sourceField.hideDecoration(warning);
+            }
+        }
+    }
+    
+    private void addTemplateOuputInput(Composite composite) {
+        Label templateOutputLabel = new Label(composite, SWT.NONE);
+        templateOutputLabel.setText("Template output folder:");
+        outputField = new DecoratedField(composite, SWT.SINGLE | SWT.BORDER, new TextControlCreator());
+        templateOutputDirInput = (Text) outputField.getControl();
+        templateOutputDirInput.addModifyListener(new OutputModified());
+        GridData gd = new GridData(IDialogConstants.ENTRY_FIELD_WIDTH + 
+                                   FieldDecorationRegistry.getDefault().getMaximumDecorationWidth(), SWT.DEFAULT);
+        outputField.getLayoutControl().setLayoutData(gd);
+        FieldDecoration requiredFieldIndicator = FieldDecorationRegistry.getDefault().
+        getFieldDecoration(FieldDecorationRegistry.DEC_REQUIRED);
+        outputField.addFieldDecoration(requiredFieldIndicator, SWT.CENTER | SWT.LEFT, false);        
+        
         String templateOutputDir = JamonNature.templateOutputFolderName(getProject());
         templateOutputDirInput.setText(
             (templateOutputDir != null)
             ? templateOutputDir
             : JamonNature.DEFAULT_OUTPUT_DIR);
-	}
+    }
 
     @Override protected Control createContents(Composite parent) {
 		Composite composite = new Composite(parent, SWT.NONE);
