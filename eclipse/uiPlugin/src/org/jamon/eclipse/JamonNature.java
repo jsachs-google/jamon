@@ -133,7 +133,7 @@ public class JamonNature implements IProjectNature {
 		jp.setRawClasspath(e.toArray(new IClasspathEntry[e.size()]), null);
 		if (tsrc.exists()) {
 			unsetReadOnly(tsrc);
-			tsrc.delete(IResource.DEPTH_INFINITE, null);
+			// tsrc.delete(IResource.DEPTH_INFINITE, null);
 		}
 	}
 
