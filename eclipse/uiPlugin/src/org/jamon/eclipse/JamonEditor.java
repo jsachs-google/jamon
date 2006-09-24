@@ -26,6 +26,8 @@ public class JamonEditor extends AbstractDecoratedTextEditor
     private static final String EDITOR_CONTEXT_MENU_ID =
         JamonProjectPlugin.getDefault().pluginId() + ".editorContext";
 
+    public final static String JAMON_PARTITIONING = JamonProjectPlugin.getDefault().pluginId() + ".partitioning";
+
     public JamonEditor()
     {
         setEditorContextMenuId(EDITOR_CONTEXT_MENU_ID);

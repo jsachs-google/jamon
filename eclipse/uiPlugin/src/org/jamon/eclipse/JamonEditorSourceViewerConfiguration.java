@@ -19,9 +19,20 @@
  */
 package org.jamon.eclipse;
 
+import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.presentation.IPresentationReconciler;
+import org.eclipse.jface.text.presentation.PresentationReconciler;
+import org.eclipse.jface.text.rules.DefaultDamagerRepairer;
+import org.eclipse.jface.text.rules.RuleBasedScanner;
 import org.eclipse.jface.text.source.IAnnotationHover;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.text.source.SourceViewerConfiguration;
+import org.jamon.eclipse.editor.JamonArgsScanner;
+import org.jamon.eclipse.editor.JamonCodeScanner;
+import org.jamon.eclipse.editor.JamonColorProvider;
+import org.jamon.eclipse.editor.JamonDocScanner;
+import org.jamon.eclipse.editor.JamonImportScanner;
+import org.jamon.eclipse.editor.JamonPartitionScanner;
 
 public class JamonEditorSourceViewerConfiguration extends
         SourceViewerConfiguration
@@ -39,5 +50,44 @@ public class JamonEditorSourceViewerConfiguration extends
         ISourceViewer sourceViewer)
     {
         return s_annotationHover;
+    }
+    
+    @Override
+    public String getConfiguredDocumentPartitioning(ISourceViewer sourceViewer) {
+        return JamonEditor.JAMON_PARTITIONING;
+    }
+    
+    @Override
+    public String[] getConfiguredContentTypes(ISourceViewer sourceViewer) {
+        return new String[] { IDocument.DEFAULT_CONTENT_TYPE, JamonPartitionScanner.JAMON_JAVA, JamonPartitionScanner.JAMON_DOC, JamonPartitionScanner.JAMON_ARGS };
+    }
+
+    @Override
+    public IPresentationReconciler getPresentationReconciler(ISourceViewer sourceViewer) {
+        PresentationReconciler reconciler= new PresentationReconciler();
+        reconciler.setDocumentPartitioning(getConfiguredDocumentPartitioning(sourceViewer));
+        RuleBasedScanner scanner =new RuleBasedScanner();
+        // scanner.setDefaultReturnToken(Token.UNDEFINED);
+        DefaultDamagerRepairer dr= new DefaultDamagerRepairer(scanner);
+        reconciler.setDamager(dr, IDocument.DEFAULT_CONTENT_TYPE);
+        reconciler.setRepairer(dr, IDocument.DEFAULT_CONTENT_TYPE);
+        
+        dr= new DefaultDamagerRepairer(new JamonDocScanner(new JamonColorProvider()));
+        reconciler.setDamager(dr, JamonPartitionScanner.JAMON_DOC);
+        reconciler.setRepairer(dr, JamonPartitionScanner.JAMON_DOC);
+        
+        dr= new DefaultDamagerRepairer(new JamonCodeScanner(new JamonColorProvider()));
+        reconciler.setDamager(dr, JamonPartitionScanner.JAMON_JAVA);
+        reconciler.setRepairer(dr, JamonPartitionScanner.JAMON_JAVA);
+
+        dr= new DefaultDamagerRepairer(new JamonArgsScanner(new JamonColorProvider()));
+        reconciler.setDamager(dr, JamonPartitionScanner.JAMON_ARGS);
+        reconciler.setRepairer(dr, JamonPartitionScanner.JAMON_ARGS);
+        
+        dr= new DefaultDamagerRepairer(new JamonImportScanner(new JamonColorProvider()));
+        reconciler.setDamager(dr, JamonPartitionScanner.JAMON_IMPORT);
+        reconciler.setRepairer(dr, JamonPartitionScanner.JAMON_IMPORT);
+        
+        return reconciler;
     }
 }
