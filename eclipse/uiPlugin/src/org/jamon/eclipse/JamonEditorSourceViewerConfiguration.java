@@ -27,7 +27,7 @@ import org.eclipse.jface.text.rules.RuleBasedScanner;
 import org.eclipse.jface.text.source.IAnnotationHover;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.text.source.SourceViewerConfiguration;
-import org.jamon.eclipse.editor.JamonArgsScanner;
+import org.jamon.eclipse.editor.JamonAliasScanner;
 import org.jamon.eclipse.editor.JamonCodeScanner;
 import org.jamon.eclipse.editor.JamonColorProvider;
 import org.jamon.eclipse.editor.JamonDocScanner;
@@ -76,14 +76,26 @@ public class JamonEditorSourceViewerConfiguration extends
         reconciler.setDamager(dr, JamonPartitionScanner.JAMON_DOC);
         reconciler.setRepairer(dr, JamonPartitionScanner.JAMON_DOC);
         
-        dr= new DefaultDamagerRepairer(new JamonCodeScanner(new JamonColorProvider()));
+        dr= new DefaultDamagerRepairer(new JamonCodeScanner(new JamonColorProvider(), "java"));
         reconciler.setDamager(dr, JamonPartitionScanner.JAMON_JAVA);
         reconciler.setRepairer(dr, JamonPartitionScanner.JAMON_JAVA);
 
-        dr= new DefaultDamagerRepairer(new JamonArgsScanner(new JamonColorProvider()));
+        dr= new DefaultDamagerRepairer(new JamonCodeScanner(new JamonColorProvider(), "class"));
+        reconciler.setDamager(dr, JamonPartitionScanner.JAMON_CLASS);
+        reconciler.setRepairer(dr, JamonPartitionScanner.JAMON_CLASS);
+
+        dr= new DefaultDamagerRepairer(new JamonCodeScanner(new JamonColorProvider(), "args"));
         reconciler.setDamager(dr, JamonPartitionScanner.JAMON_ARGS);
         reconciler.setRepairer(dr, JamonPartitionScanner.JAMON_ARGS);
         
+        dr= new DefaultDamagerRepairer(new JamonCodeScanner(new JamonColorProvider(), "xargs"));
+        reconciler.setDamager(dr, JamonPartitionScanner.JAMON_XARGS);
+        reconciler.setRepairer(dr, JamonPartitionScanner.JAMON_XARGS);
+        
+        dr= new DefaultDamagerRepairer(new JamonAliasScanner(new JamonColorProvider()));
+        reconciler.setDamager(dr, JamonPartitionScanner.JAMON_ALIAS);
+        reconciler.setRepairer(dr, JamonPartitionScanner.JAMON_ALIAS);
+
         dr= new DefaultDamagerRepairer(new JamonImportScanner(new JamonColorProvider()));
         reconciler.setDamager(dr, JamonPartitionScanner.JAMON_IMPORT);
         reconciler.setRepairer(dr, JamonPartitionScanner.JAMON_IMPORT);
