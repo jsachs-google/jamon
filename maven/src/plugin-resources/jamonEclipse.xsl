@@ -3,7 +3,7 @@
 
     <xsl:output method="xml" omit-xml-declaration="yes" indent="yes"/>
 
-    <xsl:template match="buildCommand[name='org.eclipse.jdt.core.javabuilder']">
+    <xsl:template match="buildCommand[name='org.eclipse.jdt.core.javabuilder']" xml:space="preserve">
         <buildCommand>
             <name>org.jamon.project.templateBuilder</name>
             <arguments/>
