@@ -1,29 +1,60 @@
-<project xmlns:ant="jelly:ant" xmlns:j="jelly:core" xmlns:maven="jelly:maven"> 
+<project xmlns:ant="jelly:ant" xmlns:j="jelly:core" xmlns:maven="jelly:maven" xmlns:x="jelly:xml"> 
 
-  <goal name="jamon:verify">
-    <j:if test="${context.getVariable('jamon.template.output') == null || context.getVariable('jamon.template.output') == ''}">
-      <fail>Must specify jamon.template.output property</fail>
+  <preGoal name="java:compile">
+    <attainGoal name="jamon:compile"/>
+  </preGoal>
+
+  <postGoal name="clean">
+    <attainGoal name="jamon:clean"/>
+  </postGoal>
+
+  <postGoal name="java:prepare-filesystem">
+    <attainGoal name="jamon:prepare-filesystem"/>
+  </postGoal>
+
+  <postGoal name="eclipse:generate-project">
+    <attainGoal name="jamon:eclipse"/>
+  </postGoal>
+
+  <goal name="jamon:clean" description="Remove generated jamon">
+    <j:if test="${context.getVariable('jamon.template.output') != '*JAMON_OUTPUT_DIR_NOT_SET*'}">
+	  <j:if test="${context.getVariable('jamon.clean.template.output') == 'true'}">
+	    <ant:delete dir="${jamon.template.output}"/>
+      </j:if>
     </j:if>
-    <j:if test="${context.getVariable('jamon.template.source') == null}">
-      <fail>Must specify jamon.template.source property</fail>
+  </goal> 
+
+  <goal name="jamon:prepare-filesystem" description="Prepare filesystem">
+    <j:if test="${context.getVariable('jamon.template.output') != '*JAMON_OUTPUT_DIR_NOT_SET*'}">
+      <ant:mkdir dir="${jamon.template.output}"/>
     </j:if>
   </goal>
 
-  <goal name="jamon:clean" description="Remove generated jamon" prereqs="jamon:verify">
-    <ant:delete dir="${jamon.template.output}"/> 
-  </goal> 
+  <goal name="jamon:eclipse">
+	<j:new var="now" className="java.util.Date"/>
+	<ant:echo>${plugin.resources}</ant:echo>
+	<ant:echo file=".settings/org.jamon.prefs"># ${now}
+eclipse.preferences.version=1
+templateSourceDir=${jamon.template.source}
+templateOutputDir=${jamon.template.output}
+	</ant:echo>
+	<j:file name=".project.new" omitXmlDeclaration="true" escapeText="false">
+	  <x:transform xml="file:.project" xslt="file:${plugin.resources}/jamonEclipse.xsl"/>
+	</j:file>
+	<ant:move file=".project.new" tofile=".project"/>
+	<ant:mkdir dir="${jamon.template.output}"/>
+  </goal>
 
-  <goal name="jamon:prepare-filesystem" description="Prepare filesystem" prereqs="jamon:verify">
-    <ant:mkdir dir="${jamon.template.output}"/> 
-  </goal> 
-
-  <goal name="jamon:compile" description="Process jamon templates into Java sources" prereqs="jamon:verify">
-    <ant:path id="jamon.src.set" location="${jamon.template.output}"/>
-    <maven:addPath id="maven.compile.src.set" refid="jamon.src.set"/>
-    <ant:taskdef name="jamon"
-                 classname="org.jamon.ant.JamonTask"
-                 classpath="${plugin.getDependencyPath('jamon:jamon')}:${plugin.getDependencyPath('jamon:jamon-anttask')}" />
-    <ant:jamon destdir="${jamon.template.output}" srcdir="${jamon.template.source}"/>
+  <goal name="jamon:compile" description="Process jamon templates into Java sources" prereqs="jamon:prepare-filesystem">
+    <j:if test="${context.getVariable('jamon.template.output') != '*JAMON_OUTPUT_DIR_NOT_SET*'} &amp;&amp; ${context.getVariable('jamon.template.source') != '*JAMON_SRC_DIR_NOT_SET*'">
+      <ant:echo>Processing jamon templates from ${context.getVariable('jamon.template.source')}</ant:echo>
+      <ant:path id="jamon.src.set" location="${jamon.template.output}"/>
+      <maven:addPath id="maven.compile.src.set" refid="jamon.src.set"/>
+      <ant:taskdef name="jamon"
+                   classname="org.jamon.ant.JamonTask"
+                   classpath="${plugin.getDependencyPath('jamon:jamon')}:${plugin.getDependencyPath('jamon:jamon-anttask')}" />
+      <ant:jamon destdir="${jamon.template.output}" srcdir="${jamon.template.source}"/>
+    </j:if>
   </goal>
 
 </project>
