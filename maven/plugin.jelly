@@ -46,8 +46,8 @@ templateOutputDir=${jamon.template.output}
   </goal>
 
   <goal name="jamon:compile" description="Process jamon templates into Java sources" prereqs="jamon:prepare-filesystem">
-    <j:if test="${context.getVariable('jamon.template.output') != '*JAMON_OUTPUT_DIR_NOT_SET*'} &amp;&amp; ${context.getVariable('jamon.template.source') != '*JAMON_SRC_DIR_NOT_SET*'">
-      <ant:echo>Processing jamon templates from ${context.getVariable('jamon.template.source')}</ant:echo>
+    <j:if test="${context.getVariable('jamon.template.output') != '*JAMON_OUTPUT_DIR_NOT_SET*' &amp;&amp; context.getVariable('jamon.template.source') != '*JAMON_SRC_DIR_NOT_SET*'}">
+      <ant:echo>Processing jamon templates from ${context.getVariable('jamon.template.source')} to ${context.getVariable('jamon.template.output')}</ant:echo>
       <ant:path id="jamon.src.set" location="${jamon.template.output}"/>
       <maven:addPath id="maven.compile.src.set" refid="jamon.src.set"/>
       <ant:taskdef name="jamon"
