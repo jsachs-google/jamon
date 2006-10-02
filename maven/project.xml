@@ -3,7 +3,7 @@
   <artifactId>maven-jamon-plugin</artifactId> 
   <groupId>jamon</groupId> 
   <name>Jamon Plugin</name> 
-  <currentVersion>1.0.0</currentVersion> 
+  <currentVersion>1.0.0-SNAPSHOT</currentVersion> 
 
   <developers>
     <developer>
