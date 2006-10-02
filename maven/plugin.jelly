@@ -16,21 +16,22 @@
     <attainGoal name="jamon:eclipse"/>
   </postGoal>
 
-  <goal name="jamon:clean" description="Remove generated jamon">
-    <j:if test="${context.getVariable('jamon.template.output') != '*JAMON_OUTPUT_DIR_NOT_SET*'}">
-	  <j:if test="${context.getVariable('jamon.clean.template.output') == 'true'}">
+  <goal name="jamon:clean"
+        description="Remove generated Jamon templates">
+    <j:if test="${context.getVariable('jamon.template.output') != '' &amp;&amp; context.getVariable('jamon.clean.template.output')}">
 	    <ant:delete dir="${jamon.template.output}"/>
-      </j:if>
     </j:if>
   </goal> 
 
-  <goal name="jamon:prepare-filesystem" description="Prepare filesystem">
-    <j:if test="${context.getVariable('jamon.template.output') != '*JAMON_OUTPUT_DIR_NOT_SET*'}">
+  <goal name="jamon:prepare-filesystem"
+        description="Prepare filesystem for Jamon template creation">
+    <j:if test="${context.getVariable('jamon.template.output') ne ''}">
       <ant:mkdir dir="${jamon.template.output}"/>
     </j:if>
   </goal>
 
-  <goal name="jamon:eclipse">
+  <goal name="jamon:eclipse"
+        description="Adjust .project and preferences to enable Jamon plugin for Eclipse projects">
 	<j:new var="now" className="java.util.Date"/>
 	<ant:echo>${plugin.resources}</ant:echo>
 	<ant:echo file=".settings/org.jamon.prefs"># ${now}
@@ -45,9 +46,10 @@ templateOutputDir=${jamon.template.output}
 	<ant:mkdir dir="${jamon.template.output}"/>
   </goal>
 
-  <goal name="jamon:compile" description="Process jamon templates into Java sources" prereqs="jamon:prepare-filesystem">
-    <j:if test="${context.getVariable('jamon.template.output') != '*JAMON_OUTPUT_DIR_NOT_SET*' &amp;&amp; context.getVariable('jamon.template.source') != '*JAMON_SRC_DIR_NOT_SET*'}">
-      <ant:echo>Processing jamon templates from ${context.getVariable('jamon.template.source')} to ${context.getVariable('jamon.template.output')}</ant:echo>
+  <goal name="jamon:compile" prereqs="jamon:prepare-filesystem"
+        description="Process Jamon templates into Java sources">
+    <j:if test="${context.getVariable('jamon.template.output') != '' &amp;&amp; context.getVariable('jamon.template.source') != ''}">
+      <ant:echo>Processing jamon templates from ${jamon.template.source} to ${jamon.template.output}</ant:echo>
       <ant:path id="jamon.src.set" location="${jamon.template.output}"/>
       <maven:addPath id="maven.compile.src.set" refid="jamon.src.set"/>
       <ant:taskdef name="jamon"
