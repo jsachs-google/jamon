@@ -18,23 +18,33 @@ public class JamonTagMatchingRule implements IRule {
         if (c == ICharacterScanner.EOF) {
             return Token.EOF;
         }
-        else if (c == '<') {
+        int read = 1;
+        if (c == '<') {
             c = scanner.read();
+            read++;
             if (c == '/') {
                 c = scanner.read();
+                read++;
             }
-            if (c != '%') {
-                return Token.UNDEFINED;
+            if (c == '%') {
+	            c = scanner.read();
+	            read++;
+	            int i = 0;
+	            while (i < tagName.length() && c == tagName.charAt(i)) {
+	                c = scanner.read();
+	                read++;
+	                i++;
+	            }
+	            if (i == tagName.length()) {
+	            	if (c == '>')
+	            	{
+	            		return token;
+	            	}
+	            }
             }
-            c = scanner.read();
-            int i = 0;
-            while (i < tagName.length() && c == tagName.charAt(i)) {
-                c = scanner.read();
-                i++;
-            }
-            if (i == tagName.length()) {
-                return token; 
-            }
+        }
+        while (read-- > 0) {
+        	scanner.unread();
         }
         return Token.UNDEFINED;
     }

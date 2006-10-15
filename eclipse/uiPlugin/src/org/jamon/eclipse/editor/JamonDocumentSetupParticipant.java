@@ -19,9 +19,13 @@ public class JamonDocumentSetupParticipant implements IDocumentSetupParticipant 
     public void setup(IDocument document) {
         if (document instanceof IDocumentExtension3) {
             IDocumentExtension3 extension3= (IDocumentExtension3) document;
-            IDocumentPartitioner partitioner= new FastPartitioner(new JamonPartitionScanner(), JamonPartitionScanner.JAVA_PARTITION_TYPES);
-            extension3.setDocumentPartitioner(JamonEditor.JAMON_PARTITIONING, partitioner);
+            IDocumentPartitioner partitioner= new FastPartitioner(new JamonPartitionScanner(), JamonPartitionScanner.JAMON_PARTITION_TYPES);
+            IDocumentPartitioner oldPartitioner = document.getDocumentPartitioner();
+            if (oldPartitioner != null) {
+            	oldPartitioner.disconnect();
+            }
             partitioner.connect(document);
+            extension3.setDocumentPartitioner(JamonEditor.JAMON_PARTITIONING, partitioner);
         }
     }
 }

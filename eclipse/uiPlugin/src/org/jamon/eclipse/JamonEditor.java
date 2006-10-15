@@ -20,6 +20,7 @@
 package org.jamon.eclipse;
 
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditor;
+import org.jamon.eclipse.editor.JamonEditorSourceViewerConfiguration;
 
 public class JamonEditor extends AbstractDecoratedTextEditor
 {
@@ -32,6 +33,7 @@ public class JamonEditor extends AbstractDecoratedTextEditor
     {
         setEditorContextMenuId(EDITOR_CONTEXT_MENU_ID);
     }
+    
     @Override
     protected void initializeEditor()
     {

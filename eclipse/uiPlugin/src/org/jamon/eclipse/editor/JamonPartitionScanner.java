@@ -20,7 +20,15 @@ public class JamonPartitionScanner extends RuleBasedPartitionScanner {
         public final static String JAMON_XARGS = "__jamon_xargs";
         public final static String JAMON_IMPORT = "__jamon_import";
         public final static String JAMON_ALIAS = "__jamon_alias";
-        public final static String[] JAVA_PARTITION_TYPES= new String[] { JAMON_DOC, JAMON_JAVA, JAMON_ARGS, JAMON_IMPORT, JAMON_ALIAS };
+        public final static String[] JAMON_PARTITION_TYPES= new String[] { 
+        	JAMON_DOC, 
+        	JAMON_JAVA, 
+        	JAMON_ARGS, 
+        	JAMON_XARGS, 
+        	JAMON_IMPORT, 
+        	JAMON_ALIAS,
+        	JAMON_CLASS,
+        	};
 
         public JamonPartitionScanner() {
             super();
@@ -36,13 +44,12 @@ public class JamonPartitionScanner extends RuleBasedPartitionScanner {
             List<IRule> rules= new ArrayList<IRule>();
 
             rules.add(new MultiLineRule("<%doc>", "</%doc>", jamonDoc, (char) 0, true));
+            rules.add(new MultiLineRule("<%java>", "</%java>", jamonJava, (char) 0, true));
             rules.add(new MultiLineRule("<%args>", "</%args>", jamonArgs, (char) 0, true));
             rules.add(new MultiLineRule("<%xargs>", "</%xargs>", jamonXargs, (char) 0, true));
             rules.add(new MultiLineRule("<%import>", "</%import>", jamonImport, (char) 0, true));
             rules.add(new MultiLineRule("<%alias>", "</%alias>", jamonAlias, (char) 0, true));
-            rules.add(new MultiLineRule("<%java>", "</%java>", jamonJava, (char) 0, true));
             rules.add(new MultiLineRule("<%class>", "</%class>", jamonClass, (char) 0, true));
-
             setPredicateRules(rules.toArray(new IPredicateRule[rules.size()]));
         }
     }

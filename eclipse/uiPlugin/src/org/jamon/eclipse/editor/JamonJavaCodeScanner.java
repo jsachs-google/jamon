@@ -17,7 +17,7 @@ import org.eclipse.jface.text.rules.WordRule;
 /**
  * A Java code scanner.
  */
-public class JamonCodeScanner extends RuleBasedScanner {
+public class JamonJavaCodeScanner extends RuleBasedScanner {
 
     private static String[] fgKeywords= { "abstract", "break", "case", "catch", "class", "continue", "default", "do", "else", "extends", "final", "finally", "for", "if", "implements", "import", "instanceof", "interface", "native", "new", "package", "private", "protected", "public", "return", "static", "super", "switch", "synchronized", "this", "throw", "throws", "transient", "try", "volatile", "while" };
 
@@ -30,7 +30,7 @@ public class JamonCodeScanner extends RuleBasedScanner {
      * 
      * @param provider the color provider
      */
-    public JamonCodeScanner(JamonColorProvider provider, String jamonKeyword) {
+    public JamonJavaCodeScanner(JamonColorProvider provider, String jamonKeyword) {
 
         IToken keyword= new Token(new TextAttribute(provider.getColor(JamonColorProvider.KEYWORD)));
         IToken type= new Token(new TextAttribute(provider.getColor(JamonColorProvider.TYPE)));

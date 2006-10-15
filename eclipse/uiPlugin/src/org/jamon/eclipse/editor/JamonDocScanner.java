@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.eclipse.jface.text.TextAttribute;
 import org.eclipse.jface.text.rules.BufferedRuleBasedScanner;
-import org.eclipse.jface.text.rules.ICharacterScanner;
 import org.eclipse.jface.text.rules.IRule;
 import org.eclipse.jface.text.rules.IToken;
 import org.eclipse.jface.text.rules.Token;
@@ -20,12 +19,15 @@ public class JamonDocScanner extends BufferedRuleBasedScanner {
 
         List<IRule> rules= new ArrayList<IRule>();
         rules.add(new JamonTagMatchingRule("doc", keyword));
+        setDefaultReturnToken(comment);
+        /*
         rules.add(new IRule() {
             public IToken evaluate(ICharacterScanner scanner) {
                 return comment;
             }
         }
         );
+        */
         setRules(rules.toArray(new IRule[rules.size()]));
     }
 }
