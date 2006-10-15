@@ -4,7 +4,7 @@
 	<classpathentry output="testbin" kind="src" path="test"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="var" path="JUNIT_JAR"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/jamon"/>
+	<classpathentry kind="var" path="JUNIT_HOME/junit.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
