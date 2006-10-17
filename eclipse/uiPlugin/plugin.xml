@@ -137,15 +137,4 @@
                 class="org.jamon.eclipse.editor.JamonDocumentSetupParticipant"
                 extensions="jamon"/>
        </extension>
-       <extension
-             id="org.jamon.eclipse.content_types"
-             name="Jamon Content Type"
-             point="org.eclipse.core.contenttype.contentTypes">
-          <content-type
-                base-type="org.eclipse.core.runtime.text"
-                file-extensions="jamon"
-                id="org.jamon.content_type"
-                name="Jamon Content type"
-                priority="normal"/>
-       </extension>
 </plugin>
