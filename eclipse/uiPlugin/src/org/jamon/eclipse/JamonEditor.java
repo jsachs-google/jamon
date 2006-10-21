@@ -38,7 +38,11 @@ public class JamonEditor extends AbstractDecoratedTextEditor
     protected void initializeEditor()
     {
         super.initializeEditor();
-        setSourceViewerConfiguration(
-            new JamonEditorSourceViewerConfiguration());
+        if (useEditor) 
+        {
+        	setSourceViewerConfiguration(new JamonEditorSourceViewerConfiguration());
+        }
     }
+    
+    private boolean useEditor = false;
 }
