@@ -62,18 +62,6 @@ public class JamonEditorSourceViewerConfiguration extends
     	System.arraycopy(JamonPartitionScanner.JAMON_PARTITION_TYPES, 0, result, 1, JamonPartitionScanner.JAMON_PARTITION_TYPES.length);
     	result[0] = IDocument.DEFAULT_CONTENT_TYPE;
     	return result;
-    	/*
-        return new String[] { 
-        		IDocument.DEFAULT_CONTENT_TYPE, 
-        		JamonPartitionScanner.JAMON_JAVA, 
-        		JamonPartitionScanner.JAMON_DOC, 
-        		JamonPartitionScanner.JAMON_ARGS, 
-        		JamonPartitionScanner.JAMON_XARGS, 
-        		JamonPartitionScanner.JAMON_ALIAS, 
-        		JamonPartitionScanner.JAMON_IMPORT, 
-        		JamonPartitionScanner.JAMON_CLASS, 
-        		};
-        		*/
     }
     
     @Override
@@ -97,6 +85,13 @@ public class JamonEditorSourceViewerConfiguration extends
         reconciler.setDamager(dr, JamonPartitionScanner.ARGS);
         reconciler.setRepairer(dr, JamonPartitionScanner.ARGS);
 
+        dr = new DefaultDamagerRepairer(new JamonJavaScanner(colorProvider));
+        reconciler.setDamager(dr, JamonPartitionScanner.JAVA);
+        reconciler.setRepairer(dr, JamonPartitionScanner.JAVA);
+
+        dr = new DefaultDamagerRepairer(new JamonEmitScanner(colorProvider));
+        reconciler.setDamager(dr, JamonPartitionScanner.EMIT);
+        reconciler.setRepairer(dr, JamonPartitionScanner.EMIT);
         /*
         dr= new DefaultDamagerRepairer(new JamonDocScanner(colorProvider));
         reconciler.setDamager(dr, JamonPartitionScanner.JAMON_DOC);

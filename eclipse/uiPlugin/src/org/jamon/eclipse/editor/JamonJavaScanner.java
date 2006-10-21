@@ -6,12 +6,12 @@ import org.eclipse.jface.text.rules.IToken;
 import org.eclipse.jface.text.rules.Token;
 import org.eclipse.swt.SWT;
 
-public class JamonArgsScanner extends BufferedRuleBasedScanner 
+public class JamonJavaScanner extends BufferedRuleBasedScanner 
 {
-    public JamonArgsScanner(JamonColorProvider provider) 
+    public JamonJavaScanner(JamonColorProvider provider) 
     {
         super();
-        final IToken defaultToken= new Token(new TextAttribute(provider.getColor(JamonColorProvider.TYPE), provider.getColor(JamonColorProvider.ARGS_BG), SWT.NORMAL));
+        final IToken defaultToken= new Token(new TextAttribute(provider.getColor(JamonColorProvider.DEFAULT), provider.getColor(JamonColorProvider.JAVA_BG), SWT.NORMAL));
         setDefaultReturnToken(defaultToken);
     }
 

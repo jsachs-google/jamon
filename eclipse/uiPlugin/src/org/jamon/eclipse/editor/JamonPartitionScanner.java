@@ -63,16 +63,19 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
 
 	public static final String JAMON = IDocument.DEFAULT_CONTENT_TYPE;
 	public static final String ARGS = "__jamon_partition_args";
+	public static final String JAVA = "__jamon_partition_java";
+	public static final String EMIT = "__jamon_partition_emit";
 	
-	private static final IToken ARGS_TOKEN = new Token(ARGS);
-	private static final IToken CALL_TOKEN = new Token("__jamon_partition_call");
-	private static final IToken EMIT_TOKEN = new Token("__jamon_partition_emit");
-	private static final IToken JAVA_TOKEN = new Token("__jamon_partition_java");
+	private static final IToken JAVA_TOKEN = new Token(JAVA);
+	private static final IToken EMIT_TOKEN = new Token(EMIT);
 	private static final IToken JAMON_TOKEN = new Token(JAMON);
+	private static final IToken ARGS_TOKEN = new Token(ARGS);
 	
 	public static final String[] JAMON_PARTITION_TYPES = new String[] {
 		JAMON_TOKEN.getData().toString(),
 		ARGS_TOKEN.getData().toString(),
+		JAVA_TOKEN.getData().toString(),
+		EMIT_TOKEN.getData().toString(),
 	};
 	
 	private IDocument document;
@@ -94,17 +97,13 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
 		{
 			return ARGS_TOKEN;
 		}
-		else if (CALL_TOKEN.getData().toString().equals(contentType)) 
-		{
-			return CALL_TOKEN;
-		}
-		else if (EMIT_TOKEN.getData().toString().equals(contentType))
-		{
-			return EMIT_TOKEN;
-		}
 		else if (JAVA_TOKEN.getData().toString().equals(contentType)) 
 		{
 			return JAVA_TOKEN;
+		}
+		else if (EMIT_TOKEN.getData().toString().equals(contentType)) 
+		{
+			return EMIT_TOKEN;
 		}
 		else if (JAMON_TOKEN.getData().toString().equals(contentType))
 		{
@@ -186,6 +185,42 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
 				tokenOffset = i;
 				return ARGS_TOKEN;
 			}
+			if (lookingAt(i, "<% ")) 
+			{
+				int end = processEmit(i);
+				if (end < 0) 
+				{
+					// no </%args>
+					tokenLength = length - (i - offset);
+					offset = limit;
+				}
+				else 
+				{
+					// found </%args>
+					tokenLength = end - i + 1;
+					offset = end;
+				}
+				tokenOffset = i;
+				return EMIT_TOKEN;
+			}
+			else if (lookingAt(i, "<%java>")) 
+			{
+				int end = processJava(i);
+				if (end < 0) 
+				{
+					// no </%java>
+					tokenLength = length - (i - offset);
+					offset = limit;
+				}
+				else 
+				{
+					// found </%java>
+					tokenLength = end - i + 1;
+					offset = end;
+				}
+				tokenOffset = i;
+				return JAVA_TOKEN;
+			}
 			/*
 			else if (lookingAt(i, "<%java>")) {
 				offset = i;
@@ -239,6 +274,36 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
 				return JAMON_TOKEN;
 			}
 		}
+		else if (currentContent == JAVA_TOKEN) {
+			int end = processJava(offset);
+			if (end < 0) 
+			{
+				// didn't see </%java>
+				return currentContent;
+			}
+			else 
+			{
+				// found it
+				tokenLength = end - offset + 1;
+				tokenOffset = end;
+				return JAMON_TOKEN;
+			}
+		}
+		else if (currentContent == EMIT_TOKEN) {
+			int end = processEmit(offset);
+			if (end < 0) 
+			{
+				// didn't see </%java>
+				return currentContent;
+			}
+			else 
+			{
+				// found it
+				tokenLength = end - offset + 1;
+				tokenOffset = end;
+				return EMIT_TOKEN;
+			}
+		}
 		/*
 		else if (currentContent == JAVA_TOKEN) {
 			return processJava();
@@ -250,12 +315,22 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
 		}
 	}
 	
-	IToken processJava() 
+	private int processArgs(int start)
 	{
-		return null;
+		return processSection(start, "</%args>");
 	}
-
-	private int processArgs(int start) 
+	
+	private int processJava(int start)
+	{
+		return processSection(start, "</%java>");
+	}
+	
+	private int processEmit(int start)
+	{
+		return processSection(start, "%>");
+	}
+	
+	private int processSection(int start, String endToken)
 	{
 		int i = start;
 		boolean inString = false; // FIXME: need to figure this out if in mid-partition!
@@ -279,9 +354,9 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
 			}
 			else if (! inString) 
 			{
-				if (lookingAt(i, "</%args>")) 
+				if (lookingAt(i, endToken)) 
 				{
-					return i + 7;
+					return i + endToken.length();
 				}
 			}
 			else
