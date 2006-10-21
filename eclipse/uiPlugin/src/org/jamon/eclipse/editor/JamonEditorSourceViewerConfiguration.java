@@ -89,6 +89,15 @@ public class JamonEditorSourceViewerConfiguration extends
         reconciler.setDamager(dr, IDocument.DEFAULT_CONTENT_TYPE);
         reconciler.setRepairer(dr, IDocument.DEFAULT_CONTENT_TYPE);
         
+        dr = new DefaultDamagerRepairer(new JamonScanner(colorProvider));
+        reconciler.setDamager(dr, JamonPartitionScanner.JAMON);
+        reconciler.setRepairer(dr, JamonPartitionScanner.JAMON);
+        
+        dr = new DefaultDamagerRepairer(new JamonArgsScanner(colorProvider));
+        reconciler.setDamager(dr, JamonPartitionScanner.ARGS);
+        reconciler.setRepairer(dr, JamonPartitionScanner.ARGS);
+
+        /*
         dr= new DefaultDamagerRepairer(new JamonDocScanner(colorProvider));
         reconciler.setDamager(dr, JamonPartitionScanner.JAMON_DOC);
         reconciler.setRepairer(dr, JamonPartitionScanner.JAMON_DOC);
@@ -116,7 +125,7 @@ public class JamonEditorSourceViewerConfiguration extends
         dr= new DefaultDamagerRepairer(new JamonJavaCodeScanner(colorProvider, "class"));
         reconciler.setDamager(dr, JamonPartitionScanner.JAMON_CLASS);
         reconciler.setRepairer(dr, JamonPartitionScanner.JAMON_CLASS);
-
+	*/
         return reconciler;
     }
 }
