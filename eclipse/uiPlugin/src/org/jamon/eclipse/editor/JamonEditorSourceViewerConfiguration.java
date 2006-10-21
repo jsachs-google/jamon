@@ -27,6 +27,7 @@ import org.eclipse.jface.text.rules.RuleBasedScanner;
 import org.eclipse.jface.text.source.IAnnotationHover;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.text.source.SourceViewerConfiguration;
+import org.eclipse.swt.graphics.RGB;
 import org.jamon.eclipse.JamonAnnotationHover;
 import org.jamon.eclipse.JamonEditor;
 
@@ -64,12 +65,21 @@ public class JamonEditorSourceViewerConfiguration extends
     	return result;
     }
     
+    private void addDamageRepairer(String name, RGB bgColor) {
+        DefaultDamagerRepairer dr = new DefaultDamagerRepairer(new SimpleBgScanner(colorProvider, bgColor));
+        reconciler.setDamager(dr, name);
+        reconciler.setRepairer(dr, name);
+    }
+    
+    private PresentationReconciler reconciler;
+    private JamonColorProvider colorProvider;
+    
     @Override
     public IPresentationReconciler getPresentationReconciler(ISourceViewer sourceViewer)
     {
-        PresentationReconciler reconciler= new PresentationReconciler();
+        reconciler= new PresentationReconciler();
         reconciler.setDocumentPartitioning(getConfiguredDocumentPartitioning(sourceViewer));
-        final JamonColorProvider colorProvider = new JamonColorProvider();
+        colorProvider = new JamonColorProvider();
         DefaultDamagerRepairer dr;
         RuleBasedScanner scanner = new RuleBasedScanner();
         // scanner.setDefaultReturnToken(Token.UNDEFINED);
@@ -77,21 +87,12 @@ public class JamonEditorSourceViewerConfiguration extends
         reconciler.setDamager(dr, IDocument.DEFAULT_CONTENT_TYPE);
         reconciler.setRepairer(dr, IDocument.DEFAULT_CONTENT_TYPE);
         
-        dr = new DefaultDamagerRepairer(new JamonScanner(colorProvider));
-        reconciler.setDamager(dr, JamonPartitionScanner.JAMON);
-        reconciler.setRepairer(dr, JamonPartitionScanner.JAMON);
+        addDamageRepairer(JamonPartitionScanner.JAMON, JamonColorProvider.JAMON_BG);
+        addDamageRepairer(JamonPartitionScanner.ARGS, JamonColorProvider.ARGS_BG);
+        addDamageRepairer(JamonPartitionScanner.JAVA, JamonColorProvider.JAVA_BG);
+        addDamageRepairer(JamonPartitionScanner.EMIT, JamonColorProvider.EMIT_BG);
+        addDamageRepairer(JamonPartitionScanner.CLASS, JamonColorProvider.CLASS_BG);
         
-        dr = new DefaultDamagerRepairer(new JamonArgsScanner(colorProvider));
-        reconciler.setDamager(dr, JamonPartitionScanner.ARGS);
-        reconciler.setRepairer(dr, JamonPartitionScanner.ARGS);
-
-        dr = new DefaultDamagerRepairer(new JamonJavaScanner(colorProvider));
-        reconciler.setDamager(dr, JamonPartitionScanner.JAVA);
-        reconciler.setRepairer(dr, JamonPartitionScanner.JAVA);
-
-        dr = new DefaultDamagerRepairer(new JamonEmitScanner(colorProvider));
-        reconciler.setDamager(dr, JamonPartitionScanner.EMIT);
-        reconciler.setRepairer(dr, JamonPartitionScanner.EMIT);
         /*
         dr= new DefaultDamagerRepairer(new JamonDocScanner(colorProvider));
         reconciler.setDamager(dr, JamonPartitionScanner.JAMON_DOC);
