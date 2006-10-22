@@ -90,7 +90,7 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
 
   private static IToken tokenFor(String contentType)
   {
-    if (contentType == null)
+    if (contentType == null || contentType.equals(JAMON_TOKEN.getData()))
     {
       return JAMON_TOKEN;
     }
@@ -122,7 +122,7 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
   }
 
   public int getTokenOffset()
-  {
+  { 
     return tokenOffset;
   }
 
@@ -193,7 +193,7 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
     }
     else
     {
-      tokenLength = end - i + 1;
+      tokenLength = end - i;
       offset = end;
     }
     tokenOffset = i;
@@ -221,18 +221,22 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
     {
       if (currentContent == s.token())
       {
-        int end = processSectionWithStringLiterals(offset, s.close());
+        int end = processSection(s, offset);
         if (end < 0)
         {
           // didn't see close
+          tokenOffset = offset; // partitionOffset;
+          tokenLength = limit - tokenOffset + 1;
+          offset = limit;
           return currentContent;
         }
         else
         {
           // found it
-          tokenLength = end - offset + 1;
-          tokenOffset = end;
-          return JAMON_TOKEN;
+          tokenOffset = offset; // partitionOffset;
+          tokenLength = end - tokenOffset + 1;
+          offset = end;
+          return currentContent; // JAMON_TOKEN;
         }
       }
     }
