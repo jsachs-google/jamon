@@ -61,17 +61,24 @@ DEFAULT: everywhere else
 public class JamonPartitionScanner implements IPartitionTokenScanner
 {
 
+  private static final char STRING_ESCAPE_CHAR = '\\';
   public static final String JAMON = IDocument.DEFAULT_CONTENT_TYPE;
   public static final String ARGS = "__jamon_partition_args";
   public static final String JAVA = "__jamon_partition_java";
   public static final String EMIT = "__jamon_partition_emit";
   public static final String CLASS = "__jamon_partition_class";
+  public static final String DOC = "__jamon_partition_doc";
+  public static final String ALIAS = "__jamon_partition_alias";
+  public static final String IMPORT = "__jamon_partition_import";
 
   private static final IToken JAVA_TOKEN = new Token(JAVA);
   private static final IToken EMIT_TOKEN = new Token(EMIT);
   private static final IToken JAMON_TOKEN = new Token(JAMON);
   private static final IToken ARGS_TOKEN = new Token(ARGS);
   private static final IToken CLASS_TOKEN = new Token(CLASS);
+  private static final IToken DOC_TOKEN = new Token(DOC);
+  private static final IToken ALIAS_TOKEN = new Token(ALIAS);
+  private static final IToken IMPORT_TOKEN = new Token(IMPORT);
 
   public static final String[] JAMON_PARTITION_TYPES = new String[] {
     JAMON_TOKEN.getData().toString(),
@@ -79,6 +86,9 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
     JAVA_TOKEN.getData().toString(),
     EMIT_TOKEN.getData().toString(),
     CLASS_TOKEN.getData().toString(),
+    DOC_TOKEN.getData().toString(),
+    ALIAS_TOKEN.getData().toString(),
+    IMPORT_TOKEN.getData().toString(),
   };
 
   private IDocument document;
@@ -114,6 +124,18 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
     else if (JAMON_TOKEN.getData().toString().equals(contentType))
     {
       return JAMON_TOKEN;
+    }
+    else if (ALIAS_TOKEN.getData().toString().equals(contentType))
+    {
+      return ALIAS_TOKEN;
+    }
+    else if (DOC_TOKEN.getData().toString().equals(contentType))
+    {
+      return DOC_TOKEN;
+    }
+    else if (IMPORT_TOKEN.getData().toString().equals(contentType))
+    {
+      return IMPORT_TOKEN;
     }
     else
     {
@@ -166,96 +188,92 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
     }
     return true;
   }
+  
+  private static enum Section {
+    ARGS("<%args>", "</%args>", ARGS_TOKEN, true), 
+    JAVA("<%java>", "</%java>", JAVA_TOKEN, true),
+    EMIT("<% ", "%>", EMIT_TOKEN, true),
+    CLASS("<%class>", "</%class>", CLASS_TOKEN, true),
+    ALIAS("<%alias>", "</%alias>", ALIAS_TOKEN, true),
+    IMPORT("<%import>", "</%import>", IMPORT_TOKEN, true),
+    DOC("<%doc>", "</%doc>", DOC_TOKEN, false);
+    
+    private Section(String p_open, String p_close, IToken p_token, boolean p_hasStrings) {
+      m_open = p_open;
+      m_close = p_close;
+      m_token = p_token;
+      m_hasStrings = p_hasStrings;
+    }
+    
+    public IToken token() {
+      return m_token;
+    }
+    
+    public String close() {
+      return m_close;
+    }
+    public String open() {
+      return m_open;
+    }
+    
+    public boolean hasStrings()
+    {
+      return m_hasStrings;
+    }
+    
+    private final String m_open;
+    private final String m_close;
+    private final IToken m_token;
+    private final boolean m_hasStrings;
+  }
 
   private IToken processDefault()
   {
     int i = offset;
     while (i < limit)
     {
-      if (lookingAt(i, "<%args>"))
+      for (Section s : Section.values()) 
       {
-        int end = processArgs(i);
-        if (end < 0)
+        if (lookingAt(i, s.open())) 
         {
-          // no </%args>
-          tokenLength = length - (i - offset);
-          offset = limit;
+          setTokenInfo(s, i);
+          return s.token();
         }
-        else
-        {
-          // found </%args>
-          tokenLength = end - i + 1;
-          offset = end;
-        }
-        tokenOffset = i;
-        return ARGS_TOKEN;
       }
-      if (lookingAt(i, "<% "))
-      {
-        int end = processEmit(i);
-        if (end < 0)
-        {
-          // no </%args>
-          tokenLength = length - (i - offset);
-          offset = limit;
-        }
-        else
-        {
-          // found </%args>
-          tokenLength = end - i + 1;
-          offset = end;
-        }
-        tokenOffset = i;
-        return EMIT_TOKEN;
-      }
-      else if (lookingAt(i, "<%java>"))
-      {
-        int end = processJava(i);
-        if (end < 0)
-        {
-          // no </%java>
-          tokenLength = length - (i - offset);
-          offset = limit;
-        }
-        else
-        {
-          // found </%java>
-          tokenLength = end - i + 1;
-          offset = end;
-        }
-        tokenOffset = i;
-        return JAVA_TOKEN;
-      }
-      else if (lookingAt(i, "<%class>"))
-      {
-        int end = processClass(i);
-        if (end < 0)
-        {
-          // no </%java>
-          tokenLength = length - (i - offset);
-          offset = limit;
-        }
-        else
-        {
-          // found </%java>
-          tokenLength = end - i + 1;
-          offset = end;
-        }
-        tokenOffset = i;
-        return CLASS_TOKEN;
-      }
-      /*
-      else if (lookingAt(i, "<%java>")) {
-        offset = i;
-        return JAVA_TOKEN;
-      }
-      */
       i++;
     }
     tokenLength = i - offset + 1;
     tokenOffset = offset;
     offset = i;
     return JAMON_TOKEN;
+  }
+  
+  private int processSection(Section s, int i)
+  {
+    if (s.hasStrings())
+    {
+      return processSectionWithStringLiterals(i, s.close());
+    }
+    else
+    {
+      return processSimpleSection(i, s.close());
+    }
+  }
+
+  private void setTokenInfo(Section s, int i)
+  {
+    int end = processSection(s, i);
+    if (end < 0)
+    {
+      tokenLength = length - (i - offset);
+      offset = limit;
+    }
+    else
+    {
+      tokenLength = end - i + 1;
+      offset = end;
+    }
+    tokenOffset = i;
   }
 
   public IToken nextToken()
@@ -270,110 +288,35 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
     }
     else
     {
-      return xnextToken();
-      /*
-      tokenOffset = 0;
-      tokenLength = length;
-      offset += length;
-      return JAMON_TOKEN;
-      */
+      return resumedNextToken();
     }
   }
 
-  public IToken xnextToken()
+  private IToken resumedNextToken()
   {
-    if (currentContent == ARGS_TOKEN) {
-      int end = processArgs(offset);
-      if (end < 0)
-      {
-        // didn't see </%args>
-        return currentContent;
-      }
-      else
-      {
-        // found it
-        tokenLength = end - offset + 1;
-        tokenOffset = end;
-        return JAMON_TOKEN;
-      }
-    }
-    else if (currentContent == JAVA_TOKEN) {
-      int end = processJava(offset);
-      if (end < 0)
-      {
-        // didn't see </%java>
-        return currentContent;
-      }
-      else
-      {
-        // found it
-        tokenLength = end - offset + 1;
-        tokenOffset = end;
-        return JAMON_TOKEN;
-      }
-    }
-    else if (currentContent == CLASS_TOKEN) {
-      int end = processClass(offset);
-      if (end < 0)
-      {
-        // didn't see </%java>
-        return currentContent;
-      }
-      else
-      {
-        // found it
-        tokenLength = end - offset + 1;
-        tokenOffset = end;
-        return JAMON_TOKEN;
-      }
-    }
-    else if (currentContent == EMIT_TOKEN) {
-      int end = processEmit(offset);
-      if (end < 0)
-      {
-        // didn't see </%java>
-        return currentContent;
-      }
-      else
-      {
-        // found it
-        tokenLength = end - offset + 1;
-        tokenOffset = end;
-        return EMIT_TOKEN;
-      }
-    }
-    /*
-    else if (currentContent == JAVA_TOKEN) {
-      return processJava();
-    }
-    */
-    else
+    for (Section s : Section.values())
     {
-      throw new IllegalStateException();
+      if (currentContent == s.token())
+      {
+        int end = processSectionWithStringLiterals(offset, s.close());
+        if (end < 0)
+        {
+          // didn't see close
+          return currentContent;
+        }
+        else
+        {
+          // found it
+          tokenLength = end - offset + 1;
+          tokenOffset = end;
+          return JAMON_TOKEN;
+        }
+      }
     }
+    throw new IllegalStateException();
   }
 
-  private int processArgs(int start)
-  {
-    return processSection(start, "</%args>");
-  }
-
-  private int processJava(int start)
-  {
-    return processSection(start, "</%java>");
-  }
-
-  private int processClass(int start)
-  {
-    return processSection(start, "</%class>");
-  }
-
-  private int processEmit(int start)
-  {
-    return processSection(start, "%>");
-  }
-
-  private int processSection(int start, String endToken)
+  private int processSectionWithStringLiterals(int start, String endToken)
   {
     int i = start;
     boolean inString = false; // FIXME: need to figure this out if in mid-partition!
@@ -385,7 +328,7 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
       {
         if (inString)
         {
-          if (lastChar != '\\')
+          if (lastChar != STRING_ESCAPE_CHAR)
           {
             inString = false;
           }
@@ -404,13 +347,27 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
       }
       else
       {
-        if (lastChar == '\\' && c == '\\')
+        if (lastChar == STRING_ESCAPE_CHAR && c == STRING_ESCAPE_CHAR)
         {
           lastChar = ICharacterScanner.EOF;
         }
       }
       i++;
       lastChar = c;
+    }
+    return -1;
+  }
+
+  private int processSimpleSection(int start, String endToken)
+  {
+    int i = start;
+    while (i < endOffset)
+    {
+      if (lookingAt(i, endToken))
+      {
+        return i + endToken.length();
+      }
+      i++;
     }
     return -1;
   }
