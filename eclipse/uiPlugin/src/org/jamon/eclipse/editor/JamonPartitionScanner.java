@@ -64,31 +64,40 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
   private static final char STRING_ESCAPE_CHAR = '\\';
   public static final String JAMON = IDocument.DEFAULT_CONTENT_TYPE;
   public static final String ARGS = "__jamon_partition_args";
+  public static final String XARGS = "__jamon_partition_xargs";
   public static final String JAVA = "__jamon_partition_java";
   public static final String EMIT = "__jamon_partition_emit";
   public static final String CLASS = "__jamon_partition_class";
   public static final String DOC = "__jamon_partition_doc";
   public static final String ALIAS = "__jamon_partition_alias";
   public static final String IMPORT = "__jamon_partition_import";
+  public static final String CALL = "__jamon_partition_call";
+  public static final String CALL_CONTENT = "__jamon_partition_callcontent";
 
   private static final IToken JAVA_TOKEN = new Token(JAVA);
   private static final IToken EMIT_TOKEN = new Token(EMIT);
   private static final IToken JAMON_TOKEN = new Token(JAMON);
   private static final IToken ARGS_TOKEN = new Token(ARGS);
+  private static final IToken XARGS_TOKEN = new Token(XARGS);
   private static final IToken CLASS_TOKEN = new Token(CLASS);
   private static final IToken DOC_TOKEN = new Token(DOC);
   private static final IToken ALIAS_TOKEN = new Token(ALIAS);
   private static final IToken IMPORT_TOKEN = new Token(IMPORT);
+  private static final IToken CALL_TOKEN = new Token(CALL);
+  private static final IToken CALL_CONTENT_TOKEN = new Token(CALL_CONTENT);
 
   public static final String[] JAMON_PARTITION_TYPES = new String[] {
     JAMON_TOKEN.getData().toString(),
     ARGS_TOKEN.getData().toString(),
+    XARGS_TOKEN.getData().toString(),
     JAVA_TOKEN.getData().toString(),
     EMIT_TOKEN.getData().toString(),
     CLASS_TOKEN.getData().toString(),
     DOC_TOKEN.getData().toString(),
     ALIAS_TOKEN.getData().toString(),
     IMPORT_TOKEN.getData().toString(),
+    CALL_TOKEN.getData().toString(),
+    CALL_CONTENT_TOKEN.getData().toString(),
   };
 
   private IDocument document;
@@ -108,6 +117,10 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
     else if (ARGS_TOKEN.getData().toString().equals(contentType))
     {
       return ARGS_TOKEN;
+    }
+    else if (XARGS_TOKEN.getData().toString().equals(contentType))
+    {
+      return XARGS_TOKEN;
     }
     else if (JAVA_TOKEN.getData().toString().equals(contentType))
     {
@@ -136,6 +149,10 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
     else if (IMPORT_TOKEN.getData().toString().equals(contentType))
     {
       return IMPORT_TOKEN;
+    }
+    else if (CALL_TOKEN.getData().toString().equals(contentType))
+    {
+      return CALL_TOKEN;
     }
     else
     {
@@ -191,11 +208,14 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
   
   private static enum Section {
     ARGS("<%args>", "</%args>", ARGS_TOKEN, true), 
+    XARGS("<%xargs>", "</%xargs>", XARGS_TOKEN, true), 
     JAVA("<%java>", "</%java>", JAVA_TOKEN, true),
     EMIT("<% ", "%>", EMIT_TOKEN, true),
     CLASS("<%class>", "</%class>", CLASS_TOKEN, true),
-    ALIAS("<%alias>", "</%alias>", ALIAS_TOKEN, true),
-    IMPORT("<%import>", "</%import>", IMPORT_TOKEN, true),
+    ALIAS("<%alias>", "</%alias>", ALIAS_TOKEN, false),
+    IMPORT("<%import>", "</%import>", IMPORT_TOKEN, false),
+    CALL_CONTENT("<&|", "</&>", CALL_CONTENT_TOKEN, true),
+    CALL("<&", "&>", CALL_TOKEN, true),
     DOC("<%doc>", "</%doc>", DOC_TOKEN, false);
     
     private Section(String p_open, String p_close, IToken p_token, boolean p_hasStrings) {

@@ -89,12 +89,15 @@ public class JamonEditorSourceViewerConfiguration extends
         
         addDamageRepairer(JamonPartitionScanner.JAMON, JamonColorProvider.JAMON_BG);
         addDamageRepairer(JamonPartitionScanner.ARGS, JamonColorProvider.ARGS_BG);
+        addDamageRepairer(JamonPartitionScanner.XARGS, JamonColorProvider.XARGS_BG);
         addDamageRepairer(JamonPartitionScanner.JAVA, JamonColorProvider.JAVA_BG);
         addDamageRepairer(JamonPartitionScanner.EMIT, JamonColorProvider.EMIT_BG);
         addDamageRepairer(JamonPartitionScanner.CLASS, JamonColorProvider.CLASS_BG);
         addDamageRepairer(JamonPartitionScanner.DOC, JamonColorProvider.DOC_BG);
         addDamageRepairer(JamonPartitionScanner.ALIAS, JamonColorProvider.ALIAS_BG);
         addDamageRepairer(JamonPartitionScanner.IMPORT, JamonColorProvider.IMPORT_BG);
+        addDamageRepairer(JamonPartitionScanner.CALL, JamonColorProvider.CALL_BG);
+        addDamageRepairer(JamonPartitionScanner.CALL_CONTENT, JamonColorProvider.CALL_CONTENT_BG);
         
         /*
         dr= new DefaultDamagerRepairer(new JamonDocScanner(colorProvider));
