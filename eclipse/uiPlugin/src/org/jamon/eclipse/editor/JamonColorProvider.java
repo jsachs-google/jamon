@@ -27,18 +27,6 @@ public class JamonColorProvider
     public static final RGB JAVADOC_DEFAULT = new RGB(0, 128, 128);
     public static final RGB JAMON_CODE_BG = new RGB(224,224,255);
 
-    public static final RGB JAMON_BG = new RGB(255, 255, 255);
-    public static final RGB ARGS_BG = new RGB(255, 255, 224);
-    public static final RGB JAVA_BG = new RGB(224, 255, 255);
-    public static final RGB EMIT_BG = new RGB(255, 224, 255);
-    public static final RGB CLASS_BG = new RGB(224, 224, 255);
-    public static final RGB ALIAS_BG = new RGB(255, 224, 224);
-    public static final RGB IMPORT_BG = new RGB(224, 255, 224);
-    public static final RGB CALL_BG = new RGB(192, 224, 255);
-    public static final RGB CALL_CONTENT_BG = new RGB(192, 255, 224);
-    public static final RGB XARGS_BG = new RGB(224, 192, 255);
-    public static final RGB DOC_BG = new RGB(160, 160, 160);
-
     private final Map<RGB,Color> m_colorTable= new HashMap<RGB,Color>(10);
 
     /**
