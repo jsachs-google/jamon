@@ -485,7 +485,7 @@ Today's temperature is
     <& _TemplateInclude: "/templates/weather/StormWarning" &>
     resulting in something like
     <pre class="tty"><&| escape//Html &>
-<& /weather/Sunny: new weather.WeatherReport("Friday", "Boston") &></&></pre>
+<& /weather/StormWarning: new weather.WeatherReport("Friday", "Boston") &></&></pre>
 
   <li><span class="concept">Fragment arguments</span>
 
@@ -501,7 +501,7 @@ Today's temperature is
     In order to pass a fragment argument, the target template or
     subtemplate must declare that it expects a fragment
     argument. This is done using the
-    <code><% "<%frag " %><var>name</var>< %"/>" %></code>
+    <code><% "<%frag " %><var>name</var><% "/>" %></code>
     declaration, which declares that the template or subtemplate
     expects a fragment argument.
 
