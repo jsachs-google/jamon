@@ -104,14 +104,11 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
     throw new IllegalArgumentException("unknown content type " + contentType);
   }
 
-  private int endOffset;
-
   public void setPartialRange(IDocument document, int offset, int length, String contentType, int partitionOffset)
   {
     this.document = document;
     this.offset = offset;
     this.length = length;
-    this.endOffset = offset + length;
     this.currentContent = tokenFor(contentType);
     this.limit = offset + length;
   }
@@ -185,7 +182,7 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
 
   private void setTokenInfo(PartitionDescriptor s, int i)
   {
-    int end = processSection(s, i);
+    int end = processSection(s, i + s.open().length());
     if (end < 0)
     {
       tokenLength = length - (i - offset);
@@ -194,7 +191,7 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
     else
     {
       tokenLength = end - i;
-      offset = end;
+      offset = end + 1;
     }
     tokenOffset = i;
   }
@@ -248,7 +245,7 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
     int i = start;
     boolean inString = false; // FIXME: need to figure this out if in mid-partition!
     int lastChar = ICharacterScanner.EOF;
-    while (i < endOffset)
+    while (i < limit)
     {
       int c = nextChar(i);
       if (c == '"')
@@ -288,7 +285,7 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
   private int processSimpleSection(int start, String endToken)
   {
     int i = start;
-    while (i < endOffset)
+    while (i < limit)
     {
       if (lookingAt(i, endToken))
       {
