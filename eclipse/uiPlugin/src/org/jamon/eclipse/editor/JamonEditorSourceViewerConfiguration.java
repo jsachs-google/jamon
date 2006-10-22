@@ -87,47 +87,10 @@ public class JamonEditorSourceViewerConfiguration extends
         reconciler.setDamager(dr, IDocument.DEFAULT_CONTENT_TYPE);
         reconciler.setRepairer(dr, IDocument.DEFAULT_CONTENT_TYPE);
         
-        addDamageRepairer(JamonPartitionScanner.JAMON, JamonColorProvider.JAMON_BG);
-        addDamageRepairer(JamonPartitionScanner.ARGS, JamonColorProvider.ARGS_BG);
-        addDamageRepairer(JamonPartitionScanner.XARGS, JamonColorProvider.XARGS_BG);
-        addDamageRepairer(JamonPartitionScanner.JAVA, JamonColorProvider.JAVA_BG);
-        addDamageRepairer(JamonPartitionScanner.EMIT, JamonColorProvider.EMIT_BG);
-        addDamageRepairer(JamonPartitionScanner.CLASS, JamonColorProvider.CLASS_BG);
-        addDamageRepairer(JamonPartitionScanner.DOC, JamonColorProvider.DOC_BG);
-        addDamageRepairer(JamonPartitionScanner.ALIAS, JamonColorProvider.ALIAS_BG);
-        addDamageRepairer(JamonPartitionScanner.IMPORT, JamonColorProvider.IMPORT_BG);
-        addDamageRepairer(JamonPartitionScanner.CALL, JamonColorProvider.CALL_BG);
-        addDamageRepairer(JamonPartitionScanner.CALL_CONTENT, JamonColorProvider.CALL_CONTENT_BG);
-        
-        /*
-        dr= new DefaultDamagerRepairer(new JamonDocScanner(colorProvider));
-        reconciler.setDamager(dr, JamonPartitionScanner.JAMON_DOC);
-        reconciler.setRepairer(dr, JamonPartitionScanner.JAMON_DOC);
-        
-        dr= new DefaultDamagerRepairer(new JamonJavaCodeScanner(colorProvider, "java"));
-        reconciler.setDamager(dr, JamonPartitionScanner.JAMON_JAVA);
-        reconciler.setRepairer(dr, JamonPartitionScanner.JAMON_JAVA);
-
-        dr= new DefaultDamagerRepairer(new JamonArgsScanner(colorProvider));
-        reconciler.setDamager(dr, JamonPartitionScanner.JAMON_ARGS);
-        reconciler.setRepairer(dr, JamonPartitionScanner.JAMON_ARGS);
-        
-        dr= new DefaultDamagerRepairer(new DefaultJamonScanner(colorProvider, "xargs"));
-        reconciler.setDamager(dr, JamonPartitionScanner.JAMON_XARGS);
-        reconciler.setRepairer(dr, JamonPartitionScanner.JAMON_XARGS);
-        
-        dr= new DefaultDamagerRepairer(new JamonAliasScanner(colorProvider));
-        reconciler.setDamager(dr, JamonPartitionScanner.JAMON_ALIAS);
-        reconciler.setRepairer(dr, JamonPartitionScanner.JAMON_ALIAS);
-
-        dr= new DefaultDamagerRepairer(new JamonImportScanner(colorProvider));
-        reconciler.setDamager(dr, JamonPartitionScanner.JAMON_IMPORT);
-        reconciler.setRepairer(dr, JamonPartitionScanner.JAMON_IMPORT);
-
-        dr= new DefaultDamagerRepairer(new JamonJavaCodeScanner(colorProvider, "class"));
-        reconciler.setDamager(dr, JamonPartitionScanner.JAMON_CLASS);
-        reconciler.setRepairer(dr, JamonPartitionScanner.JAMON_CLASS);
-	*/
+        for (PartitionDescriptor pd : PartitionDescriptor.values())
+        {
+          addDamageRepairer(pd.tokenname(), pd.bgcolor());
+        }
         return reconciler;
     }
 }

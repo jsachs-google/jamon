@@ -1,5 +1,8 @@
 package org.jamon.eclipse.editor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.rules.ICharacterScanner;
@@ -62,42 +65,19 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
 {
 
   private static final char STRING_ESCAPE_CHAR = '\\';
-  public static final String JAMON = IDocument.DEFAULT_CONTENT_TYPE;
-  public static final String ARGS = "__jamon_partition_args";
-  public static final String XARGS = "__jamon_partition_xargs";
-  public static final String JAVA = "__jamon_partition_java";
-  public static final String EMIT = "__jamon_partition_emit";
-  public static final String CLASS = "__jamon_partition_class";
-  public static final String DOC = "__jamon_partition_doc";
-  public static final String ALIAS = "__jamon_partition_alias";
-  public static final String IMPORT = "__jamon_partition_import";
-  public static final String CALL = "__jamon_partition_call";
-  public static final String CALL_CONTENT = "__jamon_partition_callcontent";
 
-  private static final IToken JAVA_TOKEN = new Token(JAVA);
-  private static final IToken EMIT_TOKEN = new Token(EMIT);
+  private static final String JAMON = IDocument.DEFAULT_CONTENT_TYPE;
   private static final IToken JAMON_TOKEN = new Token(JAMON);
-  private static final IToken ARGS_TOKEN = new Token(ARGS);
-  private static final IToken XARGS_TOKEN = new Token(XARGS);
-  private static final IToken CLASS_TOKEN = new Token(CLASS);
-  private static final IToken DOC_TOKEN = new Token(DOC);
-  private static final IToken ALIAS_TOKEN = new Token(ALIAS);
-  private static final IToken IMPORT_TOKEN = new Token(IMPORT);
-  private static final IToken CALL_TOKEN = new Token(CALL);
-  private static final IToken CALL_CONTENT_TOKEN = new Token(CALL_CONTENT);
 
-  public static final String[] JAMON_PARTITION_TYPES = new String[] {
-    JAMON_TOKEN.getData().toString(),
-    ARGS_TOKEN.getData().toString(),
-    XARGS_TOKEN.getData().toString(),
-    JAVA_TOKEN.getData().toString(),
-    EMIT_TOKEN.getData().toString(),
-    CLASS_TOKEN.getData().toString(),
-    DOC_TOKEN.getData().toString(),
-    ALIAS_TOKEN.getData().toString(),
-    IMPORT_TOKEN.getData().toString(),
-    CALL_TOKEN.getData().toString(),
-    CALL_CONTENT_TOKEN.getData().toString(),
+  public static final String[] JAMON_PARTITION_TYPES;
+  static 
+  {
+    List<String> types = new ArrayList<String>();
+    for (PartitionDescriptor pd : PartitionDescriptor.values())
+    {
+      types.add(pd.tokenname());
+    }
+    JAMON_PARTITION_TYPES = types.toArray(new String[types.size()]);
   };
 
   private IDocument document;
@@ -114,50 +94,14 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
     {
       return JAMON_TOKEN;
     }
-    else if (ARGS_TOKEN.getData().toString().equals(contentType))
+    for (PartitionDescriptor pd : PartitionDescriptor.values())
     {
-      return ARGS_TOKEN;
+      if (pd.tokenname().equals(contentType))
+      {
+        return pd.token();
+      }
     }
-    else if (XARGS_TOKEN.getData().toString().equals(contentType))
-    {
-      return XARGS_TOKEN;
-    }
-    else if (JAVA_TOKEN.getData().toString().equals(contentType))
-    {
-      return JAVA_TOKEN;
-    }
-    else if (EMIT_TOKEN.getData().toString().equals(contentType))
-    {
-      return EMIT_TOKEN;
-    }
-    else if (CLASS_TOKEN.getData().toString().equals(contentType))
-    {
-      return CLASS_TOKEN;
-    }
-    else if (JAMON_TOKEN.getData().toString().equals(contentType))
-    {
-      return JAMON_TOKEN;
-    }
-    else if (ALIAS_TOKEN.getData().toString().equals(contentType))
-    {
-      return ALIAS_TOKEN;
-    }
-    else if (DOC_TOKEN.getData().toString().equals(contentType))
-    {
-      return DOC_TOKEN;
-    }
-    else if (IMPORT_TOKEN.getData().toString().equals(contentType))
-    {
-      return IMPORT_TOKEN;
-    }
-    else if (CALL_TOKEN.getData().toString().equals(contentType))
-    {
-      return CALL_TOKEN;
-    }
-    else
-    {
-      throw new IllegalArgumentException("unknown content type " + contentType);
-    }
+    throw new IllegalArgumentException("unknown content type " + contentType);
   }
 
   private int endOffset;
@@ -206,53 +150,12 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
     return true;
   }
   
-  private static enum Section {
-    ARGS("<%args>", "</%args>", ARGS_TOKEN, true), 
-    XARGS("<%xargs>", "</%xargs>", XARGS_TOKEN, true), 
-    JAVA("<%java>", "</%java>", JAVA_TOKEN, true),
-    EMIT("<% ", "%>", EMIT_TOKEN, true),
-    CLASS("<%class>", "</%class>", CLASS_TOKEN, true),
-    ALIAS("<%alias>", "</%alias>", ALIAS_TOKEN, false),
-    IMPORT("<%import>", "</%import>", IMPORT_TOKEN, false),
-    CALL_CONTENT("<&|", "</&>", CALL_CONTENT_TOKEN, true),
-    CALL("<&", "&>", CALL_TOKEN, true),
-    DOC("<%doc>", "</%doc>", DOC_TOKEN, false);
-    
-    private Section(String p_open, String p_close, IToken p_token, boolean p_hasStrings) {
-      m_open = p_open;
-      m_close = p_close;
-      m_token = p_token;
-      m_hasStrings = p_hasStrings;
-    }
-    
-    public IToken token() {
-      return m_token;
-    }
-    
-    public String close() {
-      return m_close;
-    }
-    public String open() {
-      return m_open;
-    }
-    
-    public boolean hasStrings()
-    {
-      return m_hasStrings;
-    }
-    
-    private final String m_open;
-    private final String m_close;
-    private final IToken m_token;
-    private final boolean m_hasStrings;
-  }
-
   private IToken processDefault()
   {
     int i = offset;
     while (i < limit)
     {
-      for (Section s : Section.values()) 
+      for (PartitionDescriptor s : PartitionDescriptor.values()) 
       {
         if (lookingAt(i, s.open())) 
         {
@@ -268,7 +171,7 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
     return JAMON_TOKEN;
   }
   
-  private int processSection(Section s, int i)
+  private int processSection(PartitionDescriptor s, int i)
   {
     if (s.hasStrings())
     {
@@ -280,7 +183,7 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
     }
   }
 
-  private void setTokenInfo(Section s, int i)
+  private void setTokenInfo(PartitionDescriptor s, int i)
   {
     int end = processSection(s, i);
     if (end < 0)
@@ -314,7 +217,7 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
 
   private IToken resumedNextToken()
   {
-    for (Section s : Section.values())
+    for (PartitionDescriptor s : PartitionDescriptor.values())
     {
       if (currentContent == s.token())
       {
