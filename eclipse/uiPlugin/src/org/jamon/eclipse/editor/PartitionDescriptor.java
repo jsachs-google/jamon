@@ -23,8 +23,8 @@ public enum PartitionDescriptor {
   
   private PartitionDescriptor(String p_open, String p_close, boolean p_hasStrings, RGB p_bgcolor)
   {
-    m_open = p_open;
-    m_close = p_close;
+    m_open = p_open.toCharArray();
+    m_close = p_close.toCharArray();
     m_name = "__jamon_parition_" + name();
     m_token = new Token(m_name);
     m_hasStrings = p_hasStrings;
@@ -41,7 +41,7 @@ public enum PartitionDescriptor {
     return m_name;
   }
 
-  public String close()
+  public char[] close()
   {
     return m_close;
   }
@@ -51,7 +51,7 @@ public enum PartitionDescriptor {
     return m_bgcolor;
   }
 
-  public String open()
+  public char[] open()
   {
     return m_open;
   }
@@ -61,9 +61,9 @@ public enum PartitionDescriptor {
     return m_hasStrings;
   }
 
-  private final String m_open;
+  private final char[] m_open;
 
-  private final String m_close;
+  private final char[] m_close;
 
   private final IToken m_token;
 

@@ -135,11 +135,11 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
     }
   }
 
-  private boolean lookingAt(int off, String match)
+  private boolean lookingAt(int off, char[] match)
   {
-    for (int i = 0; i < match.length(); ++i)
+    for (int i = 0; i < match.length; ++i)
     {
-      if (nextChar(i + off) != match.charAt(i))
+      if (nextChar(i + off) != match[i])
       {
         return false;
       }
@@ -168,21 +168,21 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
     return JAMON_TOKEN;
   }
   
-  private int processSection(PartitionDescriptor s, int i)
+  private int processSection(PartitionDescriptor pd, int i)
   {
-    if (s.hasStrings())
+    if (pd.hasStrings())
     {
-      return processSectionWithStringLiterals(i, s.close());
+      return processSectionWithStringLiterals(pd, i);
     }
     else
     {
-      return processSimpleSection(i, s.close());
+      return processSimpleSection(pd, i);
     }
   }
 
-  private void setTokenInfo(PartitionDescriptor s, int i)
+  private void setTokenInfo(PartitionDescriptor pd, int i)
   {
-    int end = processSection(s, i + s.open().length());
+    int end = processSection(pd, i + pd.open().length);
     if (end < 0)
     {
       tokenLength = length - (i - offset);
@@ -240,7 +240,7 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
     throw new IllegalStateException();
   }
 
-  private int processSectionWithStringLiterals(int start, String endToken)
+  private int processSectionWithStringLiterals(PartitionDescriptor pd, int start)
   {
     int i = start;
     boolean inString = false; // FIXME: need to figure this out if in mid-partition!
@@ -264,9 +264,9 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
       }
       else if (! inString)
       {
-        if (lookingAt(i, endToken))
+        if (lookingAt(i, pd.close()))
         {
-          return i + endToken.length();
+          return i + pd.close().length;
         }
       }
       else
@@ -282,14 +282,14 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
     return -1;
   }
 
-  private int processSimpleSection(int start, String endToken)
+  private int processSimpleSection(PartitionDescriptor pd, int start)
   {
     int i = start;
     while (i < limit)
     {
-      if (lookingAt(i, endToken))
+      if (lookingAt(i, pd.close()))
       {
-        return i + endToken.length();
+        return i + pd.close().length;
       }
       i++;
     }
