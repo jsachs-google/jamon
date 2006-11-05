@@ -11,63 +11,13 @@ import org.eclipse.jface.text.rules.IToken;
 import org.eclipse.jface.text.rules.Token;
 
 
-/*
-partition jamon:
-
-find first tag
- if doc, switch to doc mode
- if emit or args or java, switch to string-handling mode
- consume everything until see a close tag or another open tag
- if another open tag, push current and recurse
- when find close tag, partition done
-
-This doesn't quite work because we can't give nested partitions
-but we allow nested tags
-
-What are the partitions below?
-
-<%method foo>
-
-  <%args>
-     String s = "<%/args>";
-     int i;
-  </%args>
-
-  <& /a/b/c: "<%method>" &>
-  <% "<&| foo: 3 &></&>" %>
-<%
-5
-  %>
-  <&| /a/c &>
-      ...
-  </&>
-
-% int j = i;
-<%java>
-j++
-</%java>
-
-</%method>
-
-What about:
-
-ARGS: line 18-19
-CALL: line 22
-EMIT: line 23
-CALL: line 24
-JAVA: line 28
-JAVA: line 30
-DEFAULT: everywhere else
-
- */
-
 public class JamonPartitionScanner implements IPartitionTokenScanner
 {
 
   private static final char STRING_ESCAPE_CHAR = '\\';
 
   private static final String JAMON = IDocument.DEFAULT_CONTENT_TYPE;
-  private static final IToken JAMON_TOKEN = new Token(JAMON);
+  static final IToken JAMON_TOKEN = new Token(JAMON);
 
   public static final String[] JAMON_PARTITION_TYPES;
   static 
@@ -162,7 +112,7 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
       }
       i++;
     }
-    tokenLength = i - offset + 1;
+    tokenLength = i - offset;
     tokenOffset = offset;
     offset = i;
     return JAMON_TOKEN;

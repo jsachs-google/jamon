@@ -52,7 +52,7 @@ public class JamonColorProvider
         Color color= m_colorTable.get(rgb);
         if (color == null) 
         {
-            color= new Color(Display.getCurrent(), rgb);
+            color = s_colorFactory.colorFor(rgb);
             m_colorTable.put(rgb, color);
         }
         return color;
@@ -66,10 +66,29 @@ public class JamonColorProvider
       }
       return s_instance;
     }
+
+    private static ColorFactory s_colorFactory = new DefaultColorFactory();
     
     private JamonColorProvider()
     {
-      
+    }
+    
+    interface ColorFactory
+    {
+      Color colorFor(RGB p_rgb);
+    }
+    
+    static class DefaultColorFactory implements ColorFactory
+    {
+      public Color colorFor(RGB p_rgb)
+      {
+        return new Color(Display.getCurrent(), p_rgb);      
+      }
+    }
+
+    static void setColorFactory(ColorFactory p_colorFactory)
+    {
+      s_colorFactory = p_colorFactory;
     }
     
     private static JamonColorProvider s_instance;
