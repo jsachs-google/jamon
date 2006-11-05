@@ -23,74 +23,68 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.presentation.IPresentationReconciler;
 import org.eclipse.jface.text.presentation.PresentationReconciler;
 import org.eclipse.jface.text.rules.DefaultDamagerRepairer;
+import org.eclipse.jface.text.rules.ITokenScanner;
 import org.eclipse.jface.text.rules.RuleBasedScanner;
 import org.eclipse.jface.text.source.IAnnotationHover;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.text.source.SourceViewerConfiguration;
-import org.eclipse.swt.graphics.RGB;
 import org.jamon.eclipse.JamonAnnotationHover;
 import org.jamon.eclipse.JamonEditor;
 
-public class JamonEditorSourceViewerConfiguration extends
-        SourceViewerConfiguration
+public class JamonEditorSourceViewerConfiguration extends SourceViewerConfiguration
 {
-    private static final IAnnotationHover s_annotationHover = 
-        new JamonAnnotationHover(); 
+  private static final IAnnotationHover s_annotationHover = new JamonAnnotationHover();
 
-    @Override
-    public IAnnotationHover getAnnotationHover(ISourceViewer sourceViewer) 
-    {
-        return s_annotationHover;
-    }
+  @Override
+  public IAnnotationHover getAnnotationHover(ISourceViewer sourceViewer)
+  {
+    return s_annotationHover;
+  }
 
-    @Override
-    public IAnnotationHover getOverviewRulerAnnotationHover(
-        ISourceViewer sourceViewer)
+  @Override
+  public IAnnotationHover getOverviewRulerAnnotationHover(ISourceViewer sourceViewer)
+  {
+    return s_annotationHover;
+  }
+
+  @Override
+  public String getConfiguredDocumentPartitioning(ISourceViewer sourceViewer)
+  {
+    return JamonEditor.JAMON_PARTITIONING;
+  }
+
+  @Override
+  public String[] getConfiguredContentTypes(ISourceViewer sourceViewer)
+  {
+    String[] result = new String[JamonPartitionScanner.JAMON_PARTITION_TYPES.length + 1];
+    System.arraycopy(JamonPartitionScanner.JAMON_PARTITION_TYPES, 0, result, 1, JamonPartitionScanner.JAMON_PARTITION_TYPES.length);
+    result[0] = IDocument.DEFAULT_CONTENT_TYPE;
+    return result;
+  }
+
+  private void addDamageRepairer(String name, PresentationReconciler reconciler, ITokenScanner p_scanner)
+  {
+    DefaultDamagerRepairer dr = new DefaultDamagerRepairer(p_scanner);
+    reconciler.setDamager(dr, name);
+    reconciler.setRepairer(dr, name);
+  }
+  
+  @Override
+  public IPresentationReconciler getPresentationReconciler(ISourceViewer sourceViewer)
+  {
+    PresentationReconciler reconciler = new PresentationReconciler();
+    reconciler.setDocumentPartitioning(getConfiguredDocumentPartitioning(sourceViewer));
+    DefaultDamagerRepairer dr;
+    RuleBasedScanner scanner = new RuleBasedScanner();
+    // scanner.setDefaultReturnToken(Token.UNDEFINED);
+    dr = new DefaultDamagerRepairer(scanner);
+    reconciler.setDamager(dr, IDocument.DEFAULT_CONTENT_TYPE);
+    reconciler.setRepairer(dr, IDocument.DEFAULT_CONTENT_TYPE);
+
+    for (PartitionDescriptor pd : PartitionDescriptor.values())
     {
-        return s_annotationHover;
+      addDamageRepairer(pd.tokenname(), reconciler, pd.scanner());
     }
-    
-    @Override
-    public String getConfiguredDocumentPartitioning(ISourceViewer sourceViewer) 
-    {
-        return JamonEditor.JAMON_PARTITIONING;
-    }
-    
-    @Override
-    public String[] getConfiguredContentTypes(ISourceViewer sourceViewer) 
-    {
-    	String[] result = new String[JamonPartitionScanner.JAMON_PARTITION_TYPES.length + 1];
-    	System.arraycopy(JamonPartitionScanner.JAMON_PARTITION_TYPES, 0, result, 1, JamonPartitionScanner.JAMON_PARTITION_TYPES.length);
-    	result[0] = IDocument.DEFAULT_CONTENT_TYPE;
-    	return result;
-    }
-    
-    private void addDamageRepairer(String name, RGB bgColor) {
-        DefaultDamagerRepairer dr = new DefaultDamagerRepairer(new SimpleBgScanner(colorProvider, bgColor));
-        reconciler.setDamager(dr, name);
-        reconciler.setRepairer(dr, name);
-    }
-    
-    private PresentationReconciler reconciler;
-    private JamonColorProvider colorProvider;
-    
-    @Override
-    public IPresentationReconciler getPresentationReconciler(ISourceViewer sourceViewer)
-    {
-        reconciler= new PresentationReconciler();
-        reconciler.setDocumentPartitioning(getConfiguredDocumentPartitioning(sourceViewer));
-        colorProvider = new JamonColorProvider();
-        DefaultDamagerRepairer dr;
-        RuleBasedScanner scanner = new RuleBasedScanner();
-        // scanner.setDefaultReturnToken(Token.UNDEFINED);
-        dr= new DefaultDamagerRepairer(scanner);
-        reconciler.setDamager(dr, IDocument.DEFAULT_CONTENT_TYPE);
-        reconciler.setRepairer(dr, IDocument.DEFAULT_CONTENT_TYPE);
-        
-        for (PartitionDescriptor pd : PartitionDescriptor.values())
-        {
-          addDamageRepairer(pd.tokenname(), pd.bgcolor());
-        }
-        return reconciler;
-    }
+    return reconciler;
+  }
 }

@@ -57,4 +57,20 @@ public class JamonColorProvider
         }
         return color;
     }
+    
+    public static synchronized JamonColorProvider instance()
+    {
+      if (s_instance == null)
+      {
+        s_instance = new JamonColorProvider();
+      }
+      return s_instance;
+    }
+    
+    private JamonColorProvider()
+    {
+      
+    }
+    
+    private static JamonColorProvider s_instance;
 }

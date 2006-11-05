@@ -4,6 +4,7 @@
 package org.jamon.eclipse.editor;
 
 import org.eclipse.jface.text.rules.IToken;
+import org.eclipse.jface.text.rules.ITokenScanner;
 import org.eclipse.jface.text.rules.Token;
 import org.eclipse.swt.graphics.RGB;
 
@@ -15,22 +16,32 @@ public enum PartitionDescriptor {
   ALIAS("<%alias>", "</%alias>", false, new RGB(255, 224, 224)),
   IMPORT("<%import>", "</%import>", false, new RGB(192, 224, 255)),
   CALL_CONTENT("<&|", "&>", true, new RGB(192, 255, 224)),
-  CALL("<&", "&>", true, new RGB(224, 192, 255)),
+  CALL("<&", "&>", true, new RGB(255, 192, 224)), // new CallScanner()),
   FOR("<%for ", "%>", true, new RGB(224, 255, 192)),
   FOR_CLOSE("</%for>", "", false, new RGB(224, 255, 192)),
   EMIT("<% ", "%>", true, new RGB(224, 224, 255)),
   DOC("<%doc>", "</%doc>", false, new RGB(160, 160, 255));
   
   private PartitionDescriptor(String p_open, String p_close, boolean p_hasStrings, RGB p_bgcolor)
+  { 
+    this(p_open, p_close, p_hasStrings, new SimpleBgScanner(p_bgcolor));
+  }
+  
+  private PartitionDescriptor(String p_open, String p_close, boolean p_hasStrings, ITokenScanner p_scanner)
   {
     m_open = p_open.toCharArray();
     m_close = p_close.toCharArray();
     m_name = "__jamon_parition_" + name();
     m_token = new Token(m_name);
     m_hasStrings = p_hasStrings;
-    m_bgcolor = p_bgcolor;
+    m_scanner = p_scanner;
   }
 
+  public ITokenScanner scanner()
+  {
+    return m_scanner;
+  }
+  
   public IToken token()
   {
     return m_token;
@@ -44,11 +55,6 @@ public enum PartitionDescriptor {
   public char[] close()
   {
     return m_close;
-  }
-
-  public RGB bgcolor()
-  {
-    return m_bgcolor;
   }
 
   public char[] open()
@@ -71,5 +77,5 @@ public enum PartitionDescriptor {
 
   private final String m_name;
 
-  private final RGB m_bgcolor;
+  private final ITokenScanner m_scanner;
 }

@@ -7,12 +7,14 @@ import org.eclipse.jface.text.rules.Token;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.RGB;
 
-public class SimpleBgScanner extends BufferedRuleBasedScanner 
+public class SimpleBgScanner extends BufferedRuleBasedScanner
 {
-    public SimpleBgScanner(JamonColorProvider provider, RGB bgColor) 
-    {
-        final IToken defaultToken= new Token(new TextAttribute(provider.getColor(JamonColorProvider.DEFAULT), provider.getColor(bgColor), SWT.NORMAL));
-        setDefaultReturnToken(defaultToken);
-    }
+  public SimpleBgScanner(RGB bgColor)
+  {
+    final JamonColorProvider provider = JamonColorProvider.instance();
+    final IToken defaultToken =
+      new Token(new TextAttribute(provider.getColor(JamonColorProvider.DEFAULT), provider.getColor(bgColor), SWT.NORMAL));
+    setDefaultReturnToken(defaultToken);
+  }
 
 }

@@ -8,24 +8,29 @@ import org.eclipse.jface.text.IDocumentPartitioner;
 import org.eclipse.jface.text.rules.FastPartitioner;
 import org.jamon.eclipse.JamonEditor;
 
-public class JamonDocumentSetupParticipant implements IDocumentSetupParticipant {
-    
-    public JamonDocumentSetupParticipant() {
-    }
+public class JamonDocumentSetupParticipant implements IDocumentSetupParticipant
+{
 
-    /*
-     * @see org.eclipse.core.filebuffers.IDocumentSetupParticipant#setup(org.eclipse.jface.text.IDocument)
-     */
-    public void setup(IDocument document) {
-        if (document instanceof IDocumentExtension3) {
-            IDocumentExtension3 extension3= (IDocumentExtension3) document;
-            IDocumentPartitioner partitioner= new FastPartitioner(new JamonPartitionScanner(), JamonPartitionScanner.JAMON_PARTITION_TYPES);
-            IDocumentPartitioner oldPartitioner = document.getDocumentPartitioner();
-            if (oldPartitioner != null) {
-            	oldPartitioner.disconnect();
-            }
-            partitioner.connect(document);
-            extension3.setDocumentPartitioner(JamonEditor.JAMON_PARTITIONING, partitioner);
-        }
+  public JamonDocumentSetupParticipant()
+  {
+  }
+
+  /*
+   * @see org.eclipse.core.filebuffers.IDocumentSetupParticipant#setup(org.eclipse.jface.text.IDocument)
+   */
+  public void setup(IDocument document)
+  {
+    if (document instanceof IDocumentExtension3)
+    {
+      IDocumentExtension3 extension3 = (IDocumentExtension3) document;
+      IDocumentPartitioner partitioner = new FastPartitioner(new JamonPartitionScanner(), JamonPartitionScanner.JAMON_PARTITION_TYPES);
+      IDocumentPartitioner oldPartitioner = document.getDocumentPartitioner();
+      if (oldPartitioner != null)
+      {
+        oldPartitioner.disconnect();
+      }
+      partitioner.connect(document);
+      extension3.setDocumentPartitioner(JamonEditor.JAMON_PARTITIONING, partitioner);
     }
+  }
 }
