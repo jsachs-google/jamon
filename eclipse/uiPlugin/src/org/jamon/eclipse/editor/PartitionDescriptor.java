@@ -20,7 +20,7 @@ public enum PartitionDescriptor {
   FOR("<%for ", "%>", true, new RGB(224, 255, 192)),
   FOR_CLOSE("</%for>", "", false, new RGB(224, 255, 192)),
   EMIT("<% ", "%>", true, new RGB(224, 224, 255)),
-  DOC("<%doc>", "</%doc>", false, new RGB(160, 160, 255));
+  DOC("<%doc>", "</%doc>", false, new DocScanner());
   
   private PartitionDescriptor(String p_open, String p_close, boolean p_hasStrings, RGB p_bgcolor)
   { 
