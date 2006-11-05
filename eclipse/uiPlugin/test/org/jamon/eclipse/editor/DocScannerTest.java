@@ -1,58 +1,37 @@
 package org.jamon.eclipse.editor;
 
-import org.eclipse.jface.text.rules.Token;
+import org.eclipse.jface.text.rules.ITokenScanner;
 
-import junit.framework.TestCase;
-
-public class DocScannerTest extends TestCase
+public class DocScannerTest extends AbstractScannerTest
 {
   @Override
-  protected void setUp() throws Exception
+  protected ITokenScanner makeScanner()
   {
-    super.setUp();
-    JamonColorProvider.setColorFactory(new MockColorFactory());
-    m_scanner = new DocScanner();
+    return new DocScanner();
   }
-  
-  private DocScanner m_scanner;
   
   public void testFull()
   {
-    MockDocument doc = new MockDocument("<%doc>this is a complete doc section\n   </%doc>");
-    m_scanner.setRange(doc, 0, doc.getLength());
-    assertEquals(DocScanner.TAG, m_scanner.nextToken());
-    assertEquals(0, m_scanner.getTokenOffset());
-    assertEquals(6, m_scanner.getTokenLength());
-    assertEquals(DocScanner.DOC, m_scanner.nextToken());
-    assertEquals(6, m_scanner.getTokenOffset());
-    assertEquals(doc.getLength() - 13, m_scanner.getTokenLength());
-    assertEquals(DocScanner.TAG, m_scanner.nextToken());
-    assertEquals(doc.getLength() - 7, m_scanner.getTokenOffset());
-    assertEquals(7, m_scanner.getTokenLength());
-    assertEquals(Token.EOF, m_scanner.nextToken());
+    setDocument("<%doc>this is a complete doc section\n   </%doc>");
+    checkToken(6, DocScanner.TAG);
+    checkToken(34, DocScanner.DOC);
+    checkToken(7, DocScanner.TAG);
+    checkDone();
   }
 
   public void testPartial()
   {
-    MockDocument doc = new MockDocument("<%doc>this is not a complete doc section\n   </%doc");
-    m_scanner.setRange(doc, 0, doc.getLength());
-    assertEquals(DocScanner.TAG, m_scanner.nextToken());
-    assertEquals(0, m_scanner.getTokenOffset());
-    assertEquals(6, m_scanner.getTokenLength());
-    assertEquals(DocScanner.DOC, m_scanner.nextToken());
-    assertEquals(6, m_scanner.getTokenOffset());
-    assertEquals(doc.getLength() - 6, m_scanner.getTokenLength());
-    assertEquals(Token.EOF, m_scanner.nextToken());
+    setDocument("<%doc>this is not a complete doc section\n   </%doc");
+    checkToken(6, DocScanner.TAG);
+    checkToken(44, DocScanner.DOC);
+    checkDone();
   }
 
   public void testMinimal()
   {
-    MockDocument doc = new MockDocument("<%doc>");
-    m_scanner.setRange(doc, 0, doc.getLength());
-    assertEquals(DocScanner.TAG, m_scanner.nextToken());
-    assertEquals(0, m_scanner.getTokenOffset());
-    assertEquals(6, m_scanner.getTokenLength());
-    assertEquals(Token.EOF, m_scanner.nextToken());
+    setDocument("<%doc>");
+    checkToken(6, DocScanner.TAG);
+    checkDone();
   }
 
 
