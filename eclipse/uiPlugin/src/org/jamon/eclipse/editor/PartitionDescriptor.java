@@ -16,7 +16,7 @@ public enum PartitionDescriptor {
   ALIAS("<%alias>", "</%alias>", false, new RGB(255, 224, 224)),
   IMPORT("<%import>", "</%import>", false, new RGB(192, 224, 255)),
   CALL_CONTENT("<&|", "&>", true, new RGB(192, 255, 224)),
-  CALL("<&", "&>", true, new RGB(255, 192, 224)), // new CallScanner()),
+  CALL("<&", "&>", true, new CallScanner()),
   FOR("<%for ", "%>", true, new RGB(224, 255, 192)),
   FOR_CLOSE("</%for>", "", false, new RGB(224, 255, 192)),
   EMIT("<% ", "%>", true, new RGB(224, 224, 255)),
