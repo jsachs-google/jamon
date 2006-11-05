@@ -4,11 +4,16 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.TextAttribute;
 import org.eclipse.jface.text.rules.IToken;
 import org.eclipse.jface.text.rules.Token;
+import org.eclipse.jface.util.Assert;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.RGB;
 
 public class CallScanner extends AbstractScanner
 {
+  
+  private static final char[] OPEN = "<&".toCharArray();
+  private static final char[] CLOSE = "&>".toCharArray();
+  
   public IToken nextToken()
   {
     if (offset >= limit)
@@ -16,33 +21,41 @@ public class CallScanner extends AbstractScanner
       return Token.EOF;
     }
     tokenOffset = offset;
-    if (! sawOpen)
+
+    if (initialOffset == offset)
     {
-      if (lookingAt(offset, "<&".toCharArray()))
+      Assert.isTrue(lookingAt(offset, OPEN));
+      tokenLength = 2;
+      offset += 2;
+      return TAG;
+    }
+
+    if (sawPath)
+    {
+      if (lookingAt(limit-2, CLOSE))
       {
-        tokenLength = 2;
-        offset += 2;
-        sawOpen = true;
-        return TAG;
+        if (offset == limit - 2)
+        {
+          tokenLength = 2;
+          offset += 2;
+          return TAG;
+        }
+        else
+        {
+          tokenLength = limit - tokenOffset - 2;
+          offset += tokenLength;
+          return DEFAULT;
+        }
       }
       else
       {
-        System.err.println("huh!?!");
+        // partial
+        tokenLength = limit - tokenOffset;
+        offset += tokenLength;
+        return DEFAULT;
       }
     }
-    if (offset == limit - 2)
-    {
-      if (lookingAt(offset, "&>".toCharArray()))
-      {
-        tokenLength = 2;
-        offset += 2;
-        return TAG;
-      }
-      else
-      {
-        System.err.println("huh?!?");
-      }
-    }
+ 
     if (isWhitespace(charAt(offset)))
     {
       offset++;
@@ -53,25 +66,20 @@ public class CallScanner extends AbstractScanner
       tokenLength = offset - tokenOffset;
       return Token.WHITESPACE;
     }
-    if (! sawPath)
+
+    offset++;
+    while (offset < limit)
     {
-      offset++;
-      while (offset < limit)
+      int c = charAt(offset);
+      if (isWhitespace(c) || c == ':' || c == ';')
       {
-        int c = charAt(offset);
-        if (isWhitespace(c) || c == ':' || c == ';')
-        {
-          break;
-        }
-        offset++;
+        break;
       }
-      tokenLength = offset - tokenOffset;
-      sawPath = true;
-      return PATH;
+      offset++;
     }
-    tokenLength = limit - tokenOffset - 2;
-    offset += tokenLength;
-    return DEFAULT;
+    tokenLength = offset - tokenOffset;
+    sawPath = true;
+    return PATH;
   }
   
   private boolean isWhitespace(int ch)
@@ -83,7 +91,6 @@ public class CallScanner extends AbstractScanner
   public void setRange(IDocument p_document, int p_offset, int p_length)
   {
     super.setRange(p_document, p_offset, p_length);
-    this.sawOpen = false;
     this.sawPath = false;
   }
   
@@ -91,7 +98,6 @@ public class CallScanner extends AbstractScanner
   static final IToken PATH = new Token(new TextAttribute(JamonColorProvider.instance().getColor(new RGB(127, 31, 15)), null, SWT.ITALIC | SWT.BOLD));
   static final IToken DEFAULT = new Token(new TextAttribute(JamonColorProvider.instance().getColor(new RGB(0, 0, 0))));
   
-  private boolean sawOpen;
   private boolean sawPath;
 
 }

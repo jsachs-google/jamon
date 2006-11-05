@@ -18,8 +18,29 @@ public class CallScannerTest extends AbstractScannerTest
     checkToken(2, CallScanner.TAG);
     checkToken(1, Token.WHITESPACE);
     checkToken(6, CallScanner.PATH);
-    checkToken(1, Token.WHITESPACE);
+    checkToken(1, CallScanner.DEFAULT);
     checkToken(2, CallScanner.TAG);
+    checkDone();
+  }
+  
+  public void testWithArgs()
+  {
+    setDocument("<& /a/b/c : x => 3; y => \"yes\" &>");
+    checkToken(2, CallScanner.TAG);
+    checkToken(1, Token.WHITESPACE);
+    checkToken(6, CallScanner.PATH);
+    checkToken(22, CallScanner.DEFAULT);
+    checkToken(2, CallScanner.TAG);
+    checkDone();
+  }
+  
+  public void testPartial()
+  {
+    setDocument("<& /a/b/c  : x => 3 &");
+    checkToken(2, CallScanner.TAG);
+    checkToken(1, Token.WHITESPACE);
+    checkToken(6, CallScanner.PATH);
+    checkToken(12, CallScanner.DEFAULT);
     checkDone();
   }
 
