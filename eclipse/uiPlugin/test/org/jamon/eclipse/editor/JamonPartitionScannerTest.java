@@ -3,20 +3,10 @@ package org.jamon.eclipse.editor;
 import junit.framework.TestCase;
 
 import org.eclipse.jface.text.rules.Token;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.RGB;
 
 public class JamonPartitionScannerTest extends TestCase
 {
   
-  private static final class MockColorFactory implements JamonColorProvider.ColorFactory
-  {
-    public Color colorFor(RGB p_rgb)
-    {
-      return null;
-    }
-  }
-
   @Override
   protected void setUp() throws Exception
   {
