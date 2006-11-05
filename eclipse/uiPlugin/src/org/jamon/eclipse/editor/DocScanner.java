@@ -1,10 +1,13 @@
 package org.jamon.eclipse.editor;
 
+import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.TextAttribute;
+import org.eclipse.jface.text.rules.ICharacterScanner;
 import org.eclipse.jface.text.rules.IToken;
 import org.eclipse.jface.text.rules.ITokenScanner;
 import org.eclipse.jface.text.rules.Token;
+import org.eclipse.jface.util.Assert;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.RGB;
 
@@ -19,6 +22,9 @@ public class DocScanner implements ITokenScanner
   {
     return tokenOffset;
   }
+  
+  private static final char[] CLOSE = "</%doc>".toCharArray();
+  private static final char[] OPEN = "<%doc>".toCharArray();
 
   public IToken nextToken()
   {
@@ -26,52 +32,86 @@ public class DocScanner implements ITokenScanner
     {
       return Token.EOF;
     }
-    if (! sawOpen)
+
+    tokenOffset = offset;
+    
+    if (offset == initialOffset)
     {
-      tokenOffset = offset;
-      tokenLength = "<%doc>".length();
+      Assert.isTrue(lookingAt(offset, OPEN));
+      tokenLength = OPEN.length;
       offset += tokenLength;
-      sawOpen = true;
       return TAG;
     }
-    else if (! sawDoc)
+
+    if (lookingAt(limit - CLOSE.length, CLOSE))
     {
-      tokenOffset = offset;
-      offset = limit - "</%doc>".length(); 
-      tokenLength = offset - tokenOffset;
-      sawDoc = true;
-      return DOC;
+      if (offset == limit - CLOSE.length)
+      {
+        offset = limit; 
+        tokenLength = CLOSE.length;
+        return TAG;
+      }
+      else
+      {
+        offset = limit - CLOSE.length;
+        tokenLength = limit - CLOSE.length - tokenOffset;
+        return DOC;
+      }
     }
     else
     {
-      tokenOffset = offset;
       offset = limit;
-      tokenLength = "</%doc>".length();
-      return TAG;
+      tokenLength = limit - tokenOffset;
+      return DOC;
+    }
+
+  }
+
+  private boolean lookingAt(int off, char[] match)
+  {
+    for (int i = 0; i < match.length; ++i)
+    {
+      if (charAt(i + off) != match[i])
+      {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  private int charAt(int i)
+  {
+    try
+    {
+      return document.getChar(i);
+    }
+    catch (BadLocationException e)
+    {
+      return ICharacterScanner.EOF;
     }
   }
-  
-  private static final IToken TAG = new Token(new TextAttribute(JamonColorProvider.instance().getColor(new RGB(127, 127, 127)), null, SWT.BOLD));
-  private static final IToken DOC = new Token(new TextAttribute(JamonColorProvider.instance().getColor(new RGB(112, 112, 112)), null, SWT.ITALIC));
+
+
+
+  static final IToken TAG = new Token(new TextAttribute(JamonColorProvider.instance().getColor(new RGB(127, 127, 127)), null, SWT.BOLD));
+  static final IToken DOC = new Token(new TextAttribute(JamonColorProvider.instance().getColor(new RGB(112, 112, 112)), null, SWT.ITALIC));
 
   
   public void setRange(IDocument p_document, int p_offset, int p_length)
   {
     this.document = p_document;
+    this.initialOffset = p_offset;
     this.offset = p_offset;
     this.length = p_length;
     this.limit = offset + length;
-    this.sawDoc = false;
-    this.sawOpen = false;
   }
 
   @SuppressWarnings("unused")
   private IDocument document;
   private int offset;
+  private int initialOffset;
   private int length;
   private int tokenOffset;
   private int tokenLength;
   private int limit;
-  private boolean sawOpen;
-  private boolean sawDoc;
 }
