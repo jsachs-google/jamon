@@ -34,7 +34,7 @@ public class DocScannerTest extends TestCase
 
   public void testPartial()
   {
-    MockDocument doc = new MockDocument("<%doc>this is a complete doc section\n   </%doc");
+    MockDocument doc = new MockDocument("<%doc>this is not a complete doc section\n   </%doc");
     m_scanner.setRange(doc, 0, doc.getLength());
     assertEquals(DocScanner.TAG, m_scanner.nextToken());
     assertEquals(0, m_scanner.getTokenOffset());
@@ -44,5 +44,16 @@ public class DocScannerTest extends TestCase
     assertEquals(doc.getLength() - 6, m_scanner.getTokenLength());
     assertEquals(Token.EOF, m_scanner.nextToken());
   }
+
+  public void testMinimal()
+  {
+    MockDocument doc = new MockDocument("<%doc>");
+    m_scanner.setRange(doc, 0, doc.getLength());
+    assertEquals(DocScanner.TAG, m_scanner.nextToken());
+    assertEquals(0, m_scanner.getTokenOffset());
+    assertEquals(6, m_scanner.getTokenLength());
+    assertEquals(Token.EOF, m_scanner.nextToken());
+  }
+
 
 }
