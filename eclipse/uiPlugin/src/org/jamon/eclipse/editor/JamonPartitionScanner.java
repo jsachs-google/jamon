@@ -20,7 +20,7 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
   static final IToken JAMON_TOKEN = new Token(JAMON);
 
   public static final String[] JAMON_PARTITION_TYPES;
-  static 
+  static
   {
     List<String> types = new ArrayList<String>();
     for (PartitionDescriptor pd : PartitionDescriptor.values())
@@ -28,7 +28,7 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
       types.add(pd.tokenname());
     }
     JAMON_PARTITION_TYPES = types.toArray(new String[types.size()]);
-  };
+  }
 
   private IDocument document;
   private int offset;
@@ -69,7 +69,7 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
   }
 
   public int getTokenOffset()
-  { 
+  {
     return tokenOffset;
   }
 
@@ -96,15 +96,15 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
     }
     return true;
   }
-  
+
   private IToken processDefault()
   {
     int i = offset;
     while (i < limit)
     {
-      for (PartitionDescriptor s : PartitionDescriptor.values()) 
+      for (PartitionDescriptor s : PartitionDescriptor.values())
       {
-        if (lookingAt(i, s.open())) 
+        if (lookingAt(i, s.open()))
         {
           setTokenInfo(s, i);
           return s.token();
@@ -117,7 +117,7 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
     offset = i;
     return JAMON_TOKEN;
   }
-  
+
   private int processSection(PartitionDescriptor pd, int i)
   {
     if (pd.hasStrings())
