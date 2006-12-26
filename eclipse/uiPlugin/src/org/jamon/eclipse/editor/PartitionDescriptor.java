@@ -9,17 +9,17 @@ import org.eclipse.jface.text.rules.Token;
 import org.eclipse.swt.graphics.RGB;
 
 public enum PartitionDescriptor {
-  ARGS("<%args>", "</%args>", true, new RGB(255, 255, 224)), 
-  XARGS("<%xargs>", "</%xargs>", true, new RGB(224, 255, 255)), 
-  JAVA("<%java>", "</%java>", true, new RGB(255, 224, 255)),
-  CLASS("<%class>", "</%class>", true, new RGB(224, 255, 224)),
+  ARGS("<%args>", "</%args>", true, new ArgsScanner()), 
+  XARGS("<%xargs>", "</%xargs>", true, new XargsScanner()), 
+  JAVA("<%java>", "</%java>", true, new JavaScanner()),
+  CLASS("<%class>", "</%class>", true, new ClassScanner()),
   ALIAS("<%alias>", "</%alias>", false, new RGB(255, 224, 224)),
-  IMPORT("<%import>", "</%import>", false, new RGB(192, 224, 255)),
-  CALL_CONTENT("<&|", "&>", true, new RGB(192, 255, 224)),
-  CALL("<&", "&>", true, new CallScanner()),
+  IMPORT("<%import>", "</%import>", false, new ImportScanner()),
+  CALL_CONTENT("<&|", "&>", true, new CallScanner(true)),
+  CALL("<&", "&>", true, new CallScanner(false)),
   FOR("<%for ", "%>", true, new RGB(224, 255, 192)),
   FOR_CLOSE("</%for>", "", false, new RGB(224, 255, 192)),
-  EMIT("<% ", "%>", true, new RGB(224, 224, 255)),
+  EMIT("<% ", "%>", true, new EmitScanner()),
   DOC("<%doc>", "</%doc>", false, new DocScanner());
   
   private PartitionDescriptor(String p_open, String p_close, boolean p_hasStrings, RGB p_bgcolor)

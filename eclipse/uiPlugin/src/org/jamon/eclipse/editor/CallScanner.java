@@ -11,8 +11,13 @@ import org.eclipse.swt.graphics.RGB;
 public class CallScanner extends AbstractScanner
 {
   private final JamonJavaCodeScanner javaScanner = new JamonJavaCodeScanner(JamonColorProvider.instance());
-  private static final char[] OPEN = "<&".toCharArray();
-  private static final char[] CLOSE = "&>".toCharArray();
+  private final char[] open;
+  private final char[] close;
+  
+  public CallScanner(boolean p_withContent) {
+    close = "&>".toCharArray();
+    open = (p_withContent ? "<&|" : "<&").toCharArray();
+  }
   
   public IToken nextToken()
   {
@@ -24,7 +29,7 @@ public class CallScanner extends AbstractScanner
 
     if (initialOffset == offset)
     {
-      Assert.isTrue(lookingAt(offset, OPEN));
+      Assert.isTrue(lookingAt(offset, open));
       tokenLength = 2;
       offset += 2;
       return TAG;
@@ -32,7 +37,7 @@ public class CallScanner extends AbstractScanner
 
     else if (sawPath)
     {
-      if (lookingAt(limit-2, CLOSE))
+      if (lookingAt(limit-2, close))
       {
         if (offset == limit - 2)
         {

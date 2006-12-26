@@ -34,6 +34,8 @@ public class JamonEditor extends AbstractDecoratedTextEditor
         setEditorContextMenuId(EDITOR_CONTEXT_MENU_ID);
     }
     
+    private static boolean useEditor = true;
+
     @Override
     protected void initializeEditor()
     {
@@ -44,5 +46,4 @@ public class JamonEditor extends AbstractDecoratedTextEditor
         }
     }
     
-    private boolean useEditor = false;
 }

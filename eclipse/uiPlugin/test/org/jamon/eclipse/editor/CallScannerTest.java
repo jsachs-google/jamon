@@ -9,7 +9,7 @@ public class CallScannerTest extends AbstractScannerTest
   @Override
   protected ITokenScanner makeScanner()
   {
-    return new CallScanner();
+    return new CallScanner(false);
   }
 
   public void testSimple()
@@ -18,7 +18,7 @@ public class CallScannerTest extends AbstractScannerTest
     checkToken(2, CallScanner.TAG);
     checkToken(1, Token.WHITESPACE);
     checkToken(6, CallScanner.PATH);
-    checkToken(1, CallScanner.DEFAULT);
+    checkToken(1, Token.WHITESPACE);
     checkToken(2, CallScanner.TAG);
     checkDone();
   }
@@ -29,7 +29,8 @@ public class CallScannerTest extends AbstractScannerTest
     checkToken(2, CallScanner.TAG);
     checkToken(1, Token.WHITESPACE);
     checkToken(6, CallScanner.PATH);
-    checkToken(22, CallScanner.DEFAULT);
+    checkToken(1, Token.WHITESPACE);
+    skipNTokens(17);
     checkToken(2, CallScanner.TAG);
     checkDone();
   }
@@ -40,7 +41,8 @@ public class CallScannerTest extends AbstractScannerTest
     checkToken(2, CallScanner.TAG);
     checkToken(1, Token.WHITESPACE);
     checkToken(6, CallScanner.PATH);
-    checkToken(12, CallScanner.DEFAULT);
+    checkToken(2, Token.WHITESPACE);
+    skipNTokens(8);
     checkDone();
   }
 

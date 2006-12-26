@@ -108,8 +108,7 @@ public class MockDocument implements IDocument
 
   public String[] getLegalLineDelimiters()
   {
-    // TODO Auto-generated method stub
-    return null;
+    return new String[0];
   }
 
   public int getLength()

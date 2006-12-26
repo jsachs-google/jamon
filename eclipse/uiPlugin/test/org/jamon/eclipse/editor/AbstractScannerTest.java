@@ -1,5 +1,6 @@
 package org.jamon.eclipse.editor;
 
+import junit.framework.Assert;
 import junit.framework.TestCase;
 
 import org.eclipse.jface.text.rules.IToken;
@@ -29,9 +30,25 @@ public abstract class AbstractScannerTest extends TestCase
 
   private int offset;
 
+  protected void skipNTokens(int numToSkip) 
+  {
+    for (int i = 0; i < numToSkip; i++)
+    {
+      if (m_scanner.nextToken().isEOF())
+      {
+        Assert.fail("Hit EOF at token " + i);
+      }
+      offset += m_scanner.getTokenLength();
+    }
+  }
+  
   protected void checkToken(int length, IToken expected)
   {
-    assertEquals(expected, m_scanner.nextToken());
+    IToken tok = m_scanner.nextToken();
+    if (expected != tok)
+    {
+      Assert.fail("Expected " + expected.getData()  + " token, but got " + tok.getData());
+    }
     assertEquals(length, m_scanner.getTokenLength());
     assertEquals(offset, m_scanner.getTokenOffset());
     offset += length;
