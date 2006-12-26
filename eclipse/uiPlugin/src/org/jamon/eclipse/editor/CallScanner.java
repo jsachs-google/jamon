@@ -10,7 +10,7 @@ import org.eclipse.swt.graphics.RGB;
 
 public class CallScanner extends AbstractScanner
 {
-  
+  private final JamonJavaCodeScanner javaScanner = new JamonJavaCodeScanner(JamonColorProvider.instance());
   private static final char[] OPEN = "<&".toCharArray();
   private static final char[] CLOSE = "&>".toCharArray();
   
@@ -30,7 +30,7 @@ public class CallScanner extends AbstractScanner
       return TAG;
     }
 
-    if (sawPath)
+    else if (sawPath)
     {
       if (lookingAt(limit-2, CLOSE))
       {
@@ -40,23 +40,18 @@ public class CallScanner extends AbstractScanner
           offset += 2;
           return TAG;
         }
-        else
-        {
-          tokenLength = limit - tokenOffset - 2;
-          offset += tokenLength;
-          return DEFAULT;
-        }
       }
-      else
+
       {
-        // partial
-        tokenLength = limit - tokenOffset;
+        final IToken tok = javaScanner.nextToken();
+        tokenLength = javaScanner.getTokenLength();
+        offset  = javaScanner.getTokenOffset();
         offset += tokenLength;
-        return DEFAULT;
+        return tok;
       }
     }
  
-    if (isWhitespace(charAt(offset)))
+    else if (isWhitespace(charAt(offset)))
     {
       offset++;
       while (offset < limit && isWhitespace(charAt(offset)))
@@ -67,19 +62,23 @@ public class CallScanner extends AbstractScanner
       return Token.WHITESPACE;
     }
 
-    offset++;
-    while (offset < limit)
+    else
     {
-      int c = charAt(offset);
-      if (isWhitespace(c) || c == ':' || c == ';')
-      {
-        break;
-      }
       offset++;
+      while (offset < limit)
+      {
+        int c = charAt(offset);
+        if (isWhitespace(c) || c == ':' || c == ';')
+        {
+          break;
+        }
+        offset++;
+      }
+      tokenLength = offset - tokenOffset;
+      sawPath = true;
+      javaScanner.setRange(document, offset, limit - offset - 2);
+      return PATH;
     }
-    tokenLength = offset - tokenOffset;
-    sawPath = true;
-    return PATH;
   }
   
   private boolean isWhitespace(int ch)

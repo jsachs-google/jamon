@@ -30,7 +30,7 @@ public class JamonJavaCodeScanner extends RuleBasedScanner {
      * 
      * @param provider the color provider
      */
-    public JamonJavaCodeScanner(JamonColorProvider provider, String jamonKeyword) {
+    public JamonJavaCodeScanner(JamonColorProvider provider) {
 
         IToken keyword= new Token(new TextAttribute(provider.getColor(JamonColorProvider.KEYWORD)));
         IToken type= new Token(new TextAttribute(provider.getColor(JamonColorProvider.TYPE)));
@@ -56,10 +56,9 @@ public class JamonJavaCodeScanner extends RuleBasedScanner {
         for (int i= 0; i < fgConstants.length; i++)
             wordRule.addWord(fgConstants[i], type);
         rules.add(wordRule);
-        rules.add(new JamonTagMatchingRule(jamonKeyword, new Token(new TextAttribute(provider.getColor(JamonColorProvider.JAMON_KEYWORD)))));
         // Add generic whitespace rule.
         rules.add(new WhitespaceRule(new JamonWhitespaceDetector()));
-
+        setDefaultReturnToken(new Token(other));
         IRule[] result= new IRule[rules.size()];
         rules.toArray(result);
         setRules(result);

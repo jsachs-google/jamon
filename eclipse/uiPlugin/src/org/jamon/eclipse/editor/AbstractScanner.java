@@ -50,7 +50,7 @@ public abstract class AbstractScanner implements ITokenScanner
     this.limit = offset + length;
   }
 
-  private IDocument document;
+  protected IDocument document;
   protected int offset;
   protected int initialOffset;
   protected int length;
