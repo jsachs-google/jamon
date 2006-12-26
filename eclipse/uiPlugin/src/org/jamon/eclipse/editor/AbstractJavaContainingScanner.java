@@ -1,17 +1,21 @@
 package org.jamon.eclipse.editor;
 
+import org.eclipse.jface.text.TextAttribute;
 import org.eclipse.jface.text.rules.IToken;
 import org.eclipse.jface.text.rules.Token;
 import org.eclipse.jface.util.Assert;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.RGB;
 
 public abstract class AbstractJavaContainingScanner extends AbstractScanner
 {
-  private final JamonJavaCodeScanner javaScanner = new JamonJavaCodeScanner(JamonColorProvider.instance());
+  private final JamonJavaCodeScanner javaScanner;
   
-  protected AbstractJavaContainingScanner(String p_openTag, String p_closeTag, IToken p_tagToken) {
+  protected AbstractJavaContainingScanner(String p_openTag, String p_closeTag, RGB fgColor, RGB bgColor) {
     open = p_openTag.toCharArray();
     close = p_closeTag.toCharArray();
-    tagToken = p_tagToken;
+    tagToken = new Token(new TextAttribute(JamonColorProvider.instance().getColor(fgColor), JamonColorProvider.instance().getColor(bgColor), SWT.NORMAL));
+    javaScanner  = new JamonJavaCodeScanner(JamonColorProvider.instance(), bgColor);
   }
   
   private final char[] open;

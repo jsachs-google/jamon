@@ -13,7 +13,7 @@ public enum PartitionDescriptor {
   XARGS("<%xargs>", "</%xargs>", true, new XargsScanner()), 
   JAVA("<%java>", "</%java>", true, new JavaScanner()),
   CLASS("<%class>", "</%class>", true, new ClassScanner()),
-  ALIAS("<%alias>", "</%alias>", false, new RGB(255, 224, 224)),
+  ALIAS("<%alias>", "</%alias>", false, new RGB(255, 236, 236)),
   IMPORT("<%import>", "</%import>", false, new ImportScanner()),
   CALL_CONTENT("<&|", "&>", true, new CallScanner(true)),
   CALL("<&", "&>", true, new CallScanner(false)),

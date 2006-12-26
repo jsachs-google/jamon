@@ -1,7 +1,6 @@
 package org.jamon.eclipse.editor;
 
 import org.eclipse.jface.text.rules.ITokenScanner;
-import org.eclipse.jface.text.rules.Token;
 
 public class CallScannerTest extends AbstractScannerTest
 {
@@ -16,9 +15,9 @@ public class CallScannerTest extends AbstractScannerTest
   {
     setDocument("<& /a/b/c &>");
     checkToken(2, CallScanner.TAG);
-    checkToken(1, Token.WHITESPACE);
+    checkToken(1, CallScanner.WHITESPACE);
     checkToken(6, CallScanner.PATH);
-    checkToken(1, Token.WHITESPACE);
+    skipNTokens(1);
     checkToken(2, CallScanner.TAG);
     checkDone();
   }
@@ -27,10 +26,9 @@ public class CallScannerTest extends AbstractScannerTest
   {
     setDocument("<& /a/b/c : x => 3; y => \"yes\" &>");
     checkToken(2, CallScanner.TAG);
-    checkToken(1, Token.WHITESPACE);
+    checkToken(1, CallScanner.WHITESPACE);
     checkToken(6, CallScanner.PATH);
-    checkToken(1, Token.WHITESPACE);
-    skipNTokens(17);
+    skipNTokens(18);
     checkToken(2, CallScanner.TAG);
     checkDone();
   }
@@ -39,10 +37,9 @@ public class CallScannerTest extends AbstractScannerTest
   {
     setDocument("<& /a/b/c  : x => 3 &");
     checkToken(2, CallScanner.TAG);
-    checkToken(1, Token.WHITESPACE);
+    checkToken(1, CallScanner.WHITESPACE);
     checkToken(6, CallScanner.PATH);
-    checkToken(2, Token.WHITESPACE);
-    skipNTokens(8);
+    skipNTokens(9);
     checkDone();
   }
 

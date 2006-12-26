@@ -10,11 +10,12 @@ import org.eclipse.swt.graphics.RGB;
 
 public class CallScanner extends AbstractScanner
 {
-  private final JamonJavaCodeScanner javaScanner = new JamonJavaCodeScanner(JamonColorProvider.instance());
+  private final JamonJavaCodeScanner javaScanner;
   private final char[] open;
   private final char[] close;
   
   public CallScanner(boolean p_withContent) {
+    javaScanner = new JamonJavaCodeScanner(JamonColorProvider.instance(), BG);
     close = "&>".toCharArray();
     open = (p_withContent ? "<&|" : "<&").toCharArray();
   }
@@ -64,7 +65,7 @@ public class CallScanner extends AbstractScanner
         offset++;
       }
       tokenLength = offset - tokenOffset;
-      return Token.WHITESPACE;
+      return WHITESPACE;
     }
 
     else
@@ -97,11 +98,19 @@ public class CallScanner extends AbstractScanner
     super.setRange(p_document, p_offset, p_length);
     this.sawPath = false;
   }
+
+  static IToken token(RGB fg, RGB bg, int style)
+  {
+    return new Token(new TextAttribute(JamonColorProvider.instance().getColor(fg),
+                                       JamonColorProvider.instance().getColor(bg),
+                                       style));
+  }
   
-  static final IToken TAG = new Token(new TextAttribute(JamonColorProvider.instance().getColor(new RGB(127, 31, 15)), null, SWT.ITALIC));
-  static final IToken PATH = new Token(new TextAttribute(JamonColorProvider.instance().getColor(new RGB(127, 31, 15)), null, SWT.ITALIC | SWT.BOLD));
-  static final IToken DEFAULT = new Token(new TextAttribute(JamonColorProvider.instance().getColor(new RGB(0, 0, 0))));
-  
+  static final RGB BG = new RGB(255, 248, 240);
+  static final IToken TAG = token(new RGB(127, 31, 15), BG, SWT.ITALIC);
+  static final IToken PATH = token(new RGB(127, 31, 15), BG, SWT.ITALIC | SWT.BOLD);
+  static final IToken DEFAULT = token(new RGB(0, 0, 0), BG, SWT.NORMAL);
+  static final IToken WHITESPACE = token(JamonColorProvider.DEFAULT, BG, SWT.NORMAL);
   private boolean sawPath;
 
 }

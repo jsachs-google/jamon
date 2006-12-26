@@ -4,20 +4,24 @@ package org.jamon.eclipse.editor;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.TextAttribute;
 import org.eclipse.jface.text.rules.EndOfLineRule;
 import org.eclipse.jface.text.rules.IRule;
 import org.eclipse.jface.text.rules.IToken;
+import org.eclipse.jface.text.rules.ITokenScanner;
 import org.eclipse.jface.text.rules.RuleBasedScanner;
 import org.eclipse.jface.text.rules.SingleLineRule;
 import org.eclipse.jface.text.rules.Token;
-import org.eclipse.jface.text.rules.WhitespaceRule;
 import org.eclipse.jface.text.rules.WordRule;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.RGB;
 
 /**
  * A Java code scanner.
  */
-public class JamonJavaCodeScanner extends RuleBasedScanner {
+public class JamonJavaCodeScanner implements ITokenScanner {
 
     private static String[] fgKeywords= { "abstract", "break", "case", "catch", "class", "continue", "default", "do", "else", "extends", "final", "finally", "for", "if", "implements", "import", "instanceof", "interface", "native", "new", "package", "private", "protected", "public", "return", "static", "super", "switch", "synchronized", "this", "throw", "throws", "transient", "try", "volatile", "while" };
 
@@ -30,14 +34,15 @@ public class JamonJavaCodeScanner extends RuleBasedScanner {
      * 
      * @param provider the color provider
      */
-    public JamonJavaCodeScanner(JamonColorProvider provider) {
+    public JamonJavaCodeScanner(JamonColorProvider provider, RGB bgcolor) {
 
-        IToken keyword= new Token(new TextAttribute(provider.getColor(JamonColorProvider.KEYWORD)));
-        IToken type= new Token(new TextAttribute(provider.getColor(JamonColorProvider.TYPE)));
-        IToken string= new Token(new TextAttribute(provider.getColor(JamonColorProvider.STRING)));
-        IToken comment= new Token(new TextAttribute(provider.getColor(JamonColorProvider.SINGLE_LINE_COMMENT)));
-        IToken other= new Token(new TextAttribute(provider.getColor(JamonColorProvider.DEFAULT)));
-
+        final Color bg = provider.getColor(bgcolor);
+        IToken keyword= new Token(new TextAttribute(provider.getColor(JamonColorProvider.KEYWORD), bg, SWT.NORMAL));
+        IToken type= new Token(new TextAttribute(provider.getColor(JamonColorProvider.TYPE), bg, SWT.NORMAL));
+        IToken string= new Token(new TextAttribute(provider.getColor(JamonColorProvider.STRING), bg, SWT.NORMAL));
+        IToken comment= new Token(new TextAttribute(provider.getColor(JamonColorProvider.SINGLE_LINE_COMMENT), bg, SWT.NORMAL));
+        IToken other= new Token(new TextAttribute(provider.getColor(JamonColorProvider.DEFAULT), bg, SWT.NORMAL));
+        IToken whitespace = new Token(new TextAttribute(provider.getColor(JamonColorProvider.DEFAULT), bg, SWT.NORMAL));
         List<IRule> rules= new ArrayList<IRule>();
 
         // Add rule for single line comments.
@@ -56,11 +61,33 @@ public class JamonJavaCodeScanner extends RuleBasedScanner {
         for (int i= 0; i < fgConstants.length; i++)
             wordRule.addWord(fgConstants[i], type);
         rules.add(wordRule);
-        // Add generic whitespace rule.
-        rules.add(new WhitespaceRule(new JamonWhitespaceDetector()));
-        setDefaultReturnToken(new Token(other));
+        rules.add(new JamonWhitespaceRule(whitespace));
+        scanner = new RuleBasedScanner();
+        scanner.setDefaultReturnToken(other);
         IRule[] result= new IRule[rules.size()];
         rules.toArray(result);
-        setRules(result);
+        scanner.setRules(result);
     }
+    
+    public int getTokenLength()
+    {
+      return scanner.getTokenLength();
+    }
+    
+    public int getTokenOffset()
+    {
+      return scanner.getTokenOffset();
+    }
+    
+    public IToken nextToken()
+    {
+      return scanner.nextToken();
+    }
+    
+    public void setRange(IDocument p_document, int p_offset, int p_length)
+    {
+      scanner.setRange(p_document, p_offset, p_length);
+    }
+    
+    private final RuleBasedScanner scanner;
 }
