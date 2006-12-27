@@ -84,7 +84,6 @@ public class JamonEditorSourceViewerConfiguration extends SourceViewerConfigurat
     {
       addDamageRepairer(pd.tokenname(), reconciler, pd.scanner());
     }
-    System.err.println(JamonPartitionScanner.JAMON_LINE_TOKEN.getData().toString());
     addDamageRepairer(JamonPartitionScanner.JAMON_LINE_TOKEN.getData().toString(), reconciler, new SimpleScanner("\n%", "\n", "java_line"));
     return reconciler;
   }

@@ -122,10 +122,6 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
           return s.token();
         }
       }
-      if (lookingAt(i, new char[] { '%' }))
-      {
-          System.err.println("Found lone % at " + i );
-      }
       for (int j = 0; j < javaLineStart.length; j++)
       {
           if (lookingAt(i, javaLineStart[j]))
