@@ -8,7 +8,7 @@ import org.eclipse.jface.util.Assert;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.RGB;
 
-public class CallScanner extends AbstractScanner
+public class CallScanner extends AbstractScanner implements BoundedScanner
 {
   private final JamonJavaCodeScanner javaScanner;
   private final char[] open;
@@ -18,6 +18,16 @@ public class CallScanner extends AbstractScanner
     javaScanner = new JamonJavaCodeScanner(JamonColorProvider.instance(), BG);
     close = "&>".toCharArray();
     open = (p_withContent ? "<&|" : "<&").toCharArray();
+  }
+  
+  public char[] close()
+  {
+    return close;
+  }
+  
+  public char[] open()
+  {
+    return open;
   }
   
   public IToken nextToken()

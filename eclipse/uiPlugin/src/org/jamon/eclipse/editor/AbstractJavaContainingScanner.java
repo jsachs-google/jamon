@@ -7,7 +7,7 @@ import org.eclipse.jface.util.Assert;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.RGB;
 
-public abstract class AbstractJavaContainingScanner extends AbstractScanner
+public abstract class AbstractJavaContainingScanner extends AbstractScanner implements BoundedScanner
 {
   private final JamonJavaCodeScanner javaScanner;
   
@@ -21,6 +21,16 @@ public abstract class AbstractJavaContainingScanner extends AbstractScanner
   private final char[] open;
   private final char[] close;
   private final IToken tagToken;
+  
+  public char[] close()
+  {
+    return close;
+  }
+  
+  public char[] open()
+  {
+    return open;
+  }
   
   public IToken nextToken()
   {
