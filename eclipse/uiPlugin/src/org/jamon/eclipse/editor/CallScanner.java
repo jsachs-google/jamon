@@ -106,7 +106,7 @@ public class CallScanner extends AbstractScanner
                                        style));
   }
   
-  static final RGB BG = new RGB(255, 248, 240);
+  static final RGB BG = new RGB(240, 240, 240);
   static final IToken TAG = token(new RGB(127, 31, 15), BG, SWT.ITALIC);
   static final IToken PATH = token(new RGB(127, 31, 15), BG, SWT.ITALIC | SWT.BOLD);
   static final IToken DEFAULT = token(new RGB(0, 0, 0), BG, SWT.NORMAL);

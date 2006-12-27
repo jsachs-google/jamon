@@ -35,7 +35,7 @@ public abstract class AbstractJavaContainingScanner extends AbstractScanner
       Assert.isTrue(lookingAt(offset, open));
       tokenLength = open.length;
       offset += open.length;
-      javaScanner.setRange(document, offset, limit - offset - open.length);
+      javaScanner.setRange(document, offset, limit - offset);
       return tagToken;
     }
 

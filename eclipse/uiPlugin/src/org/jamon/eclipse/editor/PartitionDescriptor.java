@@ -17,8 +17,14 @@ public enum PartitionDescriptor {
   IMPORT("<%import>", "</%import>", false, new ImportScanner()),
   CALL_CONTENT("<&|", "&>", true, new CallScanner(true)),
   CALL("<&", "&>", true, new CallScanner(false)),
-  FOR("<%for ", "%>", true, new RGB(224, 255, 192)),
-  FOR_CLOSE("</%for>", "", false, new RGB(224, 255, 192)),
+  WHILE("<%while ", "%>", true, new ControlScanner("<%while ", "%>", new RGB(0, 127, 255), new RGB(224, 248, 255))),
+  WHILE_CLOSE("</%while>", "", false, new ControlScanner("</%while>", "", new RGB(0, 127, 255), new RGB(224, 248, 255))),
+  FOR("<%for ", "%>", true, new ControlScanner("<%for ", "%>", new RGB(0, 127, 255), new RGB(224, 248, 255))),
+  FOR_CLOSE("</%for>", "", false, new ControlScanner("</%for>", "", new RGB(0, 127, 255), new RGB(224, 248, 255))),
+  IF("<%if ", "%>", true, new ControlScanner("<%if ", "%>", new RGB(0, 127, 255), new RGB(224, 248, 255))),
+  IF_CLOSE("</%if>", "", false, new ControlScanner("</%if>", "", new RGB(0, 127, 255), new RGB(224, 248, 255))),
+  ELSE("<%else>", "", false, new ControlScanner("<%else>", "", new RGB(0, 127, 255), new RGB(224, 248, 255))),
+  ELSEIF("<%elseif ", "%>", false, new ControlScanner("<%elseif ", "%>", new RGB(0, 127, 255), new RGB(224, 248, 255))),
   EMIT("<% ", "%>", true, new EmitScanner()),
   DOC("<%doc>", "</%doc>", false, new DocScanner());
   
@@ -31,7 +37,7 @@ public enum PartitionDescriptor {
   {
     m_open = p_open.toCharArray();
     m_close = p_close.toCharArray();
-    m_name = "__jamon_parition_" + name();
+    m_name = "__jamon_partition_" + name();
     m_token = new Token(m_name);
     m_hasStrings = p_hasStrings;
     m_scanner = p_scanner;

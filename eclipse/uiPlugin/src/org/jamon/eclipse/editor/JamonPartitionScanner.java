@@ -17,6 +17,7 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
   private static final char STRING_ESCAPE_CHAR = '\\';
 
   private static final String JAMON = IDocument.DEFAULT_CONTENT_TYPE;
+  public static final IToken JAMON_LINE_TOKEN = new Token("__jamon_partition_line");
   static final IToken JAMON_TOKEN = new Token(JAMON);
 
   public static final String[] JAMON_PARTITION_TYPES;
@@ -27,6 +28,7 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
     {
       types.add(pd.tokenname());
     }
+    types.add(JAMON_LINE_TOKEN.getData().toString());
     JAMON_PARTITION_TYPES = types.toArray(new String[types.size()]);
   }
 
@@ -37,6 +39,8 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
   private int length;
   private IToken currentContent;
   private int limit;
+  private char[][] lineDelimiters;
+  private char[][] javaLineStart;
 
   private static IToken tokenFor(String contentType)
   {
@@ -61,6 +65,14 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
     this.length = length;
     this.currentContent = tokenFor(contentType);
     this.limit = offset + length;
+    this.lineDelimiters = new char[document.getLegalLineDelimiters().length][];
+    this.javaLineStart = new char[lineDelimiters.length][];
+    for (int i = 0; i < lineDelimiters.length; i++)
+    {
+        String s = document.getLegalLineDelimiters()[i];
+        lineDelimiters[i] = s.toCharArray();
+        javaLineStart[i] = (s + "%").toCharArray();
+    }
   }
 
   public int getTokenLength()
@@ -110,6 +122,29 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
           return s.token();
         }
       }
+      if (lookingAt(i, new char[] { '%' }))
+      {
+          System.err.println("Found lone % at " + i );
+      }
+      for (int j = 0; j < javaLineStart.length; j++)
+      {
+          if (lookingAt(i, javaLineStart[j]))
+          {
+              int end = processSimpleSection(lineDelimiters[j], i + javaLineStart[j].length);
+              if (end < 0)
+              {
+                tokenLength = length - (i - offset);
+                offset = limit;
+              }
+              else
+              {
+                tokenLength = end - i - lineDelimiters[j].length;
+                offset = end - lineDelimiters[j].length;
+              }
+              tokenOffset = i;
+              return JAMON_LINE_TOKEN;
+          }
+      }
       i++;
     }
     tokenLength = i - offset;
@@ -126,7 +161,7 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
     }
     else
     {
-      return processSimpleSection(pd, i);
+      return processSimpleSection(pd.close(), i);
     }
   }
 
@@ -141,7 +176,7 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
     else
     {
       tokenLength = end - i;
-      offset = end + 1;
+      offset = end;
     }
     tokenOffset = i;
   }
@@ -232,14 +267,14 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
     return -1;
   }
 
-  private int processSimpleSection(PartitionDescriptor pd, int start)
+  private int processSimpleSection(final char[] close, int start)
   {
     int i = start;
     while (i < limit)
     {
-      if (lookingAt(i, pd.close()))
+      if (lookingAt(i, close))
       {
-        return i + pd.close().length;
+        return i + close.length;
       }
       i++;
     }
@@ -250,6 +285,5 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
   {
     setPartialRange(document, offset, length, null, -1);
   }
-
 
 }

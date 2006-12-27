@@ -6,6 +6,6 @@ public class XargsScanner extends AbstractJavaContainingScanner
 {
   public XargsScanner()
   {
-    super("<%xargs>", "</%xargs>", new RGB(64, 64, 224), new RGB(224, 255, 224));
+    super("<%xargs>", "</%xargs>", new RGB(64, 64, 224), new RGB(255, 255, 244));
   }  
 }

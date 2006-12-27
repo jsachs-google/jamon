@@ -90,19 +90,16 @@ public class MockDocument implements IDocument
 
   public String getContentType(int p_offset) throws BadLocationException
   {
-    // TODO Auto-generated method stub
     return null;
   }
 
   public IDocumentPartitioner getDocumentPartitioner()
   {
-    // TODO Auto-generated method stub
     return null;
   }
 
   public String[] getLegalContentTypes()
   {
-    // TODO Auto-generated method stub
     return null;
   }
 
@@ -118,146 +115,123 @@ public class MockDocument implements IDocument
 
   public String getLineDelimiter(int p_line) throws BadLocationException
   {
-    // TODO Auto-generated method stub
     return null;
   }
 
   public IRegion getLineInformation(int p_line) throws BadLocationException
   {
-    // TODO Auto-generated method stub
     return null;
   }
 
   public IRegion getLineInformationOfOffset(int p_offset) throws BadLocationException
   {
-    // TODO Auto-generated method stub
     return null;
   }
 
   public int getLineLength(int p_line) throws BadLocationException
   {
-    // TODO Auto-generated method stub
+
     return 0;
   }
 
   public int getLineOfOffset(int p_offset) throws BadLocationException
   {
-    // TODO Auto-generated method stub
     return 0;
   }
 
   public int getLineOffset(int p_line) throws BadLocationException
   {
-    // TODO Auto-generated method stub
     return 0;
   }
 
   public int getNumberOfLines()
   {
-    // TODO Auto-generated method stub
     return 0;
   }
 
   public int getNumberOfLines(int p_offset, int p_length) throws BadLocationException
   {
-    // TODO Auto-generated method stub
     return 0;
   }
 
   public ITypedRegion getPartition(int p_offset) throws BadLocationException
   {
-    // TODO Auto-generated method stub
     return null;
   }
 
   public String[] getPositionCategories()
   {
-    // TODO Auto-generated method stub
     return null;
   }
 
   public IPositionUpdater[] getPositionUpdaters()
   {
-    // TODO Auto-generated method stub
     return null;
   }
 
   public Position[] getPositions(String p_category) throws BadPositionCategoryException
   {
-    // TODO Auto-generated method stub
     return null;
   }
 
   public void insertPositionUpdater(IPositionUpdater p_updater, int p_index)
   {
-    // TODO Auto-generated method stub
 
   }
 
   public void removeDocumentListener(IDocumentListener p_listener)
   {
-    // TODO Auto-generated method stub
 
   }
 
   public void removeDocumentPartitioningListener(IDocumentPartitioningListener p_listener)
   {
-    // TODO Auto-generated method stub
 
   }
 
   public void removePosition(Position p_position)
   {
-    // TODO Auto-generated method stub
 
   }
 
   public void removePosition(String p_category, Position p_position) throws BadPositionCategoryException
   {
-    // TODO Auto-generated method stub
 
   }
 
   public void removePositionCategory(String p_category) throws BadPositionCategoryException
   {
-    // TODO Auto-generated method stub
 
   }
 
   public void removePositionUpdater(IPositionUpdater p_updater)
   {
-    // TODO Auto-generated method stub
 
   }
 
   public void removePrenotifiedDocumentListener(IDocumentListener p_documentAdapter)
   {
-    // TODO Auto-generated method stub
 
   }
 
   public void replace(int p_offset, int p_length, String p_text) throws BadLocationException
   {
-    // TODO Auto-generated method stub
 
   }
 
   public int search(int p_startOffset, String p_findString, boolean p_forwardSearch, boolean p_caseSensitive, boolean p_wholeWord)
       throws BadLocationException
   {
-    // TODO Auto-generated method stub
     return 0;
   }
 
   public void set(String p_text)
   {
-    // TODO Auto-generated method stub
 
   }
 
   public void setDocumentPartitioner(IDocumentPartitioner p_partitioner)
   {
-    // TODO Auto-generated method stub
 
   }
 

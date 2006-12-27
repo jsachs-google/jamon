@@ -80,11 +80,12 @@ public class JamonEditorSourceViewerConfiguration extends SourceViewerConfigurat
     dr = new DefaultDamagerRepairer(scanner);
     reconciler.setDamager(dr, IDocument.DEFAULT_CONTENT_TYPE);
     reconciler.setRepairer(dr, IDocument.DEFAULT_CONTENT_TYPE);
-
     for (PartitionDescriptor pd : PartitionDescriptor.values())
     {
       addDamageRepairer(pd.tokenname(), reconciler, pd.scanner());
     }
+    System.err.println(JamonPartitionScanner.JAMON_LINE_TOKEN.getData().toString());
+    addDamageRepairer(JamonPartitionScanner.JAMON_LINE_TOKEN.getData().toString(), reconciler, new JavaLineScanner());
     return reconciler;
   }
 }
