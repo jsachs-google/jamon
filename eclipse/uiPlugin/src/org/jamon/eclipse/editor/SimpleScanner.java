@@ -10,20 +10,20 @@ public class SimpleScanner extends AbstractJavaContainingScanner
 {
     static RGB fg(String propertyBase)
     {
-        return color(propertyBase + ".foreground");
+        return color(propertyBase + ".foreground", JamonColorProvider.DEFAULT);
     }
     
     static RGB bg(String propertyBase)
     {
-        return color(propertyBase + ".background");
+        return color(propertyBase + ".background", null);
     }
     
-    private static RGB color(String propertyName)
+    private static RGB color(String propertyName, RGB defaultValue)
     {
         String s = COLORS.getProperty(propertyName);
         if (s == null)
         {
-            return null;
+            return defaultValue;
         }
         else
         {

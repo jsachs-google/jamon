@@ -37,12 +37,12 @@ public class JamonJavaCodeScanner implements ITokenScanner {
     public JamonJavaCodeScanner(JamonColorProvider provider, RGB bgcolor) {
 
         final Color bg = provider.getColor(bgcolor);
-        IToken keyword= new Token(new TextAttribute(provider.getColor(JamonColorProvider.KEYWORD), bg, SWT.NORMAL));
-        IToken type= new Token(new TextAttribute(provider.getColor(JamonColorProvider.TYPE), bg, SWT.NORMAL));
-        IToken string= new Token(new TextAttribute(provider.getColor(JamonColorProvider.STRING), bg, SWT.NORMAL));
-        IToken comment= new Token(new TextAttribute(provider.getColor(JamonColorProvider.SINGLE_LINE_COMMENT), bg, SWT.NORMAL));
-        IToken other= new Token(new TextAttribute(provider.getColor(JamonColorProvider.DEFAULT), bg, SWT.NORMAL));
-        IToken whitespace = new Token(new TextAttribute(provider.getColor(JamonColorProvider.DEFAULT), bg, SWT.NORMAL));
+        IToken keyword= new Token(new TextAttribute(provider.getColor(KEYWORD), bg, SWT.NORMAL));
+        IToken type= new Token(new TextAttribute(provider.getColor(TYPE), bg, SWT.NORMAL));
+        IToken string= new Token(new TextAttribute(provider.getColor(STRING), bg, SWT.NORMAL));
+        IToken comment= new Token(new TextAttribute(provider.getColor(SINGLE_LINE_COMMENT), bg, SWT.NORMAL));
+        IToken other= new Token(new TextAttribute(provider.getColor(DEFAULT), bg, SWT.NORMAL));
+        IToken whitespace = new Token(new TextAttribute(provider.getColor(DEFAULT), bg, SWT.NORMAL));
         List<IRule> rules= new ArrayList<IRule>();
 
         // Add rule for single line comments.
@@ -90,4 +90,10 @@ public class JamonJavaCodeScanner implements ITokenScanner {
     }
     
     private final RuleBasedScanner scanner;
+
+    private static final RGB SINGLE_LINE_COMMENT = new RGB(128, 128, 0);
+    private static final RGB KEYWORD = new RGB(0, 0, 255);
+    private static final RGB TYPE = new RGB(0, 128, 128);
+    private static final RGB STRING = new RGB(0, 192, 0);
+    private static final RGB DEFAULT = JamonColorProvider.DEFAULT;
 }

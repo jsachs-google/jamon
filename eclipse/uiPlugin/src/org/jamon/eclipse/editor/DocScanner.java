@@ -7,11 +7,20 @@ import org.eclipse.jface.util.Assert;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.RGB;
 
-public class DocScanner extends AbstractScanner
+public class DocScanner extends AbstractScanner implements BoundedScanner
 {
   private static final char[] CLOSE = "</%doc>".toCharArray();
   private static final char[] OPEN = "<%doc>".toCharArray();
 
+  public char[] close()
+  {
+    return CLOSE;
+  }
+  public char[] open()
+  {
+    return OPEN;
+  }
+  
   public IToken nextToken()
   {
     if (offset >= limit)

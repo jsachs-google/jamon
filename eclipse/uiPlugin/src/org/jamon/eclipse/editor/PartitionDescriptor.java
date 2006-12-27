@@ -6,14 +6,13 @@ package org.jamon.eclipse.editor;
 import org.eclipse.jface.text.rules.IToken;
 import org.eclipse.jface.text.rules.ITokenScanner;
 import org.eclipse.jface.text.rules.Token;
-import org.eclipse.swt.graphics.RGB;
 
 public enum PartitionDescriptor {
   ARGS(true, new SimpleScanner("<%args>", "</%args>", "args")), 
   XARGS(true, new SimpleScanner("<%xargs>", "</%xargs>", "args")), 
   JAVA(true, new SimpleScanner("<%java>", "</%java>", "java")),
   CLASS(true, new SimpleScanner("<%class>", "</%class>", "class")),
-  ALIAS("<%alias>", "</%alias>", false, new RGB(255, 236, 236)),
+  ALIAS("<%alias>", "</%alias>", false, new SimpleBgScanner("alias")),
   IMPORT(false, new SimpleScanner("<%import>", "</%import>", "import")),
   CALL_CONTENT(true, new CallScanner(true)),
   CALL(true, new CallScanner(false)),
@@ -26,12 +25,7 @@ public enum PartitionDescriptor {
   ELSE(false, new SimpleScanner("<%else>", "", "else")),
   ELSEIF(true, new SimpleScanner("<%elseif ", "%>", "elseif")),
   EMIT(true, new SimpleScanner("<% ", "%>", "emit")),
-  DOC("<%doc>", "</%doc>", false, new DocScanner());
-  
-  private PartitionDescriptor(String p_open, String p_close, boolean p_hasStrings, RGB p_bgcolor)
-  { 
-    this(p_open, p_close, p_hasStrings, new SimpleBgScanner(p_bgcolor));
-  }
+  DOC(false, new DocScanner());
   
   private PartitionDescriptor(boolean p_hasStrings, BoundedScanner p_scanner)
   {

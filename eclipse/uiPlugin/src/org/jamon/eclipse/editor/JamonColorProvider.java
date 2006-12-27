@@ -14,18 +14,7 @@ import org.eclipse.swt.widgets.Display;
 public class JamonColorProvider
 {
 
-    public static final RGB MULTI_LINE_COMMENT = new RGB(128, 0, 0);
-    public static final RGB SINGLE_LINE_COMMENT = new RGB(128, 128, 0);
-    public static final RGB KEYWORD = new RGB(0, 0, 255);
-    public static final RGB JAMON_KEYWORD = new RGB(0, 128, 255);
-    public static final RGB TYPE = new RGB(0, 128, 128);
-    public static final RGB STRING = new RGB(0, 192, 0);
     public static final RGB DEFAULT = new RGB(0, 0, 0);
-    public static final RGB JAVADOC_KEYWORD = new RGB(0, 128, 0);
-    public static final RGB JAVADOC_TAG = new RGB(128, 128, 128);
-    public static final RGB JAVADOC_LINK = new RGB(128, 128, 128);
-    public static final RGB JAVADOC_DEFAULT = new RGB(0, 128, 128);
-    public static final RGB JAMON_CODE_BG = new RGB(224,224,255);
 
     private final Map<RGB,Color> m_colorTable= new HashMap<RGB,Color>(10);
 
@@ -49,6 +38,10 @@ public class JamonColorProvider
      */
     public Color getColor(RGB rgb)
     {
+        if (rgb == null)
+        {
+            return null;
+        }
         Color color= m_colorTable.get(rgb);
         if (color == null) 
         {
