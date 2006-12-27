@@ -24,6 +24,10 @@ public enum PartitionDescriptor {
   IF_CLOSE(false, new SimpleScanner("</%if>", "", "if_close")),
   ELSE(false, new SimpleScanner("<%else>", "", "else")),
   ELSEIF(true, new SimpleScanner("<%elseif ", "%>", "elseif")),
+  DEF(false, new SimpleScanner("<%def ", ">", "def")),
+  DEF_CLOSE(false, new SimpleScanner("</%def>", "", "def_close")),
+  METHOD(false, new SimpleScanner("<%method ", ">", "method")),
+  METHOD_CLOSE(false, new SimpleScanner("</%method>", "", "method_close")),
   EMIT(true, new SimpleScanner("<% ", "%>", "emit")),
   DOC(false, new DocScanner());
   
