@@ -1,15 +1,18 @@
 /**
- * 
+ *
  */
 package org.jamon.eclipse.editor;
 
 import org.eclipse.jface.text.rules.IToken;
 import org.eclipse.jface.text.rules.ITokenScanner;
 import org.eclipse.jface.text.rules.Token;
+import org.eclipse.jface.util.IPropertyChangeListener;
+import org.eclipse.jface.util.PropertyChangeEvent;
+import org.eclipse.ui.PlatformUI;
 
 public enum PartitionDescriptor {
-  ARGS(true, new SimpleScanner("<%args>", "</%args>", "args")), 
-  XARGS(true, new SimpleScanner("<%xargs>", "</%xargs>", "args")), 
+  ARGS(true, new SimpleScanner("<%args>", "</%args>", "args")),
+  XARGS(true, new SimpleScanner("<%xargs>", "</%xargs>", "args")),
   JAVA(true, new SimpleScanner("<%java>", "</%java>", "java")),
   CLASS(true, new SimpleScanner("<%class>", "</%class>", "class")),
   ALIAS("<%alias>", "</%alias>", false, new SimpleBgScanner("alias")),
@@ -30,7 +33,7 @@ public enum PartitionDescriptor {
   METHOD_CLOSE(false, new SimpleScanner("</%method>", "", "method_close")),
   EMIT(true, new SimpleScanner("<% ", "%>", "emit")),
   DOC(false, new DocScanner());
-  
+
   private PartitionDescriptor(boolean p_hasStrings, BoundedScanner p_scanner)
   {
     this(p_scanner.open(), p_scanner.close(), p_hasStrings, p_scanner);
@@ -55,7 +58,7 @@ public enum PartitionDescriptor {
   {
     return m_scanner;
   }
-  
+
   public IToken token()
   {
     return m_token;
@@ -79,6 +82,28 @@ public enum PartitionDescriptor {
   public boolean hasStrings()
   {
     return m_hasStrings;
+  }
+
+  public static void reloadScanners() {
+      for (PartitionDescriptor partitionDescriptor: values()) {
+          if (partitionDescriptor.m_scanner instanceof SimpleScanner) {
+            SimpleScanner simpleScanner = (SimpleScanner)partitionDescriptor.m_scanner;
+            simpleScanner.reloadColors();
+          }
+      }
+  }
+
+  static {
+      PlatformUI.getWorkbench().getThemeManager().addPropertyChangeListener(
+          new IPropertyChangeListener() {
+              public void propertyChange(PropertyChangeEvent event)
+              {
+                  if (event.getProperty().startsWith(SimpleScanner.THEME_BASE)) {
+                      PartitionDescriptor.reloadScanners();
+                  }
+              }
+          }
+      );
   }
 
   private final char[] m_open;

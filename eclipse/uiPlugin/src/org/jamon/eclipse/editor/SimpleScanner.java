@@ -9,6 +9,8 @@ import org.eclipse.ui.PlatformUI;
 
 public class SimpleScanner extends AbstractJavaContainingScanner
 {
+    public static final String THEME_BASE = "org.jamon.theme.";
+
     static RGB fg(String propertyBase)
     {
         return color(propertyBase + ".foreground", JamonColorProvider.DEFAULT);
@@ -39,7 +41,7 @@ public class SimpleScanner extends AbstractJavaContainingScanner
 
     private static RGB themeColor(String propertyName) {
         return PlatformUI.getWorkbench().getThemeManager().getCurrentTheme().getColorRegistry().getRGB(
-            "org.jamon." + propertyName);
+            THEME_BASE + propertyName);
     }
 
     private static final Properties COLORS = new Properties();
@@ -70,6 +72,13 @@ public class SimpleScanner extends AbstractJavaContainingScanner
     protected SimpleScanner(String p_openTag, String p_closeTag, String propertyBase)
     {
         super(p_openTag, p_closeTag, fg(propertyBase), bg(propertyBase));
+        m_propertyBase = propertyBase;
     }
 
+    void reloadColors()
+    {
+        useColors(fg(m_propertyBase), bg(m_propertyBase));
+    }
+
+    private final String m_propertyBase;
 }
