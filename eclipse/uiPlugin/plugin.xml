@@ -53,7 +53,7 @@
          id="jamonEditor"
          name="Jamon Template Editor"
          point="org.eclipse.ui.editors">
-	      <editor
+        <editor
              class="org.jamon.eclipse.JamonEditor"
              contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
              extensions="jamon"
@@ -136,5 +136,209 @@
           <participant
                 class="org.jamon.eclipse.editor.JamonDocumentSetupParticipant"
                 extensions="jamon"/>
+       </extension>
+       <extension
+             point="org.eclipse.ui.themes">
+          <themeElementCategory
+                id="org.jamon.themes"
+                label="Jamon"/>
+          <colorDefinition
+                categoryId="org.jamon.themes"
+                id="org.jamon.args.background"
+                isEditable="true"
+                label="Jamon args background"
+                value="255,255,244"/>
+          <colorDefinition
+                categoryId="org.jamon.themes"
+                id="org.jamon.args.foreground"
+                isEditable="true"
+                label="Jamon args foreground"
+                value="64,64,224"/>
+          <colorDefinition
+                categoryId="org.jamon.themes"
+                id="org.jamon.java.background"
+                isEditable="true"
+                label="Jamon java background"
+                value="240,252,232"/>
+          <colorDefinition
+                categoryId="org.jamon.themes"
+                id="org.jamon.java.foreground"
+                isEditable="true"
+                label="Jamon java foreground"
+                value="32,127,127"/>
+          <colorDefinition
+                categoryId="org.jamon.themes"
+                id="org.jamon.java_line.background"
+                isEditable="true"
+                label="Jamon java_line background"
+                value="240,252,232"/>
+          <colorDefinition
+                categoryId="org.jamon.themes"
+                id="org.jamon.java_line.foreground"
+                isEditable="true"
+                label="Jamon java_line foreground"
+                value="32,127,127"/>
+          <colorDefinition
+                categoryId="org.jamon.themes"
+                id="org.jamon.emit.background"
+                isEditable="true"
+                label="Jamon emit background"
+                value="240,248,240"/>
+          <colorDefinition
+                categoryId="org.jamon.themes"
+                id="org.jamon.emit.foreground"
+                isEditable="true"
+                label="Jamon emit foreground"
+                value="127,64,64"/>
+          <colorDefinition
+                categoryId="org.jamon.themes"
+                id="org.jamon.class.background"
+                isEditable="true"
+                label="Jamon class background"
+                value="224,255,224"/>
+          <colorDefinition
+                categoryId="org.jamon.themes"
+                id="org.jamon.class.foreground"
+                isEditable="true"
+                label="Jamon class foreground"
+                value="32,127,127"/>
+          <colorDefinition
+                categoryId="org.jamon.themes"
+                id="org.jamon.import.background"
+                isEditable="true"
+                label="Jamon import background"
+                value="224,255,224"/>
+          <colorDefinition
+                categoryId="org.jamon.themes"
+                id="org.jamon.import.foreground"
+                isEditable="true"
+                label="Jamon import foreground"
+                value="64,224,64"/>
+          <colorDefinition
+                categoryId="org.jamon.themes"
+                id="org.jamon.while.background"
+                isEditable="true"
+                label="Jamon while background"
+                value="224,248,255"/>
+          <colorDefinition
+                categoryId="org.jamon.themes"
+                id="org.jamon.while.foreground"
+                isEditable="true"
+                label="Jamon while foreground"
+                value="0,127,255"/>
+          <colorDefinition
+                categoryId="org.jamon.themes"
+                id="org.jamon.while_close.background"
+                isEditable="true"
+                label="Jamon while_close background"
+                value="224,248,255"/>
+          <colorDefinition
+                categoryId="org.jamon.themes"
+                id="org.jamon.while_close.foreground"
+                isEditable="true"
+                label="Jamon while_close foreground"
+                value="0,127,255"/>
+          <colorDefinition
+                categoryId="org.jamon.themes"
+                id="org.jamon.for.background"
+                isEditable="true"
+                label="Jamon for background"
+                value="224,248,255"/>
+          <colorDefinition
+                categoryId="org.jamon.themes"
+                id="org.jamon.for.foreground"
+                isEditable="true"
+                label="Jamon for foreground"
+                value="0,127,255"/>
+          <colorDefinition
+                categoryId="org.jamon.themes"
+                id="org.jamon.for_close.background"
+                isEditable="true"
+                label="Jamon for_close background"
+                value="224,248,255"/>
+          <colorDefinition
+                categoryId="org.jamon.themes"
+                id="org.jamon.for_close.foreground"
+                isEditable="true"
+                label="Jamon for_close foreground"
+                value="0,127,255"/>
+          <colorDefinition
+                categoryId="org.jamon.themes"
+                id="org.jamon.if.background"
+                isEditable="true"
+                label="Jamon if background"
+                value="224,248,255"/>
+          <colorDefinition
+                categoryId="org.jamon.themes"
+                id="org.jamon.if.foreground"
+                isEditable="true"
+                label="Jamon if foreground"
+                value="0,127,255"/>
+          <colorDefinition
+                categoryId="org.jamon.themes"
+                id="org.jamon.if_close.background"
+                isEditable="true"
+                label="Jamon if_close background"
+                value="224,248,255"/>
+          <colorDefinition
+                categoryId="org.jamon.themes"
+                id="org.jamon.if_close.foreground"
+                isEditable="true"
+                label="Jamon if_close foreground"
+                value="0,127,255"/>
+          <colorDefinition
+                categoryId="org.jamon.themes"
+                id="org.jamon.else.background"
+                isEditable="true"
+                label="Jamon else background"
+                value="224,248,255"/>
+          <colorDefinition
+                categoryId="org.jamon.themes"
+                id="org.jamon.else.foreground"
+                isEditable="true"
+                label="Jamon else foreground"
+                value="0,127,255"/>
+          <colorDefinition
+                categoryId="org.jamon.themes"
+                id="org.jamon.elseif.background"
+                isEditable="true"
+                label="Jamon elseif background"
+                value="224,248,255"/>
+          <colorDefinition
+                categoryId="org.jamon.themes"
+                id="org.jamon.elseif.foreground"
+                isEditable="true"
+                label="Jamon elseif foreground"
+                value="0,127,255"/>
+          <colorDefinition
+                categoryId="org.jamon.themes"
+                id="org.jamon.alias.background"
+                isEditable="true"
+                label="Jamon alias background"
+                value="255,240,240"/>
+          <colorDefinition
+                categoryId="org.jamon.themes"
+                id="org.jamon.def.background"
+                isEditable="true"
+                label="Jamon def background"
+                value="224,208,208"/>
+          <colorDefinition
+                categoryId="org.jamon.themes"
+                id="org.jamon.def_close.background"
+                isEditable="true"
+                label="Jamon def_close background"
+                value="224,208,208"/>
+          <colorDefinition
+                categoryId="org.jamon.themes"
+                id="org.jamon.method.background"
+                isEditable="true"
+                label="Jamon method background"
+                value="208,208,224"/>
+          <colorDefinition
+                categoryId="org.jamon.themes"
+                id="org.jamon.method_close.background"
+                isEditable="true"
+                label="Jamon method_close background"
+                value="208,208,224"/>
        </extension>
 </plugin>
