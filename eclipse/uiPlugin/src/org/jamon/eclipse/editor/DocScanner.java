@@ -12,6 +12,16 @@ public class DocScanner extends AbstractScanner implements BoundedScanner
   private static final char[] CLOSE = "</%doc>".toCharArray();
   private static final char[] OPEN = "<%doc>".toCharArray();
 
+  public static BoundedScannerFactory makeBoundedScannerFactory()
+  {
+    return new BoundedScannerFactory() {
+        public BoundedScanner create()
+        {
+            return new DocScanner();
+        }
+    };
+  }
+
   public char[] close()
   {
     return CLOSE;
@@ -20,7 +30,7 @@ public class DocScanner extends AbstractScanner implements BoundedScanner
   {
     return OPEN;
   }
-  
+
   public IToken nextToken()
   {
     if (offset >= limit)
@@ -29,7 +39,7 @@ public class DocScanner extends AbstractScanner implements BoundedScanner
     }
 
     tokenOffset = offset;
-    
+
     if (offset == initialOffset)
     {
       Assert.isTrue(lookingAt(offset, OPEN));
@@ -42,7 +52,7 @@ public class DocScanner extends AbstractScanner implements BoundedScanner
     {
       if (offset == limit - CLOSE.length)
       {
-        offset = limit; 
+        offset = limit;
         tokenLength = CLOSE.length;
         return TAG;
       }

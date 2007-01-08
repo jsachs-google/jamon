@@ -34,6 +34,7 @@ import org.jamon.eclipse.JamonEditor;
 public class JamonEditorSourceViewerConfiguration extends SourceViewerConfiguration
 {
   private static final IAnnotationHover s_annotationHover = new JamonAnnotationHover();
+  private PresentationReconciler m_reconciler;
 
   @Override
   public IAnnotationHover getAnnotationHover(ISourceViewer sourceViewer)
@@ -62,25 +63,30 @@ public class JamonEditorSourceViewerConfiguration extends SourceViewerConfigurat
     return result;
   }
 
-  private void addDamageRepairer(String name, PresentationReconciler reconciler, ITokenScanner p_scanner)
+  private void addDamageRepairer(String name, ITokenScanner p_scanner)
   {
     DefaultDamagerRepairer dr = new DefaultDamagerRepairer(p_scanner);
-    reconciler.setDamager(dr, name);
-    reconciler.setRepairer(dr, name);
+    m_reconciler.setDamager(dr, name);
+    m_reconciler.setRepairer(dr, name);
   }
 
   @Override
   public IPresentationReconciler getPresentationReconciler(ISourceViewer sourceViewer)
   {
-    PresentationReconciler reconciler = new PresentationReconciler();
-    reconciler.setDocumentPartitioning(getConfiguredDocumentPartitioning(sourceViewer));
-    addDamageRepairer(IDocument.DEFAULT_CONTENT_TYPE, reconciler, new RuleBasedScanner());
-    for (PartitionDescriptor pd : PartitionDescriptor.values())
-    {
-      addDamageRepairer(pd.tokenname(), reconciler, pd.scanner());
-    }
-    addDamageRepairer(JamonPartitionScanner.JAMON_LINE_TOKEN.getData().toString(), reconciler, new SimpleScanner("\n%", "\n", "java_line"));
-    return reconciler;
+    m_reconciler = new PresentationReconciler();
+    m_reconciler.setDocumentPartitioning(getConfiguredDocumentPartitioning(sourceViewer));
+    setDamageRepairers();
+    return m_reconciler;
   }
 
+  public void setDamageRepairers()
+  {
+      addDamageRepairer(IDocument.DEFAULT_CONTENT_TYPE, new RuleBasedScanner());
+      for (PartitionDescriptor pd : PartitionDescriptor.values())
+      {
+        addDamageRepairer(pd.tokenname(), pd.scanner());
+      }
+      addDamageRepairer(JamonPartitionScanner.JAMON_LINE_TOKEN.getData().toString(),
+                        new SimpleScanner("\n%", "\n", "java_line"));
+  }
 }

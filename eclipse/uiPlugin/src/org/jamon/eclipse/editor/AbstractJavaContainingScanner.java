@@ -9,21 +9,20 @@ import org.eclipse.swt.graphics.RGB;
 
 public abstract class AbstractJavaContainingScanner extends AbstractScanner implements BoundedScanner
 {
-  protected AbstractJavaContainingScanner(String p_openTag, String p_closeTag, RGB fgColor, RGB bgColor) {
-    open = p_openTag.toCharArray();
-    close = p_closeTag.toCharArray();
-    useColors(fgColor, bgColor);
-  }
+    protected AbstractJavaContainingScanner(String p_openTag, String p_closeTag, RGB fgColor, RGB bgColor) {
+        open = p_openTag.toCharArray();
+        close = p_closeTag.toCharArray();
+        tagToken = new Token(new TextAttribute(
+            JamonColorProvider.instance().getColor(fgColor),
+            JamonColorProvider.instance().getColor(bgColor),
+            SWT.NORMAL));
+        javaScanner  = new JamonJavaCodeScanner(JamonColorProvider.instance(), bgColor);
+    }
 
   private final char[] open;
   private final char[] close;
-  private IToken tagToken;
-  private JamonJavaCodeScanner javaScanner;
-
-  protected final void useColors(RGB fgColor, RGB bgColor) {
-      tagToken = new Token(new TextAttribute(JamonColorProvider.instance().getColor(fgColor), JamonColorProvider.instance().getColor(bgColor), SWT.NORMAL));
-      javaScanner  = new JamonJavaCodeScanner(JamonColorProvider.instance(), bgColor);
-  }
+  private final IToken tagToken;
+  private final JamonJavaCodeScanner javaScanner;
 
   public char[] close()
   {

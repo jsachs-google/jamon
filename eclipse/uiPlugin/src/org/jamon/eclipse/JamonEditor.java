@@ -19,31 +19,61 @@
  */
 package org.jamon.eclipse;
 
+import org.eclipse.jface.util.IPropertyChangeListener;
+import org.eclipse.jface.util.PropertyChangeEvent;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditor;
+import org.eclipse.ui.themes.IThemeManager;
 import org.jamon.eclipse.editor.JamonEditorSourceViewerConfiguration;
+import org.jamon.eclipse.editor.SimpleScanner;
 
 public class JamonEditor extends AbstractDecoratedTextEditor
 {
     private static final String EDITOR_CONTEXT_MENU_ID =
         JamonProjectPlugin.getDefault().pluginId() + ".editorContext";
+    private IPropertyChangeListener m_propertyChangeListener;
 
-    public final static String JAMON_PARTITIONING = JamonProjectPlugin.getDefault().pluginId() + ".partitioning";
+    public final static String JAMON_PARTITIONING =
+        JamonProjectPlugin.getDefault().pluginId() + ".partitioning";
 
     public JamonEditor()
     {
         setEditorContextMenuId(EDITOR_CONTEXT_MENU_ID);
     }
-    
+
     private static boolean useEditor = true;
 
     @Override
     protected void initializeEditor()
     {
         super.initializeEditor();
-        if (useEditor) 
+        if (useEditor)
         {
-        	setSourceViewerConfiguration(new JamonEditorSourceViewerConfiguration());
+            final JamonEditorSourceViewerConfiguration jamonEditorSourceViewerConfiguration =
+                new JamonEditorSourceViewerConfiguration();
+            setSourceViewerConfiguration(jamonEditorSourceViewerConfiguration);
+            m_propertyChangeListener = new IPropertyChangeListener() {
+                public void propertyChange(PropertyChangeEvent event)
+                {
+                    if (event.getProperty().startsWith(SimpleScanner.THEME_BASE)) {
+                        jamonEditorSourceViewerConfiguration.setDamageRepairers();
+                        getSourceViewer().setDocument(getDocumentProvider().getDocument(getEditorInput()));
+                    }
+                }
+            };
+            getThemeManager().addPropertyChangeListener(m_propertyChangeListener);
         }
     }
-    
+
+    @Override public void dispose()
+    {
+        getThemeManager().removePropertyChangeListener(m_propertyChangeListener);
+        super.dispose();
+    }
+
+    private IThemeManager getThemeManager()
+    {
+        return PlatformUI.getWorkbench().getThemeManager();
+    }
+
 }

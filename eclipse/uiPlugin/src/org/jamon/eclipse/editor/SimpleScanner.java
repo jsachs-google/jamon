@@ -9,6 +9,18 @@ import org.eclipse.ui.PlatformUI;
 
 public class SimpleScanner extends AbstractJavaContainingScanner
 {
+    public static BoundedScannerFactory makeBoundedScannerFactory(
+        final String p_openTag, final String p_closeTag, final String propertyBase)
+    {
+        return new BoundedScannerFactory() {
+            public BoundedScanner create()
+            {
+                return new SimpleScanner(p_openTag, p_closeTag, propertyBase);
+            }
+
+        };
+    }
+
     public static final String THEME_BASE = "org.jamon.theme.";
 
     static RGB fg(String propertyBase)
@@ -72,13 +84,5 @@ public class SimpleScanner extends AbstractJavaContainingScanner
     protected SimpleScanner(String p_openTag, String p_closeTag, String propertyBase)
     {
         super(p_openTag, p_closeTag, fg(propertyBase), bg(propertyBase));
-        m_propertyBase = propertyBase;
     }
-
-    void reloadColors()
-    {
-        useColors(fg(m_propertyBase), bg(m_propertyBase));
-    }
-
-    private final String m_propertyBase;
 }

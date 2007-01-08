@@ -13,23 +13,33 @@ public class CallScanner extends AbstractScanner implements BoundedScanner
   private final JamonJavaCodeScanner javaScanner;
   private final char[] open;
   private final char[] close;
-  
+
+  public static BoundedScannerFactory makeBoundedScannerFactory(final boolean p_withContent)
+  {
+      return new BoundedScannerFactory() {
+        public BoundedScanner create()
+        {
+            return new CallScanner(p_withContent);
+        }
+      };
+  }
+
   public CallScanner(boolean p_withContent) {
     javaScanner = new JamonJavaCodeScanner(JamonColorProvider.instance(), BG);
     close = "&>".toCharArray();
     open = (p_withContent ? "<&|" : "<&").toCharArray();
   }
-  
+
   public char[] close()
   {
     return close;
   }
-  
+
   public char[] open()
   {
     return open;
   }
-  
+
   public IToken nextToken()
   {
     if (offset >= limit)
@@ -66,7 +76,7 @@ public class CallScanner extends AbstractScanner implements BoundedScanner
         return tok;
       }
     }
- 
+
     else if (isWhitespace(charAt(offset)))
     {
       offset++;
@@ -96,12 +106,12 @@ public class CallScanner extends AbstractScanner implements BoundedScanner
       return PATH;
     }
   }
-  
+
   private boolean isWhitespace(int ch)
   {
     return Character.isWhitespace(ch);
   }
-  
+
   @Override
   public void setRange(IDocument p_document, int p_offset, int p_length)
   {
@@ -115,7 +125,7 @@ public class CallScanner extends AbstractScanner implements BoundedScanner
                                        JamonColorProvider.instance().getColor(bg),
                                        style));
   }
-  
+
   static final RGB BG = new RGB(240, 240, 240);
   static final IToken TAG = token(new RGB(127, 31, 15), BG, SWT.ITALIC);
   static final IToken PATH = token(new RGB(127, 31, 15), BG, SWT.ITALIC | SWT.BOLD);
