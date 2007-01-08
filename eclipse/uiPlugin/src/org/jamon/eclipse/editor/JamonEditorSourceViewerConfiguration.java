@@ -68,18 +68,13 @@ public class JamonEditorSourceViewerConfiguration extends SourceViewerConfigurat
     reconciler.setDamager(dr, name);
     reconciler.setRepairer(dr, name);
   }
-  
+
   @Override
   public IPresentationReconciler getPresentationReconciler(ISourceViewer sourceViewer)
   {
     PresentationReconciler reconciler = new PresentationReconciler();
     reconciler.setDocumentPartitioning(getConfiguredDocumentPartitioning(sourceViewer));
-    DefaultDamagerRepairer dr;
-    RuleBasedScanner scanner = new RuleBasedScanner();
-    // scanner.setDefaultReturnToken(Token.UNDEFINED);
-    dr = new DefaultDamagerRepairer(scanner);
-    reconciler.setDamager(dr, IDocument.DEFAULT_CONTENT_TYPE);
-    reconciler.setRepairer(dr, IDocument.DEFAULT_CONTENT_TYPE);
+    addDamageRepairer(IDocument.DEFAULT_CONTENT_TYPE, reconciler, new RuleBasedScanner());
     for (PartitionDescriptor pd : PartitionDescriptor.values())
     {
       addDamageRepairer(pd.tokenname(), reconciler, pd.scanner());
@@ -87,4 +82,5 @@ public class JamonEditorSourceViewerConfiguration extends SourceViewerConfigurat
     addDamageRepairer(JamonPartitionScanner.JAMON_LINE_TOKEN.getData().toString(), reconciler, new SimpleScanner("\n%", "\n", "java_line"));
     return reconciler;
   }
+
 }
