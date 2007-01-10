@@ -9,7 +9,7 @@ public enum PartitionDescriptor {
   XARGS(true, SimpleScanner.makeBoundedScannerFactory("<%xargs>", "</%xargs>", "args")),
   JAVA(true, SimpleScanner.makeBoundedScannerFactory("<%java>", "</%java>", "java")),
   CLASS(true, SimpleScanner.makeBoundedScannerFactory("<%class>", "</%class>", "class")),
-  ALIAS(false, SimpleBgScanner.makeFactory("<%alias>", "</%alias>", "alias")),
+  ALIAS(false, SimpleScanner.makeBoundedScannerFactory("<%alias>", "</%alias>", "alias")),
   IMPORT(false, SimpleScanner.makeBoundedScannerFactory("<%import>", "</%import>", "import")),
   CALL_CONTENT(true, CallScanner.makeBoundedScannerFactory(true)),
   CALL(true, CallScanner.makeBoundedScannerFactory(false)),
