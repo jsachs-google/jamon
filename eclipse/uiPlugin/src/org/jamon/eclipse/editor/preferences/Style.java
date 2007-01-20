@@ -44,7 +44,7 @@ public final class Style
     public void setForeground(RGB p_foreground)
     {
         assertNotNull(p_foreground);
-        m_background = p_foreground;
+        m_foreground = p_foreground;
     }
 
     public RGB getBackground() { return m_background; }
