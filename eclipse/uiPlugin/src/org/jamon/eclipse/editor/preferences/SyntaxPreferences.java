@@ -19,14 +19,6 @@ public class SyntaxPreferences
         new EnumMap<SyntaxType, Style>(SyntaxType.class);
     private static IPreferenceStore s_preferenceStore;
 
-    public SyntaxPreferences()
-    {
-        for (SyntaxType syntaxType: SyntaxType.values())
-        {
-            m_syntaxTypeStyles.put(syntaxType, new Style());
-        }
-    }
-
     public static Style loadStyle(SyntaxType p_syntaxType)
     {
         Style style = new Style();
@@ -104,7 +96,7 @@ public class SyntaxPreferences
         }
     }
 
-    public static synchronized IPreferenceStore getPreferenceStore()
+    public static IPreferenceStore getPreferenceStore()
     {
         if (s_preferenceStore == null)
         {
