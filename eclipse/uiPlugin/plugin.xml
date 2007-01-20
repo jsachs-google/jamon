@@ -341,4 +341,15 @@
                 label="Jamon method_close background"
                 value="208,208,224"/>
        </extension>
+       <extension
+             point="org.eclipse.ui.preferencePages">
+          <page
+                class="org.jamon.eclipse.editor.preferences.SyntaxPage"
+                id="org.jamon.syntaxPage"
+                name="Jamon Syntax"/>
+       </extension>
+       <extension
+             point="org.eclipse.core.runtime.preferences">
+          <initializer class="org.jamon.eclipse.editor.preferences.PreferencesInitializer"/>
+       </extension>
 </plugin>

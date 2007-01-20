@@ -21,11 +21,10 @@ package org.jamon.eclipse;
 
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditor;
-import org.eclipse.ui.themes.IThemeManager;
 import org.jamon.eclipse.editor.JamonEditorSourceViewerConfiguration;
-import org.jamon.eclipse.editor.SimpleScanner;
+import org.jamon.eclipse.editor.preferences.SyntaxPreferences;
+import org.jamon.eclipse.editor.preferences.SyntaxType;
 
 public class JamonEditor extends AbstractDecoratedTextEditor
 {
@@ -55,25 +54,25 @@ public class JamonEditor extends AbstractDecoratedTextEditor
             m_propertyChangeListener = new IPropertyChangeListener() {
                 public void propertyChange(PropertyChangeEvent event)
                 {
-                    if (event.getProperty().startsWith(SimpleScanner.THEME_BASE)) {
-                        jamonEditorSourceViewerConfiguration.setDamageRepairers();
-                        getSourceViewer().setDocument(getDocumentProvider().getDocument(getEditorInput()));
+                    SyntaxType syntaxType = SyntaxType.getByPreferenceKey(event.getProperty());
+                    if (syntaxType != null)
+                    {
+                        jamonEditorSourceViewerConfiguration.setDamageRepairers(syntaxType);
+                        // force a reparse
+                        getSourceViewer().setDocument(
+                            getDocumentProvider().getDocument(getEditorInput()));
                     }
                 }
             };
-            getThemeManager().addPropertyChangeListener(m_propertyChangeListener);
+            SyntaxPreferences.getPreferenceStore().addPropertyChangeListener(
+                m_propertyChangeListener);
         }
     }
 
     @Override public void dispose()
     {
-        getThemeManager().removePropertyChangeListener(m_propertyChangeListener);
+        SyntaxPreferences.getPreferenceStore().removePropertyChangeListener(
+            m_propertyChangeListener);
         super.dispose();
     }
-
-    private IThemeManager getThemeManager()
-    {
-        return PlatformUI.getWorkbench().getThemeManager();
-    }
-
 }

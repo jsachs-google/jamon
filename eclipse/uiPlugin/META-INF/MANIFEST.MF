@@ -14,7 +14,9 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.jface.text,
  org.eclipse.ui.workbench.texteditor,
  org.eclipse.ui.editors,
- org.jamon
+ org.jamon,
+ org.eclipse.jdt.ui,
+ org.eclipse.ui.forms
 Eclipse-LazyStart: true
 Bundle-Vendor: jamon.org
 Provide-Package: org.jamon.eclipse;x-friends:="org.jamon.ui.test"

@@ -6,9 +6,23 @@ import org.eclipse.jface.text.rules.Token;
 import org.eclipse.jface.util.Assert;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.RGB;
+import org.jamon.eclipse.editor.preferences.Style;
+import org.jamon.eclipse.editor.preferences.SyntaxPreferences;
+import org.jamon.eclipse.editor.preferences.SyntaxType;
 
 public abstract class AbstractJavaContainingScanner extends AbstractScanner implements BoundedScanner
 {
+    protected AbstractJavaContainingScanner(String p_openTag, String p_closeTag, SyntaxType p_syntaxType) {
+        open = p_openTag.toCharArray();
+        close = p_closeTag.toCharArray();
+        Style style = SyntaxPreferences.loadStyle(p_syntaxType);
+        tagToken = new Token(new TextAttribute(
+            JamonColorProvider.instance().getColor(style.getForeground()),
+            JamonColorProvider.instance().getColor(style.getBackground()),
+            style.getSwtStyle()));
+        javaScanner  = new JamonJavaCodeScanner(JamonColorProvider.instance(), style.getBackground());
+    }
+
     protected AbstractJavaContainingScanner(String p_openTag, String p_closeTag, RGB fgColor, RGB bgColor) {
         open = p_openTag.toCharArray();
         close = p_closeTag.toCharArray();

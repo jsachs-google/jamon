@@ -6,7 +6,9 @@ import org.eclipse.jface.text.rules.Token;
 import org.eclipse.jface.util.Assert;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.RGB;
+import org.jamon.eclipse.editor.preferences.SyntaxType;
 
+//FIXME - use configurable styles
 public class DocScanner extends AbstractScanner implements BoundedScanner
 {
   private static final char[] CLOSE = "</%doc>".toCharArray();
@@ -15,7 +17,7 @@ public class DocScanner extends AbstractScanner implements BoundedScanner
   public static BoundedScannerFactory makeBoundedScannerFactory()
   {
     return new BoundedScannerFactory() {
-        public BoundedScanner create()
+        public BoundedScanner create(SyntaxType p_syntaxType)
         {
             return new DocScanner();
         }

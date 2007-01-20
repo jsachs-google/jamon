@@ -7,7 +7,9 @@ import org.eclipse.jface.text.rules.Token;
 import org.eclipse.jface.util.Assert;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.RGB;
+import org.jamon.eclipse.editor.preferences.SyntaxType;
 
+//FIXME - use configurable styles
 public class CallScanner extends AbstractScanner implements BoundedScanner
 {
   private final JamonJavaCodeScanner javaScanner;
@@ -17,7 +19,7 @@ public class CallScanner extends AbstractScanner implements BoundedScanner
   public static BoundedScannerFactory makeBoundedScannerFactory(final boolean p_withContent)
   {
       return new BoundedScannerFactory() {
-        public BoundedScanner create()
+        public BoundedScanner create(SyntaxType p_syntaxType)
         {
             return new CallScanner(p_withContent);
         }

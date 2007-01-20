@@ -2,16 +2,17 @@ package org.jamon.eclipse.editor;
 
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.ui.PlatformUI;
+import org.jamon.eclipse.editor.preferences.SyntaxType;
 
 public class SimpleScanner extends AbstractJavaContainingScanner
 {
     public static BoundedScannerFactory makeBoundedScannerFactory(
-        final String p_openTag, final String p_closeTag, final String propertyBase)
+        final String p_openTag, final String p_closeTag)
     {
         return new BoundedScannerFactory() {
-            public BoundedScanner create()
+            public BoundedScanner create(SyntaxType p_syntaxType)
             {
-                return new SimpleScanner(p_openTag, p_closeTag, propertyBase);
+                return new SimpleScanner(p_openTag, p_closeTag, p_syntaxType);
             }
 
         };
@@ -43,5 +44,10 @@ public class SimpleScanner extends AbstractJavaContainingScanner
     protected SimpleScanner(String p_openTag, String p_closeTag, String propertyBase)
     {
         super(p_openTag, p_closeTag, fg(propertyBase), bg(propertyBase));
+    }
+
+    protected SimpleScanner(String p_openTag, String p_closeTag, SyntaxType p_syntaxType)
+    {
+        super(p_openTag, p_closeTag, p_syntaxType);
     }
 }

@@ -30,6 +30,7 @@ import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.text.source.SourceViewerConfiguration;
 import org.jamon.eclipse.JamonAnnotationHover;
 import org.jamon.eclipse.JamonEditor;
+import org.jamon.eclipse.editor.preferences.SyntaxType;
 
 public class JamonEditorSourceViewerConfiguration extends SourceViewerConfiguration
 {
@@ -88,5 +89,13 @@ public class JamonEditorSourceViewerConfiguration extends SourceViewerConfigurat
       }
       addDamageRepairer(JamonPartitionScanner.JAMON_LINE_TOKEN.getData().toString(),
                         new SimpleScanner("\n%", "\n", "java_line"));
+  }
+
+  public void setDamageRepairers(SyntaxType p_syntaxType)
+  {
+      for (PartitionDescriptor pd : PartitionDescriptor.getDescriptorsByType(p_syntaxType))
+      {
+        addDamageRepairer(pd.tokenname(), pd.scanner());
+      }
   }
 }
