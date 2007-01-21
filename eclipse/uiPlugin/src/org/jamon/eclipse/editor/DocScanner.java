@@ -6,32 +6,33 @@ import org.eclipse.jface.text.rules.Token;
 import org.eclipse.jface.util.Assert;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.RGB;
-import org.jamon.eclipse.editor.preferences.SyntaxType;
+import org.jamon.eclipse.editor.preferences.StyleProvider;
+
 
 //FIXME - use configurable styles
 public class DocScanner extends AbstractScanner implements BoundedScanner
 {
-  private static final char[] CLOSE = "</%doc>".toCharArray();
-  private static final char[] OPEN = "<%doc>".toCharArray();
+    private final char[] m_open;
+    private final char[] m_close;
+
+  public DocScanner(StyleProvider p_styleProvider, String p_openTag, String p_closeTag)
+  {
+      m_open = p_openTag.toCharArray();
+      m_close = p_closeTag.toCharArray();
+  }
 
   public static BoundedScannerFactory makeBoundedScannerFactory()
   {
     return new BoundedScannerFactory() {
-        public BoundedScanner create(SyntaxType p_syntaxType)
+        public BoundedScanner create(StyleProvider p_styleProvider, String p_open, String p_close)
         {
-            return new DocScanner();
+            return new DocScanner(p_styleProvider, p_open, p_close);
         }
     };
   }
 
-  public char[] close()
-  {
-    return CLOSE;
-  }
-  public char[] open()
-  {
-    return OPEN;
-  }
+  public char[] close() { return m_close; }
+  public char[] open() { return m_open; }
 
   public IToken nextToken()
   {
@@ -44,24 +45,24 @@ public class DocScanner extends AbstractScanner implements BoundedScanner
 
     if (offset == initialOffset)
     {
-      Assert.isTrue(lookingAt(offset, OPEN));
-      tokenLength = OPEN.length;
+      Assert.isTrue(lookingAt(offset, m_open));
+      tokenLength = m_open.length;
       offset += tokenLength;
       return TAG;
     }
 
-    if (lookingAt(limit - CLOSE.length, CLOSE))
+    if (lookingAt(limit - m_close.length, m_close))
     {
-      if (offset == limit - CLOSE.length)
+      if (offset == limit - m_close.length)
       {
         offset = limit;
-        tokenLength = CLOSE.length;
+        tokenLength = m_close.length;
         return TAG;
       }
       else
       {
-        offset = limit - CLOSE.length;
-        tokenLength = limit - CLOSE.length - tokenOffset;
+        offset = limit - m_close.length;
+        tokenLength = limit - m_close.length - tokenOffset;
         return DOC;
       }
     }
@@ -75,6 +76,6 @@ public class DocScanner extends AbstractScanner implements BoundedScanner
   }
 
 
-  static final IToken TAG = new Token(new TextAttribute(JamonColorProvider.instance().getColor(new RGB(127, 127, 127)), null, SWT.BOLD));
-  static final IToken DOC = new Token(new TextAttribute(JamonColorProvider.instance().getColor(new RGB(112, 112, 112)), null, SWT.ITALIC));
+  public final static IToken TAG = new Token(new TextAttribute(JamonColorProvider.instance().getColor(new RGB(127, 127, 127)), null, SWT.BOLD));
+  public final static IToken DOC = new Token(new TextAttribute(JamonColorProvider.instance().getColor(new RGB(112, 112, 112)), null, SWT.ITALIC));
 }

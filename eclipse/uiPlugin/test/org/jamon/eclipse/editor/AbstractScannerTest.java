@@ -17,7 +17,7 @@ public abstract class AbstractScannerTest extends TestCase
     m_scanner = makeScanner();
     offset = 0;
   }
-  
+
   protected abstract ITokenScanner makeScanner();
 
   protected void setDocument(String content)
@@ -25,12 +25,12 @@ public abstract class AbstractScannerTest extends TestCase
     MockDocument doc = new MockDocument(content);
     m_scanner.setRange(doc, 0, doc.getLength());
   }
-  
-  private ITokenScanner m_scanner;
+
+  protected ITokenScanner m_scanner;
 
   private int offset;
 
-  protected void skipNTokens(int numToSkip) 
+  protected void skipNTokens(int numToSkip)
   {
     for (int i = 0; i < numToSkip; i++)
     {
@@ -41,7 +41,7 @@ public abstract class AbstractScannerTest extends TestCase
       offset += m_scanner.getTokenLength();
     }
   }
-  
+
   protected void checkToken(int length, IToken expected)
   {
     IToken tok = m_scanner.nextToken();

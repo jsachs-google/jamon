@@ -7,7 +7,7 @@ import org.eclipse.jface.text.rules.Token;
 import org.eclipse.jface.util.Assert;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.RGB;
-import org.jamon.eclipse.editor.preferences.SyntaxType;
+import org.jamon.eclipse.editor.preferences.StyleProvider;
 
 //FIXME - use configurable styles
 public class CallScanner extends AbstractScanner implements BoundedScanner
@@ -16,30 +16,27 @@ public class CallScanner extends AbstractScanner implements BoundedScanner
   private final char[] open;
   private final char[] close;
 
-  public static BoundedScannerFactory makeBoundedScannerFactory(final boolean p_withContent)
-  {
-      return new BoundedScannerFactory() {
-        public BoundedScanner create(SyntaxType p_syntaxType)
-        {
-            return new CallScanner(p_withContent);
-        }
-      };
-  }
+  public static BoundedScannerFactory FACTORY = new BoundedScannerFactory() {
+      public BoundedScanner create(StyleProvider p_styleProvider, String p_openTag, String p_closeTag)
+      {
+          return new CallScanner(p_openTag, p_closeTag);
+      }
+    };
 
-  public CallScanner(boolean p_withContent) {
+  public CallScanner(String p_openTag, String p_closeTag) {
     javaScanner = new JamonJavaCodeScanner(JamonColorProvider.instance(), BG);
-    close = "&>".toCharArray();
-    open = (p_withContent ? "<&|" : "<&").toCharArray();
-  }
-
-  public char[] close()
-  {
-    return close;
+    open = p_openTag.toCharArray();
+    close = p_closeTag.toCharArray();
   }
 
   public char[] open()
   {
     return open;
+  }
+
+  public char[] close()
+  {
+      return close;
   }
 
   public IToken nextToken()
@@ -134,5 +131,4 @@ public class CallScanner extends AbstractScanner implements BoundedScanner
   static final IToken DEFAULT = token(new RGB(0, 0, 0), BG, SWT.NORMAL);
   static final IToken WHITESPACE = token(JamonColorProvider.DEFAULT, BG, SWT.NORMAL);
   private boolean sawPath;
-
 }

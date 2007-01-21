@@ -1,8 +1,8 @@
 package org.jamon.eclipse.editor;
 
-import org.jamon.eclipse.editor.preferences.SyntaxType;
+import org.jamon.eclipse.editor.preferences.StyleProvider;
 
 public interface BoundedScannerFactory
 {
-    BoundedScanner create(SyntaxType p_syntaxType);
+    BoundedScanner create(StyleProvider p_styleProvider, String p_open, String p_close);
 }

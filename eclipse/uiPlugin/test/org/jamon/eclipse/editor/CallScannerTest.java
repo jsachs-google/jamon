@@ -4,11 +4,11 @@ import org.eclipse.jface.text.rules.ITokenScanner;
 
 public class CallScannerTest extends AbstractScannerTest
 {
-  
+
   @Override
   protected ITokenScanner makeScanner()
   {
-    return new CallScanner(false);
+    return new CallScanner("<&", "&>");
   }
 
   public void testSimple()
@@ -21,7 +21,7 @@ public class CallScannerTest extends AbstractScannerTest
     checkToken(2, CallScanner.TAG);
     checkDone();
   }
-  
+
   public void testWithArgs()
   {
     setDocument("<& /a/b/c : x => 3; y => \"yes\" &>");
@@ -32,7 +32,7 @@ public class CallScannerTest extends AbstractScannerTest
     checkToken(2, CallScanner.TAG);
     checkDone();
   }
-  
+
   public void testPartial()
   {
     setDocument("<& /a/b/c  : x => 3 &");

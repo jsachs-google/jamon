@@ -2,19 +2,21 @@ package org.jamon.eclipse.editor;
 
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.ui.PlatformUI;
+import org.jamon.eclipse.editor.preferences.StyleProvider;
 import org.jamon.eclipse.editor.preferences.SyntaxType;
 
 public class SimpleScanner extends AbstractJavaContainingScanner
 {
-    public static BoundedScannerFactory makeBoundedScannerFactory(
-        final String p_openTag, final String p_closeTag)
+    public final static BoundedScannerFactory makeFactory(final SyntaxType p_syntaxType)
     {
         return new BoundedScannerFactory() {
-            public BoundedScanner create(SyntaxType p_syntaxType)
+            public BoundedScanner create(
+                StyleProvider p_styleProvider,
+                String p_openTag,
+                String p_closeTag)
             {
-                return new SimpleScanner(p_openTag, p_closeTag, p_syntaxType);
+                return new SimpleScanner(p_openTag, p_closeTag, p_syntaxType, p_styleProvider);
             }
-
         };
     }
 
@@ -41,13 +43,14 @@ public class SimpleScanner extends AbstractJavaContainingScanner
             THEME_BASE + propertyName);
     }
 
-    protected SimpleScanner(String p_openTag, String p_closeTag, String propertyBase)
+    @Deprecated protected SimpleScanner(String p_openTag, String p_closeTag, String propertyBase)
     {
         super(p_openTag, p_closeTag, fg(propertyBase), bg(propertyBase));
     }
 
-    protected SimpleScanner(String p_openTag, String p_closeTag, SyntaxType p_syntaxType)
+    protected SimpleScanner(
+        String p_openTag, String p_closeTag, SyntaxType p_syntaxType, StyleProvider p_styleProvider)
     {
-        super(p_openTag, p_closeTag, p_syntaxType);
+        super(p_openTag, p_closeTag, p_syntaxType, p_styleProvider);
     }
 }

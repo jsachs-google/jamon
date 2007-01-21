@@ -7,9 +7,9 @@ public class DocScannerTest extends AbstractScannerTest
   @Override
   protected ITokenScanner makeScanner()
   {
-    return new DocScanner();
+    return new DocScanner(null, "<%doc>", "</%doc>");
   }
-  
+
   public void testFull()
   {
     setDocument("<%doc>this is a complete doc section\n   </%doc>");
@@ -33,6 +33,4 @@ public class DocScannerTest extends AbstractScannerTest
     checkToken(6, DocScanner.TAG);
     checkDone();
   }
-
-
 }

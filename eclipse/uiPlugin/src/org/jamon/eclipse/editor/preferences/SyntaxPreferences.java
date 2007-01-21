@@ -48,6 +48,8 @@ public class SyntaxPreferences
                     syntaxType.getBackgroundPreferenceKey(), rgbToString(style.getBackground()));
             }
         }
+        //FIXME - avoid cyclic dependencies between packages
+        PreferencesStyleProvider.getProvider().reloadStyles();
     }
 
     // package scoped for unit testing.

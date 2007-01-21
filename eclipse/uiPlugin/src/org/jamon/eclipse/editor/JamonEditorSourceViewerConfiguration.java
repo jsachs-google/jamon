@@ -30,7 +30,6 @@ import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.text.source.SourceViewerConfiguration;
 import org.jamon.eclipse.JamonAnnotationHover;
 import org.jamon.eclipse.JamonEditor;
-import org.jamon.eclipse.editor.preferences.SyntaxType;
 
 public class JamonEditorSourceViewerConfiguration extends SourceViewerConfiguration
 {
@@ -66,9 +65,9 @@ public class JamonEditorSourceViewerConfiguration extends SourceViewerConfigurat
 
   private void addDamageRepairer(String name, ITokenScanner p_scanner)
   {
-    DefaultDamagerRepairer dr = new DefaultDamagerRepairer(p_scanner);
-    m_reconciler.setDamager(dr, name);
-    m_reconciler.setRepairer(dr, name);
+      DefaultDamagerRepairer dr = new DefaultDamagerRepairer(p_scanner);
+      m_reconciler.setDamager(dr, name);
+      m_reconciler.setRepairer(dr, name);
   }
 
   @Override
@@ -85,17 +84,10 @@ public class JamonEditorSourceViewerConfiguration extends SourceViewerConfigurat
       addDamageRepairer(IDocument.DEFAULT_CONTENT_TYPE, new RuleBasedScanner());
       for (PartitionDescriptor pd : PartitionDescriptor.values())
       {
-        addDamageRepairer(pd.tokenname(), pd.scanner());
+        BoundedScanner scanner = pd.scanner();
+        addDamageRepairer(pd.tokenname(), scanner);
       }
       addDamageRepairer(JamonPartitionScanner.JAMON_LINE_TOKEN.getData().toString(),
                         new SimpleScanner("\n%", "\n", "java_line"));
-  }
-
-  public void setDamageRepairers(SyntaxType p_syntaxType)
-  {
-      for (PartitionDescriptor pd : PartitionDescriptor.getDescriptorsByType(p_syntaxType))
-      {
-        addDamageRepairer(pd.tokenname(), pd.scanner());
-      }
   }
 }

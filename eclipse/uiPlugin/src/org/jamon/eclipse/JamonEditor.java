@@ -19,18 +19,16 @@
  */
 package org.jamon.eclipse;
 
-import org.eclipse.jface.util.IPropertyChangeListener;
-import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditor;
 import org.jamon.eclipse.editor.JamonEditorSourceViewerConfiguration;
-import org.jamon.eclipse.editor.preferences.SyntaxPreferences;
-import org.jamon.eclipse.editor.preferences.SyntaxType;
+import org.jamon.eclipse.editor.preferences.PreferencesStyleProvider;
+import org.jamon.eclipse.editor.preferences.StyleProvider.StylesChangeListener;
 
 public class JamonEditor extends AbstractDecoratedTextEditor
 {
     private static final String EDITOR_CONTEXT_MENU_ID =
         JamonProjectPlugin.getDefault().pluginId() + ".editorContext";
-    private IPropertyChangeListener m_propertyChangeListener;
+    private StylesChangeListener m_stylesChangeListener;
 
     public final static String JAMON_PARTITIONING =
         JamonProjectPlugin.getDefault().pluginId() + ".partitioning";
@@ -51,28 +49,21 @@ public class JamonEditor extends AbstractDecoratedTextEditor
             final JamonEditorSourceViewerConfiguration jamonEditorSourceViewerConfiguration =
                 new JamonEditorSourceViewerConfiguration();
             setSourceViewerConfiguration(jamonEditorSourceViewerConfiguration);
-            m_propertyChangeListener = new IPropertyChangeListener() {
-                public void propertyChange(PropertyChangeEvent event)
+            m_stylesChangeListener = new StylesChangeListener() {
+                public void stylesChanged()
                 {
-                    SyntaxType syntaxType = SyntaxType.getByPreferenceKey(event.getProperty());
-                    if (syntaxType != null)
-                    {
-                        jamonEditorSourceViewerConfiguration.setDamageRepairers(syntaxType);
-                        // force a reparse
-                        getSourceViewer().setDocument(
-                            getDocumentProvider().getDocument(getEditorInput()));
-                    }
+                    // force a reparse
+                    getSourceViewer().setDocument(
+                        getDocumentProvider().getDocument(getEditorInput()));
                 }
             };
-            SyntaxPreferences.getPreferenceStore().addPropertyChangeListener(
-                m_propertyChangeListener);
+            PreferencesStyleProvider.getProvider().addStylesChangedListener(m_stylesChangeListener);
         }
     }
 
     @Override public void dispose()
     {
-        SyntaxPreferences.getPreferenceStore().removePropertyChangeListener(
-            m_propertyChangeListener);
+        PreferencesStyleProvider.getProvider().removeStylesChangedListener(m_stylesChangeListener);
         super.dispose();
     }
 }
