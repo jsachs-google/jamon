@@ -53,4 +53,9 @@ public class SimpleScanner extends AbstractJavaContainingScanner
     {
         super(p_openTag, p_closeTag, p_syntaxType, p_styleProvider);
     }
+
+    public void dispose()
+    {
+        m_styleProvider.removeSyntaxStyleChangeListener(m_syntaxType, this);
+    }
 }

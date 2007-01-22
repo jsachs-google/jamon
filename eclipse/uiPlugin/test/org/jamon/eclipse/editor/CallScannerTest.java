@@ -19,6 +19,11 @@ public class CallScannerTest extends AbstractScannerTest
             SyntaxType.CALL, (SyntaxStyleChangeListener) m_scanner));
         assertTrue(m_styleProvider.containsListener(
             SyntaxType.CALL_PATH, (SyntaxStyleChangeListener) m_scanner));
+        m_scanner.dispose();
+        assertFalse(m_styleProvider.containsListener(
+            SyntaxType.CALL, (SyntaxStyleChangeListener) m_scanner));
+        assertFalse(m_styleProvider.containsListener(
+            SyntaxType.CALL_PATH, (SyntaxStyleChangeListener) m_scanner));
     }
 
 

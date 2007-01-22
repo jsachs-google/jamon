@@ -145,4 +145,10 @@ public class CallScanner extends AbstractScanner
         m_whitespaceToken = new Token(new TextAttribute(
             textAttribute.getForeground(), textAttribute.getBackground(), SWT.NONE));
     }
+
+    public void dispose()
+    {
+        m_styleProvider.removeSyntaxStyleChangeListener(SyntaxType.CALL, this);
+        m_styleProvider.removeSyntaxStyleChangeListener(SyntaxType.CALL_PATH, this);
+    }
 }

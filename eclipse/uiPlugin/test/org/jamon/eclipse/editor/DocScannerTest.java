@@ -19,6 +19,11 @@ public class DocScannerTest extends AbstractScannerTest
             SyntaxType.DOC_BODY, (SyntaxStyleChangeListener) m_scanner));
         assertTrue(m_styleProvider.containsListener(
             SyntaxType.DOC_TAG, (SyntaxStyleChangeListener) m_scanner));
+        m_scanner.dispose();
+        assertFalse(m_styleProvider.containsListener(
+            SyntaxType.DOC_TAG, (SyntaxStyleChangeListener) m_scanner));
+        assertFalse(m_styleProvider.containsListener(
+            SyntaxType.DOC_BODY, (SyntaxStyleChangeListener) m_scanner));
     }
 
 

@@ -6,4 +6,5 @@ public interface BoundedScanner extends ITokenScanner
 {
     char[] open();
     char[] close();
+    void dispose();
 }

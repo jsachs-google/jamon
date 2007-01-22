@@ -54,9 +54,10 @@ public class MockStyleProvider implements StyleProvider
         throw new UnsupportedOperationException();
     }
 
-    public void removeSyntaxStyleChangeListener(SyntaxType p_syntaxType, SyntaxStyleChangeListener p_listener)
+    public void removeSyntaxStyleChangeListener(
+        SyntaxType p_syntaxType, SyntaxStyleChangeListener p_listener)
     {
-        throw new UnsupportedOperationException();
+        m_listeners.get(p_syntaxType).remove(p_listener);
     }
 
     public boolean containsListener(SyntaxType p_syntaxType, SyntaxStyleChangeListener p_listener)

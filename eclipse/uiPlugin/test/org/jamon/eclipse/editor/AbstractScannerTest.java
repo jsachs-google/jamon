@@ -5,7 +5,6 @@ import junit.framework.TestCase;
 
 import org.eclipse.jface.text.TextAttribute;
 import org.eclipse.jface.text.rules.IToken;
-import org.eclipse.jface.text.rules.ITokenScanner;
 import org.eclipse.jface.text.rules.Token;
 import org.jamon.eclipse.editor.preferences.Style;
 import org.jamon.eclipse.editor.preferences.SyntaxType;
@@ -27,7 +26,7 @@ public abstract class AbstractScannerTest extends TestCase
     m_scanner.setRange(doc, 0, doc.getLength());
   }
 
-  protected ITokenScanner m_scanner;
+  protected BoundedScanner m_scanner;
   protected MockStyleProvider m_styleProvider;
 
   private int offset;

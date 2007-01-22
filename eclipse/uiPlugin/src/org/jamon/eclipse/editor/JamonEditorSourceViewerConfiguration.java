@@ -19,6 +19,9 @@
  */
 package org.jamon.eclipse.editor;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.presentation.IPresentationReconciler;
 import org.eclipse.jface.text.presentation.PresentationReconciler;
@@ -35,6 +38,8 @@ public class JamonEditorSourceViewerConfiguration extends SourceViewerConfigurat
 {
   private static final IAnnotationHover s_annotationHover = new JamonAnnotationHover();
   private PresentationReconciler m_reconciler;
+
+  private Collection<BoundedScanner> m_boundedScanners = new ArrayList<BoundedScanner>();
 
   @Override
   public IAnnotationHover getAnnotationHover(ISourceViewer sourceViewer)
@@ -68,6 +73,9 @@ public class JamonEditorSourceViewerConfiguration extends SourceViewerConfigurat
       DefaultDamagerRepairer dr = new DefaultDamagerRepairer(p_scanner);
       m_reconciler.setDamager(dr, name);
       m_reconciler.setRepairer(dr, name);
+      if (p_scanner instanceof BoundedScanner) {
+        m_boundedScanners.add((BoundedScanner)p_scanner);
+    }
   }
 
   @Override
@@ -89,5 +97,13 @@ public class JamonEditorSourceViewerConfiguration extends SourceViewerConfigurat
       }
       addDamageRepairer(JamonPartitionScanner.JAMON_LINE_TOKEN.getData().toString(),
                         new SimpleScanner("\n%", "\n", "java_line"));
+  }
+
+  void dispose()
+  {
+      for (BoundedScanner boundedScanner: m_boundedScanners)
+      {
+          boundedScanner.dispose();
+      }
   }
 }

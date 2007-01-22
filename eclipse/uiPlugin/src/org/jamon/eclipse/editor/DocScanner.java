@@ -85,4 +85,11 @@ public class DocScanner extends AbstractScanner
         m_docTagToken = makeToken(SyntaxType.DOC_TAG);
         m_docBodyToken = makeToken(SyntaxType.DOC_BODY);
     }
+
+    public void dispose()
+    {
+        m_styleProvider.removeSyntaxStyleChangeListener(SyntaxType.DOC_TAG, this);
+        m_styleProvider.removeSyntaxStyleChangeListener(SyntaxType.DOC_BODY, this);
+    }
+
 }

@@ -49,7 +49,7 @@ public abstract class AbstractJavaContainingScanner extends AbstractScanner
   private final char[] close;
   private IToken tagToken;
   private JamonJavaCodeScanner m_javaScanner;
-  private final SyntaxType m_syntaxType;
+  protected final SyntaxType m_syntaxType;
   public char[] close()
   {
     return close;
