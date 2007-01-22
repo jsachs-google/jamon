@@ -11,15 +11,15 @@ import org.jamon.eclipse.editor.preferences.StyleProvider;
 import org.jamon.eclipse.editor.preferences.SyntaxType;
 
 public abstract class AbstractJavaContainingScanner extends AbstractScanner
-    implements BoundedScanner, StyleProvider.SytnaxStyleChangeListener
+    implements BoundedScanner, StyleProvider.SyntaxStyleChangeListener
 {
     protected AbstractJavaContainingScanner(
         String p_openTag, String p_closeTag, SyntaxType p_syntaxType, StyleProvider p_styleProvider)
     {
+        super(p_styleProvider);
         open = p_openTag.toCharArray();
         close = p_closeTag.toCharArray();
         m_syntaxType = p_syntaxType;
-        m_styleProvider = p_styleProvider;
         styleChanged();
         p_styleProvider.addSyntaxStyleChangeListener(p_syntaxType, this);
     }
@@ -34,6 +34,7 @@ public abstract class AbstractJavaContainingScanner extends AbstractScanner
 
     @Deprecated protected AbstractJavaContainingScanner(
         String p_openTag, String p_closeTag, RGB fgColor, RGB bgColor) {
+        super(null);
         open = p_openTag.toCharArray();
         close = p_closeTag.toCharArray();
         tagToken = new Token(new TextAttribute(
@@ -42,7 +43,6 @@ public abstract class AbstractJavaContainingScanner extends AbstractScanner
             SWT.NORMAL));
         m_javaScanner  = new JamonJavaCodeScanner(JamonColorProvider.instance(), bgColor);
         m_syntaxType = null;
-        m_styleProvider = null;
     }
 
   private final char[] open;
@@ -50,8 +50,6 @@ public abstract class AbstractJavaContainingScanner extends AbstractScanner
   private IToken tagToken;
   private JamonJavaCodeScanner m_javaScanner;
   private final SyntaxType m_syntaxType;
-  private final StyleProvider m_styleProvider;
-
   public char[] close()
   {
     return close;
@@ -97,8 +95,8 @@ public abstract class AbstractJavaContainingScanner extends AbstractScanner
 
   public void styleChanged()
   {
-      Style style = m_styleProvider.getStyle(m_syntaxType);
-      setTagTokenStyle(style);
-      m_javaScanner = new JamonJavaCodeScanner(JamonColorProvider.instance(), style.getBackground());
+      tagToken = makeToken(m_syntaxType);
+      m_javaScanner = new JamonJavaCodeScanner(
+          JamonColorProvider.instance(), m_styleProvider.getStyle(m_syntaxType).getBackground());
   }
 }

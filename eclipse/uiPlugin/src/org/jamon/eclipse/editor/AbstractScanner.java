@@ -2,11 +2,21 @@ package org.jamon.eclipse.editor;
 
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.TextAttribute;
 import org.eclipse.jface.text.rules.ICharacterScanner;
 import org.eclipse.jface.text.rules.ITokenScanner;
+import org.eclipse.jface.text.rules.Token;
+import org.jamon.eclipse.editor.preferences.Style;
+import org.jamon.eclipse.editor.preferences.StyleProvider;
+import org.jamon.eclipse.editor.preferences.SyntaxType;
 
 public abstract class AbstractScanner implements ITokenScanner
 {
+    protected AbstractScanner(StyleProvider p_styleProvider)
+    {
+        m_styleProvider = p_styleProvider;
+    }
+
     public int getTokenLength()
     {
         return tokenLength;
@@ -47,6 +57,15 @@ public abstract class AbstractScanner implements ITokenScanner
         this.limit = offset + length;
     }
 
+    protected Token makeToken(SyntaxType p_syntaxType)
+    {
+        Style style = m_styleProvider.getStyle(p_syntaxType);
+        return new Token(new TextAttribute(
+            JamonColorProvider.instance().getColor(style.getForeground()),
+            JamonColorProvider.instance().getColor(style.getBackground()),
+            style.getSwtStyle()));
+    }
+
     protected IDocument document;
     protected int offset;
     protected int initialOffset;
@@ -54,5 +73,6 @@ public abstract class AbstractScanner implements ITokenScanner
     protected int tokenOffset;
     protected int tokenLength;
     protected int limit;
+    protected final StyleProvider m_styleProvider;
 
 }

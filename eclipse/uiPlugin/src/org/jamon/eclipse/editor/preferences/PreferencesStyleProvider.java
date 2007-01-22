@@ -47,8 +47,8 @@ public class PreferencesStyleProvider implements StyleProvider
                 entry.setValue(newStyle);
                 for (Object listener: m_syntaxStyleChangedListeners.get(entry.getKey()).getListeners())
                 {
-                    if (listener instanceof SytnaxStyleChangeListener) {
-                        ((SytnaxStyleChangeListener)listener).styleChanged();
+                    if (listener instanceof SyntaxStyleChangeListener) {
+                        ((SyntaxStyleChangeListener)listener).styleChanged();
                     }
                 }
             }
@@ -68,7 +68,7 @@ public class PreferencesStyleProvider implements StyleProvider
     }
 
     public void addSyntaxStyleChangeListener(
-        SyntaxType p_syntaxType, SytnaxStyleChangeListener p_listener)
+        SyntaxType p_syntaxType, SyntaxStyleChangeListener p_listener)
     {
         m_syntaxStyleChangedListeners.get(p_syntaxType).add(p_listener);
 
@@ -80,7 +80,7 @@ public class PreferencesStyleProvider implements StyleProvider
     }
 
     public void removeSyntaxStyleChangeListener(
-        SyntaxType p_syntaxType, SytnaxStyleChangeListener p_listener)
+        SyntaxType p_syntaxType, SyntaxStyleChangeListener p_listener)
     {
         m_syntaxStyleChangedListeners.get(p_syntaxType).remove(p_listener);
     }

@@ -3,7 +3,7 @@ package org.jamon.eclipse.editor.preferences;
 import org.eclipse.jface.text.TextAttribute;
 import org.eclipse.swt.SWT;
 
-enum StyleOption
+public enum StyleOption
 {
     ITALIC("italic", SWT.ITALIC),
     UNDERLINE("underline", TextAttribute.UNDERLINE),

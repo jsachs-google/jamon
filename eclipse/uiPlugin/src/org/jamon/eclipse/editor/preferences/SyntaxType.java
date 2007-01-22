@@ -10,13 +10,14 @@ import java.util.Map;
         ALIAS("Alias", "alias"),
         CLASS("Class", "class"),
         IMPORT("Imports", "imports"),
-        CALL_CONTENT("Call content", "callContent"),
         CALL("Call", "call"),
+        CALL_PATH("Call path", "callPath"),
         FLOW_CONTROL("Flow control", "flowControl"),
         DEF("Def", "def"),
         METHOD("Method", "method"),
         EMIT("Emit", "emit"),
-        DOC("Doc", "doc");
+        DOC_TAG("Doc Tag", "docTag"),
+        DOC_BODY("Doc Body", "docBody");
 
     private SyntaxType(String p_label, String p_preferenceKey)
     {

@@ -20,6 +20,15 @@ public class PreferencesInitializer extends AbstractPreferenceInitializer
             preferenceStore.setDefault(syntaxType.getBackgroundPreferenceKey(), WHITE);
             preferenceStore.setDefault(syntaxType.getForegroundPreferenceKey(), BLACK);
         }
+
+        preferenceStore.setDefault(SyntaxType.DOC_TAG.getStylePreferenceKey(), SWT.BOLD);
+        preferenceStore.setDefault(
+            SyntaxType.DOC_TAG.getForegroundPreferenceKey(),
+            SyntaxPreferences.rgbToString(new RGB(127, 127, 127)));
+        preferenceStore.setDefault(SyntaxType.DOC_BODY.getStylePreferenceKey(), SWT.ITALIC);
+        preferenceStore.setDefault(
+            SyntaxType.DOC_BODY.getForegroundPreferenceKey(),
+            SyntaxPreferences.rgbToString(new RGB(112, 112, 112)));
     }
 
 }

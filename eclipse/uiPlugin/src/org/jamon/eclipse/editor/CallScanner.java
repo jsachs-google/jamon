@@ -8,9 +8,11 @@ import org.eclipse.jface.util.Assert;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.RGB;
 import org.jamon.eclipse.editor.preferences.StyleProvider;
+import org.jamon.eclipse.editor.preferences.SyntaxType;
+import org.jamon.eclipse.editor.preferences.StyleProvider.SyntaxStyleChangeListener;
 
-//FIXME - use configurable styles
-public class CallScanner extends AbstractScanner implements BoundedScanner
+public class CallScanner extends AbstractScanner
+    implements BoundedScanner, SyntaxStyleChangeListener
 {
   private final JamonJavaCodeScanner javaScanner;
   private final char[] open;
@@ -19,14 +21,19 @@ public class CallScanner extends AbstractScanner implements BoundedScanner
   public static BoundedScannerFactory FACTORY = new BoundedScannerFactory() {
       public BoundedScanner create(StyleProvider p_styleProvider, String p_openTag, String p_closeTag)
       {
-          return new CallScanner(p_openTag, p_closeTag);
+          return new CallScanner(p_styleProvider, p_openTag, p_closeTag);
       }
     };
 
-  public CallScanner(String p_openTag, String p_closeTag) {
-    javaScanner = new JamonJavaCodeScanner(JamonColorProvider.instance(), BG);
-    open = p_openTag.toCharArray();
-    close = p_closeTag.toCharArray();
+  public CallScanner(StyleProvider p_styleProvider, String p_openTag, String p_closeTag)
+  {
+      super(p_styleProvider);
+      javaScanner = new JamonJavaCodeScanner(JamonColorProvider.instance(), BG);
+      open = p_openTag.toCharArray();
+      close = p_closeTag.toCharArray();
+      styleChanged();
+      p_styleProvider.addSyntaxStyleChangeListener(SyntaxType.CALL, this);
+      p_styleProvider.addSyntaxStyleChangeListener(SyntaxType.CALL_PATH, this);
   }
 
   public char[] open()
@@ -52,7 +59,7 @@ public class CallScanner extends AbstractScanner implements BoundedScanner
       Assert.isTrue(lookingAt(offset, open));
       tokenLength = 2;
       offset += 2;
-      return TAG;
+      return m_tagToken;
     }
 
     else if (sawPath)
@@ -63,7 +70,7 @@ public class CallScanner extends AbstractScanner implements BoundedScanner
         {
           tokenLength = 2;
           offset += 2;
-          return TAG;
+          return m_tagToken;
         }
       }
 
@@ -84,7 +91,7 @@ public class CallScanner extends AbstractScanner implements BoundedScanner
         offset++;
       }
       tokenLength = offset - tokenOffset;
-      return WHITESPACE;
+      return m_whitespaceToken;
     }
 
     else
@@ -102,7 +109,7 @@ public class CallScanner extends AbstractScanner implements BoundedScanner
       tokenLength = offset - tokenOffset;
       sawPath = true;
       javaScanner.setRange(document, offset, limit - offset - 2);
-      return PATH;
+      return m_pathToken;
     }
   }
 
@@ -125,10 +132,17 @@ public class CallScanner extends AbstractScanner implements BoundedScanner
                                        style));
   }
 
-  static final RGB BG = new RGB(240, 240, 240);
-  static final IToken TAG = token(new RGB(127, 31, 15), BG, SWT.ITALIC);
-  static final IToken PATH = token(new RGB(127, 31, 15), BG, SWT.ITALIC | SWT.BOLD);
-  static final IToken DEFAULT = token(new RGB(0, 0, 0), BG, SWT.NORMAL);
-  static final IToken WHITESPACE = token(JamonColorProvider.DEFAULT, BG, SWT.NORMAL);
+  private IToken m_tagToken, m_pathToken, m_whitespaceToken;
+
+  private static RGB BG = null; //FIXME - REMOVE
   private boolean sawPath;
+
+    public void styleChanged()
+    {
+        m_tagToken = makeToken(SyntaxType.CALL);
+        m_pathToken = makeToken(SyntaxType.CALL_PATH);
+        TextAttribute textAttribute = (TextAttribute) m_tagToken.getData();
+        m_whitespaceToken = new Token(new TextAttribute(
+            textAttribute.getForeground(), textAttribute.getBackground(), SWT.NONE));
+    }
 }
