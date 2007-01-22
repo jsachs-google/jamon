@@ -63,6 +63,7 @@ public class JamonEditor extends AbstractDecoratedTextEditor
 
     @Override public void dispose()
     {
+        //BROKEN - dispose of SyntaxStyleChangeListeners
         PreferencesStyleProvider.getProvider().removeStylesChangedListener(m_stylesChangeListener);
         super.dispose();
     }
