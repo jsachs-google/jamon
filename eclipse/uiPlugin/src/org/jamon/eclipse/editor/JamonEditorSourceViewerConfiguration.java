@@ -39,7 +39,7 @@ public class JamonEditorSourceViewerConfiguration extends SourceViewerConfigurat
   private static final IAnnotationHover s_annotationHover = new JamonAnnotationHover();
   private PresentationReconciler m_reconciler;
 
-  private Collection<BoundedScanner> m_boundedScanners = new ArrayList<BoundedScanner>();
+  private Collection<DisposableScanner> m_disposableScanners = new ArrayList<DisposableScanner>();
 
   @Override
   public IAnnotationHover getAnnotationHover(ISourceViewer sourceViewer)
@@ -73,8 +73,8 @@ public class JamonEditorSourceViewerConfiguration extends SourceViewerConfigurat
       DefaultDamagerRepairer dr = new DefaultDamagerRepairer(p_scanner);
       m_reconciler.setDamager(dr, name);
       m_reconciler.setRepairer(dr, name);
-      if (p_scanner instanceof BoundedScanner) {
-        m_boundedScanners.add((BoundedScanner)p_scanner);
+      if (p_scanner instanceof DisposableScanner) {
+        m_disposableScanners.add((DisposableScanner)p_scanner);
     }
   }
 
@@ -92,7 +92,7 @@ public class JamonEditorSourceViewerConfiguration extends SourceViewerConfigurat
       addDamageRepairer(IDocument.DEFAULT_CONTENT_TYPE, new RuleBasedScanner());
       for (PartitionDescriptor pd : PartitionDescriptor.values())
       {
-        BoundedScanner scanner = pd.scanner();
+        DisposableScanner scanner = pd.scanner();
         addDamageRepairer(pd.tokenname(), scanner);
       }
       addDamageRepairer(JamonPartitionScanner.JAMON_LINE_TOKEN.getData().toString(),
@@ -101,9 +101,9 @@ public class JamonEditorSourceViewerConfiguration extends SourceViewerConfigurat
 
   void dispose()
   {
-      for (BoundedScanner boundedScanner: m_boundedScanners)
+      for (DisposableScanner disposableScanner: m_disposableScanners)
       {
-          boundedScanner.dispose();
+          disposableScanner.dispose();
       }
   }
 }

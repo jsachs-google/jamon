@@ -8,7 +8,7 @@ import org.jamon.eclipse.editor.preferences.SyntaxType;
 
 
 public class DocScanner extends AbstractScanner
-    implements BoundedScanner, StyleProvider.SyntaxStyleChangeListener
+    implements DisposableScanner, StyleProvider.SyntaxStyleChangeListener
 {
     private final char[] m_open;
     private final char[] m_close;
@@ -23,10 +23,10 @@ public class DocScanner extends AbstractScanner
       styleChanged();
   }
 
-  public static BoundedScannerFactory makeBoundedScannerFactory()
+  public static DisposableScannerFactory makeDisposableScannerFactory()
   {
-    return new BoundedScannerFactory() {
-        public BoundedScanner create(StyleProvider p_styleProvider, String p_open, String p_close)
+    return new DisposableScannerFactory() {
+        public DisposableScanner create(StyleProvider p_styleProvider, String p_open, String p_close)
         {
             return new DocScanner(p_styleProvider, p_open, p_close);
         }

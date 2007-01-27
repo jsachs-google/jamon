@@ -26,7 +26,7 @@ public abstract class AbstractScannerTest extends TestCase
     m_scanner.setRange(doc, 0, doc.getLength());
   }
 
-  protected BoundedScanner m_scanner;
+  protected DisposableScanner m_scanner;
   protected MockStyleProvider m_styleProvider;
 
   private int offset;

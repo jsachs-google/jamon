@@ -12,12 +12,12 @@ import org.jamon.eclipse.editor.preferences.StyleProvider;
 import org.jamon.eclipse.editor.preferences.SyntaxType;
 
 public class SimpleScanner extends AbstractScanner
-    implements BoundedScanner, StyleProvider.SyntaxStyleChangeListener
+    implements DisposableScanner, StyleProvider.SyntaxStyleChangeListener
 {
-    public final static BoundedScannerFactory makeFactory(final SyntaxType p_syntaxType)
+    public final static DisposableScannerFactory makeFactory(final SyntaxType p_syntaxType)
     {
-        return new BoundedScannerFactory() {
-            public BoundedScanner create(
+        return new DisposableScannerFactory() {
+            public DisposableScanner create(
                 StyleProvider p_styleProvider,
                 String p_openTag,
                 String p_closeTag)

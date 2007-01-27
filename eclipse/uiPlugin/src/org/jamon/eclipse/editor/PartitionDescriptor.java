@@ -27,11 +27,11 @@ public enum PartitionDescriptor {
     METHOD(false, SimpleScanner.makeFactory(SyntaxType.METHOD), "<%method ", ">"),
     METHOD_CLOSE(false, SimpleScanner.makeFactory(SyntaxType.METHOD), "</%method>", ""),
     EMIT(true, SimpleScanner.makeFactory(SyntaxType.EMIT), "<% ", "%>"),
-    DOC(false, DocScanner.makeBoundedScannerFactory(), "<%doc>", "</%doc>");
+    DOC(false, DocScanner.makeDisposableScannerFactory(), "<%doc>", "</%doc>");
 
   private PartitionDescriptor(
       boolean p_hasStrings,
-      BoundedScannerFactory p_boundedScannerFactory,
+      DisposableScannerFactory p_disposableScannerFactory,
       String p_openTag,
       String p_closeTag)
   {
@@ -40,14 +40,14 @@ public enum PartitionDescriptor {
       m_openChars = p_openTag.toCharArray();
       m_closeChars = p_closeTag.toCharArray();
       m_hasStrings = p_hasStrings;
-      m_scannerBoundedScannerFactory = p_boundedScannerFactory;
+      m_scannerDisposableScannerFactory = p_disposableScannerFactory;
       m_name = "__jamon_partition_" + name();
       m_token = new Token(m_name);
   }
 
-  public BoundedScanner scanner()
+  public DisposableScanner scanner()
   {
-    return m_scannerBoundedScannerFactory.create(
+    return m_scannerDisposableScannerFactory.create(
         PreferencesStyleProvider.getProvider(), m_openTag, m_closeTag);
   }
 
@@ -81,5 +81,5 @@ public enum PartitionDescriptor {
   private final IToken m_token;
   private final boolean m_hasStrings;
   private final String m_name;
-  private final BoundedScannerFactory m_scannerBoundedScannerFactory;
+  private final DisposableScannerFactory m_scannerDisposableScannerFactory;
 }

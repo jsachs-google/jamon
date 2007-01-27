@@ -12,14 +12,14 @@ import org.jamon.eclipse.editor.preferences.SyntaxType;
 import org.jamon.eclipse.editor.preferences.StyleProvider.SyntaxStyleChangeListener;
 
 public class CallScanner extends AbstractScanner
-    implements BoundedScanner, SyntaxStyleChangeListener
+    implements DisposableScanner, SyntaxStyleChangeListener
 {
   private final JamonJavaCodeScanner javaScanner;
   private final char[] open;
   private final char[] close;
 
-  public static BoundedScannerFactory FACTORY = new BoundedScannerFactory() {
-      public BoundedScanner create(StyleProvider p_styleProvider, String p_openTag, String p_closeTag)
+  public static DisposableScannerFactory FACTORY = new DisposableScannerFactory() {
+      public DisposableScanner create(StyleProvider p_styleProvider, String p_openTag, String p_closeTag)
       {
           return new CallScanner(p_styleProvider, p_openTag, p_closeTag);
       }
