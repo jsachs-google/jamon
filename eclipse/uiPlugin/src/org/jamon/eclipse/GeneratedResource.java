@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 
 public class GeneratedResource
@@ -12,6 +13,7 @@ public class GeneratedResource
     public GeneratedResource(IFile p_generatedJavaFile)
         throws CoreException, NotAGeneratedResourceException
     {
+        p_generatedJavaFile.refreshLocal(IResource.DEPTH_ZERO, null);
         TemplateResources resources = TemplateResources.fromGeneratedSource(p_generatedJavaFile);
         if (resources == null) {
             throw new NotAGeneratedResourceException();
