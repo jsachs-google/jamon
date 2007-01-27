@@ -393,7 +393,21 @@ public class TemplateBuilder extends IncrementalProjectBuilder
                         resources.getImpl());
                 }
             }
-            return true;
+            return shouldDescendInto(p_resource);
+        }
+
+        private boolean shouldDescendInto(IResource p_resource) throws CoreException
+        {
+            if (p_resource.getType() == IResource.PROJECT) 
+            {
+                return JamonNature.projectHasNature((IProject) p_resource);
+            }
+            if (p_resource.getType() != IResource.FOLDER)
+            {
+                return false;
+            }
+            final IFolder folder = (IFolder) p_resource;
+            return m_templateDir.getProjectRelativePath().isPrefixOf(folder.getProjectRelativePath());
         }
 
         public boolean visit(IResourceDelta p_delta) throws CoreException
@@ -402,17 +416,15 @@ public class TemplateBuilder extends IncrementalProjectBuilder
             {
                 case IResourceDelta.ADDED :
                 case IResourceDelta.CHANGED :
-                    visit(p_delta.getResource());
-                break;
+                    return visit(p_delta.getResource());
                 case IResourceDelta.REMOVED:
-                    TemplateResources resources =
-                        makeResources(p_delta.getResource());
+                    TemplateResources resources = makeResources(p_delta.getResource());
                     if (resources != null)
                     {
                         resources.clearGeneratedResources();
                     }
             }
-            return true;
+            return shouldDescendInto(p_delta.getResource());
         }
     }
 
