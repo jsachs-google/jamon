@@ -63,9 +63,11 @@ public class JavaMarkerListener implements IResourceChangeListener
 
                 String markerType =
                   generatedResource.isImpl() ? implMarkerId : proxyMarkerId;
-                generatedResource.getTemplateFile().deleteMarkers(
-                    markerType, true, IResource.DEPTH_ZERO);
-
+                if (markerDeltas.length > 0)
+                {
+                    generatedResource.getTemplateFile().deleteMarkers(
+                        markerType, true, IResource.DEPTH_ZERO);
+                }
                 for (IMarkerDelta markerDelta : markerDeltas)
                 {
                     switch(markerDelta.getKind())
