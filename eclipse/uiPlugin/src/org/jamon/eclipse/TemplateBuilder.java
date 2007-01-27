@@ -38,14 +38,14 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.launching.JavaRuntime;
 import org.jamon.JamonRuntimeException;
+import org.jamon.ParserError;
+import org.jamon.ParserErrors;
 import org.jamon.codegen.Analyzer;
 import org.jamon.codegen.ImplGenerator;
 import org.jamon.codegen.ProxyGenerator;
 import org.jamon.codegen.SourceGenerator;
 import org.jamon.codegen.TemplateDescriber;
 import org.jamon.codegen.TemplateUnit;
-import org.jamon.ParserError;
-import org.jamon.ParserErrors;
 import org.jamon.util.StringUtils;
 
 
@@ -75,7 +75,7 @@ public class TemplateBuilder extends IncrementalProjectBuilder
         }
         catch (FileNotFoundException e) 
         {
-            return;
+            // ok, no cached dependencies
         }
         catch (IOException e) 
         {
@@ -83,17 +83,7 @@ public class TemplateBuilder extends IncrementalProjectBuilder
         }
         finally 
         {
-            if (in != null)
-            {
-                try
-                {
-                    in.close();
-                }
-                catch (IOException e)
-                {
-                    // sshh
-                }
-            }
+            EclipseUtils.closeQuiety(in);
         }
     }
 
@@ -212,27 +202,42 @@ public class TemplateBuilder extends IncrementalProjectBuilder
             throws CoreException
         {
             List<URL> urls = new ArrayList<URL>();
-            String[] entries = JavaRuntime.computeDefaultRuntimeClassPath(p_project);
-            for (int i = 0; i < entries.length; ++i) 
+            for (String entry : JavaRuntime.computeDefaultRuntimeClassPath(p_project)) 
             {
                 try 
                 {
-                    urls.add(new File(entries[i]).toURL());
+                    urls.add(new File(entry).toURL());
                 }
                 catch (MalformedURLException e) 
                 {
                     EclipseUtils.logError(e);
                 }
             }
-            IProject[] dependencies = p_project.getProject().getReferencedProjects();
-            for (int i = 0; i < dependencies.length; ++i) 
-            {
-                if (dependencies[i].hasNature(JavaCore.NATURE_ID)) 
-                {
-                    urls.addAll(classpathUrlsForProject((IJavaProject) dependencies[i].getNature(JavaCore.NATURE_ID)));
-                }
-            }
+            addDependenciesClasspath(p_project, urls);
             return urls;
+        }
+
+        private void addDependencyClasspath(IProject p_project, List<URL> urls) throws CoreException
+        {
+            if (! p_project.isOpen()) 
+            {
+                EclipseUtils.logInfo("Apparently dependent project " + p_project.getName() + " not open, ignoring");
+                return;
+            }
+            if (! p_project.hasNature(JavaCore.NATURE_ID))
+            {
+                EclipseUtils.logInfo("Dependent project " + p_project.getName() + " not a java project, ignoring");
+                return;
+            }
+            urls.addAll(classpathUrlsForProject((IJavaProject) p_project.getNature(JavaCore.NATURE_ID)));
+        }
+
+        private void addDependenciesClasspath(IJavaProject p_project, List<URL> urls) throws CoreException
+        {
+            for (final IProject proj : p_project.getProject().getReferencedProjects()) 
+            {
+                addDependencyClasspath(proj, urls);
+            }
         }
 
         private ClassLoader classLoader() throws CoreException 
