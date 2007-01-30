@@ -1,5 +1,6 @@
 package org.jamon.eclipse.editor;
 
+import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.TextAttribute;
 import org.eclipse.jface.text.rules.IToken;
 import org.eclipse.jface.text.rules.Token;
@@ -142,5 +143,17 @@ public class SimpleScanner extends AbstractScanner
           tagToken = makeToken(m_syntaxType);
           m_javaScanner = new JamonJavaCodeScanner(
               JamonColorProvider.instance(), m_styleProvider.getStyle(m_syntaxType).getBackground());
-      }
+    }
+    
+    @Override public void setRange(IDocument p_document, int p_offset, int p_length)
+    {
+        super.setRange(p_document, p_offset, p_length);
+        while (! lookingAt(initialOffset, open))
+        {
+            initialOffset--;
+            offset--;
+            length++;
+            limit++;
+        }
+    }
 }
