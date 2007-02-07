@@ -99,8 +99,6 @@ public class JamonEditorSourceViewerConfiguration extends SourceViewerConfigurat
         DisposableScanner scanner = pd.scanner();
         addDamageRepairer(pd.tokenname(), scanner);
       }
-      addDamageRepairer(JamonPartitionScanner.JAMON_LINE_TOKEN.getData().toString(),
-                        new SimpleScanner("\n%", "\n", "java_line"));
   }
 
   void dispose()
