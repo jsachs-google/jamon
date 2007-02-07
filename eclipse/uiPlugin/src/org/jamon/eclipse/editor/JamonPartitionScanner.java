@@ -27,6 +27,7 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
     {
       types.add(pd.tokenname());
     }
+    types.add(JAMON);
     JAMON_PARTITION_TYPES = types.toArray(new String[types.size()]);
   }
 
@@ -56,6 +57,21 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
 
   public void setPartialRange(IDocument document, int offset, int length, String contentType, int partitionOffset)
   {
+    try
+    {
+        if (contentType == null) {
+            System.err.println("\n***setRange on " + offset + " " + length + " doclength is " + document.getLength());
+        }
+        else {
+            System.err.println("\n@@@setPartialRange on " + contentType);
+            System.err.println("range is \"" + document.get(offset, length) + "\"");
+            System.err.println("partition range is \"" + document.get(partitionOffset, length + (offset - partitionOffset)) + "\"");
+        }
+    }
+    catch (BadLocationException e)
+    {
+        e.printStackTrace();
+    }
     this.document = document;
     this.offset = offset;
     this.length = length;
@@ -100,8 +116,6 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
   private IToken processDefault()
   {
     int i = offset;
-    while (i < limit)
-    {
       for (PartitionDescriptor s : PartitionDescriptor.values())
       {
         if (lookingAt(i, s.open()))
@@ -110,8 +124,14 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
           return s.token();
         }
       }
-      i++;
-    }
+      OUTER: while (i < limit) {
+          for (PartitionDescriptor s : PartitionDescriptor.values()) {
+              if (lookingAt(i, s.open())) {
+                  break OUTER;
+              }
+          }
+          i++;
+      }
     tokenLength = i - offset;
     tokenOffset = offset;
     offset = i;
@@ -148,23 +168,33 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
 
   public IToken nextToken()
   {
-      try {
+      IToken result = null;
         if (offset >= limit)
         {
-          return Token.EOF;
+            tokenOffset = offset;
+            tokenLength = 0;
+          result = Token.EOF;
         }
         else if (currentContent == JAMON_TOKEN || currentContent == null)
         {
-          return processDefault();
+          result = processDefault();
         }
         else
         {
-          return resumedNextToken();
+          result = resumedNextToken();
         }
-      }
-      finally {
           currentContent = null;
-      }
+          System.err.println("\n!!! Partition token: " + tokenOffset + " " + tokenLength + " " + result.getData());
+          try
+        {
+            System.err.println(" corresponding to \"" + document.get(tokenOffset, tokenLength) + "\"");
+        }
+        catch (BadLocationException e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+          return result;
   }
 
   private IToken resumedNextToken()
@@ -254,6 +284,10 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
   public void setRange(IDocument document, int offset, int length)
   {
     setPartialRange(document, offset, length, null, -1);
+  }
+  
+  public JamonPartitionScanner() {
+      
   }
 
 }
