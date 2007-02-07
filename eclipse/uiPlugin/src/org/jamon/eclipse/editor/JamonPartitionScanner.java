@@ -110,6 +110,7 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
           return s.token();
         }
       }
+      i++;
     }
     tokenLength = i - offset;
     tokenOffset = offset;
@@ -147,18 +148,23 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
 
   public IToken nextToken()
   {
-    if (offset >= limit)
-    {
-      return Token.EOF;
-    }
-    else if (currentContent == JAMON_TOKEN)
-    {
-      return processDefault();
-    }
-    else
-    {
-      return resumedNextToken();
-    }
+      try {
+        if (offset >= limit)
+        {
+          return Token.EOF;
+        }
+        else if (currentContent == JAMON_TOKEN || currentContent == null)
+        {
+          return processDefault();
+        }
+        else
+        {
+          return resumedNextToken();
+        }
+      }
+      finally {
+          currentContent = null;
+      }
   }
 
   private IToken resumedNextToken()
