@@ -1,10 +1,8 @@
 package org.jamon.eclipse.editor;
 
-import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.TextAttribute;
 import org.eclipse.jface.text.rules.IToken;
 import org.eclipse.jface.text.rules.Token;
-import org.eclipse.jface.util.Assert;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.ui.PlatformUI;
@@ -62,7 +60,7 @@ public class SimpleScanner extends AbstractScanner
         super(null);
         open = p_openTag.toCharArray();
         close = p_closeTag.toCharArray();
-        RGB bgColor = bg(propertyBase);
+        RGB bgColor = new RGB(255, 255, 255); // bg(propertyBase);
         tagToken = new Token(new TextAttribute(
             JamonColorProvider.instance().getColor(fg(propertyBase)),
             JamonColorProvider.instance().getColor(bgColor),
@@ -113,9 +111,10 @@ public class SimpleScanner extends AbstractScanner
         }
         tokenOffset = offset;
 
-        if (initialOffset == offset)
+        // if (initialOffset == offset)
+        if (lookingAt(offset,open))
         {
-          Assert.isTrue(lookingAt(offset, open));
+          // Assert.isTrue(lookingAt(offset, open));
           tokenLength = open.length;
           offset += open.length;
           m_javaScanner.setRange(document, offset, limit - offset);
@@ -130,6 +129,10 @@ public class SimpleScanner extends AbstractScanner
         }
         else
         {
+            if (offset == initialOffset)
+            {
+                m_javaScanner.setRange(document, offset, limit - offset);
+            }
           final IToken tok = m_javaScanner.nextToken();
           tokenLength = m_javaScanner.getTokenLength();
           offset  = m_javaScanner.getTokenOffset();
@@ -145,15 +148,4 @@ public class SimpleScanner extends AbstractScanner
               JamonColorProvider.instance(), m_styleProvider.getStyle(m_syntaxType).getBackground());
     }
     
-    @Override public void setRange(IDocument p_document, int p_offset, int p_length)
-    {
-        super.setRange(p_document, p_offset, p_length);
-        while (! lookingAt(initialOffset, open))
-        {
-            initialOffset--;
-            offset--;
-            length++;
-            limit++;
-        }
-    }
 }
