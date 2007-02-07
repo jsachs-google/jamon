@@ -81,6 +81,10 @@ public class JamonEditorSourceViewerConfiguration extends SourceViewerConfigurat
   @Override
   public IPresentationReconciler getPresentationReconciler(ISourceViewer sourceViewer)
   {
+      if (m_reconciler != null)
+      {
+          return m_reconciler;
+      }
     m_reconciler = new PresentationReconciler();
     m_reconciler.setDocumentPartitioning(getConfiguredDocumentPartitioning(sourceViewer));
     setDamageRepairers();
