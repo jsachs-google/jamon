@@ -1,9 +1,10 @@
 package org.jamon.eclipse.editor.preferences;
 
+import junit.framework.TestCase;
+
 import org.eclipse.jface.text.TextAttribute;
 import org.eclipse.swt.SWT;
-
-import junit.framework.TestCase;
+import org.eclipse.swt.graphics.RGB;
 
 public class StyleTest extends TestCase
 {
@@ -33,4 +34,22 @@ public class StyleTest extends TestCase
         assertFalse(style.isOptionSet(StyleOption.ITALIC));
         assertEquals(swtStyle, style.getSwtStyle());
     }
+    
+    public void testDefaultBg()
+    {
+        style = new Style();
+        assertEquals(style, new Style());
+        style.setForeground(new RGB(4,5,6));
+        Style s2 = new Style();
+        s2.setForeground(new RGB(4,5,6));
+        assertEquals(style, s2);
+        s2.setForeground(new RGB(3,5,6));
+        assertFalse(style.equals(s2));
+        s2.setForeground(new RGB(4,5,6));
+        s2.setBackground(new RGB(0,1,2));
+        assertFalse(style.equals(s2));
+        style.setBackground(new RGB(0,1,2));
+        assertEquals(style, s2);
+    }
+        
 }

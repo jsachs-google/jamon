@@ -79,7 +79,7 @@ public final class Style
         {
             Style style = (Style)p_other;
             return ((style.m_background == null && m_background == null) 
-                    || (m_background != null && style.m_background.equals(m_background)))
+                    || (style.m_background != null && style.m_background.equals(m_background)))
                 && style.m_foreground.equals(m_foreground)
                 && style.m_options.equals(m_options);
         }
