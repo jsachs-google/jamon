@@ -54,6 +54,9 @@ public class SyntaxPreferences
 
     // package scoped for unit testing.
     static RGB stringToRgb(String p_string) {
+        if (p_string == null || p_string.length() == 0) {
+            return null;
+        }
         StringTokenizer tokenizer = new StringTokenizer(p_string, ",");
         int[] colorComponents = new int[3];
         for (int i = 0; i < colorComponents.length; i++)
@@ -66,6 +69,10 @@ public class SyntaxPreferences
     // package scoped for unit testing.
     static String rgbToString(RGB p_rgb)
     {
+        if (p_rgb == null)
+        {
+            return "";
+        }
         return p_rgb.red + "," + p_rgb.green + "," + p_rgb.blue;
     }
 

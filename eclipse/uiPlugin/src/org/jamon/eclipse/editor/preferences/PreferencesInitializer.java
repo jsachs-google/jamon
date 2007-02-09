@@ -9,15 +9,15 @@ import org.jamon.eclipse.JamonProjectPlugin;
 public class PreferencesInitializer extends AbstractPreferenceInitializer
 {
     private static final String BLACK = SyntaxPreferences.rgbToString(new RGB(0,0,0));
-    private static final String WHITE = SyntaxPreferences.rgbToString(new RGB(255, 255, 255));
-
+    private static final String DEFAULT = "";
+    
     @Override public void initializeDefaultPreferences()
     {
         IPreferenceStore preferenceStore = JamonProjectPlugin.getDefault().getPreferenceStore();
         for (SyntaxType syntaxType : SyntaxType.values())
         {
             preferenceStore.setDefault(syntaxType.getStylePreferenceKey(), SWT.NONE);
-            preferenceStore.setDefault(syntaxType.getBackgroundPreferenceKey(), WHITE);
+            preferenceStore.setDefault(syntaxType.getBackgroundPreferenceKey(), DEFAULT);
             preferenceStore.setDefault(syntaxType.getForegroundPreferenceKey(), BLACK);
         }
 

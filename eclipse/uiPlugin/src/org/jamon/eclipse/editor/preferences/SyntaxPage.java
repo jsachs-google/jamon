@@ -8,6 +8,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -45,7 +46,7 @@ public class SyntaxPage extends PreferencePage implements IWorkbenchPreferencePa
                 m_currentSelectedSyntaxType = SyntaxType.values()[selectionIndex];
                 Style style = m_syntaxPreferences.getStyle(m_currentSelectedSyntaxType);
                 m_foregroundColorSelector.setColorValue(style.getForeground());
-                m_backgroundColorSelector.setColorValue(style.getBackground());
+                m_backgroundColorSelector.setColorValue(style.getBackground() == null ? new RGB(255,255,255) : style.getBackground());
                 for (StyleOption styleOption: StyleOption.values())
                 {
                     styleOptionButtons.get(styleOption).setSelection(

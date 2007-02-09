@@ -9,7 +9,7 @@ public final class Style
 {
     private Set<StyleOption> m_options = EnumSet.noneOf(StyleOption.class);
     private RGB m_foreground = new RGB(0, 0, 0);
-    private RGB m_background = new RGB(255, 255, 255);
+    private RGB m_background = null;
 
     public void setOption(StyleOption styleOption, boolean value) {
         if (value)
@@ -50,7 +50,6 @@ public final class Style
     public RGB getBackground() { return m_background; }
     public void setBackground(RGB p_background)
     {
-        assertNotNull(p_background);
         m_background = p_background;
     }
 
@@ -79,7 +78,8 @@ public final class Style
         if (p_other instanceof Style)
         {
             Style style = (Style)p_other;
-            return style.m_background.equals(m_background)
+            return ((style.m_background == null && m_background == null) 
+                    || (m_background != null && style.m_background.equals(m_background)))
                 && style.m_foreground.equals(m_foreground)
                 && style.m_options.equals(m_options);
         }
@@ -92,7 +92,7 @@ public final class Style
     @Override public int hashCode()
     {
         return
-            (((m_options.hashCode() * 31)) + m_foreground.hashCode() * 31) + m_background.hashCode();
+            (((m_options.hashCode() * 31)) + m_foreground.hashCode() * 31) + (m_background == null ? 0 : m_background.hashCode());
     }
 
     @Override public String toString()
