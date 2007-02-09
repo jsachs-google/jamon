@@ -9,6 +9,7 @@ public enum PartitionDescriptor {
     ARGS(true, SimpleScanner.makeFactory(SyntaxType.ARGS), "<%args>", "</%args>"),
     XARGS(true, SimpleScanner.makeFactory(SyntaxType.XARGS), "<%xargs>", "</%xargs>"),
     JAVA(true, SimpleScanner.makeFactory(SyntaxType.JAVA), "<%java>", "</%java>"),
+    SHORT_JAVA(true, SimpleScanner.makeFactory(SyntaxType.JAVA), "<%java ", "%>"),
     CLASS(true, SimpleScanner.makeFactory(SyntaxType.CLASS), "<%class>", "</%class>"),
     ALIAS(false, SimpleScanner.makeFactory(SyntaxType.ALIAS), "<%alias>", "</%alias>"),
     IMPORT(false, SimpleScanner.makeFactory(SyntaxType.IMPORT),"<%import>", "</%import>"),
