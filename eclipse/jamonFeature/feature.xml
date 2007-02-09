@@ -2,14 +2,14 @@
 <feature
       id="org.jamon.feature"
       label="jamon"
-      version="2.1.0.2">
+      version="2.2.0.0">
 
    <description url="http://www.jamon.org/">
       Feature to assist in working with jamon templates in eclipse
    </description>
 
    <copyright>
-      Copyright 2005-2006 Jay Sachs and Ian Robertson
+      Copyright 2005-2007 Jay Sachs and Ian Robertson
    </copyright>
 
    <license url="http://www.mozilla.org/MPL/">
@@ -25,7 +25,7 @@ rights and limitations under the License.
 The Original Code is Jamon code, released February, 2003.
 The Initial Developers of the Original Code are Jay Sachs and
 Ian Robertson.  Portions
-created by Jay Sachs and Ian Robertson are Copyright (C) 2003-2006
+created by Jay Sachs and Ian Robertson are Copyright (C) 2003-2007
 Jay Sachs and Ian Robertson.  All Rights Reserved.
 Contributor(s):
    </license>
