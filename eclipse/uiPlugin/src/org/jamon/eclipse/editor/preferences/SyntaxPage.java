@@ -22,9 +22,25 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 
 public class SyntaxPage extends PreferencePage implements IWorkbenchPreferencePage
 {
+    public class DefaultBackgroundListener implements SelectionListener
+    {
+
+        public void widgetDefaultSelected(SelectionEvent p_event)
+        {
+            m_backgroundColorSelector.setEnabled(! m_backgroundUseDefault.getSelection());
+        }
+
+        public void widgetSelected(SelectionEvent p_event)
+        {
+            m_backgroundColorSelector.setEnabled(! m_backgroundUseDefault.getSelection());
+        }
+
+    }
+
     private List styleList = null;
     private ColorSelector m_foregroundColorSelector = null;
     private ColorSelector m_backgroundColorSelector = null;
+    private Button m_backgroundUseDefault = null;
     private EnumMap<StyleOption, Button> styleOptionButtons =
         new EnumMap<StyleOption, Button>(StyleOption.class);
 
@@ -42,16 +58,17 @@ public class SyntaxPage extends PreferencePage implements IWorkbenchPreferencePa
             int selectionIndex = styleList.getSelectionIndex();
             if (selectionIndex >= 0 && selectionIndex < SyntaxType.values().length)
             {
-                setEnablement(true);
                 m_currentSelectedSyntaxType = SyntaxType.values()[selectionIndex];
                 Style style = m_syntaxPreferences.getStyle(m_currentSelectedSyntaxType);
                 m_foregroundColorSelector.setColorValue(style.getForeground());
                 m_backgroundColorSelector.setColorValue(style.getBackground() == null ? new RGB(255,255,255) : style.getBackground());
+                m_backgroundUseDefault.setSelection(style.getBackground() == null);
                 for (StyleOption styleOption: StyleOption.values())
                 {
                     styleOptionButtons.get(styleOption).setSelection(
                         style.isOptionSet(styleOption));
                 }
+                setEnablement(true);
             }
             else
             {
@@ -102,7 +119,10 @@ public class SyntaxPage extends PreferencePage implements IWorkbenchPreferencePa
         new Label(optionsGroup, SWT.NONE).setText("Background:");
         m_backgroundColorSelector = new ColorSelector(optionsGroup);
 
-
+        new Label(optionsGroup, SWT.NONE).setText("  use default");
+        m_backgroundUseDefault = new Button(optionsGroup, SWT.CHECK);
+        m_backgroundUseDefault.addSelectionListener(new DefaultBackgroundListener());
+        
         for (StyleOption styleOption: StyleOption.values())
         {
             Button checkbox = new Button(optionsGroup, SWT.CHECK);
@@ -167,7 +187,14 @@ public class SyntaxPage extends PreferencePage implements IWorkbenchPreferencePa
         if (m_currentSelectedSyntaxType != null) {
             Style style = m_syntaxPreferences.getStyle(m_currentSelectedSyntaxType);
             style.setForeground(m_foregroundColorSelector.getColorValue());
-            style.setBackground(m_backgroundColorSelector.getColorValue());
+            if ( m_backgroundUseDefault.getSelection()) 
+            {
+                style.setBackground(null);
+            }
+            else 
+            {
+                style.setBackground(m_backgroundColorSelector.getColorValue());
+            }
             for (StyleOption styleOption: StyleOption.values())
             {
                 style.setOption(
@@ -180,7 +207,8 @@ public class SyntaxPage extends PreferencePage implements IWorkbenchPreferencePa
     private void setEnablement(boolean enabled)
     {
         m_foregroundColorSelector.setEnabled(enabled);
-        m_backgroundColorSelector.setEnabled(enabled);
+        m_backgroundUseDefault.setEnabled(enabled);
+        m_backgroundColorSelector.setEnabled(! m_backgroundUseDefault.getSelection() && enabled);
         for (Button button: styleOptionButtons.values())
         {
             button.setEnabled(enabled);
