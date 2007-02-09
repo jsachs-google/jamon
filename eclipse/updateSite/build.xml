@@ -11,9 +11,8 @@
       <arg value="--recursive" />
       <arg value="--relative" />
       <arg value="--compress" />
-      <arg value="--exclude=.cvsignore"/>
       <arg value="--exclude=.project"/>
-      <arg value="--exclude=CVS"/>
+      <arg value="--exclude=.svn"/>
       <arg value="."/>
       <arg value="jamon@www.jamon.org:/home/jamon/www${site.dir}/eclipse/updates" />
     </exec>

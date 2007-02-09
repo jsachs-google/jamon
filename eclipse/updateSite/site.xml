@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/org.jamon.feature_2.1.0.2.jar" id="org.jamon.feature" version="2.1.0.2">
+   <feature url="features/org.jamon.feature_2.2.0.0.jar" id="org.jamon.feature" version="2.2.0.0">
       <category name="Jamon"/>
    </feature>
    <category-def name="Jamon" label="Jamon"/>
