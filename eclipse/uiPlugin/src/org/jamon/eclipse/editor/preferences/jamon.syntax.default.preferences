@@ -1,0 +1,11 @@
+# 
+org.jamon.syntax.alias.foreground=0,0,255
+org.jamon.syntax.args.foreground=0,0,255
+org.jamon.syntax.xargs.foreground=0,0,255
+org.jamon.syntax.java.foreground=0,0,255
+org.jamon.syntax.class.foreground=0,0,255
+org.jamon.syntax.imports.foreground=0,0,255
+org.jamon.syntax.flowControl.foreground=0,0,255
+org.jamon.syntax.def.foreground=0,0,255
+org.jamon.syntax.method.foreground=0,0,255
+org.jamon.syntax.emit.foreground=0,192,127
