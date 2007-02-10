@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.jamon</groupId>
     <artifactId>maven-jamon-plugin</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>2.2.0.0-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
     <organization>
         <name>Jamon developers</name>
@@ -35,19 +35,28 @@
         <developerConnection>scm:svn:svn+ssh://svn.sourceforge.net/svnroot/jamon/mvn2-plugin/</developerConnection>
         <url>https://svn.sourceforge.net/svnroot/jamon/mvn2-plugin/</url>
     </scm>
+    <repositories>
+        <repository>
+            <id>jamon</id>
+            <name>Jamon</name>
+            <url>http://maven.jamon.org/</url>
+        </repository>
+    </repositories>
+    
     <distributionManagement>
         <repository>
             <id>jamon</id>
             <name>Jamon</name>
-            <url>sftp://www.jamon.org/home/jamon/maven2</url>
+            <url>scpexe://jamon@maven.jamon.org/home/jamon/maven2</url>
             <uniqueVersion>false</uniqueVersion>
         </repository>
         <site>
             <id>jamon</id>
             <name>Jamon</name>
-            <url>sftp://www.jamon.org/maven2</url>
+            <url>scpexe://jamon@maven.jamon.org/home/jamon/maven2</url>
         </site>
     </distributionManagement>
+    
     <name>Jamon Maven2 Plugin</name>
     <dependencies>
         <dependency>
