@@ -69,7 +69,6 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
       {
         this.length += delta;
         this.offset = partitionOffset;
-        this.limit += delta;
         this.currentContent = null;
       }
     }
