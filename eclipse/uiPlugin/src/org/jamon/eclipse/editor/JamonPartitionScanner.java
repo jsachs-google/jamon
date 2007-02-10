@@ -62,6 +62,17 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
     this.length = length;
     this.currentContent = tokenFor(contentType);
     this.limit = offset + length;
+    if (partitionOffset >= 0)
+    {
+      int delta = offset - partitionOffset;
+      if (delta > 0)
+      {
+        this.length += delta;
+        this.offset = partitionOffset;
+        this.limit += delta;
+        this.currentContent = null;
+      }
+    }
   }
 
   public int getTokenLength()
