@@ -111,7 +111,7 @@ public class SyntaxPage extends PreferencePage implements IWorkbenchPreferencePa
     private void createOptionsGroup(Composite parent)
     {
         Group optionsGroup = new Group(parent, SWT.NONE);
-        optionsGroup.setLayout(new GridLayout(2, true));
+        optionsGroup.setLayout(new GridLayout(4, true));
 
         new Label(optionsGroup, SWT.NONE).setText("Foreground:");
         m_foregroundColorSelector = new ColorSelector(optionsGroup);
@@ -119,10 +119,10 @@ public class SyntaxPage extends PreferencePage implements IWorkbenchPreferencePa
         new Label(optionsGroup, SWT.NONE).setText("Background:");
         m_backgroundColorSelector = new ColorSelector(optionsGroup);
 
-        new Label(optionsGroup, SWT.NONE).setText("  use default");
+        new Label(optionsGroup, SWT.NONE).setText("use default background");
         m_backgroundUseDefault = new Button(optionsGroup, SWT.CHECK);
         m_backgroundUseDefault.addSelectionListener(new DefaultBackgroundListener());
-        
+
         for (StyleOption styleOption: StyleOption.values())
         {
             Button checkbox = new Button(optionsGroup, SWT.CHECK);
@@ -187,11 +187,11 @@ public class SyntaxPage extends PreferencePage implements IWorkbenchPreferencePa
         if (m_currentSelectedSyntaxType != null) {
             Style style = m_syntaxPreferences.getStyle(m_currentSelectedSyntaxType);
             style.setForeground(m_foregroundColorSelector.getColorValue());
-            if ( m_backgroundUseDefault.getSelection()) 
+            if ( m_backgroundUseDefault.getSelection())
             {
                 style.setBackground(null);
             }
-            else 
+            else
             {
                 style.setBackground(m_backgroundColorSelector.getColorValue());
             }

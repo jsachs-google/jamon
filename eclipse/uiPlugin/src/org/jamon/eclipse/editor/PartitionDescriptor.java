@@ -1,36 +1,64 @@
 package org.jamon.eclipse.editor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.jface.text.rules.IToken;
 import org.eclipse.jface.text.rules.Token;
 import org.jamon.eclipse.editor.preferences.PreferencesStyleProvider;
 import org.jamon.eclipse.editor.preferences.SyntaxType;
 
-public enum PartitionDescriptor {
-    ARGS(true, SimpleScanner.makeFactory(SyntaxType.ARGS), "<%args>", "</%args>"),
-    XARGS(true, SimpleScanner.makeFactory(SyntaxType.XARGS), "<%xargs>", "</%xargs>"),
-    JAVA(true, SimpleScanner.makeFactory(SyntaxType.JAVA), "<%java>", "</%java>"),
-    SHORT_JAVA(true, SimpleScanner.makeFactory(SyntaxType.JAVA), "<%java ", "%>"),
-    CLASS(true, SimpleScanner.makeFactory(SyntaxType.CLASS), "<%class>", "</%class>"),
-    ALIAS(false, SimpleScanner.makeFactory(SyntaxType.ALIAS), "<%alias>", "</%alias>"),
-    IMPORT(false, SimpleScanner.makeFactory(SyntaxType.IMPORT),"<%import>", "</%import>"),
-    CALL_CONTENT(true, CallScanner.FACTORY, "<&|", "&>"),
-    CALL(true, CallScanner.FACTORY, "<&", "&>"),
-    WHILE(true, SimpleScanner.makeFactory(SyntaxType.FLOW_CONTROL), "<%while ", "%>"),
-    WHILE_CLOSE(false, SimpleScanner.makeFactory(SyntaxType.FLOW_CONTROL), "</%while>", ""),
-    FOR(true, SimpleScanner.makeFactory(SyntaxType.FLOW_CONTROL), "<%for ", "%>"),
-    FOR_CLOSE(false, SimpleScanner.makeFactory(SyntaxType.FLOW_CONTROL), "</%for>", ""),
-    IF(true, SimpleScanner.makeFactory(SyntaxType.FLOW_CONTROL), "<%if ", "%>"),
-    IF_CLOSE(false, SimpleScanner.makeFactory(SyntaxType.FLOW_CONTROL), "</%if>", ""),
-    ELSE(false, SimpleScanner.makeFactory(SyntaxType.FLOW_CONTROL), "<%else>", ""),
-    ELSEIF(true, SimpleScanner.makeFactory(SyntaxType.FLOW_CONTROL), "<%elseif ", "%>"),
-    DEF(false, SimpleScanner.makeFactory(SyntaxType.DEF), "<%def ", ">"),
-    DEF_CLOSE(false, SimpleScanner.makeFactory(SyntaxType.DEF), "</%def>", ""),
-    METHOD(false, SimpleScanner.makeFactory(SyntaxType.METHOD), "<%method ", ">"),
-    METHOD_CLOSE(false, SimpleScanner.makeFactory(SyntaxType.METHOD), "</%method>", ""),
-    EMIT(true, SimpleScanner.makeFactory(SyntaxType.EMIT), "<% ", "%>"),
-    DOC(false, DocScanner.makeDisposableScannerFactory(), "<%doc>", "</%doc>");
+public class PartitionDescriptor {
 
-  private PartitionDescriptor(
+    private final static List<PartitionDescriptor> VALUES = new ArrayList<PartitionDescriptor>();
+    static
+    {
+        make(true, SimpleScanner.makeFactory(SyntaxType.ARGS), "<%args>", "</%args>");
+        make(true, SimpleScanner.makeFactory(SyntaxType.XARGS), "<%xargs>", "</%xargs>");
+        make(true, SimpleScanner.makeFactory(SyntaxType.JAVA), "<%java>", "</%java>");
+        make(true, SimpleScanner.makeFactory(SyntaxType.CLASS), "<%class>", "</%class>");
+        make(false, SimpleScanner.makeFactory(SyntaxType.ALIAS), "<%alias>", "</%alias>");
+        make(false, SimpleScanner.makeFactory(SyntaxType.IMPORT),"<%import>", "</%import>");
+        make(true, CallScanner.FACTORY, "<&|", "&>");
+        make(true, CallScanner.FACTORY, "<&", "&>");
+        make(true, SimpleScanner.makeFactory(SyntaxType.FLOW_CONTROL), "<%while ", "%>");
+        make(false, SimpleScanner.makeFactory(SyntaxType.FLOW_CONTROL), "</%while>", "");
+        make(true, SimpleScanner.makeFactory(SyntaxType.FLOW_CONTROL), "<%for ", "%>");
+        make(false, SimpleScanner.makeFactory(SyntaxType.FLOW_CONTROL), "</%for>", "");
+        make(true, SimpleScanner.makeFactory(SyntaxType.FLOW_CONTROL), "<%if ", "%>");
+        make(false, SimpleScanner.makeFactory(SyntaxType.FLOW_CONTROL), "</%if>", "");
+        make(false, SimpleScanner.makeFactory(SyntaxType.FLOW_CONTROL), "<%else>", "");
+        make(true, SimpleScanner.makeFactory(SyntaxType.FLOW_CONTROL), "<%elseif ", "%>");
+        make(false, SimpleScanner.makeFactory(SyntaxType.DEF), "<%def ", ">");
+        make(false, SimpleScanner.makeFactory(SyntaxType.DEF), "</%def>", "");
+        make(false, SimpleScanner.makeFactory(SyntaxType.METHOD), "<%method ", ">");
+        make(false, SimpleScanner.makeFactory(SyntaxType.METHOD), "</%method>", "");
+        make(true, SimpleScanner.makeFactory(SyntaxType.EMIT), "<% ", "%>");
+        make(false, DocScanner.makeDisposableScannerFactory(), "<%doc>", "</%doc>");
+
+        char[] whitespaceChars = new char[] { ' ', '\n', '\t', '\r', '\f' };
+        for (char whitespaceChar: whitespaceChars)
+        {
+            make(true, SimpleScanner.makeFactory(SyntaxType.JAVA), "<%java" + whitespaceChar, "%>");
+        }
+    }
+
+    public static Iterable<PartitionDescriptor> values() { return VALUES; }
+
+    private static int counter = 0;
+
+    private static void make(
+        boolean p_hasStrings,
+        DisposableScannerFactory p_disposableScannerFactory,
+        String p_openTag,
+        String p_closeTag)
+    {
+        VALUES.add(new PartitionDescriptor(
+            p_hasStrings, p_disposableScannerFactory, p_openTag, p_closeTag));
+    }
+
+
+    private PartitionDescriptor(
       boolean p_hasStrings,
       DisposableScannerFactory p_disposableScannerFactory,
       String p_openTag,
@@ -42,7 +70,7 @@ public enum PartitionDescriptor {
       m_closeChars = p_closeTag.toCharArray();
       m_hasStrings = p_hasStrings;
       m_scannerDisposableScannerFactory = p_disposableScannerFactory;
-      m_name = "__jamon_partition_" + name();
+      m_name = "__jamon_partition_" + counter++;
       m_token = new Token(m_name);
   }
 
