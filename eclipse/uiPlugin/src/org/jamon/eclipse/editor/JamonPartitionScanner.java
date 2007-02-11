@@ -119,19 +119,17 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
       return false;
     }
   }
-  
-  private static final String JAMON_WHITESPACE = " \t\n\r\f"; 
-  
+
   private boolean isJamonWhitespace(int p_ch)
   {
-    return JAMON_WHITESPACE.indexOf((char) p_ch) >= 0;
+    return Character.isWhitespace(p_ch);
   }
 
   private boolean matchesClose(PartitionDescriptor s, int i)
   {
     return lookingAt(i, s.close());
   }
-  
+
   private IToken processDefault()
   {
     int i = offset;
@@ -143,10 +141,10 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
         return s.token();
       }
     }
-    OUTER: 
-    while (i < limit) 
+    OUTER:
+    while (i < limit)
     {
-      for (PartitionDescriptor s : PartitionDescriptor.values()) 
+      for (PartitionDescriptor s : PartitionDescriptor.values())
       {
         if (matchesOpen(s, i))
         {
@@ -298,9 +296,9 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
   {
     setPartialRange(document, offset, length, null, -1);
   }
-  
+
   public JamonPartitionScanner() {
-      
+
   }
 
 }
