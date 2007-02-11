@@ -124,16 +124,17 @@ public class JamonNature implements IProjectNature {
 		}
 	}
 
-    private void removeTsrc() throws CoreException {
+    private void removeTsrc() throws CoreException 
+    {
 		IFolder tsrc = getTemplateOutputFolder();
 		IJavaProject jp = getJavaProject();
 		List<IClasspathEntry> e =
             new ArrayList<IClasspathEntry>(Arrays.asList(jp.getRawClasspath()));
 		e.remove(JavaCore.newSourceEntry(tsrc.getFullPath()));
 		jp.setRawClasspath(e.toArray(new IClasspathEntry[e.size()]), null);
-		if (tsrc.exists()) {
+		if (tsrc.exists()) 
+        {
 			unsetReadOnly(tsrc);
-			// tsrc.delete(IResource.DEPTH_INFINITE, null);
 		}
 	}
 
@@ -143,9 +144,11 @@ public class JamonNature implements IProjectNature {
         MarkerUpdaterBuilder.addToProject(getProject());
 		removeTsrc();
 		IFolder tsrc = getTemplateOutputFolder();
-		tsrc.create(true, true, null);
-		tsrc.setDerived(true);
-
+        if (! tsrc.exists())
+        {
+            tsrc.create(true, true, null);
+            tsrc.setDerived(true);
+        }
 		IJavaProject jp = getJavaProject();
 		List<IClasspathEntry> e =
             new ArrayList<IClasspathEntry>(Arrays.asList(jp.getRawClasspath()));
