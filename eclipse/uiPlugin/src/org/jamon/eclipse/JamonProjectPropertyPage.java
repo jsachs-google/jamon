@@ -107,6 +107,12 @@ public class JamonProjectPropertyPage extends PropertyPage {
         templateSourceLabel.setText("Template source folder:");
         sourceField = new DecoratedField(composite, SWT.SINGLE | SWT.BORDER, new TextControlCreator());
         templateSourceDirInput = (Text) sourceField.getControl();
+        String templateSourceDir = JamonNature.templateSourceFolderName(getProject());
+        templateSourceDirInput.setText(
+            (templateSourceDir != null)
+            ? templateSourceDir
+            : JamonNature.DEFAULT_TEMPLATE_SOURCE);
+        
         GridData gd = new GridData(IDialogConstants.ENTRY_FIELD_WIDTH + 
                                    FieldDecorationRegistry.getDefault().getMaximumDecorationWidth(), SWT.DEFAULT);
         sourceField.getLayoutControl().setLayoutData(gd);
@@ -114,12 +120,6 @@ public class JamonProjectPropertyPage extends PropertyPage {
         getFieldDecoration(FieldDecorationRegistry.DEC_REQUIRED);
         sourceField.addFieldDecoration(requiredFieldIndicator, SWT.CENTER | SWT.LEFT, false);        
         templateSourceDirInput.addModifyListener(new SourceModified());
-        String templateSourceDir = JamonNature.templateSourceFolderName(getProject());
-        templateSourceDirInput.setText(
-            (templateSourceDir != null)
-            ? templateSourceDir
-            : JamonNature.DEFAULT_TEMPLATE_SOURCE);
-        
     }
 
     private class SourceModified implements ModifyListener {
@@ -149,6 +149,11 @@ public class JamonProjectPropertyPage extends PropertyPage {
         templateOutputLabel.setText("Template output folder:");
         outputField = new DecoratedField(composite, SWT.SINGLE | SWT.BORDER, new TextControlCreator());
         templateOutputDirInput = (Text) outputField.getControl();
+        String templateOutputDir = JamonNature.templateOutputFolderName(getProject());
+        templateOutputDirInput.setText(
+            (templateOutputDir != null)
+            ? templateOutputDir
+            : JamonNature.DEFAULT_OUTPUT_DIR);
         templateOutputDirInput.addModifyListener(new OutputModified());
         GridData gd = new GridData(IDialogConstants.ENTRY_FIELD_WIDTH + 
                                    FieldDecorationRegistry.getDefault().getMaximumDecorationWidth(), SWT.DEFAULT);
@@ -157,11 +162,6 @@ public class JamonProjectPropertyPage extends PropertyPage {
         getFieldDecoration(FieldDecorationRegistry.DEC_REQUIRED);
         outputField.addFieldDecoration(requiredFieldIndicator, SWT.CENTER | SWT.LEFT, false);        
         
-        String templateOutputDir = JamonNature.templateOutputFolderName(getProject());
-        templateOutputDirInput.setText(
-            (templateOutputDir != null)
-            ? templateOutputDir
-            : JamonNature.DEFAULT_OUTPUT_DIR);
     }
 
     @Override protected Control createContents(Composite parent) {
