@@ -108,25 +108,53 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
     return true;
   }
 
+  private boolean matchesOpen(PartitionDescriptor s, int i)
+  {
+    if (lookingAt(i, s.open()))
+    {
+      return ! s.openTagRequiresTrailingWhitespace() || isJamonWhitespace(nextChar(i + s.open().length));
+    }
+    else
+    {
+      return false;
+    }
+  }
+  
+  private static final String JAMON_WHITESPACE = " \t\n\r\f"; 
+  
+  private boolean isJamonWhitespace(int p_ch)
+  {
+    return JAMON_WHITESPACE.indexOf((char) p_ch) >= 0;
+  }
+
+  private boolean matchesClose(PartitionDescriptor s, int i)
+  {
+    return lookingAt(i, s.close());
+  }
+  
   private IToken processDefault()
   {
     int i = offset;
-      for (PartitionDescriptor s : PartitionDescriptor.values())
+    for (PartitionDescriptor s : PartitionDescriptor.values())
+    {
+      if (matchesOpen(s,i))
       {
-        if (lookingAt(i, s.open()))
+        setTokenInfo(s, i);
+        return s.token();
+      }
+    }
+    OUTER: 
+    while (i < limit) 
+    {
+      for (PartitionDescriptor s : PartitionDescriptor.values()) 
+      {
+        if (matchesOpen(s, i))
         {
-          setTokenInfo(s, i);
-          return s.token();
+          break OUTER;
         }
       }
-      OUTER: while (i < limit) {
-          for (PartitionDescriptor s : PartitionDescriptor.values()) {
-              if (lookingAt(i, s.open())) {
-                  break OUTER;
-              }
-          }
-          i++;
-      }
+      i++;
+    }
     tokenLength = i - offset;
     tokenOffset = offset;
     offset = i;
@@ -147,7 +175,7 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
 
   private void setTokenInfo(PartitionDescriptor pd, int i)
   {
-    int end = processSection(pd, i + pd.open().length);
+    int end = processSection(pd, i + pd.open().length + (pd.openTagRequiresTrailingWhitespace() ? 1 : 0));
     if (end < 0)
     {
       tokenLength = length - (i - offset);
@@ -234,7 +262,7 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
       }
       else if (! inString)
       {
-        if (lookingAt(i, pd.close()))
+        if (matchesClose(pd, i))
         {
           return i + pd.close().length;
         }
