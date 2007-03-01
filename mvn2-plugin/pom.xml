@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.jamon</groupId>
     <artifactId>maven-jamon-plugin</artifactId>
-    <version>2.2.0.0-SNAPSHOT</version>
+    <version>2.1.0.0-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
     <organization>
         <name>Jamon developers</name>
@@ -42,7 +42,7 @@
             <url>http://maven.jamon.org/</url>
         </repository>
     </repositories>
-    
+
     <distributionManagement>
         <repository>
             <id>jamon</id>
@@ -53,16 +53,16 @@
         <site>
             <id>jamon</id>
             <name>Jamon</name>
-            <url>scpexe://jamon@maven.jamon.org/home/jamon/maven2</url>
+            <url>scpexe://jamon@maven.jamon.org/home/jamon/maven2-site/</url>
         </site>
     </distributionManagement>
-    
+
     <name>Jamon Maven2 Plugin</name>
     <dependencies>
         <dependency>
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-script-ant</artifactId>
-            <version>2.0.4</version>
+            <version>2.0.5</version>
         </dependency>
         <dependency>
             <groupId>org.jamon</groupId>
@@ -79,22 +79,14 @@
     <build>
         <plugins>
             <plugin>
-                <!-- NOTE: We don't need groupId if the plugin's groupId is
-             org.apache.maven.plugins OR org.codehaus.mojo.
-             We also don't have to specify a version, since Maven can
-             automatically resolve the newest one.
-        -->
                 <artifactId>maven-plugin-plugin</artifactId>
-
-                <!-- Add the Ant plugin tools -->
                 <dependencies>
                     <dependency>
                         <groupId>org.apache.maven</groupId>
                         <artifactId>maven-plugin-tools-ant</artifactId>
-                        <version>2.0.4</version>
+                        <version>2.0.5</version>
                     </dependency>
                 </dependencies>
-
             </plugin>
         </plugins>
     </build>
