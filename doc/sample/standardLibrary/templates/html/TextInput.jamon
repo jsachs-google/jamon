@@ -1,0 +1,5 @@
+<%args>
+  TextInputField input;
+</%args>
+
+<input type='text' name='<% input.getName() #H %>' value='<% input.getValue() #H %>'/>

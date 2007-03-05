@@ -1,8 +1,7 @@
 package foo.bar;
 
 import java.util.Map;
-
-import org.jamon.render.html.TextInput;
+import foo.bar.html.TextInputField;
 
 public class HelloFormFields {
 
@@ -19,8 +18,8 @@ public class HelloFormFields {
         }
     }
 
-    public TextInput getNumberInput() {
-        return new TextInput(NUMBER_KEY, m_number);
+    public TextInputField getNumberInput() {
+        return new TextInputField(NUMBER_KEY, m_number);
     }
 
     public boolean hasData() {

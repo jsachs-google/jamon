@@ -21,7 +21,7 @@
     </%if>
     <form method="GET" action="hello">
       How many times would you like to be greeted?
-      <& /org/jamon/html/TextInput; input = formFields.getNumberInput() &>
+      <& html/TextInput; input = formFields.getNumberInput() &>
       <br>
       <input type="submit" value="Greet Me"/>
     </form>

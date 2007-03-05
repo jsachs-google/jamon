@@ -10,7 +10,8 @@ the documentation thus taking care of issues such as escaping.
   <property file="build.properties"/>
   <property file="${user.home}/.ant.properties"/>
 
-  <property name="jamon.dir" value="../eclipse/corePlugin"/>
+  <property name="jamon.dir" value="../jamon"/>
+  <property file="${jamon.dir}/version.properties"/>
 
   <property name="build.dir" value="build"/>
   <property name="work.dir" value="${build.dir}/work"/>
@@ -21,10 +22,10 @@ the documentation thus taking care of issues such as escaping.
   <property name="tutorial.samples.dir" value="${samples.dir}/tutorial"/>
   <property name="overview.samples.dir" value="${samples.dir}/overview"/>
   <property name="classes.dir" value="${www.dir}/classes"/>
-  <property name="java.lib.jamon" location="${jamon.dir}/jamon.jar"/>
-  <property name="java.lib.jamon.anttask" location="${jamon.dir}/jamon-anttask.jar"/>
+  <property name="java.lib.jamon" location="${jamon.dir}/jamon-${jamon.version}.jar"/>
+  <property name="java.lib.jamon.anttask" location="${jamon.dir}/jamon-anttask-${jamon.anttask.version}.jar"/>
   <property name="java.lib.jamon.stdlib" location="../jamonStdLib/jamon-stdlib.jar"/>
-  <property name="java.lib.diff" value="/usr/local/share/java/diff.jar"/>
+  <property name="java.lib.diff" value="lib/diff.jar"/>
   <property name="invoker.class" value="org.jamon.InvokerTool" />
 
   <property name="web.inf.dir" value="./WEB-INF"/>
@@ -77,11 +78,12 @@ the documentation thus taking care of issues such as escaping.
 
     <copy todir="${www.dir}/example2/src/foo/bar">
       <fileset dir="sample/standardLibrary/src">
-        <include name="*.java"/>
+        <include name="**/*.java"/>
       </fileset>
     </copy>
-    <copy file="sample/standardLibrary/templates/HelloTemplate.jamon"
-          todir="${www.dir}/example2/templates/foo/bar/"/>
+    <copy todir="${www.dir}/example2/templates/foo/bar/">
+      <fileset dir="sample/standardLibrary/templates" includes="**/*.jamon"/>
+    </copy>
 
     <!-- Copy the various files needed for Appendix A -->
     <copy todir="${www.dir}">
