@@ -27,8 +27,6 @@ of a typical development environment.
 
   <li value="1" type="A"><& usingTomcat &></li>
 
-  <li type="A"><& inputElements &></li>
-
   <li type="A"><& _colophon &></li>
 
 </ol>

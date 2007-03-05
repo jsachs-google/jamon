@@ -19,9 +19,7 @@
     boolean incompatible = false;
   </%args>
   <li>
-%   if (incompatible) {
-      <span class="incompatible">[INCOMPATIBLE]</span>
-%   }
+   <%if incompatible %><span class="incompatible">[INCOMPATIBLE]</span></%if>
     <& content &>
   </li>
 </%method>

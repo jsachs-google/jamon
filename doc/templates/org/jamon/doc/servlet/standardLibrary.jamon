@@ -1,20 +1,14 @@
-<span class="concept">Using the Standard Library</span>
+<span class="concept">Using input elements</span>
 
-A separate download to the Jamon package is a library of classes and
-templates to aid in the systematic development of web applications.
-The library consists of "input" objects and corresponding templates to
-render them.  The idea behind these input objects is that they
-encapsulate the name of a CGI parameter and its value.  For example
-the <code>org.jamon.render.html.TextInput</code> input object consists
-(more or less) of a name (a string), a value (a string) and its
-maxlength (an integer).  There is a corresponding template,
-<code>org.jamon.html.TextInput</code>, which takes as parameters <ul>
-<li>an object of the above input type</li> <li>the size of the input
-element (an integer)</li> <li>the type of the input element, for
-example "text" or "password" (a string)</li> </ul>
+To aid in the generation and parsing of forms, it helps to have a library of input objects and
+corresponding templates.  For example, for text inputs, there could be an
+<code>html.TextInputField</code> class:
 
-Other entities included in the standard library can be found in <a
-href="#appendixB">Appendix B</a>.
+<& ../_JavaInclude: "/sample/standardLibrary/src/html/TextInputField" &>
+
+and corresponding template <code>/html/TextInput.jamon</code> to generate text inputs:
+
+<& ../_TemplateInclude: "/sample/standardLibrary/templates/html/TextInput" &>
 
 Since it is the controller that will be receiving and parsing the data from
 the form it is natural that it decide what the name of each CGI parameter
@@ -43,9 +37,9 @@ and the corresponding template should look like:
 There are a few things to note about the above example.
 <ul>
   <li><code>HelloFormFields</code> produces
-    <code class="code">org.jamon.render.html.TextInput</code>
+    <code class="code">html.TextInput</code>
     objects which are rendered as HTML input elements by the
-    <code class="template">/org/jamon/html/TextInput</code>
+    <code class="template">/html/TextInput</code>
     template</li>
   <li>If the user makes an error while entering their data (for example,
 by typing "13q") then they will be presented with an error message together

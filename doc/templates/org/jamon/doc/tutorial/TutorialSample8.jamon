@@ -77,7 +77,7 @@ To add arguments to a fragment, simply include a
 <nobr><code>&lt;%args></code> ... <code>&lt;/%args></code></nobr>
 tag at the beginning of the fragment.
 <&| ../_Template &><%LITERAL>
-% DateFormat dateFormat = new SimpleDateFormat("MM/dd");
+<%java DateFormat dateFormat = new SimpleDateFormat("MM/dd"); %>
 We offer the following holidays:
 <&| AlternatingList; items = holidays.iterator() &>
   <%args>
@@ -113,7 +113,7 @@ Thus
 
     <& ../_TemplateInclude: "/sample/tutorial/templates/AlternatingList" &>
 
-This template, <& _FileLink: "AlternatingList.jamon" &>, 
+This template, <& _FileLink: "AlternatingList.jamon" &>,
 loops through all the objects that were passed to
 it by the <nobr><code>items Iterator</code></nobr>,
 and assigns each one in turn to the fragment parameter
@@ -125,9 +125,9 @@ to fill in each row.
 <p>
 <li><span class="concept">A Template Fragment Example</span>
 
-The template <& _FileLink: "FragmentExampleTemplate.jamon" &>, below, 
-produces a table listing the name and date of the holidays recognized by the 
-template author. The template formats the row it would like to see for each 
+The template <& _FileLink: "FragmentExampleTemplate.jamon" &>, below,
+produces a table listing the name and date of the holidays recognized by the
+template author. The template formats the row it would like to see for each
 line of output, and then passes this fragment of Jamon text to the
 <code>AlternatingList</code> template to format into a
 table with alternating background colors.

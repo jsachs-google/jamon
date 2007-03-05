@@ -42,9 +42,9 @@
 </%args>
 <html>
   <body>
-%   for (int i = 1; i <= count; ++i) {
-    <% i %>. <% greeting %> <% name %> <br />
-%   }
+    <%for int i = 1; i <= count; ++i %>
+      <% i %>. <% greeting %> <% name %> <br />
+  </%for>
   </body>
 </html></%LITERAL></&></pre>
     This can be processed into a Java interface with the
@@ -113,9 +113,9 @@ follows:
 </%args>
     Many Greetings
     ==============
-%   for (int i = 1; i <= count; ++i) {
-    <% i %>. <% greeting %> <% name %>
-%   }
+    <%for int i = 1; i <= count; ++i %>
+      <% i %>. <% greeting %> <% name %>
+    </%for>
 </%LITERAL></&></pre>
 It would emit
     <pre class="tty">

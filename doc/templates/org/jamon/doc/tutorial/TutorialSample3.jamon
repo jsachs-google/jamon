@@ -79,7 +79,7 @@ code would <em>not</em> work:
   String message;
   boolean isError;
 </%args>
-% if (isError) { message = "There was an error"; } // WILL NOT WORK
+<%java if (isError) { message = "There was an error"; } // WILL NOT WORK %>
 <% message %>
 </%LITERAL></&>
 

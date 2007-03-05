@@ -70,7 +70,7 @@ The difference between 2 and 4 is <% abs(2 - 4) %>.
     For example, the template fragment below
       <&| ../_Template &>
 <%LITERAL>
-% int count = 3;
+<%java int count = 3; %>
 <%while count-- > 0 %>Hello world!
 </%while>
 </%LITERAL>

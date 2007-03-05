@@ -2,12 +2,15 @@
   java.util.*;
   java.text.*;
 </%import>
-% HashMap<String, Date> birthDays = new HashMap<String, Date>();
-% birthDays.put("John", new GregorianCalendar(1940, 9, 9).getTime());
-% birthDays.put("Paul", new GregorianCalendar(1942, 5, 18).getTime());
-% birthDays.put("George", new GregorianCalendar(1943, 1, 25).getTime());
-% birthDays.put("Ringo", new GregorianCalendar(1940, 6, 7).getTime());
-% final DateFormat format = new SimpleDateFormat("EEE, MMM d, yyyy");
+<%java>
+  HashMap<String, Date> birthDays = new HashMap<String, Date>();
+  birthDays.put("John", new GregorianCalendar(1940, 9, 9).getTime());
+  birthDays.put("Paul", new GregorianCalendar(1942, 5, 18).getTime());
+  birthDays.put("George", new GregorianCalendar(1943, 1, 25).getTime());
+  birthDays.put("Ringo", new GregorianCalendar(1940, 6, 7).getTime());
+  final DateFormat format = new SimpleDateFormat("EEE, MMM d, yyyy");
+</%java>
+
 <&|| map<String, Date>: birthDays &>
   <|key><%args>String name;</%args><% name %>'s birthday</|>
   <|value><%args>Date birthday;</%args><% format.format(birthday) %></|>
