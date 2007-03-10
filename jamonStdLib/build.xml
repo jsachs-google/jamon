@@ -19,8 +19,9 @@
   <property name="src.dir" location="src"/>
 
   <property name="jamon.core.dir" location="../jamon"/>
-  <property name="java.lib.jamon" value="${jamon.core.dir}/jamon.jar"/>
-  <property name="java.lib.jamon-anttask" value="${jamon.core.dir}/jamon-anttask.jar"/>
+  <property file="${jamon.core.dir}/version.properties"/>
+  <property name="java.lib.jamon" value="${jamon.core.dir}/jamon-${jamon.version}.jar"/>
+  <property name="java.lib.jamon-anttask" value="${jamon.core.dir}/jamon-anttask-${jamon.anttask.version}.jar"/>
   <property name="java.lib.junit" value="/usr/local/share/java/junit.jar" />
 
   <property name="junit.fork" value="no" />
