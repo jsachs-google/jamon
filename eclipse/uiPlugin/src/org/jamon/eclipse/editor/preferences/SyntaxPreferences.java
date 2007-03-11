@@ -30,6 +30,17 @@ public class SyntaxPreferences
         return style;
     }
 
+    private static Style defaultStyle(SyntaxType p_syntaxType)
+    {
+        Style style = new Style();
+        style.setSwtStyle(getPreferenceStore().getDefaultInt(p_syntaxType.getStylePreferenceKey()));
+        style.setForeground(stringToRgb(
+            getPreferenceStore().getDefaultString(p_syntaxType.getForegroundPreferenceKey())));
+        style.setBackground(stringToRgb(
+            getPreferenceStore().getDefaultString(p_syntaxType.getBackgroundPreferenceKey())));
+        return style;
+    }
+    
     /**
      * Apply changes to the underlying preferences object.
      */
@@ -39,7 +50,13 @@ public class SyntaxPreferences
         {
             Style style = m_syntaxTypeStyles.get(syntaxType);
             Style storedStyle = loadStyle(syntaxType);
-            if (! style.equals(storedStyle))
+            if (style.equals(defaultStyle(syntaxType)))
+            {
+                getPreferenceStore().setToDefault(syntaxType.getStylePreferenceKey());
+                getPreferenceStore().setToDefault(syntaxType.getForegroundPreferenceKey());
+                getPreferenceStore().setToDefault(syntaxType.getBackgroundPreferenceKey());
+            }
+            else if (! style.equals(storedStyle))
             {
                 getPreferenceStore().setValue(syntaxType.getStylePreferenceKey(), style.getSwtStyle());
                 getPreferenceStore().setValue(
