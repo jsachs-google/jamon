@@ -7,6 +7,7 @@
 <h2>Jamon in use</h2>
 
 <ul>
+  <li><a target="_new" href="http://www.overstock.com">www.overstock.com</a></li>
   <li><a target="_new" href="http://www.earthaddress.com">www.earthaddress.com</a>
     <br />
     <br />
@@ -21,16 +22,16 @@
 
 <h2>Credits</h2>
 
-<h4>Project lead</h4>
+<h4>Developers</h4>
 
 <ul>
   <li>Jay Sachs (jay at jamon dot org)</li>
+  <li>Ian Robertson</li>
 </ul>
 
-<h4>Contributors</h4>
+<h4>Past contributors</h4>
 
 <ul>
-  <li>Ian Robertson</li>
   <li>Luis O'Shea</li>
   <li>Tom Rees</li>
 </ul>

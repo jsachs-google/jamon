@@ -1,6 +1,6 @@
 <%extends _Base>
 <%class>
-  protected Section currentSection() { return Section.DOC_INVOKERTASK; }
+  protected Section currentSection() { return Section.DOC_ANT; }
 </%class>
 <%override title>Jamon and Ant: InvokerTask</%override>
 

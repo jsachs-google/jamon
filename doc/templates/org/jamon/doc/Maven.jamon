@@ -1,0 +1,163 @@
+<%extends _Base>
+<%class>
+  protected Section currentSection() { return Section.DOC_MAVEN; }
+</%class>
+<%override title>Using Jamon with Maven</%override>
+
+<h3>Overview</h3>
+
+<p>
+  Within a Java program, each Jamon template is represented as an
+  instance of a class specific to that template. In order for your
+  program to compile, Jamon templates need to be translated into
+  Java source classes, and those generated Java sources need to be
+  included in the build of your project.
+</p>
+
+<h4>Assumptions</h4>
+<ul>
+  <li>Jamon templates are located in the directory
+  tree named '<code>./src/templates</code>'
+  <li>Java source files corresponding to Jamon
+  templates will be generated into the directory
+  '<code>./tsrc</code>'.
+</ul>
+
+<h3>Building with Maven</h3>
+
+The Jamon primary repository is at <code>http://maven.jamon.org/</code>.
+All Jamon artifacts (aside from Eclipse plugins) are deployed there. 
+
+Generally, there are three sections of your pom.xml that will need
+to be configured.
+
+<h4>1. Plugin repository</h4>
+
+<pre class="ant"><&| /org/jamon/escape/Html &>
+<pluginRepositories>
+    ...
+    <pluginRepository>
+        <id>jamon plugin</id>
+        <name>jamon plugin</name>
+        <url>http://maven.jamon.org/</url>
+        <snapshots>
+            <enabled>true</enabled>
+        </snapshots>
+    </pluginRepository>
+    ...
+</pluginRepositories>
+</&></pre>
+
+<h4>2. General dependency repository</h4>
+
+<pre class="ant"><&| /org/jamon/escape/Html &>
+  <repositories>
+    ...
+    <repository>
+      <id>jamon</id>
+      <name>jamon primary repository</name>
+      <layout>default</layout>
+      <url>http://maven.jamon.org</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+    ...
+  </repositories>
+</&></pre>
+
+<h4>3. Hook into project build lifecycle</h4>
+
+<pre class="ant"><&| /org/jamon/escape/Html &>
+<build>
+    <plugins>
+        ...
+    <plugin>
+      <groupId>org.jamon</groupId>
+      <artifactId>maven-jamon-plugin</artifactId>
+      <version>2.1.0.0</version>
+      <executions>
+        <execution>
+          <id>jamon-generate-sources</id>
+          <phase>generate-sources</phase>
+          <goals>
+            <goal>jamon:generate</goal>
+          </goals>
+          <configuration/>
+        </execution>
+        <execution>
+          <id>jamon-clean</id>
+          <phase>clean</phase>
+          <goals>
+            <goal>jamon:clean</goal>
+          </goals>
+          <configuration/>
+        </execution>
+      </executions>
+    </plugin>
+        ...
+    </plugins>
+</build>
+</&></pre>
+
+<h4>4. (Optional) Hook into Eclipse</h4>
+
+Add the following to the Jamon <code>plugin</code> section:
+
+<pre class="ant"><&| /org/jamon/escape/Html &>
+        <execution>
+          <id>jamon-generate-eclipse</id>
+          <phase>generate-resources</phase>
+          <goals>
+            <goal>jamon:eclipse</goal>
+          </goals>
+          <configuration/>
+        </execution>
+</&></pre>
+
+<h3>Customizing the plugin</h3>
+
+You can change the location where the plugin looks for template
+sources and the locaiton where it generates Java files by
+specifying the properties for <code>jamon.template.src</code>
+and <code>jamon.template.output</code> in each <code>execution</code>
+section above. For example, to root your template sources at
+<code>src/main/jamon</code> and generate Java sources into
+<code>src/gen</code>, your execution section would look like:
+
+<pre class="ant"><&| /org/jamon/escape/Html &>
+<build>
+    <plugins>
+        ...
+    <plugin>
+      <groupId>org.jamon</groupId>
+      <artifactId>maven-jamon-plugin</artifactId>
+      <version>2.1.0.0</version>
+      <executions>
+        <execution>
+          <id>jamon-generate-sources</id>
+          <phase>generate-sources</phase>
+          <goals>
+            <goal>jamon:generate</goal>
+          </goals>
+          <configuration>
+             <jamon.template.src>src/main/templates</jamon.template.src>
+             <jamon.template.output>src/gen</jamon.template.output>
+          </configuration>
+        </execution>
+        <execution>
+          <id>jamon-clean</id>
+          <phase>clean</phase>
+          <goals>
+            <goal>jamon:clean</goal>
+          </goals>
+          <configuration>
+            <jamon.template.output>src/gen</jamon.template.output>
+        </configuration>
+        </execution>
+      </executions>
+    </plugin>
+        ...
+    </plugins>
+</build>
+</&></pre>

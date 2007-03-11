@@ -176,7 +176,10 @@ the documentation thus taking care of issues such as escaping.
       <param name="template" value="Overview" />
     </antcall>
     <antcall target="grind">
-      <param name="template" value="BuildingProjects" />
+      <param name="template" value="Ant" />
+    </antcall>
+    <antcall target="grind">
+      <param name="template" value="Maven" />
     </antcall>
     <antcall target="grind">
       <param name="template" value="UserGuide" />

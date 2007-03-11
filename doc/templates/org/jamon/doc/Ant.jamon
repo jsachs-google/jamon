@@ -1,8 +1,8 @@
 <%extends _Base>
 <%class>
-  protected Section currentSection() { return Section.DOC_PROJECTS; }
+  protected Section currentSection() { return Section.DOC_ANT; }
 </%class>
-<%override title>Integrating Jamon into projects</%override>
+<%override title>Using Jamon with Ant</%override>
 
 <h3>Overview</h3>
 

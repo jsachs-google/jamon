@@ -20,7 +20,7 @@ public class Holiday {
   public Date getDate() { return  date; }
 
   public static void main(String[] argv) throws Exception {
-    List holidays = new ArrayList();
+    List<Holiday> holidays = new ArrayList<Holiday>();
     holidays.add(new Holiday("New Year's", format.parse("2003-1-1")));
     holidays.add(new Holiday("July 4", format.parse("2003-7-4")));
     holidays.add(new Holiday("Thanksgiving", format.parse("2003-11-17")));
