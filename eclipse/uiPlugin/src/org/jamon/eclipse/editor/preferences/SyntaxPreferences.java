@@ -46,29 +46,43 @@ public class SyntaxPreferences
      */
     public void apply()
     {
+        final IPreferenceStore store = getPreferenceStore();
         for (SyntaxType syntaxType: m_syntaxTypeStyles.keySet())
         {
-            Style style = m_syntaxTypeStyles.get(syntaxType);
-            Style storedStyle = loadStyle(syntaxType);
-            if (style.equals(defaultStyle(syntaxType)))
+            final Style style = m_syntaxTypeStyles.get(syntaxType);
+            final Style storedStyle = loadStyle(syntaxType);
+            final Style defaultStyle = defaultStyle(syntaxType);
+            if (style.getSwtStyle() == defaultStyle.getSwtStyle())
             {
-                getPreferenceStore().setToDefault(syntaxType.getStylePreferenceKey());
-                getPreferenceStore().setToDefault(syntaxType.getForegroundPreferenceKey());
-                getPreferenceStore().setToDefault(syntaxType.getBackgroundPreferenceKey());
+                store.setToDefault(syntaxType.getStylePreferenceKey());
             }
-            else if (! style.equals(storedStyle))
+            else if (style.getSwtStyle() != storedStyle.getSwtStyle())
             {
-                getPreferenceStore().setValue(syntaxType.getStylePreferenceKey(), style.getSwtStyle());
-                getPreferenceStore().setValue(
-                    syntaxType.getForegroundPreferenceKey(), rgbToString(style.getForeground()));
-                getPreferenceStore().setValue(
-                    syntaxType.getBackgroundPreferenceKey(), rgbToString(style.getBackground()));
+                store.setValue(syntaxType.getStylePreferenceKey(), style.getSwtStyle());
+            }
+            
+            if (style.getBackground().equals(defaultStyle.getBackground()))
+            {
+                store.setToDefault(syntaxType.getBackgroundPreferenceKey());
+            }
+            else if (! style.getBackground().equals(storedStyle.getBackground()))
+            {
+                store.setValue(syntaxType.getBackgroundPreferenceKey(), rgbToString(style.getBackground()));
+            }
+            
+            if (style.getForeground().equals(defaultStyle.getForeground()))
+            {
+                store.setToDefault(syntaxType.getForegroundPreferenceKey());
+            }
+            else if (! style.getForeground().equals(storedStyle.getForeground()))
+            {
+                store.setValue(syntaxType.getForegroundPreferenceKey(), rgbToString(style.getForeground()));
             }
         }
         //FIXME - avoid cyclic dependencies between packages
         PreferencesStyleProvider.getProvider().reloadStyles();
     }
-
+    
     // package scoped for unit testing.
     static RGB stringToRgb(String p_string) {
         if (p_string == null || p_string.length() == 0) {
