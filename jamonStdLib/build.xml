@@ -50,8 +50,7 @@
     <mkdir dir="${classes.dir}"/>
     <javac destdir="${classes.dir}"
            debug="true"
-           classpath="${java.lib.jamon}"
-           deprecation="true">
+           classpath="${java.lib.jamon}">
       <src path="${src.dir}"/>
       <src path="${build.src.dir}"/>
     </javac>
@@ -73,7 +72,6 @@
     <mkdir dir="${tests.classes.dir}" />
     <javac destdir="${tests.classes.dir}"
            debug="on"
-           deprecation="on"
            optimize="on" >
       <src path="${tests.src.dir}"/>
       <src path="${tests.build.src.dir}"/>
