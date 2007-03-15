@@ -2,6 +2,34 @@
 
 <%class>
   protected Section currentSection() { return Section.DOC_REFERENCE; }
+
+  private static enum SubSection {
+    STATIC_CONTENT("Static content", "StaticContent"),
+    EMIT_STATEMENTS("Emit statements", "EmitStatements"),
+    FLOW_CONTROL("Flow control", "FlowControl"),
+    ARBITRARY_JAVA_CODE("Arbitrary Java code", "ArbitraryJavaCode"),
+    INHERITANCE("Inheritance", "Inheritance"),
+    CLASS_CODE("Class code", "ClassCode"),
+    COMMENTS("Comments", "Comments"),
+    IMPORTS("Imports", "Imports"),
+    ANNOTATIONS("Annotations", "Annotations"),
+    ARGUMENTS("Arguments", "Arguments"),
+    INVOKING_OTHER_TEMPLATES("Invoking other templates", "InvokingOtherTemplates"),
+    SUBTEMPLATES("Subtemplates", "Subtemplates"),
+    FRAGMENT_ARGUMENTS("Fragment arguments", "FragmentArguments"),
+    PARAMETRIZED_FRAGMENT_ARGUMENTS("Parametrized fragment arguments", "ParametrizedFragmentArguments"),
+    CONTEXT("Context", "Context"),
+    JAMON_PROPERTIES("jamon.properties", "jamonProperties"),
+    GENERICS("Generics", "Generics"),
+    PATH_ALIASES("Path aliases", "PathAliases"),
+    CHARACTER_ENCODING("Character encoding", "CharacterEncoding");
+
+    private SubSection(String p_name, String p_label) {
+      name = p_name;
+      label = p_label;
+    }
+    private final String name, label;
+  }
 </%class>
 
 <%override title>Jamon Template Reference Manual</%override>
@@ -12,7 +40,13 @@
 
 <h2>Template Reference Manual</h2>
 <ol>
-  <li><span class="concept">Static content</span>
+  <ol>
+  <%for SubSection subSection: SubSection.values() %>
+    <li><a href="#<% subSection.label %>"><% subSection.name %></a>
+  </%for>
+  </ol>
+
+  <& subsection: SubSection.STATIC_CONTENT &>
 
     In general, any characters appearing in a template are output
     literally, whitespace included.
@@ -57,7 +91,7 @@
     a backslash, then neither the newline nor the backslash are
     output.
 
-  <li><span class="concept">Emit statements</span>
+  <& subsection: SubSection.EMIT_STATEMENTS &>
 
     The value of a java expression can be emitted by enclosing the
     expression in <code><% "<% ...%>" %></code> pairs, e.g.
@@ -138,7 +172,7 @@
     An attempt to emit a disallowed type will result in a Java
     compilation error when the template is compiled.
 
-  <li><span class="concept">Flow control</span>
+  <& subsection: SubSection.FLOW_CONTROL &>
     <p>
       Jamon uses the following tags to handle flow control:
       <ul>
@@ -175,7 +209,7 @@ people attending.
 
 
 
-  <li><span class="concept">Arbitrary Java code</span>
+  <& subsection: SubSection.ARBITRARY_JAVA_CODE &>
 
     <p>
       Arbitrary Java code can be inserted into the template using
@@ -201,7 +235,7 @@ people attending.
     method body. Thus, for example, package declarations and import
     statements would trigger a compilation error.
 
-  <li><span class="concept">Inheritance</span>
+  <& subsection: SubSection.INHERITANCE &>
 
     Templates can inherit from other templates.  A template is an
     "abstract" template if it contains a <code><% "<%abstract>" %></code>
@@ -223,7 +257,7 @@ people attending.
     Then rendering <code>/restaurant/Lunch</code> produces
     <pre class="tty"><&| escape//Html &><& /restaurant/Lunch &></&></pre>
 
-  <li><span class="concept">Class code</span>
+  <& subsection: SubSection.CLASS_CODE &>
 
     Any code to be included in the generated class should be placed
     inside a <code><% "<%class>...</%class>" %></code> block.  If one
@@ -241,13 +275,13 @@ people attending.
 This component has been accessed <% pageViews++ %> times.
 </%LITERAL></&>
 
-  <li><span class="concept">Comments</span>
+  <& subsection: SubSection.COMMENTS &>
 
     Any template content between <code><% "<%doc>" %></code> and
     <code><% "</%doc>" %></code> is considered "documentation", and
     ignored by the template processor
 
-  <li><span class="concept">Imports</span>
+  <& subsection: SubSection.IMPORTS &>
 
     Java classes or packages to be imported and used in a template
     should be placed inside an <code><% "<%import>...</%import>"
@@ -267,7 +301,7 @@ This component has been accessed <% pageViews++ %> times.
   static org.myorg.myapp.Constants.*;
 </%import></%LITERAL></&>
 
-  <li><span class="concept">Annotations</span>
+  <& subsection: SubSection.ANNOTATIONS &>
 
     It is possible to add class level annotations to the generated java files by use of an
     <code><% "<%annotate ... %>" %></code> tag.  By default, annotations are placed on both
@@ -282,7 +316,7 @@ This component has been accessed <% pageViews++ %> times.
 <%annotate @Comment("Only on the impl class") #impl %>
 </%LITERAL></&>
 
-  <li><span class="concept">Arguments</span>
+  <& subsection: SubSection.ARGUMENTS &>
 
     Arguments to a template are specified in
     <code><% "<%args>...</%args>" %></code>
@@ -386,7 +420,7 @@ Today's temperature is
     <code>/parent</code> without referencing it in an
     <code><% "<%xargs>...<%/xargs>" %></code> block.
 
-  <li><span class="concept">Invoking other templates</span>
+  <& subsection: SubSection.INVOKING_OTHER_TEMPLATES &>
 
     It is possible to invoke other templates from within a template.
     To invoke a template which takes no argument, simply write
@@ -437,7 +471,7 @@ Today's temperature is
     extend abstract templates, first pass the required arguments of the
     parent, and then those of the child.
 
-  <li><span class="concept">Subtemplates</span>
+  <& subsection: SubSection.SUBTEMPLATES &>
 
     In addition to calling other templates, a template can call
     "subtemplates" defined within a template.  Subtemplates come in
@@ -501,7 +535,7 @@ Today's temperature is
     <pre class="tty"><&| escape//Html &>
 <& /weather/StormWarning: new weather.WeatherReport("Friday", "Boston") &></&></pre>
 
-  <li><span class="concept">Fragment arguments</span>
+  <& subsection: SubSection.FRAGMENT_ARGUMENTS &>
 
     It is possible to pass a "fragment" of a template as an argument
     to a template or subtemplate.  When passing template fragments,
@@ -534,7 +568,7 @@ Today's temperature is
     produces
     <pre class="tty"><&| escape//Html &><& reference/fragExample &></&></pre>
 
-  <li><span class="concept">Parametrized fragment arguments</span>
+  <& subsection: SubSection.PARAMETRIZED_FRAGMENT_ARGUMENTS &>
 
     Template fragments can themselves take arguments.  The
     invocation syntax is similar to a regular template fragment with
@@ -562,7 +596,7 @@ Today's temperature is
     produces
     <pre class="tty"><&| escape//Html &><& reference/paramFragExample &></&></pre>
 
-  <li><span class="concept">Context</span>
+  <& subsection: SubSection.CONTEXT &>
     In addition to explicit arguments, a special variable called
     <code>jamonContext</code> can optionally be passed around between some or
     all templates in a project.  To do this, first assign a value to the
@@ -597,7 +631,7 @@ org.jamon.contextType=String
   interface, and still provide any additional context information they might
   need.
 
-  <li><a name="jamonProperties"><span class="concept">jamon.properties</span></a>
+  <& subsection: SubSection.JAMON_PROPERTIES &>
   Certain options in template processing are expressed by properties files.
   If a file called "jamon.properties" is present in the template directory, or
   one of it's subdirectories, then all jamon templates within that directory and
@@ -618,7 +652,7 @@ org.jamon.contextType=String
     information.
   </ul>
 
-  <li><span class="concept">Generics</span>
+  <& subsection: SubSection.GENERICS &>
     Templates can have parameterized types, otherwise known as
     <em>generics</em>.  This is primarily usefull for templates
     accepting parameterized fragments.  For example, if map.jamon
@@ -634,7 +668,7 @@ org.jamon.contextType=String
   subtemplates.  However, if a template has a parameterized type, that type
   is available to any subtemplates of that template.
 
-  <li><span class="concept">Path aliases</span>
+  <& subsection: SubSection.PATH_ALIASES &>
 
     It is possible to create aliases for path-names.  The basic syntax is:
     <code>
@@ -674,7 +708,7 @@ org.jamon.contextType=String
 <& legal/Disclaimer &> -- calls /attorneys/documents/Disclaimer
 </%LITERAL></&>
 
-  <li><span class="concept">Character encoding</span>
+  <& subsection: SubSection.CHARACTER_ENCODING &>
 
     By default, Jamon template source files are read using the default
     encoding of the running Java platform. The specific character
@@ -691,3 +725,8 @@ org.jamon.contextType=String
   </li>
 
 </ol>
+
+<%def subsection>
+<%args>SubSection subSection;</%args>
+  <li><a name="<% subSection.label %>"><span class="concept"><% subSection.name %></span></a>
+</%def>
