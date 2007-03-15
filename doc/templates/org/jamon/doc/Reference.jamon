@@ -43,6 +43,7 @@
       <li><& code: "<%override ...>" &> and <& code: "</%override>" &></li>
       <li><& code: "</%alias>" &></li>
       <li><& code: "<%encoding ...>" &></li>
+      <li><& code: "<%annotate ...%>" &></li>
     </ul>
 
     If you would like to force whitespace to appear after one of the
@@ -265,6 +266,21 @@ This component has been accessed <% pageViews++ %> times.
   org.myorg.myapp.data.*;
   static org.myorg.myapp.Constants.*;
 </%import></%LITERAL></&>
+
+  <li><span class="concept">Annotations</span>
+
+    It is possible to add class level annotations to the generated java files by use of an
+    <code><% "<%annotate ... %>" %></code> tag.  By default, annotations are placed on both
+    the generated proxy and impl classes.  An annotation can be restricted to one or the other with
+    an optional <code>#impl</code> or <code>#proxy</code> suffix.
+    <p>
+    For example:
+    <&| _Template &><%LITERAL>
+<%annotate @Deprecated %>
+<%doc>Silence complaints about imports in the proxy class</%doc>
+<%annotate @SuppressWarnings("unused") #proxy %>
+<%annotate @Comment("Only on the impl class") #impl %>
+</%LITERAL></&>
 
   <li><span class="concept">Arguments</span>
 
