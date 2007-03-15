@@ -3,7 +3,7 @@
 <%class>
   protected Section currentSection() { return Section.DOC_REFERENCE; }
 
-  private static enum SubSection {
+  static enum SubSection {
     STATIC_CONTENT("Static content", "StaticContent"),
     EMIT_STATEMENTS("Emit statements", "EmitStatements"),
     FLOW_CONTROL("Flow control", "FlowControl"),
@@ -29,6 +29,8 @@
       label = p_label;
     }
     private final String name, label;
+
+    public String getLink() { return "Reference.html#" + label; }
   }
 </%class>
 

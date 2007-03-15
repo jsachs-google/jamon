@@ -1,0 +1,3 @@
+<%args>ReferenceImpl.SubSection subsection;</%args>
+<%frag content/>
+<a href="<% subsection.getLink() %>"><& content &></a>
