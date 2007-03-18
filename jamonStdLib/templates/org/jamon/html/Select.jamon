@@ -17,8 +17,7 @@
 
   Contributor(s): Ian Robertson
 </%doc>
-<%annotateProxy @Deprecated%>
-<%annotateImpl @Deprecated%>
+<%annotate @Deprecated%>
 <%generic>Renderable</%generic>
 
 <%frag renderOption>

@@ -1,4 +1,3 @@
-<%annotateImpl @Deprecated%>
 <%args>
   java.util.Iterator<Object> i;
 </%args>

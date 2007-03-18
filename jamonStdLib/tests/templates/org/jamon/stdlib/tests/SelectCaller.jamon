@@ -1,4 +1,3 @@
-<%annotateImpl @Deprecated%>
 <%import>
   org.jamon.render.html.SingleSelect;
 </%import>\

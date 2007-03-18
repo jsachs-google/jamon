@@ -17,8 +17,7 @@
 
   Contributor(s): Ian Robertson
 </%doc>
-<%annotateProxy @Deprecated%>
-<%annotateImpl @Deprecated%>
+<%annotate @Deprecated%>
 
 <%extends _Selectable>
 <%override type>radio</%override>

@@ -17,8 +17,7 @@
 
   Contributor(s):
 </%doc>
-<%annotateProxy @Deprecated%>
-<%annotateImpl @Deprecated%>
+<%annotate @Deprecated%>
 
 <%args>
   String path;

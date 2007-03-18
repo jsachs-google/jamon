@@ -1,4 +1,3 @@
-<%annotateImpl @Deprecated%>
 <%args>
   boolean b;
 </%args>
