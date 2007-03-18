@@ -1,6 +1,7 @@
 <%abstract>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- svn-version: <% System.getProperty("svn.version") %> -->
 <html>
   <head>
     <title><& title &></title>
@@ -88,21 +89,21 @@
 
   protected static enum Section
   {
-	HOME("Home"),
-	NEWS("News"),
-	FEATURES("Features"),
-	DOWNLOAD("Download"),
-	CONTACT("Contact"),
-	ABOUT("About"),
-	
-	DOC_OVERVIEW("Overview"),
-	DOC_TUTORIAL("Tutorial"),
-	DOC_GENERATED("Generated classes"),
-	DOC_USERGUIDE("User's Guide"),
-	DOC_ANT("Ant integration"),
-	DOC_MAVEN("Maven integration"),
-	DOC_SERVLETS("Servlet usage"),
-	DOC_REFERENCE("Reference manual");
+  HOME("Home"),
+  NEWS("News"),
+  FEATURES("Features"),
+  DOWNLOAD("Download"),
+  CONTACT("Contact"),
+  ABOUT("About"),
+
+  DOC_OVERVIEW("Overview"),
+  DOC_TUTORIAL("Tutorial"),
+  DOC_GENERATED("Generated classes"),
+  DOC_USERGUIDE("User's Guide"),
+  DOC_ANT("Ant integration"),
+  DOC_MAVEN("Maven integration"),
+  DOC_SERVLETS("Servlet usage"),
+  DOC_REFERENCE("Reference manual");
 
     private Section(String p_name)
     {
