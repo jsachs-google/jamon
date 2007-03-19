@@ -173,98 +173,97 @@ the documentation thus taking care of issues such as escaping.
            includes="**/*.java" >
       <src path="${work.dir}" />
     </javac>
-    <antcall target="grind">
+    <antcall target="grind" inheritall="true">
       <param name="template" value="Contact" />
-      <param name="svn.version" value="${svn.version}"/>
     </antcall>
-    <antcall target="grind">
+    <antcall target="grind" inheritall="true">
       <param name="template" value="Overview" />
     </antcall>
-    <antcall target="grind">
+    <antcall target="grind" inheritall="true">
       <param name="template" value="Ant" />
     </antcall>
-    <antcall target="grind">
+    <antcall target="grind" inheritall="true">
       <param name="template" value="Maven" />
     </antcall>
-    <antcall target="grind">
+    <antcall target="grind" inheritall="true">
       <param name="template" value="UserGuide" />
     </antcall>
-    <antcall target="grind">
+    <antcall target="grind" inheritall="true">
       <param name="template" value="GeneratedTemplates" />
     </antcall>
-    <antcall target="grind">
+    <antcall target="grind" inheritall="true">
       <param name="template" value="Reference" />
     </antcall>
-    <antcall target="grind">
+    <antcall target="grind" inheritall="true">
       <param name="template" value="index" />
     </antcall>
-    <antcall target="grind">
+    <antcall target="grind" inheritall="true">
       <param name="template" value="JamonTask" />
     </antcall>
-    <antcall target="grind">
+    <antcall target="grind" inheritall="true">
       <param name="template" value="InvokerTask" />
     </antcall>
-    <antcall target="grind">
+    <antcall target="grind" inheritall="true">
       <param name="template" value="About" />
     </antcall>
-    <antcall target="grind">
+    <antcall target="grind" inheritall="true">
       <param name="template" value="News" />
     </antcall>
-    <antcall target="grind">
+    <antcall target="grind" inheritall="true">
       <param name="template" value="Changes11to12" />
     </antcall>
-    <antcall target="grind">
+    <antcall target="grind" inheritall="true">
       <param name="template" value="Changes12to13" />
     </antcall>
-    <antcall target="grind">
+    <antcall target="grind" inheritall="true">
       <param name="template" value="Changes13to20" />
     </antcall>
-    <antcall target="grind">
+    <antcall target="grind" inheritall="true">
       <param name="template" value="Changes20to21" />
     </antcall>
-    <antcall target="grind">
+    <antcall target="grind" inheritall="true">
       <param name="template" value="Features" />
     </antcall>
-    <antcall target="grind">
+    <antcall target="grind" inheritall="true">
       <param name="template" value="Download" />
     </antcall>
-    <antcall target="grind">
+    <antcall target="grind" inheritall="true">
       <param name="template" value="Servlets" />
     </antcall>
-    <antcall target="grind">
+    <antcall target="grind" inheritall="true">
       <param name="template" value="tutorial/TutorialPath" />
     </antcall>
-    <antcall target="grind">
+    <antcall target="grind" inheritall="true">
       <param name="template" value="tutorial/TutorialSample1" />
     </antcall>
-    <antcall target="grind">
+    <antcall target="grind" inheritall="true">
       <param name="template" value="tutorial/TutorialSample2" />
     </antcall>
-    <antcall target="grind">
+    <antcall target="grind" inheritall="true">
       <param name="template" value="tutorial/TutorialSample3" />
     </antcall>
-    <antcall target="grind">
+    <antcall target="grind" inheritall="true">
       <param name="template" value="tutorial/TutorialSample4" />
     </antcall>
-    <antcall target="grind">
+    <antcall target="grind" inheritall="true">
       <param name="template" value="tutorial/TutorialSample5" />
     </antcall>
-    <antcall target="grind">
+    <antcall target="grind" inheritall="true">
       <param name="template" value="tutorial/TutorialSample6" />
     </antcall>
-    <antcall target="grind">
+    <antcall target="grind" inheritall="true">
       <param name="template" value="tutorial/TutorialSample7" />
     </antcall>
-    <antcall target="grind">
+    <antcall target="grind" inheritall="true">
       <param name="template" value="tutorial/TutorialSample8" />
     </antcall>
-    <antcall target="grind">
+    <antcall target="grind" inheritall="true">
       <param name="template" value="tutorial/TutorialSample9" />
     </antcall>
-    <antcall target="grind">
+    <antcall target="grind" inheritall="true">
       <param name="template" value="tutorial/TutorialSample10" />
     </antcall>
-    <antcall target="grind">
+    <antcall target="grind" inheritall="true">
       <param name="template" value="tutorial/TutorialSample11" />
     </antcall>
   </target>
