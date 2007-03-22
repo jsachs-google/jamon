@@ -111,10 +111,11 @@ public class SyntaxPage extends PreferencePage implements IWorkbenchPreferencePa
     private void createOptionsGroup(Composite parent)
     {
         Group optionsGroup = new Group(parent, SWT.NONE);
-        optionsGroup.setLayout(new GridLayout(4, true));
+        optionsGroup.setLayout(new GridLayout(4, false));
 
         new Label(optionsGroup, SWT.NONE).setText("Foreground:");
         m_foregroundColorSelector = new ColorSelector(optionsGroup);
+        new Label(optionsGroup, SWT.NONE).setLayoutData(makeGridData(2));
 
         new Label(optionsGroup, SWT.NONE).setText("Background:");
         m_backgroundColorSelector = new ColorSelector(optionsGroup);
@@ -126,13 +127,18 @@ public class SyntaxPage extends PreferencePage implements IWorkbenchPreferencePa
         for (StyleOption styleOption: StyleOption.values())
         {
             Button checkbox = new Button(optionsGroup, SWT.CHECK);
-            GridData gridData = new GridData();
-            gridData.horizontalSpan = 2;
-            checkbox.setLayoutData(gridData);
+            checkbox.setLayoutData(makeGridData(4));
             checkbox.setText(styleOption.getLabel());
             styleOptionButtons.put(styleOption, checkbox);
         }
         setEnablement(false);
+    }
+
+    private GridData makeGridData(int p_horizontalSpan)
+    {
+        GridData gridData = new GridData();
+        gridData.horizontalSpan = p_horizontalSpan;
+        return gridData;
     }
 
     @Override protected Control createContents(Composite parent)
@@ -143,13 +149,11 @@ public class SyntaxPage extends PreferencePage implements IWorkbenchPreferencePa
         gridData.horizontalAlignment = GridData.FILL;
         gridData.grabExcessHorizontalSpace = true;
         composite.setLayoutData(gridData);
-        composite.setLayout(new GridLayout(2, true));
+        composite.setLayout(new GridLayout(2, false));
         Label elementLabel = new Label(composite, SWT.NONE);
         elementLabel.setText("Element");
 
-        GridData labelGridData = new GridData();
-        labelGridData.horizontalSpan = 2;
-        elementLabel.setLayoutData(labelGridData);
+        elementLabel.setLayoutData(makeGridData(2));
 
         styleList = new List(composite, SWT.NONE);
         GridData styleListGridData = new GridData();
