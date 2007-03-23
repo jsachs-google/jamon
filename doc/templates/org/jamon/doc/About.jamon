@@ -7,17 +7,13 @@
 <h2>Jamon in use</h2>
 
 <ul>
-  <li><a target="_new" href="http://www.overstock.com">www.overstock.com</a></li>
-  <li><a target="_new" href="http://www.earthaddress.com">www.earthaddress.com</a>
+  <li><a target="_new" href="http://www.overstock.com/">www.overstock.com</a>
     <br />
     <br />
-    <a target="_new" href="http://www.earthaddress.com"><img
-       alt="EarthAddress" title="EarthAddress" src="earthaddress.gif"
-       height="34" width="141" /></a>
+    <a target="_new" href="http://www.overstock.com/"><img
+       alt="Overstock.com" title="Overstock.com" src="overstock.gif"
+       height="36" width="162" /></a>
   </li>
-
-<li><a target="_new" href="http://www.eziba.com/StoreFront">www.eziba.com</a></li>
-
 </ul>
 
 <h2>Credits</h2>
@@ -26,7 +22,7 @@
 
 <ul>
   <li>Jay Sachs (jay at jamon dot org)</li>
-  <li>Ian Robertson</li>
+  <li>Ian Robertson (ian at jamon dot org)</li>
 </ul>
 
 <h4>Past contributors</h4>
