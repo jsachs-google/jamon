@@ -44,6 +44,7 @@
           <& _menuItem: Section.DOC_USERGUIDE; "UserGuide" &>
           <& _menuItem: Section.DOC_ANT; "Ant" &>
           <& _menuItem: Section.DOC_MAVEN; "Maven" &>
+          <& _menuItem: Section.DOC_ECLIPSE; "Eclipse" &>
           <& _menuItem: Section.DOC_SERVLETS; "Servlets" &>
           <& _menuItem: Section.DOC_REFERENCE; "Reference" &>
           <li class="nav">
@@ -102,6 +103,7 @@
   DOC_USERGUIDE("User's Guide"),
   DOC_ANT("Ant integration"),
   DOC_MAVEN("Maven integration"),
+  DOC_ECLIPSE("Eclipse plugin"),
   DOC_SERVLETS("Servlet usage"),
   DOC_REFERENCE("Reference manual");
 

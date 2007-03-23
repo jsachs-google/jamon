@@ -186,6 +186,9 @@ the documentation thus taking care of issues such as escaping.
       <param name="template" value="Maven" />
     </antcall>
     <antcall target="grind" inheritall="true">
+      <param name="template" value="Eclipse" />
+    </antcall>
+    <antcall target="grind" inheritall="true">
       <param name="template" value="UserGuide" />
     </antcall>
     <antcall target="grind" inheritall="true">

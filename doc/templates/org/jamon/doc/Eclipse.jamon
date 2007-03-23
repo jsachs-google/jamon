@@ -1,0 +1,20 @@
+<%extends _Base>
+<%override title>Eclipse Plugin for Jamon</%override>
+<%class>
+  protected Section currentSection() { return Section.DOC_ECLIPSE; }
+</%class>
+
+<h2><& title &></h2>
+
+An Eclipse plugin for Jamon is available.  The plugin offers the following features:
+<ul>
+  <li>Java files are automatically generated from Jamon files each time they are saved.</li>
+  <li>Error and warning markers in a generated Java files are automatically "shifted" to the
+  corresponding Jamon template file, at the location in the template which caused the problem.</li>
+  <li>Configurable syntax highlighting is performed for Jamon tags.</li>
+</ul>
+
+To install the plugin, simply point your Eclipse's update manager
+to <code>http://www.jamon.org/eclipse/updates</code>.
+A java project can be Jamon-enabled via Project Properties->Jamon.
+Syntax highlighting can be configured via Window->Preferences->Jamon Syntax
