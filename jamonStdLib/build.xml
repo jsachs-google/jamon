@@ -142,7 +142,7 @@ build
   </target>
 
   <target name="manifest" depends="svn-versioning">
-    <copy file="manifest" tofile="manifest.mf">
+    <copy overwrite="true" file="manifest" tofile="manifest.mf">
       <filterset>
         <filter token="VERSION" value="${org.jamon.stdlib.version}"/>
         <filterset refid="svn.version"/>
