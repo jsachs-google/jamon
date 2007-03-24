@@ -43,8 +43,8 @@
 <h2>Template Reference Manual</h2>
 <ol>
   <ol>
-  <%for SubSection subSection: SubSection.values() %>
-    <li><a href="#<% subSection.label %>"><% subSection.name %></a>
+  <%for final SubSection subsection: SubSection.values() %>
+    <li><&| subsectionLink: subsection &><% subsection.name %></&>
   </%for>
   </ol>
 
@@ -162,7 +162,7 @@
 
     It is possible to restrict the allowable types that can appear in
     emit directives by assigning a value to the <code>org.jamon.emitMode</code>
-    in the <a href="#jamonProperties">jamon.properties<a> file.  The following
+    in the <&| subsectionLink: SubSection.JAMON_PROPERTIES &>jamon.properties</&> file.  The following
     values are allowed:
 
     <ul>
@@ -603,7 +603,7 @@ Today's temperature is
     <code>jamonContext</code> can optionally be passed around between some or
     all templates in a project.  To do this, first assign a value to the
     <code>org.jamon.contextType</code> property via a
-    <a href="#jamonProperties">jamon.properties<a> file; this value should be a
+    <&| subsectionLink: SubSection.JAMON_PROPERTIES &>jamon.properties</&> file; this value should be a
     java type, or the empty string to have no jamonContext.  All templates with
     a jamonContext will have a <code>setJamonContext</code> method on their
     proxies, and a variable named <code>jamonContext</code> will be visible in
@@ -615,7 +615,7 @@ Today's temperature is
 
     <p>
     For example, to supply the protocol to use for image urls, one might include
-    in <a href="#jamonProperties">jamon.properties<a> the line:
+    in <&| subsectionLink: SubSection.JAMON_PROPERTIES &>jamon.properties</&> the line:
      <pre class="properties">
 org.jamon.contextType=String
 </pre>
@@ -643,15 +643,17 @@ org.jamon.contextType=String
 
   <p>
 
-  Currently, there are two properties jamon knows about:
+  Currently, there are three types of properties jamon knows about:
   <ul>
     <li><b>org.jamon.emitMode</b> - can be one of <code>standard</code>,
     <code>limited</code> or <code>strict</code>.  See the section on
     <a href="emitMode">Emit Modes</a> for more information.
     <li><b>org.jamon.contextType</b> - sets the type for the jamon context
     variable; if this property is the empty string, then there is no context
-    variable.  See the section on <a href="#jamonContext">Context</a> for more
+    variable.  See the section on <&| subsectionLink: SubSection.CONTEXT &>Context</&> for more
     information.
+    <li><b>org.jamon.alias.<em>aliasName</em></b> - declares a
+    <&| subsectionLink: SubSection.PATH_ALIASES &>path alias</&> for all templates.
   </ul>
 
   <& subsection: SubSection.GENERICS &>
@@ -672,7 +674,9 @@ org.jamon.contextType=String
 
   <& subsection: SubSection.PATH_ALIASES &>
 
-    It is possible to create aliases for path-names.  The basic syntax is:
+    It is possible to create aliases for path-names.  This can either be done in the template,
+    or through <&| subsectionLink: SubSection.JAMON_PROPERTIES &>jamon.properties</&>.
+    The basic syntax for doing it in a template is:
     <code>
       <% "<%alias>" %>
         <var>shortcut</var> = <var>/full/path</var>;
@@ -680,13 +684,14 @@ org.jamon.contextType=String
       <% "</%alias>" %>
     </code>
 
+    Shortcut must be a single word, without slashes; the only exception to this is that "/" may be
+    made an alias, refering to the "empty" shortcut.  Already defined aliases can be used to declare
+    the full path for other aliases.
+
     To use an alias, replace <var>/full/path//</var> with
     <var>shortcut//</var> when refering to other templates (note the
     double-slash after <var>shortcut</var>.  Aliases may only be used
-    for the leading part of a path.  Aliases can be used to declare
-    the full path for other aliases.  Shortcut must be a single word,
-    without slashes; the only exception to this is that "/" may be
-    made an alias, refering to the "empty" shortcut.  Note that the
+    for the leading part of a path.  Note that the
     old style syntax of placing a <code><% "=>" %></code> instead of a
     <code>=</code> between the shortcut and full path is deprecated.
 
@@ -710,6 +715,16 @@ org.jamon.contextType=String
 <& legal/Disclaimer &> -- calls /attorneys/documents/Disclaimer
 </%LITERAL></&>
 
+    To define the same aliases as above through a
+    <&| subsectionLink: SubSection.JAMON_PROPERTIES &>jamon.properties</&> file, one would say:
+    <&| _Template &><%LITERAL>
+org.jamon.alias./=/com/foo/bar
+org.jamon.alais.nav=/com/foo/bar/navigation
+org.jamon.alais.legal=/attorneys/documents
+</%LITERAL></&>
+    Note that aliases defined through jamon.properties files may not make reference to other aliases
+    in their definitions; the aliased path must always be specified as a full path.
+
   <& subsection: SubSection.CHARACTER_ENCODING &>
 
     By default, Jamon template source files are read using the default
@@ -731,4 +746,10 @@ org.jamon.contextType=String
 <%def subsection>
 <%args>SubSection subSection;</%args>
   <li><a name="<% subSection.label %>"><span class="concept"><% subSection.name %></span></a>
+</%def>
+
+<%def subsectionLink>
+<%args>SubSection subSection;</%args>
+<%frag content/>
+<a href="#<% subSection.label %>"><& content &></a>
 </%def>
