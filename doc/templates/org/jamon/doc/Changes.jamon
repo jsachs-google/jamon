@@ -1,0 +1,224 @@
+<%extends _Base>
+<%override title>Jamon Changes</%override>
+<%class>
+  protected Section currentSection() { return Section.NEWS; }
+</%class>
+
+<h2><& title &></h2>
+<a name="2.2"/><h3>Jamon Changes from 2.1 to 2.2</h3></a>
+<ul>
+<&| change &>
+  Path aliases can be set through <code>jamon.properties</code> as well as in a template.
+</&>
+
+<&| change &>
+  The "java line" syntax, where a line begining with a % is interpreted to be in-line java code,
+  has been deprecated.  In it's place, a new syntax is introduced allowing short java snippets
+  such as <code><% "<%java int x = 4; %>" %></code>
+</&>
+
+<&| change &>
+  Add the ability to add custom class-level annotations to generated java files.  Jamon will no
+  longer add a <code>@SuppressWarnings("unused")</code> to Proxy files, so templates specifying
+  imports which are not used in the Proxy class may want to add
+  <code><% "<%annotate @SuppressWarnings(\"unused\") #proxy %>" %></code>.
+</&>
+
+<&| change; incompatible=true &>
+  Switch from using static final String arrays to annotations in proxy classes to describe template
+  interfaces.  Existing templates will need to be recompiled.
+</&>
+
+<&| change &>
+  Fix bug where the template processor would go into an infinite loop in certain cases
+  while parsing an xargs section.
+</&>
+</ul>
+
+<a name="2.1"><h3>Jamon Changes from 2.0 to 2.1</h3></a>
+<ul>
+<&| change; incompatible = true &>
+  Emit mode is now specified in jamon.properties, rather than as an argument
+  to the ant task or TemplateProcessor.
+</&>
+
+<&| change &>
+  Jamon templates may optionally have a context variable which is passed from
+  template to template.
+</&>
+
+<&| change &>
+  The <code>getRootCause</code> method on JamonRuntimeException is deprecated
+  in favor of the <code>getCause</code> method.
+</&>
+
+<&| change &>
+  Various changes to generated code which, while having no functional impact,
+  should cut down on the number of warnings, especially inside of Eclipse.
+</&>
+</ul>
+
+<a name="2.0"><h3>Jamon Changes from 1.3 to 2.0</h3></a>
+<ul>
+<&| change; incompatible = true &>
+  Jamon now requires Java 1.5.  Users with prior jdk requirements should use
+  Jamon 1.3 instead.
+</&>
+
+<&| change &>
+  The parsing engine has been rewritten from the ground up.  Benefits include
+  better error messages, faster template processing times, and the ability to
+  more easily support flexible syntax.
+</&>
+
+<&| change &>
+  The standard library is now downloaded as a separate package.
+</&>
+
+<&| change &>
+  Support for generics has been added.  Argument types can be paramterized
+  types, and templates themselves can be generic.
+</&>
+
+<&| change &>
+  The old "arrow style" for passing arguments has been deprecated in favor of
+  a more natural "equals style".  Instead of making calls like
+  <code><% "<& someTemplate: name => value &>" %></code>, the new style is
+  <code><% "<& someTemplate: name = value &>" %></code>.  A similar change has
+  been made for declaring default values for optional arguments, and path
+  aliases.
+</&>
+
+<&| change &>
+  In an effort to reduce reliance on java code sections which open a block which
+  must be closed in a subsequence java code section, the following tags have
+  been added:
+  <ul>
+    <li><code><% "<%if " %><em>conditition</em><%
+        ">...<%elseif " %><em>condition</em><% ">...<%else>...</%if>" %></code></li>
+    <li><code><% "<%for " %> <em>init</em>; <em>test</em>; <em>update</em><% ">...</%for>" %></code></li>
+    <li><code><% "<%for " %> <em>Type var : list</em><% ">...</%for>" %></code></li>
+    <li><code><% "<%while " %> <em>test</em><% ">...</%while>" %></code></li>
+  </ul>
+</&>
+
+<&| change &>
+  Support for static imports has been added, eg:
+  <code><% "<%import>static com.mycompany.SomeEnum.*</%import>" %></code>
+</&>
+
+<&| change &>
+  An Eclipse plugin has been added; point your eclipse update manager to
+  http://www.jamon.org/eclipse/updates/
+</&>
+</ul>
+
+<a name="1.3"><h3>Jamon Changes from 1.2 to 1.3</h3></a>
+
+<&| change &>
+
+  Invocations of public methods on templates only throw IOException
+  when there is an IOException on the underlying writer. Other
+  exceptions, e.g. relating to compilation errors of dynamically
+  modified templates, are now JamonRuntimeExceptions. One side effect
+  of this is that invoking Renderer.asString() no longer throws
+  IOException.
+
+</&>
+
+<&| change &>
+
+  The character encoding of a template can now be specified via the
+
+    &lt;%encoding ...&gt;
+
+  declaration, which, if present, must occur at the very beginning of
+  a template source file.
+
+</&>
+
+<&| change &>
+
+  It is now possible to specify what types are legally included in
+  emit (<code>&lt;% ... %&gt;</code>) directives via the <a
+  href="Reference.html#emitMode">EmitMode</a>. This is specifiable for
+  all templates only, by supplying the appropriate attribute to the <a
+  href="JamonTask.html">JamonTask</a>, and via the corresponding
+  attribute on the <code>RecompilingTemplateManager</code>.
+
+</&>
+</ul>
+
+<a name="1.2"><h3>Jamon Changes from 1.1 to 1.2</h3></a>
+
+<ul>
+<&| change &>
+    Added a positional parameter passing syntax for invoking templates
+    and subtemplates.
+</&>
+
+<&| change; incompatible = true &>
+    The writer is publicly accessible as <code>jamonWriter</code>
+    variable, and is no longer an instance on the template.
+</&>
+
+<&| change; incompatible = true &>
+    Fixed and refactored reflective template invocation, adding
+    facilities to introspect on template arguments and types.
+    <code>Invoker</code> becomes <code>TemplateInspector</code>.
+</&>
+
+<&| change; incompatible = true &>
+    <code>Renderer</code> becomes an
+    interface, <code>AbstractRenderer</code> replaces it as the
+    abstract superclass.
+</&>
+
+<&| change; incompatible = true &>
+    Default escaping is no longer set at runtime
+    via <code>escapeWith</code>, but statically declared
+    via <code>&lt;%escaping ...&gt;</code> directive.
+</&>
+
+<&| change; incompatible = true &>
+    Flushing the writer after rendering is now done via
+    <code>autoFlush()</code> method, but done by default unless call
+    <code>renderNoFlush()</code>.
+</&>
+
+<&| change &>
+    Fixed some subtle bugs in automatic template regeneration and
+    recompilation.
+</&>
+
+<&| change &>
+    Changes to the <code>&lt;%import&gt;</code> sections are no longer
+    included in determining if a template (proxy) needs
+    regeneration. The (degenerate) use case that will break involves
+    changing
+
+<pre class="jamon"><&| /org/jamon/escape/Html &><%LITERAL>
+  <%import> java.util.Date; </%import>
+  <%args> Date date; </%args></%LITERAL></&></pre>
+    to
+<pre class="jamon"><&| /org/jamon/escape/Html &><%LITERAL>
+  <%import> java.sql.Date; </%import>
+  <%args> Date date; </%args></%LITERAL></&></pre>
+    within a template, which is unlikely enough to be ignorable.
+</&>
+
+<&| change &>
+    Fixed JDK 1.3 compatibility issues
+</&>
+</ul>
+
+<%def change>
+  <%frag content />
+  <%args>
+    boolean incompatible = false;
+  </%args>
+  <li>
+   <%if incompatible %><span class="incompatible">[INCOMPATIBLE]</span></%if>
+    <& content &>
+  </li>
+</%def>

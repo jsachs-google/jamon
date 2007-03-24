@@ -213,16 +213,7 @@ the documentation thus taking care of issues such as escaping.
       <param name="template" value="News" />
     </antcall>
     <antcall target="grind" inheritall="true">
-      <param name="template" value="Changes11to12" />
-    </antcall>
-    <antcall target="grind" inheritall="true">
-      <param name="template" value="Changes12to13" />
-    </antcall>
-    <antcall target="grind" inheritall="true">
-      <param name="template" value="Changes13to20" />
-    </antcall>
-    <antcall target="grind" inheritall="true">
-      <param name="template" value="Changes20to21" />
+      <param name="template" value="Changes" />
     </antcall>
     <antcall target="grind" inheritall="true">
       <param name="template" value="Features" />
