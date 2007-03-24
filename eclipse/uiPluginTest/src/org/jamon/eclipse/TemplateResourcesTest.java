@@ -20,6 +20,10 @@ import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
 
 public class TemplateResourcesTest extends TestCase {
+private static final String GEN_SOURCES_DIR = "genSources";
+  private static final String PROJECT_NAME = "foo";
+  private static final String PROJECT_PATH = "/" + PROJECT_NAME + "/";
+  private static final String GEN_SOURCES_PATH = PROJECT_PATH + GEN_SOURCES_DIR;
   private static final Path TEMPLATE_PATH = new Path("org/jamon/ATemplate");
   private IWorkspaceRoot m_root;
 
@@ -29,31 +33,33 @@ public class TemplateResourcesTest extends TestCase {
 
   public void testOriginalConstructor() {
     checkTemplateResources(new TemplateResources(
-      makeFile("/foo/templates/org/jamon/ATemplate.jamon"), sourceFolder(), templateFolder()), "templates", "genSources");
+      makeFile("/foo/templates/org/jamon/ATemplate.jamon"), sourceFolder(), templateFolder()), "templates", GEN_SOURCES_DIR);
   }
 
   public void testNewConstructor() {
-    checkTemplateResources(new TemplateResources(TEMPLATE_PATH, sourceFolder(), templateFolder()), "templates", "genSources");
+    checkTemplateResources(new TemplateResources(TEMPLATE_PATH, sourceFolder(), templateFolder()), "templates", GEN_SOURCES_DIR);
   }
 
   public void testFromGeneratedProxy() {
     checkTemplateResources(TemplateResources.fromGeneratedSource(
-      makeFile("/foo/genSources/org/jamon/ATemplate.java"), sourceFolder(), templateFolder()), "templates", "genSources");
+      makeFile(GEN_SOURCES_PATH + "/org/jamon/ATemplate.java"), sourceFolder(), templateFolder()),
+      "templates", GEN_SOURCES_DIR);
   }
 
   public void testFromGeneratedImpl() {
     checkTemplateResources(TemplateResources.fromGeneratedSource(
-      makeFile("/foo/genSources/org/jamon/ATemplateImpl.java"), sourceFolder(), templateFolder()), "templates", "genSources");
+      makeFile(GEN_SOURCES_PATH + "/org/jamon/ATemplateImpl.java"), sourceFolder(), templateFolder()),
+      "templates", GEN_SOURCES_DIR);
   }
 
   public void testNotFromGeneratedSource() {
     assertNull(TemplateResources.fromGeneratedSource(
-      makeFile("/foo/genSources/org/jamon/File.notjava"),
+      makeFile(GEN_SOURCES_PATH + "/org/jamon/File.notjava"),
       sourceFolder(),
       makeFolder("/bar/templates")));
 
     assertNull(TemplateResources.fromGeneratedSource(
-      makeFile("/foo/genSourcesss/org/jamon/File.java"),
+      makeFile("/foo/notGenSources/org/jamon/File.java"),
       sourceFolder(),
       makeFolder("/bar/templates")));
   }
@@ -61,18 +67,18 @@ public class TemplateResourcesTest extends TestCase {
   public void testFromGeneratedSource() throws Exception { //FIXME - change test name
       IProject project = makeProject();
       checkTemplateResources(
-        TemplateResources.fromGeneratedSource(makeFile("/foo/tsrc/org/jamon/ATemplate.java")),
-        "templates", "tsrc");
+        TemplateResources.fromGeneratedSource(makeFile(GEN_SOURCES_PATH + "/org/jamon/ATemplate.java")),
+        "templates", GEN_SOURCES_DIR);
       checkTemplateResources(
-        TemplateResources.fromGeneratedSource(makeFile("/foo/tsrc/org/jamon/ATemplateImpl.java")),
-        "templates", "tsrc");
+        TemplateResources.fromGeneratedSource(makeFile(GEN_SOURCES_PATH + "/org/jamon/ATemplateImpl.java")),
+        "templates", GEN_SOURCES_DIR);
       project.close(null);
       project.delete(true, true, null);
   }
 
   private IProject makeProject() throws CoreException, JavaModelException {
     IWorkspace workspace = ResourcesPlugin.getWorkspace();
-    IProject project = workspace.getRoot().getProject("foo");
+    IProject project = workspace.getRoot().getProject(PROJECT_NAME);
     project.delete(true, true, null); // just in case
     IProjectDescription description = workspace.newProjectDescription(project.getName());
 
@@ -87,7 +93,7 @@ public class TemplateResourcesTest extends TestCase {
     project.open(null);
     ((IJavaProject) project.getNature(JavaCore.NATURE_ID)).setRawClasspath(
       new IClasspathEntry[] { JavaCore.newSourceEntry(new Path("/foo/src")) }, null);
-    JamonNature.addToProject(project, "templates", "genSources");
+    JamonNature.addToProject(project, "templates", GEN_SOURCES_DIR);
     return project;
   }
 
@@ -96,11 +102,11 @@ public class TemplateResourcesTest extends TestCase {
     assertNotNull(resources);
     assertEquals(TEMPLATE_PATH, resources.getPath());
     assertEquals(
-      makeFile("/foo/" + templateDir + "/org/jamon/ATemplate.jamon"), resources.getTemplate());
+      makeFile(PROJECT_PATH + templateDir + "/org/jamon/ATemplate.jamon"), resources.getTemplate());
     assertEquals(
-      makeFile("/foo/" + genSourcesDir + "/org/jamon/ATemplate.java"), resources.getProxy());
+      makeFile(PROJECT_PATH + genSourcesDir + "/org/jamon/ATemplate.java"), resources.getProxy());
     assertEquals(
-      makeFile("/foo/" + genSourcesDir + "/org/jamon/ATemplateImpl.java"), resources.getImpl());
+      makeFile(PROJECT_PATH + genSourcesDir + "/org/jamon/ATemplateImpl.java"), resources.getImpl());
   }
 
   private IFile makeFile(String p_path) {
