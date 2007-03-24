@@ -169,7 +169,7 @@ build
         <exclude name="**/build/**" />
       </tarfileset>
     </tar>
-    <zip destfile="${zip.src}" >
+    <zip destfile="jamon-stdlib-${org.jamon.stdlib.version}-src.zip" >
       <zipfileset dir="." prefix="${archive.base}" >
         <exclude name="${jarfile}"/>
         <exclude name="${jarfile.versioned}"/>
