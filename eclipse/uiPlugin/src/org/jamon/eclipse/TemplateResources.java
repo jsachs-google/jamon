@@ -33,7 +33,7 @@ public class TemplateResources
     {
         IProject project = p_javaFile.getProject();
 
-          JamonNature nature = (JamonNature) project.getNature(JamonNature.natureId());
+        JamonNature nature = (JamonNature) project.getNature(JamonNature.natureId());
         return nature;
     }
 
