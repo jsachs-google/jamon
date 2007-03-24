@@ -6,6 +6,7 @@
 
   <property file="build.properties"/>
   <property file="${user.home}/.ant.properties"/>
+  <property name="org.jamon.stdlib.version" value="2.1"/>
 
   <property name="build.dir" location="build"/>
   <property name="build.src.dir" location="${build.dir}/src"/>
@@ -20,6 +21,8 @@
 
   <property name="jamon.core.dir" location="../jamon"/>
   <property file="${jamon.core.dir}/version.properties"/>
+  <import file="${jamon.core.dir}/build.version.xml"/>
+
   <property name="java.lib.jamon" value="${jamon.core.dir}/jamon-${jamon.version}.jar"/>
   <property name="java.lib.jamon-anttask" value="${jamon.core.dir}/jamon-anttask-${jamon.anttask.version}.jar"/>
   <property name="java.lib.junit" value="/usr/local/share/java/junit.jar" />
@@ -132,13 +135,21 @@ build
     <delete file="tests/.cvsignore"/>
   </target>
 
-  <target name="jar" depends="test">
-    <jar jarfile="${jarfile}" manifest="manifest" >
+  <target name="jar" depends="test,manifest">
+    <jar jarfile="${jarfile}" manifest="manifest.mf" >
       <fileset dir="${classes.dir}" />
     </jar>
   </target>
 
-  <property name="org.jamon.stdlib.version" value="2.1"/>
+  <target name="manifest" depends="svn-versioning">
+    <copy file="manifest" tofile="manifest.mf">
+      <filterset>
+        <filter token="VERSION" value="${org.jamon.stdlib.version}"/>
+        <filterset refid="svn.version"/>
+      </filterset>
+    </copy>
+  </target>
+
   <property name="jarfile.versioned"
             value="jamon-stdlib-${org.jamon.stdlib.version}.jar"/>
   <target name="bindist" depends="jar">

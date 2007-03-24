@@ -2,9 +2,10 @@ Main-Class: org.jamon.Version
 
 Name: org/jamon/stdlib
 Specification-Title: Jamon Standard Library
-Specification-Version: 1.4
+Specification-Version: @VERSION@
 Specification-Vendor: Jay Sachs <jay@jamon.org>
 Implementation-Title: org.jamon.stdlib
-Implementation-Version: 1.4  ($Name$)
+Implementation-Version: @VERSION@  ($Name$)
 Implementation-Vendor: Jay Sachs <jay@jamon.org>
 Sealed: true
+svn-version: @SVN_VERSION@
