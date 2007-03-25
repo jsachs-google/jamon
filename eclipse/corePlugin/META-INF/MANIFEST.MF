@@ -4,7 +4,7 @@ Bundle-SymbolicName: org.jamon
 Bundle-Version: 2.2.0.0
 Bundle-Localization: plugin
 Eclipse-LazyStart: true
-Bundle-ClassPath: jamon-2.2.0-20070208.jar
+Bundle-ClassPath: jamon-2.2.0.jar
 Bundle-Vendor: jamon.org
 Provide-Package: org.jamon,
  org.jamon.codegen,
