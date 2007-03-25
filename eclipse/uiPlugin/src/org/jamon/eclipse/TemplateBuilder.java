@@ -106,7 +106,6 @@ public class TemplateBuilder extends IncrementalProjectBuilder
     {
         if (kind == CLEAN_BUILD || kind == FULL_BUILD)
         {
-            EclipseUtils.logInfo("deleting all jamon parent markers");
             getProject().deleteMarkers(
                 JamonProjectPlugin.getParentMarkerType(),
                 true,
