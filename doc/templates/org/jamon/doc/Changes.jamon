@@ -24,6 +24,10 @@
   <code><% "<%annotate @SuppressWarnings(\"unused\") #proxy %>" %></code>.
 </&>
 
+<&| change &>
+  Syntax highlighting of jamon syntax elements has been added to the Eclipse plugin.
+</&>
+
 <&| change; incompatible=true &>
   Switch from using static final String arrays to annotations in proxy classes to describe template
   interfaces.  Existing templates will need to be recompiled.
