@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -53,7 +54,7 @@ public class TemplateDependencies {
 
     public Collection<String> getDependenciesOf(String p_callee) {
         Collection<String> deps = m_dependenciesOf.get(p_callee);
-        return deps == null ? Collections.<String>emptySet() : deps;
+        return deps == null ? Collections.<String>emptySet() : new ArrayList<String>(deps);
     }
 
     public TemplateDependencies(InputStream p_in) throws IOException {
