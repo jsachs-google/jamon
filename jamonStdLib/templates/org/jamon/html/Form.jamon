@@ -17,7 +17,7 @@
 
   Contributor(s):
 </%doc>\
-<%annotate @Deprecated%>
+<%annotate @Deprecated @SuppressWarnings("deprecation")%>
 <%import>
   org.jamon.render.html.Input;
 </%import>\

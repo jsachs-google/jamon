@@ -17,7 +17,7 @@
 
   Contributor(s): Ian Robertson
 </%doc>
-<%annotate @Deprecated%>
+<%annotate @Deprecated @SuppressWarnings("deprecation")%>
 
 <%abstract>
 
@@ -28,7 +28,6 @@
   Boolean selected = null;
   String onClick = null;
 </%args>
-
 <%absmeth type></%absmeth>
 
 <%def ifNotNull>

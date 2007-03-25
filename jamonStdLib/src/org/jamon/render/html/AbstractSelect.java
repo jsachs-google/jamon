@@ -30,7 +30,7 @@ import java.util.List;
     implements Select<Renderable>
 {
 
-    @SuppressWarnings("hiding")
+    @SuppressWarnings({ "hiding", "deprecation", "unchecked" })
     public static abstract class Item<Renderable>
         implements Select.Item<Renderable>
     {
