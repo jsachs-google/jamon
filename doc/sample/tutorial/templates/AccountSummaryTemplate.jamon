@@ -9,8 +9,8 @@
 Title:             <% title %>
 Effective Date:    <% effectiveDate %>
 Name:              <% userName %>
-% java.math.BigDecimal scaledBalance =
-%     totalBalance.setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
+<%java java.math.BigDecimal scaledBalance =
+   totalBalance.setScale(2, java.math.BigDecimal.ROUND_HALF_UP); %>
 Total Balance:     <% scaledBalance %>
 
 <% alertMessage %>

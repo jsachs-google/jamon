@@ -7,7 +7,7 @@
 <%args>
   Iterator items;
 </%args>
-% int row = 0;
+<%java int row = 0; %>
 <table>
 <%while items.hasNext() %>
     <tr bgcolor="<% row++ % 2 == 0 ? "white" : "grey" %>">

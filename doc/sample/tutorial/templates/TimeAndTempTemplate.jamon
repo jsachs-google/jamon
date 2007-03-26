@@ -1,4 +1,4 @@
-% String dayOfWeek = new java.text.SimpleDateFormat("EEEE").format(new java.util.Date());
+<%java String dayOfWeek = new java.text.SimpleDateFormat("EEEE").format(new java.util.Date()); %>
 <%java>
   String[] forecasts = new String[] {
     "partly cloudy", "mostly cloudy", "sunny", "rain", "snow" };
