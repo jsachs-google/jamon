@@ -258,7 +258,7 @@ public class TemplateBuilder extends IncrementalProjectBuilder
             {
                 createParents(p_container.getParent());
                 ((IFolder) p_container).create(true, true, null);
-                if (getNature().getTemplateOutputFolder().equals(p_container))
+                if (m_outFolder.equals(p_container))
                 {
                   // If the template output folder doesn't exist (which might
                   // be the case, for example, if a project is checked out from
@@ -401,12 +401,16 @@ public class TemplateBuilder extends IncrementalProjectBuilder
             {
                 return JamonNature.projectHasNature((IProject) p_resource);
             }
+            if (p_resource.getType() == IResource.FILE) {
+                return true;
+            }
             if (p_resource.getType() != IResource.FOLDER)
             {
                 return false;
             }
-            final IFolder folder = (IFolder) p_resource;
-            return m_templateDir.getProjectRelativePath().isPrefixOf(folder.getProjectRelativePath());
+            final IPath fp = ((IFolder) p_resource).getProjectRelativePath();
+            final IPath tp = m_templateDir.getProjectRelativePath();
+            return fp.isPrefixOf(tp) || tp.isPrefixOf(fp);
         }
 
         public boolean visit(IResourceDelta p_delta) throws CoreException
