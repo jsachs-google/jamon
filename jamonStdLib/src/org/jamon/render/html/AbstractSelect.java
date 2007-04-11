@@ -56,6 +56,7 @@ import java.util.List;
 
 
     @SuppressWarnings("hiding")
+    @Deprecated
     public interface ItemMaker<DataType, Renderable>
     {
         Select.Item<Renderable> makeItem(DataType data);

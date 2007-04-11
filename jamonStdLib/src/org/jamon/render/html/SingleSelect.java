@@ -25,7 +25,8 @@ import java.util.Iterator;
 @Deprecated public class SingleSelect<Renderable>
     extends AbstractSelect<Renderable>
 {
-    @SuppressWarnings("hiding")
+    @SuppressWarnings({"hiding", "deprecation"})
+    @Deprecated
     public static abstract class Item<Renderable>
         extends AbstractSelect.Item<Renderable>
     {
