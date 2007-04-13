@@ -5,6 +5,19 @@
 </%class>
 
 <h2><& title &></h2>
+<a name="2.2.1"/><h3>Jamon Changes from 2.2 to 2.2.1</h3></a>
+<ul>
+  <&| change &>
+    A bug which prevented the Eclipse plugin from properly handling templates which referenced
+    "library only" templates from jars has been fixed.
+  </&>
+
+  <&| change &>
+    The Eclipse plugin is now capable of handling a template directory which is not the top-level
+    directory in a project.
+  </&>
+</ul>
+
 <a name="2.2"/><h3>Jamon Changes from 2.1 to 2.2</h3></a>
 <ul>
 <&| change &>
