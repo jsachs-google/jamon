@@ -11,12 +11,25 @@
       <arg value="--recursive" />
       <arg value="--relative" />
       <arg value="--compress" />
-      <arg value="--exclude=.project"/>
-      <arg value="--exclude=.svn"/>
+      <arg value="--include=plugins"/>
+      <arg value="--include=plugins/**"/>
+      <arg value="--include=features"/>
+      <arg value="--include=features/**"/>
+      <arg value="--include=site.xml"/>
+      <arg value="--exclude=*"/>
       <arg value="."/>
       <arg value="jamon@www.jamon.org:/home/jamon/www${site.dir}/eclipse/updates" />
     </exec>
   </target>
 
+  <target name="localSite">
+    <exec executable="sh" outputproperty="feature.version">
+      <arg value="-c"/>
+      <arg value='grep version ../jamonFeature/feature.xml|head -2|tail -1|cut -d\" -f2'/>
+    </exec>
+    <zip zipfile="jamon-updateSite-${feature.version}.zip"
+         basedir="."
+         includes="site.xml,features/**,plugins/**"/>
+  </target>
 </project>
 
