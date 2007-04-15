@@ -55,7 +55,7 @@ import java.util.List;
     }
 
 
-    @SuppressWarnings("hiding")
+    @SuppressWarnings({"hiding", "deprecation"})
     @Deprecated
     public interface ItemMaker<DataType, Renderable>
     {
