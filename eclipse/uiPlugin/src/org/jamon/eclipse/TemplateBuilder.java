@@ -281,9 +281,9 @@ public class TemplateBuilder extends IncrementalProjectBuilder
 
         private void addMarkers(ParserErrors p_errors) throws CoreException
         {
-            for (Iterator<ParserError> i = p_errors.getErrors(); i.hasNext(); )
+            for (ParserError error: p_errors.getErrors())
             {
-                markFile(i.next());
+                markFile(error);
             }
         }
 
