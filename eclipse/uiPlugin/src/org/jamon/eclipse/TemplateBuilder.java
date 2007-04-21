@@ -313,7 +313,7 @@ public class TemplateBuilder extends IncrementalProjectBuilder
         }
 
         private byte[] generateSource(
-          TemplateUnit templateUnit, IFile file, SourceGenerator sourceGenerator)
+          TemplateUnit templateUnit, SourceGenerator sourceGenerator)
           throws CoreException
           {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -382,12 +382,10 @@ public class TemplateBuilder extends IncrementalProjectBuilder
                     m_changed.add(path);
                     createSourceFile(
                         generateSource(templateUnit,
-                                       resources.getTemplate(),
                                        new ProxyGenerator(m_describer, templateUnit)),
                         resources.getProxy());
                     createSourceFile(
                         generateSource(templateUnit,
-                                       resources.getTemplate(),
                                        new ImplGenerator(m_describer, templateUnit)),
                         resources.getImpl());
                 }
