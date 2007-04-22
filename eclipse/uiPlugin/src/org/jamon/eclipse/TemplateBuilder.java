@@ -312,8 +312,7 @@ public class TemplateBuilder extends IncrementalProjectBuilder
             }
         }
 
-        private byte[] generateSource(
-          TemplateUnit templateUnit, SourceGenerator sourceGenerator)
+        private byte[] generateSource(SourceGenerator sourceGenerator)
           throws CoreException
           {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -381,12 +380,10 @@ public class TemplateBuilder extends IncrementalProjectBuilder
                         path.toString(), templateUnit.getTemplateDependencies());
                     m_changed.add(path);
                     createSourceFile(
-                        generateSource(templateUnit,
-                                       new ProxyGenerator(m_describer, templateUnit)),
+                        generateSource(new ProxyGenerator(m_describer, templateUnit)),
                         resources.getProxy());
                     createSourceFile(
-                        generateSource(templateUnit,
-                                       new ImplGenerator(m_describer, templateUnit)),
+                        generateSource(new ImplGenerator(m_describer, templateUnit)),
                         resources.getImpl());
                 }
             }
