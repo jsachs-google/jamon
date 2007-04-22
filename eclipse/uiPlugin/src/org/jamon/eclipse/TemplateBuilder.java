@@ -46,7 +46,6 @@ import org.jamon.codegen.ImplGenerator;
 import org.jamon.codegen.ProxyGenerator;
 import org.jamon.codegen.TemplateDescriber;
 import org.jamon.codegen.TemplateUnit;
-import org.jamon.util.StringUtils;
 
 
 public class TemplateBuilder extends IncrementalProjectBuilder
@@ -293,7 +292,7 @@ public class TemplateBuilder extends IncrementalProjectBuilder
             try
             {
                 return new Analyzer(
-                    "/" + StringUtils.filePathToTemplatePath(path.toString()),
+                    "/" + path.toString().replaceAll(File.separator, "/"),
                     m_describer)
                     .analyze();
             }
