@@ -42,7 +42,7 @@ import org.jamon.api.ParserError;
 import org.jamon.api.ParserErrors;
 import org.jamon.api.SourceGenerator;
 import org.jamon.api.TemplateParser;
-import org.jamon.codegen.TemplateParserImpl;
+import org.jamon.api.TemplateSource;
 
 public class TemplateBuilder extends IncrementalProjectBuilder
 {
@@ -183,7 +183,18 @@ public class TemplateBuilder extends IncrementalProjectBuilder
             m_templateDir = getNature().getTemplateSourceFolder();
             m_source = new ResourceTemplateSource(m_templateDir);
             ClassLoader classLoader = classLoader();
-            m_templateParser = new TemplateParserImpl(m_source, classLoader);
+            try
+            {
+                m_templateParser = TemplateParser.class.cast(
+                    classLoader
+                        .loadClass("org.jamon.codegen.TemplateParserImpl")
+                        .getConstructor(TemplateSource.class, ClassLoader.class)
+                        .newInstance(m_source, classLoader));
+            }
+            catch (Exception e)
+            {
+                throw EclipseUtils.createCoreException(e);
+            }
             m_outFolder = getNature().getTemplateOutputFolder();
             m_changed = new HashSet<IPath>();
         }
@@ -239,7 +250,7 @@ public class TemplateBuilder extends IncrementalProjectBuilder
         {
             List<URL> urls = classpathUrlsForProject(getJavaProject());
             // TODO: does this have the proper parent?
-            return new URLClassLoader(urls.toArray(new URL[urls.size()]));
+            return new URLClassLoader(urls.toArray(new URL[urls.size()]), getClass().getClassLoader());
         }
 
         private final ResourceTemplateSource m_source;
