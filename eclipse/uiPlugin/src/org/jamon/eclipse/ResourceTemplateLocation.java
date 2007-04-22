@@ -20,7 +20,7 @@
 package org.jamon.eclipse;
 
 import org.eclipse.core.resources.IFile;
-import org.jamon.TemplateLocation;
+import org.jamon.api.TemplateLocation;
 
 public class ResourceTemplateLocation implements TemplateLocation
 {

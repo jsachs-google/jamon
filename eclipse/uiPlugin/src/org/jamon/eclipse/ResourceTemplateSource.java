@@ -8,8 +8,8 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Path;
-import org.jamon.TemplateLocation;
 import org.jamon.TemplateSource;
+import org.jamon.api.TemplateLocation;
 
 public class ResourceTemplateSource implements TemplateSource {
 

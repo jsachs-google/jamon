@@ -38,8 +38,9 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.launching.JavaRuntime;
 import org.jamon.JamonRuntimeException;
-import org.jamon.ParserError;
 import org.jamon.ParserErrors;
+import org.jamon.ParserErrorsImpl;
+import org.jamon.api.ParserError;
 import org.jamon.codegen.Analyzer;
 import org.jamon.codegen.ImplGenerator;
 import org.jamon.codegen.ProxyGenerator;
@@ -297,13 +298,13 @@ public class TemplateBuilder extends IncrementalProjectBuilder
                     m_describer)
                     .analyze();
             }
-            catch (ParserErrors e)
-            {
-                addMarkers(e);
-                return null;
-            }
             catch (IOException e)
             {
+                if ( e instanceof ParserErrors) {
+                    ParserErrors parserError = (ParserErrors) e;
+                    addMarkers(parserError);
+                    return null;
+                }
                 throw EclipseUtils.createCoreException(e);
             }
             catch (JamonRuntimeException e)
@@ -321,7 +322,7 @@ public class TemplateBuilder extends IncrementalProjectBuilder
                 sourceGenerator.generateSource(baos);
                 return baos.toByteArray();
             }
-            catch (ParserErrors e)
+            catch (ParserErrorsImpl e)
             {
                 addMarkers(e);
                 return null;
