@@ -33,8 +33,7 @@ import org.eclipse.core.runtime.CoreException;
 
 public class JavaMarkerListener implements IResourceChangeListener
 {
-    public JavaMarkerListener(final IFolder p_templateFolder,
-                               final IFolder p_generatedSourcesFolder)
+    public JavaMarkerListener(final IFolder p_generatedSourcesFolder)
     {
         m_generatedSourcesFolder = p_generatedSourcesFolder;
     }

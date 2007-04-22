@@ -32,11 +32,6 @@ public class PreferencesStyleProvider implements StyleProvider
         return m_styles.get(p_syntaxType);
     }
 
-    public void reloadStyle(SyntaxType p_syntaxType)
-    {
-        // TODO Auto-generated method stub
-
-    }
     public synchronized void reloadStyles()
     {
         for (Map.Entry<SyntaxType, Style> entry: m_styles.entrySet())
