@@ -37,16 +37,12 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.launching.JavaRuntime;
-import org.jamon.JamonRuntimeException;
-import org.jamon.ParserErrors;
+import org.jamon.api.ParsedTemplate;
 import org.jamon.api.ParserError;
+import org.jamon.api.ParserErrors;
 import org.jamon.api.SourceGenerator;
-import org.jamon.codegen.Analyzer;
-import org.jamon.codegen.ImplGenerator;
-import org.jamon.codegen.ProxyGenerator;
-import org.jamon.codegen.TemplateDescriber;
-import org.jamon.codegen.TemplateUnit;
-
+import org.jamon.api.TemplateParser;
+import org.jamon.codegen.TemplateParserImpl;
 
 public class TemplateBuilder extends IncrementalProjectBuilder
 {
@@ -186,7 +182,8 @@ public class TemplateBuilder extends IncrementalProjectBuilder
         {
             m_templateDir = getNature().getTemplateSourceFolder();
             m_source = new ResourceTemplateSource(m_templateDir);
-            m_describer = new TemplateDescriber(m_source, classLoader());
+            ClassLoader classLoader = classLoader();
+            m_templateParser = new TemplateParserImpl(m_source, classLoader);
             m_outFolder = getNature().getTemplateOutputFolder();
             m_changed = new HashSet<IPath>();
         }
@@ -246,7 +243,7 @@ public class TemplateBuilder extends IncrementalProjectBuilder
         }
 
         private final ResourceTemplateSource m_source;
-        private final TemplateDescriber m_describer;
+        private final TemplateParser m_templateParser;
         private final IFolder m_templateDir;
         private final IFolder m_outFolder;
         private final Set<IPath> m_changed;
@@ -286,26 +283,20 @@ public class TemplateBuilder extends IncrementalProjectBuilder
             }
         }
 
-        private TemplateUnit analyze(IPath path, IFile file) throws CoreException
+        private ParsedTemplate parse(IPath path, IFile file) throws CoreException
         {
             file.deleteMarkers(JamonProjectPlugin.getParentMarkerType(), true, IResource.DEPTH_ZERO);
             try
             {
-                return new Analyzer(
-                    "/" + path.toString().replaceAll(File.separator, "/"),
-                    m_describer)
-                    .analyze();
+                return m_templateParser.parseTemplate(
+                    "/" + path.toString().replaceAll(File.separator, "/"));
             }
-            catch (IOException e)
+            catch (Exception e)
             {
                 if (e instanceof ParserErrors) {
                     addMarkers((ParserErrors) e);
                     return null;
                 }
-                throw EclipseUtils.createCoreException(e);
-            }
-            catch (JamonRuntimeException e)
-            {
                 throw EclipseUtils.createCoreException(e);
             }
         }
@@ -319,16 +310,12 @@ public class TemplateBuilder extends IncrementalProjectBuilder
                 sourceGenerator.generateSource(baos);
                 return baos.toByteArray();
             }
-            catch (IOException e)
+            catch (Exception e)
             {
                 if (e instanceof ParserErrors) {
                     addMarkers((ParserErrors) e);
                     return null;
                 }
-                throw EclipseUtils.createCoreException(e);
-            }
-            catch (JamonRuntimeException e)
-            {
                 throw EclipseUtils.createCoreException(e);
             }
         }
@@ -369,18 +356,18 @@ public class TemplateBuilder extends IncrementalProjectBuilder
             if (resources != null)
             {
                 resources.clearGeneratedResources();
-                TemplateUnit templateUnit = analyze(resources.getPath(), resources.getTemplate());
-                if (templateUnit != null)
+                ParsedTemplate parsedTemplate = parse(resources.getPath(), resources.getTemplate());
+                if (parsedTemplate != null)
                 {
                     IPath path = resources.getPath().makeAbsolute();
                     m_dependencies.setCalledBy(
-                        path.toString(), templateUnit.getTemplateDependencies());
+                        path.toString(), parsedTemplate.getTemplateDependencies());
                     m_changed.add(path);
                     createSourceFile(
-                        generateSource(new ProxyGenerator(m_describer, templateUnit)),
+                        generateSource(parsedTemplate.getProxyGenerator()),
                         resources.getProxy());
                     createSourceFile(
-                        generateSource(new ImplGenerator(m_describer, templateUnit)),
+                        generateSource(parsedTemplate.getImplGenerator()),
                         resources.getImpl());
                 }
             }
