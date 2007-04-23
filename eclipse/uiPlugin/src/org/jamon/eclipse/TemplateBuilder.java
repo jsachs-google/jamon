@@ -299,8 +299,7 @@ public class TemplateBuilder extends IncrementalProjectBuilder
             file.deleteMarkers(JamonProjectPlugin.getParentMarkerType(), true, IResource.DEPTH_ZERO);
             try
             {
-                return m_templateParser.parseTemplate(
-                    "/" + path.toString().replaceAll(File.separator, "/"));
+                return m_templateParser.parseTemplate("/" + path);
             }
             catch (Exception e)
             {
