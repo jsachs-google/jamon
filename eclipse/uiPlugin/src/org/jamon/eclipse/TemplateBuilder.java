@@ -13,7 +13,6 @@ import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -159,9 +158,8 @@ public class TemplateBuilder extends IncrementalProjectBuilder
         delta.accept(visitor);
         @SuppressWarnings("unchecked") Set<IPath> changed = visitor.getChanged();
         IFolder templateDir = getNature().getTemplateSourceFolder();
-        for (Iterator<IPath> i = changed.iterator(); i.hasNext(); )
+        for (IPath s: changed)
         {
-            IPath s = i.next();
             for (String dependency : m_dependencies.getDependenciesOf(s.toString()))
             {
                 visitor.visit(templateDir.findMember(
