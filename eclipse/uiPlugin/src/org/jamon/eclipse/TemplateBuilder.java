@@ -96,7 +96,9 @@ public class TemplateBuilder extends IncrementalProjectBuilder
     }
 
     @Override
-    protected IProject[] build(int kind, @SuppressWarnings("unchecked") Map args, IProgressMonitor monitor) throws CoreException
+    protected IProject[] build(
+        int kind, @SuppressWarnings("unchecked") Map args, IProgressMonitor monitor)
+    throws CoreException
     {
         if (kind == CLEAN_BUILD || kind == FULL_BUILD)
         {
@@ -112,18 +114,18 @@ public class TemplateBuilder extends IncrementalProjectBuilder
         }
         if (kind == IncrementalProjectBuilder.FULL_BUILD || m_dependencies == null)
         {
-            fullBuild(monitor);
+            fullBuild();
         }
         else
         {
             IResourceDelta delta = getDelta(getProject());
             if (delta == null)
             {
-                fullBuild(monitor);
+                fullBuild();
             }
             else
             {
-                incrementalBuild(delta, monitor);
+                incrementalBuild(delta);
             }
         }
         saveDependencies();
@@ -141,7 +143,7 @@ public class TemplateBuilder extends IncrementalProjectBuilder
         }
      }
 
-    private synchronized void fullBuild(IProgressMonitor monitor) throws CoreException
+    private synchronized void fullBuild() throws CoreException
     {
         m_dependencies = new TemplateDependencies();
         getProject().accept(new BuildVisitor());
@@ -152,7 +154,7 @@ public class TemplateBuilder extends IncrementalProjectBuilder
         return (JamonNature) getProject().getNature(JamonNature.natureId());
     }
 
-    private synchronized void incrementalBuild(IResourceDelta delta, IProgressMonitor monitor) throws CoreException
+    private synchronized void incrementalBuild(IResourceDelta delta) throws CoreException
     {
         BuildVisitor visitor = new BuildVisitor();
         delta.accept(visitor);
