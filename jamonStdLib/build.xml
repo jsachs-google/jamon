@@ -24,6 +24,7 @@
   <import file="${jamon.core.dir}/build.version.xml"/>
 
   <property name="java.lib.jamon" value="${jamon.core.dir}/jamon-${jamon.version}.jar"/>
+  <property name="java.lib.jamon.runtime" value="${jamon.core.dir}/jamon-runtime-${jamon.version}.jar"/>
   <property name="java.lib.jamon-anttask" value="${jamon.core.dir}/jamon-anttask-${jamon.anttask.version}.jar"/>
   <property name="java.lib.junit" value="/usr/local/share/java/junit.jar" />
 
@@ -43,7 +44,7 @@
     </dependset>
     <taskdef name="jamon"
              classname="org.jamon.ant.JamonTask"
-             classpath="${java.lib.jamon-anttask}:${java.lib.jamon}" />
+             classpath="${java.lib.jamon-anttask}:${java.lib.jamon}:${java.lib.jamon.runtime}" />
     <jamon destdir="${build.src.dir}" srcdir="templates"/>
   </target>
 
@@ -53,7 +54,7 @@
     <mkdir dir="${classes.dir}"/>
     <javac destdir="${classes.dir}"
            debug="true"
-           classpath="${java.lib.jamon}">
+      classpath="${java.lib.jamon}:${java.lib.jamon.runtime}">
       <src path="${src.dir}"/>
       <src path="${build.src.dir}"/>
     </javac>
@@ -67,7 +68,7 @@
     <mkdir dir="${build.src.dir}"/>
     <taskdef name="jamontest"
              classname="org.jamon.ant.JamonTask"
-             classpath="${java.lib.jamon-anttask}:${java.lib.jamon}:${classes.dir}"/>
+      classpath="${java.lib.jamon-anttask}:${java.lib.jamon}:${java.lib.jamon.runtime}:${classes.dir}"/>
     <jamontest destdir="${tests.build.src.dir}" srcdir="${tests.templates.dir}"/>
   </target>
 
@@ -82,6 +83,7 @@
       <classpath>
         <pathelement location="${classes.dir}"/>
         <pathelement location="${java.lib.jamon}"/>
+        <pathelement location="${java.lib.jamon.runtime}"/>
         <pathelement location="${java.lib.junit}"/>
       </classpath>
     </javac>
@@ -98,6 +100,7 @@
       <classpath>
         <pathelement location="${tests.classes.dir}"/>
         <pathelement location="${java.lib.jamon}"/>
+        <pathelement location="${java.lib.jamon.runtime}"/>
         <pathelement location="${classes.dir}"/>
         <pathelement location="${java.lib.junit}"/>
       </classpath>
@@ -111,19 +114,6 @@
   </target>
 
 
-  <target name="cvsignores">
-    <echo file=".cvsignore">
-.cvsignore
-build
-build.properties
-${jarfile}
-</echo>
-    <echo file="tests/.cvsignore">
-build
-.cvsignore
-</echo>
-  </target>
-
   <target name="clean">
     <delete dir="${build.dir}"/>
     <delete dir="${tests.build.dir}"/>
@@ -131,8 +121,6 @@ build
   </target>
 
   <target name="spotless" depends="clean">
-    <delete file=".cvsignore" />
-    <delete file="tests/.cvsignore"/>
   </target>
 
   <target name="jar" depends="test,manifest">
