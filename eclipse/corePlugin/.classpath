@@ -2,5 +2,8 @@
 <classpath>
 	<classpathentry exported="true" kind="lib" path="jamon-api-2.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/jamon"/>
+	<classpathentry exported="true" kind="lib" path="/jamon/core/build/classes"/>
+	<classpathentry exported="true" kind="lib" path="/jamon/runtime/build/classes"/>
 	<classpathentry kind="output" path=""/>
 </classpath>
