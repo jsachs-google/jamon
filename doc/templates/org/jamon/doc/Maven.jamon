@@ -2,6 +2,7 @@
 <%class>
   protected Section currentSection() { return Section.DOC_MAVEN; }
 </%class>
+<%def _version>2.2.2.0</%def>
 <%override title>Using Jamon with Maven</%override>
 
 <h3>Overview</h3>
@@ -75,7 +76,7 @@ to be configured.
     <plugin>
       <groupId>org.jamon</groupId>
       <artifactId>maven-jamon-plugin</artifactId>
-      <version>2.2.1.0</version>
+      <version><& _version &></version>
       <executions>
         <execution>
           <id>jamon-generate-sources</id>
@@ -132,7 +133,7 @@ section above. For example, to root your template sources at
     <plugin>
       <groupId>org.jamon</groupId>
       <artifactId>maven-jamon-plugin</artifactId>
-      <version>2.2.1.0</version>
+      <version><& _version &></version>
       <executions>
         <execution>
           <id>jamon-generate-sources</id>
@@ -161,3 +162,4 @@ section above. For example, to root your template sources at
     </plugins>
 </build>
 </&></pre>
+

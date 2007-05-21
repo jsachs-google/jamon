@@ -5,6 +5,19 @@
 </%class>
 
 <h2><& title &></h2>
+<a name="2.2.2"/><h3>Jamon Changes from 2.2.1 to 2.2.2</h3></a>
+<ul>
+  <&| change &>
+    Fix errors occurring in Eclipse editor in the presence of multiline
+    <code>&lt;%doc&gt;</code> and <code>&lt;&amp; call &amp;&gt;</code> tags.
+  </&>
+
+  <&| change &>
+    Fix bug where "null" rather than "" was being emitted for null
+    objects using the standard emitter.
+  </&>
+</ul>
+
 <a name="2.2.1"/><h3>Jamon Changes from 2.2 to 2.2.1</h3></a>
 <ul>
   <&| change &>
