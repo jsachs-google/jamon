@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.jamon.RecompilingTemplateManager;
+import org.jamon.compiler.RecompilingTemplateManager;
 import org.jamon.TemplateManagerSource;
 
 public final class HelloServlet

@@ -260,8 +260,8 @@
     </target>
 
     <target name="war" depends="doc">
-        <ant dir="${www.dir}"/>
-        <ant dir="${www.dir}/example2"/>
+        <ant dir="${www.dir}" inheritrefs="true"/>
+        <ant dir="${www.dir}/example2" inheritrefs="true"/>
     </target>
 
     <target name="zip" depends="doc">
