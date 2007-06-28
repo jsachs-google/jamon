@@ -31,6 +31,11 @@
             <artifactId>servlet-api</artifactId>
             <version>2.4</version>
         </dependency>
+        <dependency>
+            <groupId>ant-contrib</groupId>
+            <artifactId>ant-contrib</artifactId>
+            <version>1.0b2</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -43,9 +48,10 @@
                         <id>integration</id>
                         <configuration>
                             <tasks>
-                                <ant dir="." inheritRefs="true">
+                                <ant dir="." inheritRefs="true" inheritAll="true">
                                     <property name="basedir" value="${basedir}"/>
                                     <property name="ignore.svn" value="true"/>
+                                    <property name="cp" refid="maven.runtime.classpath"/>
                                     <target name="stage"/>
                                 </ant>
                             </tasks>
@@ -55,8 +61,8 @@
                         </goals>
                     </execution>
                 </executions>
+                <!--
                 <dependencies>
-                    <!-- JCR-661: Plugin dependencies are inherited -->
                     <dependency>
                         <groupId>sun</groupId>
                         <artifactId>tools</artifactId>
@@ -65,7 +71,7 @@
                         <systemPath>${toolsJarPath}</systemPath>
                     </dependency>
                 </dependencies>
-
+-->
             </plugin>
 
         </plugins>

@@ -21,20 +21,24 @@
     <property name="tutorial.samples.dir" value="${samples.dir}/tutorial"/>
     <property name="overview.samples.dir" value="${samples.dir}/overview"/>
     <property name="classes.dir" value="${www.dir}/classes"/>
+    <!--
     <property name="java.lib.jamon" location="${jamon.dir}/jamon-${jamon.version}.jar"/>
     <property name="java.lib.jamon.anttask" location="${jamon.dir}/jamon-anttask-${jamon.anttask.version}.jar"/>
     <property name="java.lib.jamon.stdlib" location="../jamonStdLib/jamon-stdlib.jar"/>
+    -->
     <property name="java.lib.diff" value="lib/diff.jar"/>
+
     <property name="invoker.class" value="org.jamon.InvokerTool"/>
 
     <property name="web.inf.dir" value="./WEB-INF"/>
     <property name="build.classes.dir" value="${web.inf.dir}/classes"/>
     <property name="src.dir" value="src"/>
 
+    <!--
     <property name="tomcat.home" value="${env.TOMCAT_HOME}"/>
     <property name="tomcat.common.lib" value="${tomcat.home}/common/lib"/>
     <property name="java.lib.servlet" value="${tomcat.common.lib}/servlet-api.jar"/>
-
+-->
     <property name="invoker.compiler" value="${build.compiler}"/>
 
     <property name="com.sun.tools.jar" value="${java.home}/../lib/tools.jar"/>
@@ -46,6 +50,13 @@
     <fileset id="servlet-build-files" dir="${build.classes.dir}"/>
 
     <target name="init">
+        <echo>${cp}</echo>
+        <taskdef resource="net/sf/antcontrib/antlib.xml" classpath="${cp}"/>
+        <path id="cp">
+            <path path="${cp}"></path>
+        </path>
+        <pathtofileset name="foo" pathrefid="cp" dir="${user.home}"/>
+        
         <dirname property="this.dir" file="build.xml"/>
         <mkdir dir="${doc.dir}"/>
         <mkdir dir="${www.dir}"/>
@@ -316,7 +327,9 @@
         <mkdir dir="${stage.dir}"/>
         <copy todir="${stage.dir}">
             <fileset dir="${doc.dir}"/>
+            <!--
             <fileset dir="../jamon/core/build" includes="javadoc/**"/>
+            -->
         </copy>
     </target>
 

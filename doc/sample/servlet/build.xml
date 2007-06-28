@@ -22,9 +22,11 @@
 
     <target name="war" depends="compile">
         <mkdir dir="lib"/>
-        <copy file="${java.lib.jamon}" todir="lib"/>
-        <copy file="${java.lib.jamon.stdlib}" todir="lib"/>
-        <copy file="${java.lib.jamon.anttask}" todir="lib"/>
+        <copy todir="lib" verbose="true" flatten="true">
+            <fileset refid="foo">
+                <!-- <include name="**/jamon-*-*.jar"/> -->
+            </fileset>
+        </copy>
         <war destfile="foobar.war" webxml="web.xml">
             <classes dir="${classes.dir}"/>
             <lib dir="lib"/>
