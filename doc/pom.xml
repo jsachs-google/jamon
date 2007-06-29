@@ -51,6 +51,7 @@
                                 <ant dir="." inheritRefs="true" inheritAll="true">
                                     <property name="basedir" value="${basedir}"/>
                                     <property name="ignore.svn" value="true"/>
+                                    <property name="user.home" value="${user.home}"/>
                                     <property name="cp" refid="maven.runtime.classpath"/>
                                     <target name="stage"/>
                                 </ant>

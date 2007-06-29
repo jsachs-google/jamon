@@ -53,10 +53,10 @@
         <echo>${cp}</echo>
         <taskdef resource="net/sf/antcontrib/antlib.xml" classpath="${cp}"/>
         <path id="cp">
-            <path path="${cp}"></path>
+            <path path="${cp}"/>
         </path>
         <pathtofileset name="foo" pathrefid="cp" dir="${user.home}"/>
-        
+
         <dirname property="this.dir" file="build.xml"/>
         <mkdir dir="${doc.dir}"/>
         <mkdir dir="${www.dir}"/>
