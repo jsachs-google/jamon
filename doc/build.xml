@@ -55,8 +55,9 @@
         <path id="cp">
             <path path="${cp}"/>
         </path>
-        <pathtofileset name="foo" pathrefid="cp" dir="${user.home}"/>
-
+        <pathtofileset name="jamon.libs" pathrefid="cp" dir="${user.home}"/>
+        <pathtofileset name="jamon.dist.libs" pathrefid="maven.test.classpath" dir="${user.home}"/>
+        
         <dirname property="this.dir" file="build.xml"/>
         <mkdir dir="${doc.dir}"/>
         <mkdir dir="${www.dir}"/>
@@ -324,6 +325,18 @@
     </target>
 
     <target name="stage" depends="build">
+        <copy todir="${doc.dir}" flatten="true" verbose="true">
+            <fileset refid="jamon.dist.libs"/>
+            <mapper>
+                <chainedmapper>
+                    <flattenmapper/>
+                    <globmapper from="jamon-*.jar" to="jamon-*.jar"/>
+                </chainedmapper>
+            </mapper>
+        </copy>
+    </target>
+    
+    <target name="oldstage" depends="build">
         <mkdir dir="${stage.dir}"/>
         <copy todir="${stage.dir}">
             <fileset dir="${doc.dir}"/>

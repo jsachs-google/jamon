@@ -27,6 +27,11 @@
             <version>SNAPSHOT</version>
         </dependency>
         <dependency>
+            <groupId>org.jamon</groupId>
+            <artifactId>jamon-junit</artifactId>
+            <version>SNAPSHOT</version>
+        </dependency>
+        <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
             <version>2.4</version>
@@ -44,8 +49,8 @@
                 <artifactId>maven-antrun-plugin</artifactId>
                 <executions>
                     <execution>
-                        <phase>generate-sources</phase>
-                        <id>integration</id>
+                        <phase>test</phase>
+                        <id>gendocs</id>
                         <configuration>
                             <tasks>
                                 <ant dir="." inheritRefs="true" inheritAll="true">
@@ -53,6 +58,7 @@
                                     <property name="ignore.svn" value="true"/>
                                     <property name="user.home" value="${user.home}"/>
                                     <property name="cp" refid="maven.runtime.classpath"/>
+                                    <property name="distcp" refid="maven.test.classpath"/>
                                     <target name="stage"/>
                                 </ant>
                             </tasks>
