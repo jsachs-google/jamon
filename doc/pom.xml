@@ -13,7 +13,9 @@
     <packaging>jar</packaging>
     <description>Jamon site documentation</description>
     <scm>
-        <developerConnection>scm:svn:https://jamon.svn.sourceforge.net/svnroot/jamon/trunk/jamon/doc</developerConnection>
+        <url>http://jamon.svn.sourceforge.net/viewvc/jamon/trunk/doc/</url>
+        <connection>scm:svn:https://jamon.svn.sourceforge.net/svnroot/jamon/trunk/doc/</connection>
+        <developerConnection>scm:svn:https://jamon.svn.sourceforge.net/svnroot/jamon/trunk/doc/</developerConnection>
     </scm>
     <dependencies>
         <dependency>
