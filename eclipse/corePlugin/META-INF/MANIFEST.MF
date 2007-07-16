@@ -1,9 +1,0 @@
-Manifest-Version: 1.0
-Bundle-Name: JamonPlugin Plug-in
-Bundle-SymbolicName: org.jamon
-Bundle-Version: 2.3
-Bundle-Localization: plugin
-Eclipse-LazyStart: true
-Bundle-ClassPath: jamon-api-2.jar
-Bundle-Vendor: jamon.org
-Provide-Package: org.jamon.api

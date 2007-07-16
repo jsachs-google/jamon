@@ -2,7 +2,7 @@
 <feature
       id="org.jamon.feature"
       label="jamon"
-      version="2.2.1.0">
+      version="2.3.0.0">
 
    <description url="http://www.jamon.org/">
       Feature to assist in working with jamon templates in eclipse
@@ -29,12 +29,6 @@ created by Jay Sachs and Ian Robertson are Copyright (C) 2003-2007
 Jay Sachs and Ian Robertson.  All Rights Reserved.
 Contributor(s):
    </license>
-
-   <plugin
-         id="org.jamon"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
 
    <plugin
          id="org.jamon.project"

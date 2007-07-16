@@ -15,11 +15,9 @@
     <extension
           point="org.eclipse.ui.propertyPages">
        <page
-             adaptable="true"
              class="org.jamon.eclipse.JamonProjectPropertyPage"
-             id="org.jamon.project.JamonProjectPropertyPage"
-             name="Jamon"
-             objectClass="org.eclipse.core.resources.IProject">
+             id="org.jamon.eclipse.JamonProjectPropertyPage"
+             name="Jamon">
           <filter
                 name="nature"
                 value="org.eclipse.jdt.core.javanature"/>
