@@ -108,7 +108,7 @@ public class CallScanner extends AbstractScanner
       }
       tokenLength = offset - tokenOffset;
       sawPath = true;
-      javaScanner.setRange(document, offset, limit - offset - 2);
+      javaScanner.setRange(document, offset, Math.max(limit - offset - 2, 0));
       return m_pathToken;
     }
   }
