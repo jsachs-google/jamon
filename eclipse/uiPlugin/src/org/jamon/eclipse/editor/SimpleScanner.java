@@ -3,7 +3,6 @@ package org.jamon.eclipse.editor;
 import org.eclipse.jface.text.TextAttribute;
 import org.eclipse.jface.text.rules.IToken;
 import org.eclipse.jface.text.rules.Token;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.ui.PlatformUI;
 import org.jamon.eclipse.editor.preferences.Style;
@@ -54,20 +53,6 @@ public class SimpleScanner extends AbstractScanner
     private IToken tagToken;
     private JamonJavaCodeScanner m_javaScanner;
     protected final SyntaxType m_syntaxType;
-
-    @Deprecated protected SimpleScanner(String p_openTag, String p_closeTag, String propertyBase)
-    {
-        super(null);
-        open = p_openTag.toCharArray();
-        close = p_closeTag.toCharArray();
-        RGB bgColor = new RGB(255, 255, 255); // bg(propertyBase);
-        tagToken = new Token(new TextAttribute(
-            JamonColorProvider.instance().getColor(fg(propertyBase)),
-            JamonColorProvider.instance().getColor(bgColor),
-            SWT.NORMAL));
-        m_javaScanner  = new JamonJavaCodeScanner(JamonColorProvider.instance(), bgColor);
-        m_syntaxType = null;
-    }
 
     protected SimpleScanner(
         String p_openTag, String p_closeTag, SyntaxType p_syntaxType, StyleProvider p_styleProvider)
