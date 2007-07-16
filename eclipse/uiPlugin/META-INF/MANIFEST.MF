@@ -5,8 +5,7 @@ Bundle-Version: 2.3.0.0
 Bundle-ClassPath: lib/jamon-api-2.3.0.jar,
  lib/jamon-processor-2.3.0.jar,
  lib/jamon-runtime-2.3.0.jar,
- bin/,
- .
+ bin/
 Bundle-Activator: org.jamon.eclipse.JamonProjectPlugin
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
