@@ -64,7 +64,7 @@
         <site>
             <id>jamon</id>
             <name>Jamon</name>
-            <url>scpexe://jamon@maven.jamon.org/home/jamon/maven2-projects/${artifactId}/${version}</url>
+            <url>scpexe://jamon@maven.jamon.org/home/jamon/www-stg</url>
         </site>
     </distributionManagement>
     <repositories>
@@ -74,7 +74,7 @@
             <url>http://maven.jamon.org/</url>
         </repository>
     </repositories>
-    
+
     <developers>
         <developer>
             <name>Jay Sachs</name>
@@ -87,7 +87,7 @@
             <email>ian@red-bean.com</email>
         </developer>
     </developers>
-    
+
     <dependencies>
         <dependency>
             <groupId>org.jamon</groupId>
