@@ -57,7 +57,7 @@
         </path>
         <pathtofileset name="jamon.libs" pathrefid="cp" dir="${user.home}"/>
         <pathtofileset name="jamon.dist.libs" pathrefid="maven.test.classpath" dir="${user.home}"/>
-        
+
         <dirname property="this.dir" file="build.xml"/>
         <mkdir dir="${doc.dir}"/>
         <mkdir dir="${www.dir}"/>
@@ -335,7 +335,7 @@
             </mapper>
         </copy>
     </target>
-    
+
     <target name="oldstage" depends="build">
         <mkdir dir="${stage.dir}"/>
         <copy todir="${stage.dir}">

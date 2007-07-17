@@ -21,17 +21,17 @@
         <dependency>
             <groupId>org.jamon</groupId>
             <artifactId>jamon-anttask</artifactId>
-            <version>SNAPSHOT</version>
+            <version>2.3.0</version>
         </dependency>
         <dependency>
             <groupId>org.jamon</groupId>
             <artifactId>jamon-stdlib</artifactId>
-            <version>SNAPSHOT</version>
+            <version>2.3.0</version>
         </dependency>
         <dependency>
             <groupId>org.jamon</groupId>
             <artifactId>jamon-junit</artifactId>
-            <version>SNAPSHOT</version>
+            <version>2.3.0</version>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -45,13 +45,18 @@
         </dependency>
     </dependencies>
     <build>
+        <resources>
+            <resource>
+                <directory>target/www</directory>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <inherited>true</inherited>
                 <artifactId>maven-antrun-plugin</artifactId>
                 <executions>
                     <execution>
-                        <phase>test</phase>
+                        <phase>generate-resources</phase>
                         <id>gendocs</id>
                         <configuration>
                             <tasks>
@@ -82,7 +87,6 @@
                 </dependencies>
 -->
             </plugin>
-
         </plugins>
     </build>
     <profiles>
