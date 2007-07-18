@@ -179,7 +179,7 @@
                 <executions>
                     <execution>
                         <id>sitejavadoc</id>
-                        <phase>site</phase>
+                        <phase>generate-resources</phase>
                         <goals>
                             <goal>unpack</goal>
                         </goals>
@@ -192,7 +192,7 @@
                                     <classifier>javadoc</classifier>
                                     <type>jar</type>
                                     <overWrite>true</overWrite>
-                                    <outputDirectory>target/site/javadoc</outputDirectory>
+                                    <outputDirectory>target/www/javadoc</outputDirectory>
                                 </artifactItem>
                             </artifactItems>
                         </configuration>
