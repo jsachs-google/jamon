@@ -12,6 +12,7 @@
     CLASS_CODE("Class code", "ClassCode"),
     COMMENTS("Comments", "Comments"),
     IMPORTS("Imports", "Imports"),
+    IMPLEMENTS("Implements", "Implements"),
     ANNOTATIONS("Annotations", "Annotations"),
     ARGUMENTS("Arguments", "Arguments"),
     INVOKING_OTHER_TEMPLATES("Invoking other templates", "InvokingOtherTemplates"),
@@ -302,6 +303,33 @@ This component has been accessed <% pageViews++ %> times.
   org.myorg.myapp.data.*;
   static org.myorg.myapp.Constants.*;
 </%import></%LITERAL></&>
+
+  <& subsection: SubSection.IMPLEMENTS &>
+
+    Templates can be declared to implement interfaces through use of the
+    <code><% "<%implements ... %>" %></code> tag. It is not possible to 
+    add arbitrary public methods to generated templates, so the use of
+    this is practically limited to capturing methods such as 
+    <code>setFoo()</code> and <code>makeRenderer()</code>.
+    <p>
+    For example, given
+    <&| _Template &>
+interface RenderableWithInt {
+  Renderer makeRenderer(int i);
+}</&>
+    it's possible to declare <code>MyTemplate.jamon</code> with
+    <&| _Template &>
+<%LITERAL><%implements>
+  RenderableWithInt;
+</%implements>
+<%args>
+  int i;
+</%args>
+</%LITERAL></&>
+    and then use it like
+<&| _Template &>
+RenderableWithInt t = new MyTemplate();
+i.makeRenderer(3);</&>
 
   <& subsection: SubSection.ANNOTATIONS &>
 
