@@ -14,6 +14,12 @@
     minimal classes needed at runtime. 
   </&>
 
+  <&| change; incompatible=true &>
+    Maven plugin changes: renamed to jamon-maven-plugin.
+    Automatically adds generated classes to compile roots.
+    Supports generating templates in test phase as well.
+  </&>
+
   <&| change &>
     Fix errors occurring in Eclipse editor in the presence of malformed
     nested <code>&lt;&amp; call &amp;&gt;</code> tags. (#1746242)
