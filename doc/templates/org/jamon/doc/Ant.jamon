@@ -34,10 +34,15 @@
   following in the <code>build.xml</code> file:
 
 <pre class="webxml"><&| /org/jamon/escape/Html &>
-  <property name="java.lib.jamon" value="/path/to/jamon.jar" />
+  <path id="jamontaskcp">
+    <pathelement file="/path/to/jamon-runtime.jar"/>
+    <pathelement file="/path/to/jamon-api.jar"/>
+    <pathelement file="/path/to/jamon-procesor.jar"/>
+    <pathelement file="/path/to/jamon-anttask.jar"/>
+  </path>
   <taskdef name="jamon"
            classname="org.jamon.ant.JamonTask"
-           classpath="${java.lib.jamon}" />
+           classpathref="${jamontaskcp}"/>
 </&></pre>
 
 To generate the Java sources, include the following target:
@@ -52,7 +57,7 @@ To compile the project:
 
 <pre class="webxml"><&| /org/jamon/escape/Html &>
   <target name="compile"  depends="templates">
-    <javac destdir="classes" classpath="${java.lib.jamon}" >
+    <javac destdir="classes" classpath="/path/to/jamon-runtime.jar" >
       <src path="src"/>
       <src path="tempsrc"/>
     </javac>

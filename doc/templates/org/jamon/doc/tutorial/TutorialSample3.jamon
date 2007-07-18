@@ -104,7 +104,7 @@ Create a Jamon template
 
 <li> Set the classpath, process the template, compile, and run the program:
 <pre class="tty">
-    export CLASSPATH=.:/path/to/jamon.jar
+    export CLASSPATH=.:/path/to/jamon-runtime.jar:/path/to/jamon-api.jar:/path/to/jamon-processor.jar
     java org.jamon.TemplateProcessor --destDir=. AccountSummaryTemplate
     javac AccountSummaryTut3.java AccountSummaryTemplate*.java
     java AccountSummaryTut3

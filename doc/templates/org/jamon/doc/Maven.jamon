@@ -73,29 +73,19 @@ to be configured.
 <build>
     <plugins>
         ...
-    <plugin>
-      <groupId>org.jamon</groupId>
-      <artifactId>maven-jamon-plugin</artifactId>
-      <version><& _version &></version>
-      <executions>
-        <execution>
-          <id>jamon-generate-sources</id>
-          <phase>generate-sources</phase>
-          <goals>
-            <goal>jamon:generate</goal>
-          </goals>
-          <configuration/>
-        </execution>
-        <execution>
-          <id>jamon-clean</id>
-          <phase>clean</phase>
-          <goals>
-            <goal>jamon:clean</goal>
-          </goals>
-          <configuration/>
-        </execution>
-      </executions>
-    </plugin>
+      <plugin>
+        <groupId>org.jamon</groupId>
+        <artifactId>jamon-maven-plugin</artifactId>
+        <version><& _version &></version>
+        <executions>
+          <execution>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>translate</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
         ...
     </plugins>
 </build>
@@ -103,17 +93,25 @@ to be configured.
 
 <h4>4. (Optional) Hook into Eclipse</h4>
 
-Add the following to the Jamon <code>plugin</code> section:
+(Yes, this is far from optimal.)
+
+Add the following to the <code>plugins</code> section:
 
 <pre class="ant"><&| /org/jamon/escape/Html &>
-        <execution>
-          <id>jamon-generate-eclipse</id>
-          <phase>generate-resources</phase>
-          <goals>
-            <goal>jamon:eclipse</goal>
-          </goals>
-          <configuration/>
-        </execution>
+  <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-eclipse-plugin</artifactId>
+    <configuration>
+      <additionalProjectnatures>
+        <projectnature>org.jamon.project.jamonnature</projectnature>
+      </additionalProjectnatures>
+      <buildcommands>
+        <buildcommand>org.jamon.project.templateBuilder</buildcommand>
+        <buildcommand>org.eclipse.jdt.core.javabuilder</buildcommand>
+        <buildcommand>org.jamon.project.markerUpdater</buildcommand>
+      </buildcommands>
+    </configuration>
+  </plugin>
 </&></pre>
 
 <h3>Customizing the plugin</h3>
@@ -130,34 +128,23 @@ section above. For example, to root your template sources at
 <build>
     <plugins>
         ...
-    <plugin>
-      <groupId>org.jamon</groupId>
-      <artifactId>maven-jamon-plugin</artifactId>
-      <version><& _version &></version>
-      <executions>
-        <execution>
-          <id>jamon-generate-sources</id>
-          <phase>generate-sources</phase>
-          <goals>
-            <goal>jamon:generate</goal>
-          </goals>
-          <configuration>
-             <jamon.template.src>src/main/templates</jamon.template.src>
-             <jamon.template.output>src/gen</jamon.template.output>
-          </configuration>
-        </execution>
-        <execution>
-          <id>jamon-clean</id>
-          <phase>clean</phase>
-          <goals>
-            <goal>jamon:clean</goal>
-          </goals>
-          <configuration>
-            <jamon.template.output>src/gen</jamon.template.output>
-        </configuration>
-        </execution>
-      </executions>
-    </plugin>
+      <plugin>
+        <groupId>org.jamon</groupId>
+        <artifactId>jamon-maven-plugin</artifactId>
+        <version><& _version &></version>
+        <executions>
+          <execution>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>translate</goal>
+            </goals>
+            <configuration>
+               <templateSourceDir>src/main/jamon</templateSourceDir>
+               <templateOutputDirt>src/gen</templateOutputDir>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
         ...
     </plugins>
 </build>

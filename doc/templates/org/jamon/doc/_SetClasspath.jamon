@@ -1,0 +1,15 @@
+Set your classpath:
+<table>
+  <tr>
+    <td class="system">Windows</td>
+   <td class="tty">C:\JAMONTMP&gt; SET CLASSPATH=.;\path\to\jamon-runtime.jar;\path\to\jamon-api.jar;\path\to\jamon-processor.jar</td>
+  </tr>
+  <tr>
+    <td class="system">Unix (sh, bash, zsh, ksh)</td>
+    <td class="tty">$ export CLASSPATH=.:/path/to/jamon-runtime.jar:/path/to/jamon-api.jar:/path/to/jamon-processor.jar</td>
+  </tr>
+  <tr>
+    <td class="system">Unix (csh, tcsh)</td>
+    <td class="tty">% setenv CLASSPATH=.:/path/to/jamon-runtime.jar:/path/to/jamon-api.jar:/path/to/jamon-processor.jar</td>
+  </tr>
+</table>

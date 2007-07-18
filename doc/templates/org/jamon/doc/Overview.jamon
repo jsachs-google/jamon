@@ -63,21 +63,7 @@ Create a java file <a class="file" href="JamonQs.java">JamonQs.java</a>:
 <& _JavaInclude: "/sample/overview/src/JamonQs" &>
 
 <li>
-Set your classpath:
-<table>
-  <tr>
-    <td class="system">Windows</td>
-   <td class="tty">C:\JAMONTMP&gt; SET CLASSPATH=.;\path\to\jamon.jar</td>
-  </tr>
-  <tr>
-    <td class="system">Unix (sh, bash, zsh, ksh)</td>
-    <td class="tty">$ export CLASSPATH=.:/path/to/jamon.jar</td>
-  </tr>
-  <tr>
-    <td class="system">Unix (csh, tcsh)</td>
-    <td class="tty">% setenv CLASSPATH .:/path/to/jamon.jar</td>
-  </tr>
-</table>
+<& _SetClasspath &>
 
 <li>
 Process the template:

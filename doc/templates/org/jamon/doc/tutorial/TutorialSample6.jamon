@@ -72,7 +72,7 @@ from being output, each Jamon line must end with a backslash.
     <& ../_JavaInclude: "/sample/tutorial/src/JamonCallerTut6" &>
 <li> To process and run the template, execute the following commands:
 <pre class="tty">
-    export CLASSPATH=.:/path/to/jamon.jar
+    export CLASSPATH=.:/path/to/jamon-runtime.jar:/path/to/jamon-api.jar:/path/to/jamon-processor.jar
     java org.jamon.TemplateProcessor --destDir=. JamonCallerTemplate SpacerTemplate
     javac JamonCallerTut6.java JamonCallerTemplate*.java SpacerTemplate*.java
     java JamonCallerTut6

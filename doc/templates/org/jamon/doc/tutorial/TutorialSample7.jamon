@@ -57,7 +57,7 @@ same file or other top level templates.
   <li>
     Process the template and Java class with the following commands.
     <pre class="tty">
-        export CLASSPATH=.:/path/to/jamon.jar
+        export CLASSPATH=.:/path/to/jamon-runtime.jar:/path/to/jamon-api.jar:/path/to/jamon-processor.jar
         java org.jamon.TemplateProcessor --destDir=. SubtemplateTemplate
         javac SubtemplateTut7.java SubtemplateTemplate*.java
         java SubtemplateTut7

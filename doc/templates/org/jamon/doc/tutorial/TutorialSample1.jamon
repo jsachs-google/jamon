@@ -32,21 +32,7 @@ The code then calls the
 <code>Writer</code> that the template will use to output its content.
 
 <li>
-Set your classpath:
-<table>
-  <tr>
-    <td class="system">Windows</td>
-   <td class="tty">C:\JAMONTMP&gt; SET CLASSPATH=.;\path\to\jamon.jar</td>
-  </tr>
-  <tr>
-    <td class="system">Unix (sh, bash, zsh, ksh)</td>
-    <td class="tty">$ export CLASSPATH=.:/path/to/jamon.jar</td>
-  </tr>
-  <tr>
-    <td class="system">Unix (csh, tcsh)</td>
-    <td class="tty">% setenv CLASSPATH .:/path/to/jamon.jar</td>
-  </tr>
-</table>
+<& ../_SetClasspath &>
 
 <li>
 Process the template:

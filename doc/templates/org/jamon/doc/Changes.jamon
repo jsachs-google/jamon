@@ -5,6 +5,26 @@
 </%class>
 
 <h2><& title &></h2>
+
+<a name="2.3.0"/><h3>Jamon Changes from 2.2.2 to 2.3.0</h3></a>
+<ul>
+  <&| change; incompatible=true &>
+    Full "mavenification", and more granular libraries. In particular,
+    a creation of a <code>jamon-runtime</code> jar, containing the
+    minimal classes needed at runtime. 
+  </&>
+
+  <&| change &>
+    Fix errors occurring in Eclipse editor in the presence of malformed
+    nested <code>&lt;&amp; call &amp;&gt;</code> tags. (#1746242)
+  </&>
+
+  <&| change &>
+    Fix end of line whitespace '\'-consumption for Windows line endings. 
+    (#1751664)
+  </&>
+</ul>
+
 <a name="2.2.2"/><h3>Jamon Changes from 2.2.1 to 2.2.2</h3></a>
 <ul>
   <&| change &>
