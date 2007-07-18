@@ -64,7 +64,7 @@
         <site>
             <id>jamon</id>
             <name>Jamon</name>
-            <url>scpexe://jamon@maven.jamon.org/home/jamon/www-stg</url>
+            <url>scpexe://jamon@maven.jamon.org/home/jamon/www${stageDir}</url>
         </site>
     </distributionManagement>
     <repositories>
@@ -214,4 +214,7 @@
             </properties>
         </profile>
     </profiles>
+    <properties>
+        <stageDir>-stg</stageDir>
+    </properties>
 </project>
