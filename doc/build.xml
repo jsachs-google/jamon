@@ -8,9 +8,6 @@
     <property file="${user.home}/.ant.properties"/>
 
     <property name="jamon.dir" value="../jamon"/>
-    <property file="${jamon.dir}/version.properties"/>
-
-    <import file="${jamon.dir}/build.version.xml"/>
 
     <property name="build.dir" value="target"/>
     <property name="work.dir" value="${build.dir}/work"/>
@@ -173,7 +170,7 @@
         </invoker>
     </target>
 
-    <target name="doc" description="Generates all the documentation" depends="overview-files,tutorial,svn-versioning">
+    <target name="doc" description="Generates all the documentation" depends="overview-files,tutorial">
         <echo message="compiling templates"/>
         <javac destdir="${work.dir}" includes="**/*.java">
             <classpath>
