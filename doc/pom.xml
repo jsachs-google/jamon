@@ -149,8 +149,9 @@
                         <phase>site</phase>
                         <id>gensite</id>
                         <configuration>
+                            <property name="version" value="${pom.version}"/>
                             <tasks>
-                                <unzip src="target/jamon-doc-SNAPSHOT.jar" dest="target/site"/>
+                                <unzip src="target/jamon-doc-${version}.jar" dest="target/site"/>
                                 <delete dir="target/site/META-INF"/>
                                 <delete dir="target/css"/>
                                 <delete dir="target/images"/>
