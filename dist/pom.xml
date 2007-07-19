@@ -97,7 +97,7 @@
         <dependency>
             <groupId>org.jamon</groupId>
             <artifactId>jamon-doc</artifactId>
-            <version>SNAPSHOT</version>
+            <version>2.3.0</version>
         </dependency>
         <dependency>
             <groupId>org.jamon</groupId>
@@ -183,7 +183,7 @@
                                 <artifactItem>
                                     <groupId>org.jamon</groupId>
                                     <artifactId>jamon-doc</artifactId>
-                                    <version>SNAPSHOT</version>
+                                    <version>2.3.0</version>
                                     <type>jar</type>
                                     <overWrite>true</overWrite>
                                     <outputDirectory>target/jars</outputDirectory>
