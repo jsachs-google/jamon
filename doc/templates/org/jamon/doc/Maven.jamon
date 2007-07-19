@@ -67,7 +67,20 @@ to be configured.
   </repositories>
 </&></pre>
 
-<h4>3. Hook into project build lifecycle</h4>
+<h4>3. Compile and runtime dependency</h4>
+<pre class="ant"><&| /org/jamon/escape/Html &>
+<dependencies>
+  <dependency>
+    <dependency>
+      <group>org.jamon</group>
+      <artifactId>jamon-runtime</artifactId>
+      <version>2.3.0</version>
+    </dependency>
+  </dependency>
+</dependencies>
+</&></pre>
+
+<h4>4. Hook into project build lifecycle</h4>
 
 <pre class="ant"><&| /org/jamon/escape/Html &>
 <build>
@@ -91,7 +104,7 @@ to be configured.
 </build>
 </&></pre>
 
-<h4>4. (Optional) Hook into Eclipse</h4>
+<h4>5. (Optional) Hook into Eclipse</h4>
 
 Yes, this is far from optimal.
 
