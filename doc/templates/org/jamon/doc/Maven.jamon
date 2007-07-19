@@ -2,7 +2,7 @@
 <%class>
   protected Section currentSection() { return Section.DOC_MAVEN; }
 </%class>
-<%def _version>2.2.2.0</%def>
+<%def _version>2.3.0</%def>
 <%override title>Using Jamon with Maven</%override>
 
 <h3>Overview</h3>
@@ -93,9 +93,10 @@ to be configured.
 
 <h4>4. (Optional) Hook into Eclipse</h4>
 
-(Yes, this is far from optimal.)
+Yes, this is far from optimal.
 
-Add the following to the <code>plugins</code> section:
+Add the following to the <code>plugins</code> section, ensuring
+the templateSourceDir and templateOutputDir match your project:
 
 <pre class="ant"><&| /org/jamon/escape/Html &>
   <plugin>
@@ -110,6 +111,16 @@ Add the following to the <code>plugins</code> section:
         <buildcommand>org.eclipse.jdt.core.javabuilder</buildcommand>
         <buildcommand>org.jamon.project.markerUpdater</buildcommand>
       </buildcommands>
+      <additionalConfig>
+       	<file>
+       			<name>.settings/org.jamon.prefs</name>
+       			<content># now 
+eclipse.preferences.version=1
+templateSourceDir=templates
+templateOutputDir=tsrc
+</content>
+        </file>
+      </additionalConfig>
     </configuration>
   </plugin>
 </&></pre>
@@ -140,7 +151,7 @@ section above. For example, to root your template sources at
             </goals>
             <configuration>
                <templateSourceDir>src/main/jamon</templateSourceDir>
-               <templateOutputDirt>src/gen</templateOutputDir>
+               <templateOutputDir>src/gen</templateOutputDir>
             </configuration>
           </execution>
         </executions>
