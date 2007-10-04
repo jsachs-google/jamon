@@ -42,7 +42,7 @@ public class EclipseUtils
             p_file.delete(true, null);
         }
     }
-    
+
     public static void closeQuiety(InputStream is)
     {
         if (is == null)
@@ -60,14 +60,14 @@ public class EclipseUtils
     }
 
     public static void logError(Throwable p_error) {
-    	JamonProjectPlugin.getDefault().logError(p_error);
+        JamonProjectPlugin.getDefault().logError(p_error);
     }
 
     public static void logInfo(String p_message) {
         JamonProjectPlugin.getDefault().logInfo(p_message);
     }
 
-    public static CoreException createCoreException(Exception e)
+    public static CoreException createCoreException(Throwable e)
     {
         return new CoreException(new Status(
             IStatus.ERROR,
@@ -75,6 +75,16 @@ public class EclipseUtils
             0,
             e.getMessage(),
             e));
+    }
+
+    public static CoreException createCoreException(String message)
+    {
+        return new CoreException(new Status(
+            IStatus.ERROR,
+            JamonProjectPlugin.getDefault().getBundle().getSymbolicName(),
+            0,
+            message,
+            null));
     }
 
     private EclipseUtils() {}
