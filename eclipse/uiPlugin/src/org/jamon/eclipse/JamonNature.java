@@ -1,5 +1,6 @@
 package org.jamon.eclipse;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -141,6 +142,24 @@ public class JamonNature implements IProjectNature {
 
     static IPath externalJar(IProject p_project) {
         return stringToPath(preferences(p_project).get(PROCESSOR_JAR_EXTERNAL_PATH, null));
+    }
+
+    static File jarFile(IProject p_project) {
+        switch (processorSourceType(p_project)) {
+        case WORKSPACE: return workspacePathToFile(p_project, workspaceJar(p_project));
+        case EXTERNAL: return externalPathToFile(externalJar(p_project));
+        default: throw new IllegalStateException(
+            "unknown processor source type: " + processorSourceType(p_project));
+        }
+    }
+
+    static File workspacePathToFile(IProject p_project, IPath p_path) {
+        return new File(
+            p_project.getWorkspace().getRoot().getLocation().append(p_path).toOSString());
+    }
+
+    static File externalPathToFile(IPath p_path) {
+        return new File(p_path.toOSString());
     }
 
     public IFolder getTemplateSourceFolder() {

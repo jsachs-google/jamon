@@ -69,6 +69,8 @@ public class JamonProjectPropertyPage extends PropertyPage {
         protected void render(Composite parent) {
             radio = new Button(parent, SWT.RADIO);
             radio.setText(radioLabel);
+            radio.setSelection(
+                JamonNature.processorSourceType(getProject()) == processorSourceType);
             radio.addSelectionListener(new SimpleSelectionListener() {
                 public void widgetSelected(SelectionEvent event) {
                     if (radio.getSelection()) {
@@ -154,10 +156,7 @@ public class JamonProjectPropertyPage extends PropertyPage {
         }
 
         @Override protected boolean validate() {
-            return validateJar(new File(
-                getProject().getWorkspace().getRoot().getLocation().append(
-                    getJarLocation())
-                    .toOSString()));
+            return validateJar(JamonNature.workspacePathToFile(getProject(), getJarLocation()));
         }
 
         @Override protected IPath locateJar(Shell shell) {
@@ -174,7 +173,7 @@ public class JamonProjectPropertyPage extends PropertyPage {
         }
 
         @Override protected boolean validate() {
-            return validateJar(new File(getJarLocation().toOSString()));
+            return validateJar(JamonNature.externalPathToFile(getJarLocation()));
         }
 
         @Override protected IPath locateJar(Shell shell) {
@@ -201,13 +200,15 @@ public class JamonProjectPropertyPage extends PropertyPage {
         }
         isJamonProjectCheckbox.addSelectionListener(isJamonListener);
 
+        final Composite jarChoiceGroup = new Composite(isJamonProjectGroup, SWT.NONE);
+        jarChoiceGroup.setLayout(new GridLayout(3, false));
+        jarChoiceGroup.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 3, 1));
+
         processorChoosers.put(ProcessorSourceType.WORKSPACE, workspaceProcessorJarChoice);
         processorChoosers.put(ProcessorSourceType.EXTERNAL, externalProcessorJarChoice);
 
-        workspaceProcessorJarChoice.render(
-            isJamonProjectGroup, JamonNature.workspaceJar(getProject()));
-        externalProcessorJarChoice.render(
-            isJamonProjectGroup, JamonNature.externalJar(getProject()));
+        workspaceProcessorJarChoice.render(jarChoiceGroup, JamonNature.workspaceJar(getProject()));
+        externalProcessorJarChoice.render(jarChoiceGroup, JamonNature.externalJar(getProject()));
         setProcessorSourceType(JamonNature.processorSourceType(getProject()));
     }
 

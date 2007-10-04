@@ -7,9 +7,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -35,13 +32,11 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
-import org.eclipse.jdt.launching.JavaRuntime;
 import org.jamon.api.ParsedTemplate;
 import org.jamon.api.ParserError;
 import org.jamon.api.ParserErrors;
 import org.jamon.api.SourceGenerator;
 import org.jamon.api.TemplateParser;
-import org.jamon.api.TemplateSource;
 
 public class TemplateBuilder extends IncrementalProjectBuilder
 {
@@ -182,19 +177,10 @@ public class TemplateBuilder extends IncrementalProjectBuilder
         {
             m_templateDir = getNature().getTemplateSourceFolder();
             m_source = new ResourceTemplateSource(m_templateDir);
-            ClassLoader classLoader = classLoader();
-            try
-            {
-                m_templateParser = TemplateParser.class.cast(
-                    classLoader
-                        .loadClass("org.jamon.codegen.TemplateParserImpl")
-                        .getConstructor(TemplateSource.class, ClassLoader.class)
-                        .newInstance(m_source, classLoader));
-            }
-            catch (Exception e)
-            {
-                throw EclipseUtils.createCoreException(e);
-            }
+            m_templateParser =
+                new ProjectClassLoader(getJavaProject(), JamonNature.jarFile(getProject()))
+                .createTemplateParser(m_source);
+
             m_outFolder = getNature().getTemplateOutputFolder();
             m_changed = new HashSet<IPath>();
         }
@@ -202,55 +188,6 @@ public class TemplateBuilder extends IncrementalProjectBuilder
         Set<IPath> getChanged()
         {
             return m_changed;
-        }
-
-        private List<URL> classpathUrlsForProject(IJavaProject p_project)
-            throws CoreException
-        {
-            List<URL> urls = new ArrayList<URL>();
-            for (String entry : JavaRuntime.computeDefaultRuntimeClassPath(p_project))
-            {
-                try
-                {
-                    urls.add(new File(entry).toURL());
-                }
-                catch (MalformedURLException e)
-                {
-                    EclipseUtils.logError(e);
-                }
-            }
-            addDependenciesClasspath(p_project, urls);
-            return urls;
-        }
-
-        private void addDependencyClasspath(IProject p_project, List<URL> urls) throws CoreException
-        {
-            if (! p_project.isOpen())
-            {
-                EclipseUtils.logInfo("Apparently dependent project " + p_project.getName() + " not open, ignoring");
-                return;
-            }
-            if (! p_project.hasNature(JavaCore.NATURE_ID))
-            {
-                EclipseUtils.logInfo("Dependent project " + p_project.getName() + " not a java project, ignoring");
-                return;
-            }
-            urls.addAll(classpathUrlsForProject((IJavaProject) p_project.getNature(JavaCore.NATURE_ID)));
-        }
-
-        private void addDependenciesClasspath(IJavaProject p_project, List<URL> urls) throws CoreException
-        {
-            for (final IProject proj : p_project.getProject().getReferencedProjects())
-            {
-                addDependencyClasspath(proj, urls);
-            }
-        }
-
-        private ClassLoader classLoader() throws CoreException
-        {
-            List<URL> urls = classpathUrlsForProject(getJavaProject());
-            // TODO: does this have the proper parent?
-            return new URLClassLoader(urls.toArray(new URL[urls.size()]), getClass().getClassLoader());
         }
 
         private final ResourceTemplateSource m_source;
