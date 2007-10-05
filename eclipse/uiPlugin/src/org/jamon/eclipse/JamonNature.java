@@ -1,8 +1,10 @@
 package org.jamon.eclipse;
 
 import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.List;
 
 import org.eclipse.core.resources.IContainer;
@@ -13,13 +15,16 @@ import org.eclipse.core.resources.IProjectNature;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ProjectScope;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.IScopeContext;
 import org.eclipse.jdt.core.IClasspathEntry;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
+import org.osgi.framework.Bundle;
 import org.osgi.service.prefs.BackingStoreException;
 
 public class JamonNature implements IProjectNature {
@@ -146,11 +151,12 @@ public class JamonNature implements IProjectNature {
 
     static File jarFile(IProject p_project) {
         switch (processorSourceType(p_project)) {
+        case PLUGIN: return getPluginProcessorJar();
         case WORKSPACE: return workspacePathToFile(p_project, workspaceJar(p_project));
         case EXTERNAL: return externalPathToFile(externalJar(p_project));
-        default: throw new IllegalStateException(
-            "unknown processor source type: " + processorSourceType(p_project));
         }
+        throw new IllegalStateException(
+            "unknown processor source type: " + processorSourceType(p_project));
     }
 
     static File workspacePathToFile(IProject p_project, IPath p_path) {
@@ -160,6 +166,29 @@ public class JamonNature implements IProjectNature {
 
     static File externalPathToFile(IPath p_path) {
         return new File(p_path.toOSString());
+    }
+
+    static File getPluginProcessorJar()
+    {
+        Bundle processorPluginBundle = Platform.getBundle("org.jamon.processor");
+        for (
+                @SuppressWarnings("unchecked") Enumeration<URL> matches =
+                    processorPluginBundle.findEntries("/", "jamon-processor*.jar", false);
+                matches.hasMoreElements(); )
+        {
+            URL match = matches.nextElement();
+            try
+            {
+                return new File(
+                    FileLocator.toFileURL(processorPluginBundle.getEntry(match.getPath())).toURI());
+            }
+            catch (Exception e)
+            {
+                EclipseUtils.logError(e);
+                return null;
+            }
+        }
+        return null;
     }
 
     public IFolder getTemplateSourceFolder() {

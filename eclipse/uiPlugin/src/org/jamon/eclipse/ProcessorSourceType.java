@@ -1,7 +1,7 @@
 package org.jamon.eclipse;
 
 public enum ProcessorSourceType {
-    WORKSPACE, EXTERNAL;
+    PLUGIN, WORKSPACE, EXTERNAL;
 
     public String preferenceValue() {
         return name();

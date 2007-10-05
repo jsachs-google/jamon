@@ -86,8 +86,31 @@ public class JamonProjectPropertyPage extends PropertyPage {
         }
     }
 
-    private abstract class ProcessorJarChoice extends ProcessorChoice {
-        protected ProcessorJarChoice(ProcessorSourceType processorSourceType, String radioLabel) {
+    private class PluginProcessorChoice extends ProcessorChoice {
+        protected PluginProcessorChoice()
+        {
+            super(ProcessorSourceType.PLUGIN, "Plugin-provided");
+            // TODO Auto-generated constructor stub
+        }
+        private Label label;
+        @Override public void setEnabled(boolean p_enabled)
+        {
+            label.setEnabled(p_enabled);
+            //FIXME - verify?
+        }
+        @Override protected void render(Composite p_parent)
+        {
+            super.render(p_parent);
+            label = new Label(p_parent, SWT.NONE);
+            label.setText(JamonNature.getPluginProcessorJar().getName());
+            GridData gridData = new GridData();
+            gridData.horizontalSpan = 2;
+            label.setLayoutData(gridData);
+        }
+    }
+
+    private abstract class ProvidedJarChoice extends ProcessorChoice {
+        protected ProvidedJarChoice(ProcessorSourceType processorSourceType, String radioLabel) {
             super(processorSourceType, radioLabel);
         }
 
@@ -150,7 +173,7 @@ public class JamonProjectPropertyPage extends PropertyPage {
         }
     }
 
-    private class WorkspaceProcessorJarChoice extends ProcessorJarChoice {
+    private class WorkspaceProcessorJarChoice extends ProvidedJarChoice {
         protected WorkspaceProcessorJarChoice() {
             super(ProcessorSourceType.WORKSPACE, "Jar in workspace");
         }
@@ -167,7 +190,7 @@ public class JamonProjectPropertyPage extends PropertyPage {
         }
     }
 
-    private class ExternalProcessorJarChoice extends ProcessorJarChoice {
+    private class ExternalProcessorJarChoice extends ProvidedJarChoice {
         protected ExternalProcessorJarChoice() {
             super(ProcessorSourceType.EXTERNAL, "External Jar");
         }
@@ -204,9 +227,11 @@ public class JamonProjectPropertyPage extends PropertyPage {
         jarChoiceGroup.setLayout(new GridLayout(3, false));
         jarChoiceGroup.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 3, 1));
 
+        processorChoosers.put(ProcessorSourceType.PLUGIN, pluginProcessorChoice);
         processorChoosers.put(ProcessorSourceType.WORKSPACE, workspaceProcessorJarChoice);
         processorChoosers.put(ProcessorSourceType.EXTERNAL, externalProcessorJarChoice);
 
+        pluginProcessorChoice.render(jarChoiceGroup);
         workspaceProcessorJarChoice.render(jarChoiceGroup, JamonNature.workspaceJar(getProject()));
         externalProcessorJarChoice.render(jarChoiceGroup, JamonNature.externalJar(getProject()));
         setProcessorSourceType(JamonNature.processorSourceType(getProject()));
@@ -244,10 +269,11 @@ public class JamonProjectPropertyPage extends PropertyPage {
     private ProcessorSourceType processorSourceType;
     private Map<ProcessorSourceType, ProcessorChoice> processorChoosers =
         new EnumMap<ProcessorSourceType, ProcessorChoice>(ProcessorSourceType.class);
-    private final ExternalProcessorJarChoice externalProcessorJarChoice =
-        new ExternalProcessorJarChoice();
+    private final PluginProcessorChoice pluginProcessorChoice = new PluginProcessorChoice();
     private final WorkspaceProcessorJarChoice workspaceProcessorJarChoice =
         new WorkspaceProcessorJarChoice();
+    private final ExternalProcessorJarChoice externalProcessorJarChoice =
+        new ExternalProcessorJarChoice();
 
     private void addSecondSection(Composite parent) {
         final Composite composite = createDefaultComposite(parent);
@@ -333,6 +359,7 @@ public class JamonProjectPropertyPage extends PropertyPage {
         addFirstSection(composite);
         addSeparator(composite);
         addSecondSection(composite);
+        System.out.println(JamonNature.getPluginProcessorJar());
         return composite;
     }
 
