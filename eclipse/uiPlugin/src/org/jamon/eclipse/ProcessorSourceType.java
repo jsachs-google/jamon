@@ -8,6 +8,7 @@ public enum ProcessorSourceType {
     }
 
     public static ProcessorSourceType fromPreferenceValue(String preferenceValue) {
-        return valueOf(preferenceValue);
+        ProcessorSourceType processorSourceType = valueOf(preferenceValue);
+        return processorSourceType == null ? PLUGIN : processorSourceType;
     }
 }

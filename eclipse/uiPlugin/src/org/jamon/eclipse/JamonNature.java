@@ -127,8 +127,7 @@ public class JamonNature implements IProjectNature {
 
     static ProcessorSourceType processorSourceType(IProject p_project) {
         return ProcessorSourceType.fromPreferenceValue(
-            preferences(p_project).get(
-                PROCESSOR_JAR_SOURCE_TYPE, ProcessorSourceType.WORKSPACE.preferenceValue()));
+            preferences(p_project).get(PROCESSOR_JAR_SOURCE_TYPE, null));
     }
 
     private static IPath stringToPath(String pathString) {
