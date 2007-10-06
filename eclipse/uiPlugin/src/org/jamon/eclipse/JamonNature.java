@@ -49,7 +49,8 @@ public class JamonNature implements IProjectNature {
 
     public static void addToProject(
         IProject p_project, String p_templateSourceDir, String p_templateOutputDir,
-        ProcessorSourceType processorSourceType, IPath workspaceJar, IPath externalJar)
+        ProcessorSourceType processorSourceType,
+        IPath workspaceJar, IPath externalJar, IPath variableJar)
     throws CoreException {
         IProjectDescription description = p_project.getDescription();
         List<String> natures = naturesList(description);
@@ -63,6 +64,7 @@ public class JamonNature implements IProjectNature {
         projectNode.put(PROCESSOR_JAR_SOURCE_TYPE, processorSourceType.preferenceValue());
         projectNode.put(PROCESSOR_JAR_WORKSPACE_PATH, pathToString(workspaceJar));
         projectNode.put(PROCESSOR_JAR_EXTERNAL_PATH, pathToString(externalJar));
+        projectNode.put(PROCESSOR_JAR_VARIABLE_PATH, pathToString(variableJar));
         try {
             projectNode.flush();
         }
@@ -86,6 +88,7 @@ public class JamonNature implements IProjectNature {
     private static final String PROCESSOR_JAR_SOURCE_TYPE = "processJarSourceType";
     private static final String PROCESSOR_JAR_WORKSPACE_PATH= "processJarWorkspacePath";
     private static final String PROCESSOR_JAR_EXTERNAL_PATH = "processJarExternalPath";
+    private static final String PROCESSOR_JAR_VARIABLE_PATH = "processJarVariablePath";
 
     private static final String JAMON_PREFERENCES_NODE = "org.jamon";
 
@@ -148,11 +151,16 @@ public class JamonNature implements IProjectNature {
         return stringToPath(preferences(p_project).get(PROCESSOR_JAR_EXTERNAL_PATH, null));
     }
 
+    static IPath variableJar(IProject p_project) {
+        return stringToPath(preferences(p_project).get(PROCESSOR_JAR_VARIABLE_PATH, null));
+    }
+
     static File jarFile(IProject p_project) {
         switch (processorSourceType(p_project)) {
         case PLUGIN: return getPluginProcessorJar();
         case WORKSPACE: return workspacePathToFile(p_project, workspaceJar(p_project));
         case EXTERNAL: return externalPathToFile(externalJar(p_project));
+        case VARIABLE: return variablePathToFile(variableJar(p_project));
         }
         throw new IllegalStateException(
             "unknown processor source type: " + processorSourceType(p_project));
@@ -165,6 +173,10 @@ public class JamonNature implements IProjectNature {
 
     static File externalPathToFile(IPath p_path) {
         return new File(p_path.toOSString());
+    }
+
+    static File variablePathToFile(IPath p_path) {
+        return new File(JavaCore.getResolvedVariablePath(p_path).toOSString());
     }
 
     static File getPluginProcessorJar()
