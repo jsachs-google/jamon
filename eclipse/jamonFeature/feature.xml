@@ -30,6 +30,21 @@ Jay Sachs and Ian Robertson.  All Rights Reserved.
 Contributor(s):
    </license>
 
+   <requires>
+      <import feature="jamonProcessorEclipseFeature" version="2.3.1" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.eclipse.core.resources"/>
+      <import plugin="org.eclipse.ui.ide"/>
+      <import plugin="org.eclipse.jdt.core"/>
+      <import plugin="org.eclipse.jdt.launching"/>
+      <import plugin="org.eclipse.jface.text"/>
+      <import plugin="org.eclipse.ui.workbench.texteditor"/>
+      <import plugin="org.eclipse.ui.editors"/>
+      <import plugin="org.eclipse.jdt.ui"/>
+      <import plugin="org.eclipse.ui.forms"/>
+   </requires>
+
    <plugin
          id="org.jamon.project"
          download-size="0"
