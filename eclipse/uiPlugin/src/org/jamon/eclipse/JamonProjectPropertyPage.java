@@ -61,6 +61,11 @@ public class JamonProjectPropertyPage extends PropertyPage {
         }
     }
 
+    private void setJarIsValid(boolean jarIsValid) {
+        setValid(jarIsValid);
+        setErrorMessage(jarIsValid ? null : "the selected jar is not a jamon processor jar");
+    }
+
     private abstract class ProcessorChoice {
         private final String radioLabel;
         private Button radio;
@@ -98,6 +103,7 @@ public class JamonProjectPropertyPage extends PropertyPage {
         {
             label.setEnabled(p_enabled);
             //FIXME - verify?
+            setJarIsValid(true);
         }
         @Override protected void render(Composite p_parent)
         {
@@ -167,10 +173,7 @@ public class JamonProjectPropertyPage extends PropertyPage {
 
         private void checkJarChoiceValidity()
         {
-            boolean jarIsValid = jarLocation != null && validate();
-            setValid(jarIsValid);
-            setErrorMessage(
-                jarIsValid ? null : "the selected jar is not a jamon processor jar");
+            setJarIsValid(jarLocation != null && validate());
         }
 
         protected boolean validateJar(File jar) {
@@ -262,6 +265,13 @@ public class JamonProjectPropertyPage extends PropertyPage {
             final boolean enabled = isJamonProjectCheckbox.getSelection();
             sourceField.getControl().setEnabled(enabled);
             outputField.getControl().setEnabled(enabled);
+            if (enabled) {
+                setProcessorSourceType(null);
+            }
+            for (ProcessorSourceType option: ProcessorSourceType.values()) {
+                processorChoosers.get(option).setEnabled(false);
+            }
+            setJarIsValid(true);
         }
 
         public void widgetSelected(SelectionEvent e) {
