@@ -1,10 +1,7 @@
 package org.jamon.eclipse;
 
-import java.io.File;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Enumeration;
 import java.util.List;
 
 import org.eclipse.core.resources.IContainer;
@@ -15,16 +12,12 @@ import org.eclipse.core.resources.IProjectNature;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ProjectScope;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.IScopeContext;
 import org.eclipse.jdt.core.IClasspathEntry;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
-import org.osgi.framework.Bundle;
 import org.osgi.service.prefs.BackingStoreException;
 
 public class JamonNature implements IProjectNature {
@@ -49,8 +42,7 @@ public class JamonNature implements IProjectNature {
 
     public static void addToProject(
         IProject p_project, String p_templateSourceDir, String p_templateOutputDir,
-        ProcessorSourceType processorSourceType,
-        IPath workspaceJar, IPath externalJar, IPath variableJar)
+        ProcessorJarLocations p_processorJarLocations)
     throws CoreException {
         IProjectDescription description = p_project.getDescription();
         List<String> natures = naturesList(description);
@@ -61,10 +53,7 @@ public class JamonNature implements IProjectNature {
         IEclipsePreferences projectNode = preferences(p_project);
         projectNode.put(TEMPLATE_SOURCE_DIR_PROPERTY, p_templateSourceDir);
         projectNode.put(TEMPLATE_OUTPUT_DIR_PROPERTY, p_templateOutputDir);
-        projectNode.put(PROCESSOR_JAR_SOURCE_TYPE, processorSourceType.preferenceValue());
-        projectNode.put(PROCESSOR_JAR_WORKSPACE_PATH, pathToString(workspaceJar));
-        projectNode.put(PROCESSOR_JAR_EXTERNAL_PATH, pathToString(externalJar));
-        projectNode.put(PROCESSOR_JAR_VARIABLE_PATH, pathToString(variableJar));
+        p_processorJarLocations.storePrefs(projectNode);
         try {
             projectNode.flush();
         }
@@ -85,10 +74,6 @@ public class JamonNature implements IProjectNature {
 
     private static final String TEMPLATE_SOURCE_DIR_PROPERTY = "templateSourceDir";
     private static final String TEMPLATE_OUTPUT_DIR_PROPERTY = "templateOutputDir";
-    private static final String PROCESSOR_JAR_SOURCE_TYPE = "processJarSourceType";
-    private static final String PROCESSOR_JAR_WORKSPACE_PATH= "processJarWorkspacePath";
-    private static final String PROCESSOR_JAR_EXTERNAL_PATH = "processJarExternalPath";
-    private static final String PROCESSOR_JAR_VARIABLE_PATH = "processJarVariablePath";
 
     private static final String JAMON_PREFERENCES_NODE = "org.jamon";
 
@@ -112,12 +97,12 @@ public class JamonNature implements IProjectNature {
         return templateOutputFolder(getProject());
     }
 
-    static String templateSourceFolderName(IProject p_project) {
+    public static String templateSourceFolderName(IProject p_project) {
         return preferences(p_project)
             .get(TEMPLATE_SOURCE_DIR_PROPERTY, DEFAULT_TEMPLATE_SOURCE);
     }
 
-    static String templateOutputFolderName(IProject p_project) {
+    public static String templateOutputFolderName(IProject p_project) {
         return preferences(p_project)
             .get(TEMPLATE_OUTPUT_DIR_PROPERTY, DEFAULT_OUTPUT_DIR);
     }
@@ -128,78 +113,8 @@ public class JamonNature implements IProjectNature {
             new Path(templateSourceFolderName(p_project)));
     }
 
-    static ProcessorSourceType processorSourceType(IProject p_project) {
-        return ProcessorSourceType.fromPreferenceValue(
-            preferences(p_project).get(PROCESSOR_JAR_SOURCE_TYPE, null));
-    }
-
-    private static IPath stringToPath(String pathString) {
-        return (pathString == null || pathString.length() == 0)
-            ? null
-            : Path.fromPortableString(pathString);
-    }
-
-    private static String pathToString(IPath path) {
-        return path == null ? "" : path.toPortableString();
-    }
-
-    static IPath workspaceJar(IProject p_project) {
-        return stringToPath(preferences(p_project).get(PROCESSOR_JAR_WORKSPACE_PATH, null));
-    }
-
-    static IPath externalJar(IProject p_project) {
-        return stringToPath(preferences(p_project).get(PROCESSOR_JAR_EXTERNAL_PATH, null));
-    }
-
-    static IPath variableJar(IProject p_project) {
-        return stringToPath(preferences(p_project).get(PROCESSOR_JAR_VARIABLE_PATH, null));
-    }
-
-    static File jarFile(IProject p_project) {
-        switch (processorSourceType(p_project)) {
-        case PLUGIN: return getPluginProcessorJar();
-        case WORKSPACE: return workspacePathToFile(p_project, workspaceJar(p_project));
-        case EXTERNAL: return externalPathToFile(externalJar(p_project));
-        case VARIABLE: return variablePathToFile(variableJar(p_project));
-        }
-        throw new IllegalStateException(
-            "unknown processor source type: " + processorSourceType(p_project));
-    }
-
-    static File workspacePathToFile(IProject p_project, IPath p_path) {
-        return new File(
-            p_project.getWorkspace().getRoot().getLocation().append(p_path).toOSString());
-    }
-
-    static File externalPathToFile(IPath p_path) {
-        return new File(p_path.toOSString());
-    }
-
-    static File variablePathToFile(IPath p_path) {
-        return new File(JavaCore.getResolvedVariablePath(p_path).toOSString());
-    }
-
-    static File getPluginProcessorJar()
-    {
-        Bundle processorPluginBundle = Platform.getBundle("org.jamon.processor");
-        for (
-                @SuppressWarnings("unchecked") Enumeration<URL> matches =
-                    processorPluginBundle.findEntries("/", "jamon-processor*.jar", false);
-                matches.hasMoreElements(); )
-        {
-            URL match = matches.nextElement();
-            try
-            {
-                return new File(
-                    FileLocator.toFileURL(processorPluginBundle.getEntry(match.getPath())).toURI());
-            }
-            catch (Exception e)
-            {
-                EclipseUtils.logError(e);
-                return null;
-            }
-        }
-        return null;
+    public static ProcessorJarLocations getProcessorJarLocations(IProject p_project) {
+        return new ProcessorJarLocations(preferences(p_project));
     }
 
     public IFolder getTemplateSourceFolder() {
@@ -272,7 +187,7 @@ public class JamonNature implements IProjectNature {
 
     private IProject m_project;
     static final String JAMON_EXTENSION = "jamon";
-    static final String DEFAULT_TEMPLATE_SOURCE = "templates";
-    static final String DEFAULT_OUTPUT_DIR = "tsrc";
+    public static final String DEFAULT_TEMPLATE_SOURCE = "templates";
+    public static final String DEFAULT_OUTPUT_DIR = "tsrc";
 
 }

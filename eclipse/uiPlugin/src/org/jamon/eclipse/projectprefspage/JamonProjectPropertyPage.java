@@ -1,8 +1,5 @@
-package org.jamon.eclipse;
+package org.jamon.eclipse.projectprefspage;
 
-import java.io.File;
-import java.util.EnumMap;
-import java.util.Map;
 
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
@@ -11,7 +8,6 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
-import org.eclipse.jdt.ui.wizards.BuildPathDialogAccess;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.fieldassist.DecoratedField;
 import org.eclipse.jface.fieldassist.FieldDecoration;
@@ -28,9 +24,9 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.PropertyPage;
+import org.jamon.eclipse.JamonNature;
 
 public class JamonProjectPropertyPage extends PropertyPage {
 
@@ -44,187 +40,13 @@ public class JamonProjectPropertyPage extends PropertyPage {
         return (IJavaProject) getProject().getNature(JavaCore.NATURE_ID);
     }
 
-    private IProject getProject() {
+    IProject getProject() {
         return (IProject) getElement().getAdapter(IProject.class);
     }
 
-    private void setProcessorSourceType(ProcessorSourceType processorSourceType) {
-        this.processorSourceType = processorSourceType;
-        for (ProcessorSourceType option: ProcessorSourceType.values()) {
-            processorChoosers.get(option).setEnabled(option == processorSourceType);
-        }
-    }
-
-    private abstract class SimpleSelectionListener implements SelectionListener {
-        public void widgetDefaultSelected(SelectionEvent event) {
-            widgetSelected(event);
-        }
-    }
-
-    private void setJarIsValid(boolean jarIsValid) {
+    void setJarIsValid(boolean jarIsValid) {
         setValid(jarIsValid);
         setErrorMessage(jarIsValid ? null : "the selected jar is not a jamon processor jar");
-    }
-
-    private abstract class ProcessorChoice {
-        private final String radioLabel;
-        private Button radio;
-        private final ProcessorSourceType processorSourceType;
-        public abstract void setEnabled(boolean enabled);
-        protected void render(Composite parent) {
-            radio = new Button(parent, SWT.RADIO);
-            radio.setText(radioLabel);
-            radio.setSelection(
-                JamonNature.processorSourceType(getProject()) == processorSourceType);
-            radio.addSelectionListener(new SimpleSelectionListener() {
-                public void widgetSelected(SelectionEvent event) {
-                    if (radio.getSelection()) {
-                        setProcessorSourceType(processorSourceType);
-                    }
-                }
-            });
-        }
-
-        protected ProcessorChoice(ProcessorSourceType processorSourceType, String radioLabel) {
-            this.radioLabel = radioLabel;
-            this.processorSourceType = processorSourceType;
-            processorChoosers.put(processorSourceType, this);
-        }
-    }
-
-    private class PluginProcessorChoice extends ProcessorChoice {
-        protected PluginProcessorChoice()
-        {
-            super(ProcessorSourceType.PLUGIN, "Plugin-provided");
-            // TODO Auto-generated constructor stub
-        }
-        private Label label;
-        @Override public void setEnabled(boolean p_enabled)
-        {
-            label.setEnabled(p_enabled);
-            //FIXME - verify?
-            setJarIsValid(true);
-        }
-        @Override protected void render(Composite p_parent)
-        {
-            super.render(p_parent);
-            label = new Label(p_parent, SWT.NONE);
-            label.setText(JamonNature.getPluginProcessorJar().getName());
-            GridData gridData = new GridData();
-            gridData.horizontalSpan = 2;
-            label.setLayoutData(gridData);
-        }
-    }
-
-    private abstract class ProvidedJarChoice extends ProcessorChoice {
-        protected ProvidedJarChoice(ProcessorSourceType processorSourceType, String radioLabel) {
-            super(processorSourceType, radioLabel);
-        }
-
-        private IPath jarLocation;
-        private Text textField;
-        private Button jarChooserButton;
-
-        /**
-         * Pop up a dialog to locate the appropriate kind of jar
-         * @param shell the {@code Shell} to use for the dialog
-         * @return the path of the selected jar
-         */
-        protected abstract IPath locateJar(Shell shell);
-
-        /**
-         * Validate currently selected jar.
-         * @return true if the current selection is a valid processor jar
-         */
-        protected abstract boolean validate();
-
-        private void setJarLocation(IPath path) {
-            jarLocation = path;
-            textField.setText(path == null ? "" : path.toPortableString());
-        }
-
-        protected void render(final Composite parent, IPath jarLocation) {
-            super.render(parent);
-            textField = new Text(parent, SWT.READ_ONLY);
-            textField.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
-            setJarLocation(jarLocation);
-
-            jarChooserButton = new Button(parent, SWT.PUSH);
-            jarChooserButton.setText("Choose jar");
-            jarChooserButton.addSelectionListener(new SimpleSelectionListener() {
-                public void widgetSelected(SelectionEvent selectionEvent) {
-                    setJarLocation(locateJar(parent.getShell()));
-                    checkJarChoiceValidity();
-                }
-            });
-        }
-
-        public IPath getJarLocation() {
-            return jarLocation;
-        }
-
-        @Override public void setEnabled(boolean enabled) {
-            textField.setEnabled(enabled);
-            jarChooserButton.setEnabled(enabled);
-            if (enabled == true) {
-                checkJarChoiceValidity();
-            }
-        }
-
-        private void checkJarChoiceValidity()
-        {
-            setJarIsValid(jarLocation != null && validate());
-        }
-
-        protected boolean validateJar(File jar) {
-            return jar.exists()
-                && jar.getName().startsWith("jamon-processor"); // FIXME
-        }
-    }
-
-    private class WorkspaceProcessorJarChoice extends ProvidedJarChoice {
-        protected WorkspaceProcessorJarChoice() {
-            super(ProcessorSourceType.WORKSPACE, "Jar in workspace");
-        }
-
-        @Override protected boolean validate() {
-            return validateJar(JamonNature.workspacePathToFile(getProject(), getJarLocation()));
-        }
-
-        @Override protected IPath locateJar(Shell shell) {
-            IPath[] paths = BuildPathDialogAccess.chooseJAREntries(shell, null, new IPath[0]);
-            return extractFirstPathEntry(paths);
-        }
-    }
-
-    private class ExternalProcessorJarChoice extends ProvidedJarChoice {
-        protected ExternalProcessorJarChoice() {
-            super(ProcessorSourceType.EXTERNAL, "External Jar");
-        }
-
-        @Override protected boolean validate() {
-            return validateJar(JamonNature.externalPathToFile(getJarLocation()));
-        }
-
-        @Override protected IPath locateJar(Shell shell) {
-            IPath[] paths = BuildPathDialogAccess.chooseExternalJAREntries(shell);
-            return extractFirstPathEntry(paths);
-        }
-    }
-
-    private class VariableProcessorJarChoice extends ProvidedJarChoice {
-        protected VariableProcessorJarChoice() {
-            super(ProcessorSourceType.VARIABLE, "Variable");
-        }
-
-        @Override protected boolean validate() {
-            return validateJar(JamonNature.variablePathToFile(getJarLocation()));
-        }
-
-        @Override protected IPath locateJar(Shell shell) {
-            IPath[] paths = BuildPathDialogAccess.chooseVariableEntries(shell, new IPath[0]);
-            return extractFirstPathEntry(paths);
-        }
     }
 
     private void addFirstSection(Composite parent) {
@@ -244,15 +66,7 @@ public class JamonProjectPropertyPage extends PropertyPage {
         }
         isJamonProjectCheckbox.addSelectionListener(isJamonListener);
 
-        final Composite jarChoiceGroup = new Composite(isJamonProjectGroup, SWT.NONE);
-        jarChoiceGroup.setLayout(new GridLayout(3, false));
-        jarChoiceGroup.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 3, 1));
-
-        pluginProcessorChoice.render(jarChoiceGroup);
-        workspaceProcessorJarChoice.render(jarChoiceGroup, JamonNature.workspaceJar(getProject()));
-        externalProcessorJarChoice.render(jarChoiceGroup, JamonNature.externalJar(getProject()));
-        variableProcessorJarChoice.render(jarChoiceGroup, JamonNature.variableJar(getProject()));
-        setProcessorSourceType(JamonNature.processorSourceType(getProject()));
+        processorSelector.render(isJamonProjectGroup);
     }
 
     private IsJamonListener isJamonListener = new IsJamonListener();
@@ -265,13 +79,10 @@ public class JamonProjectPropertyPage extends PropertyPage {
             final boolean enabled = isJamonProjectCheckbox.getSelection();
             sourceField.getControl().setEnabled(enabled);
             outputField.getControl().setEnabled(enabled);
-            if (enabled) {
-                setProcessorSourceType(null);
+            processorSelector.setEnabled(enabled);
+            if (!enabled) {
+                setJarIsValid(true);
             }
-            for (ProcessorSourceType option: ProcessorSourceType.values()) {
-                processorChoosers.get(option).setEnabled(false);
-            }
-            setJarIsValid(true);
         }
 
         public void widgetSelected(SelectionEvent e) {
@@ -291,16 +102,7 @@ public class JamonProjectPropertyPage extends PropertyPage {
     private Text templateOutputDirInput;
     private DecoratedField sourceField;
     private DecoratedField outputField;
-    private ProcessorSourceType processorSourceType;
-    private Map<ProcessorSourceType, ProcessorChoice> processorChoosers =
-        new EnumMap<ProcessorSourceType, ProcessorChoice>(ProcessorSourceType.class);
-    private final PluginProcessorChoice pluginProcessorChoice = new PluginProcessorChoice();
-    private final WorkspaceProcessorJarChoice workspaceProcessorJarChoice =
-        new WorkspaceProcessorJarChoice();
-    private final ExternalProcessorJarChoice externalProcessorJarChoice =
-        new ExternalProcessorJarChoice();
-    private final VariableProcessorJarChoice variableProcessorJarChoice =
-        new VariableProcessorJarChoice();
+    private ProcessorSelector processorSelector = new ProcessorSelector(this);
 
     private void addSecondSection(Composite parent) {
         final Composite composite = createDefaultComposite(parent);
@@ -386,7 +188,6 @@ public class JamonProjectPropertyPage extends PropertyPage {
         addFirstSection(composite);
         addSeparator(composite);
         addSecondSection(composite);
-        System.out.println(JamonNature.getPluginProcessorJar());
         return composite;
     }
 
@@ -414,10 +215,7 @@ public class JamonProjectPropertyPage extends PropertyPage {
                     getJavaProject().getProject(),
                     templateSourceDirInput.getText(),
                     templateOutputDirInput.getText(),
-                    processorSourceType,
-                    workspaceProcessorJarChoice.getJarLocation(),
-                    externalProcessorJarChoice.getJarLocation(),
-                    variableProcessorJarChoice.getJarLocation());
+                    processorSelector.getProcessorJarLocations());
             }
             else {
                 JamonNature.removeFromProject(getJavaProject().getProject());
@@ -435,7 +233,7 @@ public class JamonProjectPropertyPage extends PropertyPage {
      * @param paths the array of {@code IPath} elements
      * @return the first entry, or {@code null} if there is none.
      */
-    private static IPath extractFirstPathEntry(IPath[] paths)
+    static IPath extractFirstPathEntry(IPath[] paths)
     {
         return paths == null || paths.length == 0
             ? null

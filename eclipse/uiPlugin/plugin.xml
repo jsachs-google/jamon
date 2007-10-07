@@ -15,7 +15,7 @@
     <extension
           point="org.eclipse.ui.propertyPages">
        <page
-             class="org.jamon.eclipse.JamonProjectPropertyPage"
+             class="org.jamon.eclipse.projectprefspage.JamonProjectPropertyPage"
              id="org.jamon.eclipse.JamonProjectPropertyPage"
              name="Jamon">
           <filter

@@ -178,7 +178,9 @@ public class TemplateBuilder extends IncrementalProjectBuilder
             m_templateDir = getNature().getTemplateSourceFolder();
             m_source = new ResourceTemplateSource(m_templateDir);
             m_templateParser =
-                new ProjectClassLoader(getJavaProject(), JamonNature.jarFile(getProject()))
+                new ProjectClassLoader(
+                    getJavaProject(),
+                    JamonNature.getProcessorJarLocations(getProject()).jarFile(getProject()))
                 .createTemplateParser(m_source);
 
             m_outFolder = getNature().getTemplateOutputFolder();
