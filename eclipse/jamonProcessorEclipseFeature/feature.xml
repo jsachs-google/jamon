@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="jamonProcessorEclipseFeature"
+      id="org.jamon.processor"
       label="Jamon Processor Feature"
       version="2.3.1">
 
