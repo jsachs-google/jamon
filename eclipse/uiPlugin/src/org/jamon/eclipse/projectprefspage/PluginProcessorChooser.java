@@ -24,8 +24,10 @@ class PluginProcessorChooser extends ProcessorChooser {
     @Override public void setEnabled(boolean p_enabled)
     {
         label.setEnabled(p_enabled);
-        //FIXME - verify?
-        getProcessorSelector().setJarIsValid(true);
+        if (p_enabled) {
+            //FIXME - verify?
+            getProcessorSelector().setJarIsValid(true);
+        }
     }
     @Override protected void render(Composite p_parent, ProcessorJarLocations p_jarLocations)
     {

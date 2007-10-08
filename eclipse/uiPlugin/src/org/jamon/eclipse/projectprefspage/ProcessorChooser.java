@@ -24,6 +24,9 @@ abstract class ProcessorChooser {
 
     void setWidgetEnabled(boolean enabled) {
         radio.setEnabled(enabled);
+        if (enabled == false) {
+            setEnabled(false);
+        }
     }
 
     protected void render(Composite p_parent, ProcessorJarLocations p_jarLocations) {

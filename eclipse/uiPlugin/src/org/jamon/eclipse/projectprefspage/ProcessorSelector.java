@@ -39,9 +39,11 @@ public class ProcessorSelector {
     }
 
     void setEnabled(boolean p_enabled) {
-        setProcessorSourceType(p_enabled ? getProcessorSourceType() : null);
         for (ProcessorChooser chooser: processorChoosers.values()) {
             chooser.setWidgetEnabled(p_enabled);
+        }
+        if (p_enabled && getProcessorSourceType() != null) {
+            processorChoosers.get(getProcessorSourceType()).setEnabled(true);
         }
     }
 
