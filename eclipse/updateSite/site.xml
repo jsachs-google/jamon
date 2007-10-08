@@ -7,5 +7,6 @@
       <category name="Jamon"/>
    </feature>
    <feature url="features/org.jamon.feature_2.3.0.1.jar" id="org.jamon.feature" version="2.3.0.1" patch="true"/>
+   <feature url="features/jamonProcessorEclipseFeature_2.3.1.jar" id="jamonProcessorEclipseFeature" version="2.3.1"/>
    <category-def name="Jamon" label="Jamon"/>
 </site>
