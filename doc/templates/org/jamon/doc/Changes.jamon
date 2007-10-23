@@ -6,12 +6,23 @@
 
 <h2><& title &></h2>
 
+<a name="eclipse-2.3.1"/><h3>Eclipse Plugin Changes from 2.3.0 to 2.3.1</h3>
+<ul>
+  <&| change &>
+    The Eclipse plugin is no longer tied to a single version of Jamon.
+    This version of the plugin will work with versions 2.3 and later
+    of jamon-processor.  A new Jamon Processor Feature can be used to
+    provide a default processor version, but other versions can be
+    chosen on a per-project basis via project properties.
+  </&>
+</ul>
+
 <a name="2.3.0"/><h3>Jamon Changes from 2.2.2 to 2.3.0</h3></a>
 <ul>
   <&| change; incompatible=true &>
     Full "mavenification", and more granular libraries. In particular,
     a creation of a <code>jamon-runtime</code> jar, containing the
-    minimal classes needed at runtime. 
+    minimal classes needed at runtime.
   </&>
 
   <&| change; incompatible=true &>
@@ -26,7 +37,7 @@
   </&>
 
   <&| change &>
-    Fix end of line whitespace '\'-consumption for Windows line endings. 
+    Fix end of line whitespace '\'-consumption for Windows line endings.
     (#1751664)
   </&>
 </ul>

@@ -15,6 +15,12 @@ An Eclipse plugin for Jamon is available.  The plugin offers the following featu
 </ul>
 
 To install the plugin, simply point your Eclipse's update manager
-to <code>http://www.jamon.org/eclipse/updates</code>.
+to <code>http://www.jamon.org/eclipse/updates</code>, and install both
+the Jamon feature and the Jamon Processor Feature.
+<p>
 A java project can be Jamon-enabled via Project Properties->Jamon.
-Syntax highlighting can be configured via Window->Preferences->Jamon Syntax
+By default, the jamon processor used is the one included with the
+Jamon Processor Feature, but you can also choose other versions of the
+jamon-processor jar.  Note that this only works with jamon versions
+2.3 and later.
+<p>
