@@ -6,11 +6,11 @@
 
 <h2><& title &></h2>
 
-<a name="eclipse-2.3.1"/><h3>Eclipse Plugin Changes from 2.3.0 to 2.3.1</h3>
+<a name="eclipse-2.3.1"/><h3>Eclipse Feature Changes from 2.3.0.1 to 2.3.1</h3>
 <ul>
   <&| change &>
-    The Eclipse plugin is no longer tied to a single version of Jamon.
-    This version of the plugin will work with versions 2.3 and later
+    The Eclipse feature is no longer tied to a single version of Jamon.
+    This version of the feature will work with versions 2.3 and later
     of jamon-processor.  A new Jamon Processor Feature can be used to
     provide a default processor version, but other versions can be
     chosen on a per-project basis via project properties.
