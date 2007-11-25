@@ -9,6 +9,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -141,7 +142,38 @@ public class TemplateBuilder extends IncrementalProjectBuilder
     private synchronized void fullBuild() throws CoreException
     {
         m_dependencies = new TemplateDependencies();
-        getProject().accept(new BuildVisitor());
+        BuildVisitor buildVisitor = new BuildVisitor();
+        if (buildVisitor.hasRuntimeJar())
+        {
+            deleteProjectMarkers();
+            getProject().accept(buildVisitor);
+        }
+        else
+        {
+            createMissingRuntimeJarMarker();
+        }
+    }
+
+    /**
+     * Delete any project-level markers.
+     * @throws CoreException
+     */
+    private void deleteProjectMarkers() throws CoreException
+    {
+        getProject().deleteMarkers(
+            JamonProjectPlugin.getProjectMarkerType(), false, IResource.DEPTH_ZERO);
+    }
+
+    private void createMissingRuntimeJarMarker() throws CoreException
+    {
+        deleteProjectMarkers();
+        IMarker marker = getProject().createMarker(JamonProjectPlugin.getProjectMarkerType());
+        HashMap<String, Object> attributes = new HashMap<String, Object>();
+        attributes.put(
+            IMarker.MESSAGE,
+            "This project is marked as a jamon project, but does not has a jamon-runtime jar on it's classpath");
+        attributes.put(IMarker.SEVERITY, IMarker.SEVERITY_ERROR);
+        marker.setAttributes(attributes);
     }
 
     private JamonNature getNature() throws CoreException
@@ -151,18 +183,26 @@ public class TemplateBuilder extends IncrementalProjectBuilder
 
     private synchronized void incrementalBuild(IResourceDelta delta) throws CoreException
     {
-        BuildVisitor visitor = new BuildVisitor();
-        delta.accept(visitor);
-        @SuppressWarnings("unchecked") Set<IPath> changed = visitor.getChanged();
-        IFolder templateDir = getNature().getTemplateSourceFolder();
-        for (IPath s: changed)
+        BuildVisitor buildVisitor = new BuildVisitor();
+        if (buildVisitor.hasRuntimeJar())
         {
-            for (String dependency : m_dependencies.getDependenciesOf(s.toString()))
+            deleteProjectMarkers();
+            delta.accept(buildVisitor);
+            @SuppressWarnings("unchecked") Set<IPath> changed = buildVisitor.getChanged();
+            IFolder templateDir = getNature().getTemplateSourceFolder();
+            for (IPath s: changed)
             {
-                visitor.visit(templateDir.findMember(
-                    new Path(dependency).addFileExtension(
-                        JamonNature.JAMON_EXTENSION)));
+                for (String dependency : m_dependencies.getDependenciesOf(s.toString()))
+                {
+                    buildVisitor.visit(templateDir.findMember(
+                        new Path(dependency).addFileExtension(
+                            JamonNature.JAMON_EXTENSION)));
+                }
             }
+        }
+        else
+        {
+            createMissingRuntimeJarMarker();
         }
     }
 
@@ -177,11 +217,12 @@ public class TemplateBuilder extends IncrementalProjectBuilder
         {
             m_templateDir = getNature().getTemplateSourceFolder();
             m_source = new ResourceTemplateSource(m_templateDir);
-            m_templateParser =
-                new ProjectClassLoader(
-                    getJavaProject(),
-                    JamonNature.getProcessorJarLocations(getProject()).jarFile(getProject()))
-                .createTemplateParser(m_source);
+            ProjectClassLoader projectClassLoader = new ProjectClassLoader(
+                getJavaProject(),
+                JamonNature.getProcessorJarLocations(getProject()).jarFile(getProject()));
+
+            hasRuntimeJar = projectClassLoader.hasRuntimeJar();
+            m_templateParser = projectClassLoader.createTemplateParser(m_source);
 
             m_outFolder = getNature().getTemplateOutputFolder();
             m_changed = new HashSet<IPath>();
@@ -197,6 +238,7 @@ public class TemplateBuilder extends IncrementalProjectBuilder
         private final IFolder m_templateDir;
         private final IFolder m_outFolder;
         private final Set<IPath> m_changed;
+        private final boolean hasRuntimeJar;
 
         private void createParents(IContainer p_container) throws CoreException
         {
@@ -215,6 +257,8 @@ public class TemplateBuilder extends IncrementalProjectBuilder
                 }
             }
         }
+
+        public boolean hasRuntimeJar() { return hasRuntimeJar; }
 
         private void markFile(ParserError e) throws CoreException
         {

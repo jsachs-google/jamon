@@ -128,6 +128,13 @@
           <persistent value="true"/>
        </extension>
        <extension
+             id="projectMarker"
+             name="Project Marker"
+             point="org.eclipse.core.resources.markers">
+          <super type="org.jamon.project.parentMarker"/>
+          <persistent value="true"/>
+       </extension>
+       <extension
              id="org.jamon.eclipse.editor.document_setup_participant"
              name="Editor Participant"
              point="org.eclipse.core.filebuffers.documentSetup">

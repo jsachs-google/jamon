@@ -59,6 +59,11 @@ public class JamonProjectPlugin extends AbstractUIPlugin
         return getDefault().pluginId() + ".jamonMarker";
     }
 
+    public static String getProjectMarkerType()
+    {
+        return getDefault().pluginId() + ".projectMarker";
+    }
+
     public static String getParentMarkerType()
     {
         return getDefault().pluginId() + ".parentMarker";

@@ -71,6 +71,23 @@ public class ProjectClassLoader extends URLClassLoader
     }
 
     /**
+     * Determine if the project has the runtime jar in its classpath
+     * @return {@code true} if it has a runtime jar
+     * @throws CoreException
+     */
+    public boolean hasRuntimeJar()
+    {
+        try
+        {
+            loadClass("org.jamon.Renderer");
+            return true;
+        }
+        catch (ClassNotFoundException e) {
+            return false;
+        }
+    }
+
+    /**
      * Create a {@code TemplateParser} instance
      * @param p_templateSource the {@code TemplateSource} for the parser
      * @return a new parser instance
