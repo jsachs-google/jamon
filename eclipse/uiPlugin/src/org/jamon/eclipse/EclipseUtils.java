@@ -73,7 +73,7 @@ public class EclipseUtils
             IStatus.ERROR,
             JamonProjectPlugin.getDefault().getBundle().getSymbolicName(),
             0,
-            e.getMessage(),
+            e.getMessage() != null ? e.getMessage() : e.getClass().getName(),
             e));
     }
 
