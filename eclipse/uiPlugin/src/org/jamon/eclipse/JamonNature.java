@@ -175,6 +175,8 @@ public class JamonNature implements IProjectNature {
 
     public void deconfigure() throws CoreException {
         removeTsrc();
+        getProject().deleteMarkers(
+            JamonProjectPlugin.getParentMarkerType(), true, IResource.DEPTH_INFINITE);
     }
 
     public IProject getProject() {
