@@ -93,7 +93,11 @@ private static final String GEN_SOURCES_DIR = "genSources";
     project.open(null);
     ((IJavaProject) project.getNature(JavaCore.NATURE_ID)).setRawClasspath(
       new IClasspathEntry[] { JavaCore.newSourceEntry(new Path("/foo/src")) }, null);
-    JamonNature.addToProject(project, "templates", GEN_SOURCES_DIR, new ProcessorJarLocations());
+    JamonNature.addToProject(
+        project,
+        "templates",
+        GEN_SOURCES_DIR,
+        new ProcessorJarLocations().withProcessorSourceType(ProcessorSourceType.PLUGIN));
     return project;
   }
 
