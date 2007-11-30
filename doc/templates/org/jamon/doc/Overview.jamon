@@ -67,7 +67,7 @@ Create a java file <a class="file" href="JamonQs.java">JamonQs.java</a>:
 
 <li>
 Process the template:
-<pre class="tty">java org.jamon.TemplateProcessor --destDir=. QsTemp</pre>
+<pre class="tty">java org.jamon.compiler.TemplateProcessor --destDir=. QsTemp</pre>
 
 <li>
 Compile everything:
