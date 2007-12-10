@@ -64,23 +64,24 @@
     Other ignored white space includes whitespace immediately after
     the following tags:
     <ul class="referenceTagList">
-      <li><& code: "</%args>" &></li>
-      <li><& code: "</%doc>" &></li>
-      <li><& code: "</%frag>" &></li>
-      <li><& code: "</%xargs>" &></li>
-      <li><& code: "<%abstract>" &></li>
-      <li><& code: "</%class>" &></li>
-      <li><& code: "</%import>" &></li>
-      <li><& code: "</%implements>" &></li>
-      <li><& code: "</%generic>" &></li>
-      <li><& code: "</%java>" &></li>
       <li><& code: "<%def ...>" &> and <& code: "</%def>" &></li>
-      <li><& code: "</%absmeth>" &></li>
       <li><& code: "<%method ...>" &> and <& code: "</%method>" &></li>
       <li><& code: "<%override ...>" &> and <& code: "</%override>" &></li>
+      <li><& code: "</%absmeth>" &></li>
       <li><& code: "</%alias>" &></li>
-      <li><& code: "<%encoding ...>" &></li>
+      <li><& code: "</%args>" &></li>
+      <li><& code: "</%class>" &></li>
+      <li><& code: "</%doc>" &></li>
+      <li><& code: "</%frag>" &></li>
+      <li><& code: "</%generic>" &></li>
+      <li><& code: "</%implements>" &></li>
+      <li><& code: "</%import>" &></li>
+      <li><& code: "</%java>" &></li>
+      <li><& code: "</%xargs>" &></li>
+      <li><& code: "<%abstract>" &></li>
       <li><& code: "<%annotate ...%>" &></li>
+      <li><& code: "<%encoding ...>" &></li>
+      <li><& code: "<%escape ...%>" &></li>
     </ul>
 
     If you would like to force whitespace to appear after one of the
@@ -127,9 +128,8 @@
     JavaScript escaping is also available
 
     <& _TemplateInclude: "/templates/org/jamon/doc/reference/javascriptEscapedEmit" &>
-    producing <& reference/javascriptEscapedEmit &>
-
-    <pre class="tty"><&| escape//Html &><& reference/javascriptEscapedEmit &></&></pre>
+    producing
+    <&| templateOutput &><& reference/javascriptEscapedEmit &></&>
 
     The available escaping mechanism are
     <ul>
@@ -155,9 +155,23 @@
     <p>
 
     In addition the <em>default</em> escaping mechanism can also be
-    changed, however this is done from outside the template, see the
-    Jamon <a href="UserGuide.html">user's guide</a> for further
-    details.
+    changed.  This can be done at the template by use of the
+    <& code: "<%escape ...%>" &> tag.  For example,
+
+    <& _TemplateInclude: "/templates/org/jamon/doc/reference/documentEscape" &>
+    will produce
+    <&| templateOutput &><& reference/documentEscape &></&>
+
+    Finally, by using <&| subsectionLink: SubSection.JAMON_PROPERTIES
+    &>jamon.properties</&>, escaping can be set for all templates in a
+    directory and its subdirectories.  For example, if
+    jamon.properties includes the line:
+
+     <pre class="properties">
+org.jamon.escape=u
+</pre>
+    Then templates will default to URL escaping, unless they specify
+    their own default escaping with a <& code: "<%escape ...%>" &> tag.
 
     <h4><a name="emitMode">Mode</a></h4>
 
@@ -307,9 +321,9 @@ This component has been accessed <% pageViews++ %> times.
   <& subsection: SubSection.IMPLEMENTS &>
 
     Templates can be declared to implement interfaces through use of the
-    <code><% "<%implements ... %>" %></code> tag. It is not possible to 
+    <code><% "<%implements ... %>" %></code> tag. It is not possible to
     add arbitrary public methods to generated templates, so the use of
-    this is practically limited to capturing methods such as 
+    this is practically limited to capturing methods such as
     <code>setFoo()</code> and <code>makeRenderer()</code>.
     <p>
     For example, given
@@ -675,7 +689,7 @@ org.jamon.contextType=String
   <ul>
     <li><b>org.jamon.emitMode</b> - can be one of <code>standard</code>,
     <code>limited</code> or <code>strict</code>.  See the section on
-    <a href="emitMode">Emit Modes</a> for more information.
+    <&| subsectionLink: SubSection.EMIT_STATEMENTS &>Emit Modes</&> for more information.
     <li><b>org.jamon.contextType</b> - sets the type for the jamon context
     variable; if this property is the empty string, then there is no context
     variable.  See the section on <&| subsectionLink: SubSection.CONTEXT &>Context</&> for more
@@ -780,4 +794,9 @@ org.jamon.alais.legal=/attorneys/documents
 <%args>SubSection subSection;</%args>
 <%frag content/>
 <a href="#<% subSection.label %>"><& content &></a>
+</%def>
+
+<%def templateOutput>
+<%frag content/>
+<pre class="tty"><&| escape//Html &><& content &></&></pre>
 </%def>

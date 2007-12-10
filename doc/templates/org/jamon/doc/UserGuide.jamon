@@ -136,4 +136,5 @@ The available escaping mechanisms are:
 </ul>
 
 See the <a href="Reference.html">template reference manual</a> for
-further details.
+further details, including how to set default escaping for an entire
+set of templates at once.
