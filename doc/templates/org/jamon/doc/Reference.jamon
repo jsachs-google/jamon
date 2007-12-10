@@ -114,7 +114,7 @@
     <& _TemplateInclude: "/templates/org/jamon/doc/reference/escapedEmit" &>
     produces
 
-    <pre class="tty"><&| escape//Html &><& reference/escapedEmit &></&></pre>
+    <&| templateOutput &><& reference/escapedEmit &></&>
 
     However different escaping mechanisms can be specified in the
     template itself.  A string can be emitted with no escaping as
@@ -123,7 +123,7 @@
     <& _TemplateInclude: "/templates/org/jamon/doc/reference/unescapedEmit" &>
     producing
 
-    <pre class="tty"><&| escape//Html &><& reference/unescapedEmit &></&></pre>
+    <&| templateOutput &><& reference/unescapedEmit &></&>
 
     JavaScript escaping is also available
 
@@ -272,7 +272,7 @@ people attending.
     <& _TemplateInclude: "/templates/restaurant/Lunch" &>
 
     Then rendering <code>/restaurant/Lunch</code> produces
-    <pre class="tty"><&| escape//Html &><& /restaurant/Lunch &></&></pre>
+    <&| templateOutput &><& /restaurant/Lunch &></&>
 
   <& subsection: SubSection.CLASS_CODE &>
 
@@ -509,7 +509,7 @@ Today's temperature is
     <& _TemplateInclude: "/templates/accounting/summary" &>
 
     resulting in something like
-    <pre class="tty"><& /accounting/summary &></pre>
+    <&| templateOutput &><& /accounting/summary &></&>
 
     When using positional parameter syntax to invoke templates which
     extend abstract templates, first pass the required arguments of the
@@ -538,7 +538,7 @@ Today's temperature is
     For example:
     <& _TemplateInclude: "/templates/org/jamon/doc/reference/defExample" &>
     produces
-    <pre class="tty"><&| escape//Html &><& reference/defExample &></&></pre>
+    <&| templateOutput &><& reference/defExample &></&>
     <p>
 
     Protected templates ("<def>methods</def>") can be declared via
@@ -570,14 +570,14 @@ Today's temperature is
     <& _TemplateInclude: "/templates/weather/Sunny" &>
 
     resulting in something like
-    <pre class="tty"><&| escape//Html &>
-<& /weather/Sunny: new weather.WeatherReport("Monday", "Miami") &></&></pre>
+    <&| templateOutput &>
+<& /weather/Sunny: new weather.WeatherReport("Monday", "Miami") &></&>
 
     However, <code>/weather/StormWarning</code> could contain:
     <& _TemplateInclude: "/templates/weather/StormWarning" &>
     resulting in something like
-    <pre class="tty"><&| escape//Html &>
-<& /weather/StormWarning: new weather.WeatherReport("Friday", "Boston") &></&></pre>
+    <&| templateOutput &>
+<& /weather/StormWarning: new weather.WeatherReport("Friday", "Boston") &></&>
 
   <& subsection: SubSection.FRAGMENT_ARGUMENTS &>
 
@@ -610,7 +610,7 @@ Today's temperature is
     <& _TemplateInclude:
            "/templates/org/jamon/doc/reference/fragExample" &>
     produces
-    <pre class="tty"><&| escape//Html &><& reference/fragExample &></&></pre>
+    <&| templateOutput &><& reference/fragExample &></&>
 
   <& subsection: SubSection.PARAMETRIZED_FRAGMENT_ARGUMENTS &>
 
@@ -638,7 +638,7 @@ Today's temperature is
     For example <& _TemplateInclude:
       "/templates/org/jamon/doc/reference/paramFragExample" &>
     produces
-    <pre class="tty"><&| escape//Html &><& reference/paramFragExample &></&></pre>
+    <&| templateOutput &><& reference/paramFragExample &></&>
 
   <& subsection: SubSection.CONTEXT &>
     In addition to explicit arguments, a special variable called
@@ -706,7 +706,7 @@ org.jamon.contextType=String
       "/templates/org/jamon/doc/reference/map" &> then
     <& _TemplateInclude:
       "/templates/org/jamon/doc/reference/mapCaller" &> produces
-    <pre class="tty"><&| escape//Html &><& reference/mapCaller &></&></pre>
+    <&| templateOutput &><& reference/mapCaller &></&>
 
     <p>
 
