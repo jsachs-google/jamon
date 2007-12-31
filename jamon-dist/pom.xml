@@ -5,7 +5,7 @@
     <artifactId>jamon-dist</artifactId>
     <name>jamon-dist</name>
     <version>SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
     <description>Jamon uber distribution</description>
     <url>http://www.jamon.org/</url>
     <issueManagement>
@@ -87,83 +87,64 @@
             <email>ian@red-bean.com</email>
         </developer>
     </developers>
+
+    <dependencies>
+      <dependency>
+          <groupId>org.jamon</groupId>
+          <artifactId>jamon-runtime</artifactId>
+          <version>2.3.0</version>
+      </dependency>
+      <dependency>
+          <groupId>org.jamon</groupId>
+          <artifactId>jamon-api</artifactId>
+          <version>2.3.0</version>
+      </dependency>
+      <dependency>
+          <groupId>org.jamon</groupId>
+          <artifactId>jamon-processor</artifactId>
+          <version>2.3.1</version>
+      </dependency>
+      <dependency>
+          <groupId>org.jamon</groupId>
+          <artifactId>jamon-junit</artifactId>
+          <version>2.3.0</version>
+      </dependency>
+      <dependency>
+          <groupId>org.jamon</groupId>
+          <artifactId>jamon-anttask</artifactId>
+          <version>2.3.1</version>
+      </dependency>
+      <dependency>
+          <groupId>org.jamon</groupId>
+          <artifactId>jamon-stdlib</artifactId>
+          <version>2.3.0</version>
+      </dependency>
+      <dependency>
+          <groupId>org.jamon</groupId>
+          <artifactId>jamon-doc</artifactId>
+          <version>2.3.0</version>
+      </dependency>
+    </dependencies>
     <build>
-        <resources>
-            <resource>
-                <directory>target/jars</directory>
-            </resource>
-            <resource>
-                <directory>src/main/resources</directory>
-            </resource>
-        </resources>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>copy</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>copy</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>target/jars</outputDirectory>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>org.jamon</groupId>
-                                    <artifactId>jamon-runtime</artifactId>
-                                    <version>2.3.0</version>
-                                    <type>jar</type>
-                                    <overWrite>true</overWrite>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.jamon</groupId>
-                                    <artifactId>jamon-api</artifactId>
-                                    <version>2.3.0</version>
-                                    <type>jar</type>
-                                    <overWrite>true</overWrite>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.jamon</groupId>
-                                    <artifactId>jamon-processor</artifactId>
-                                    <version>2.3.1</version>
-                                    <type>jar</type>
-                                    <overWrite>true</overWrite>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.jamon</groupId>
-                                    <artifactId>jamon-junit</artifactId>
-                                    <version>2.3.0</version>
-                                    <type>jar</type>
-                                    <overWrite>true</overWrite>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.jamon</groupId>
-                                    <artifactId>jamon-anttask</artifactId>
-                                    <version>2.3.1</version>
-                                    <type>jar</type>
-                                    <overWrite>true</overWrite>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.jamon</groupId>
-                                    <artifactId>jamon-stdlib</artifactId>
-                                    <version>2.3.0</version>
-                                    <type>jar</type>
-                                    <overWrite>true</overWrite>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.jamon</groupId>
-                                    <artifactId>jamon-doc</artifactId>
-                                    <version>2.3.0</version>
-                                    <type>jar</type>
-                                    <overWrite>true</overWrite>
-                                    <destFileName>jamon-docs.zip</destFileName>
-                                </artifactItem>
-                            </artifactItems>
-                        </configuration>
-                    </execution>
-                </executions>
+          <plugin>
+              <artifactId>maven-assembly-plugin</artifactId>
+              <version>2.2-beta-1</version>
+              <configuration>
+                <appendAssemblyId>false</appendAssemblyId>
+                <finalName>jamon-dist-${project.version}</finalName>
+                <descriptors>
+                  <descriptor>src/assembly.xml</descriptor>
+                </descriptors>
+              </configuration>
+              <executions>
+                <execution>
+                  <phase>package</phase>
+                  <goals>
+                    <goal>assembly</goal>
+                  </goals>
+                </execution>
+              </executions>
             </plugin>
         </plugins>
     </build>

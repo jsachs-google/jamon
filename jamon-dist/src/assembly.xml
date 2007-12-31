@@ -1,0 +1,22 @@
+<assembly>
+  <id>dist</id>
+  <formats>
+    <format>zip</format>
+    <format>tar.gz</format>
+  </formats>
+  <fileSets>
+    <fileSet>
+      <directory>src/main/resources</directory>
+      <outputDirectory>/</outputDirectory>
+    </fileSet>
+  </fileSets>
+  <dependencySets>
+    <dependencySet>
+      <useTransitiveFiltering>true</useTransitiveFiltering>
+      <includes>
+        <include>jamon*</include>
+      </includes>
+      <outputDirectory>/</outputDirectory>
+    </dependencySet>
+  </dependencySets>
+</assembly>
