@@ -23,9 +23,8 @@
   </target>
 
   <target name="localSite">
-    <exec executable="sh" outputproperty="feature.version">
-      <arg value="-c"/>
-      <arg value='grep version ../jamonFeature/feature.xml|head -2|tail -1|cut -d\" -f2'/>
+    <exec executable="date" outputproperty="feature.version">
+      <arg value='+%Y.%m.%d'/>
     </exec>
     <zip zipfile="jamon-updateSite-${feature.version}.zip"
          basedir="."
