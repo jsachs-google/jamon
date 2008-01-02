@@ -155,7 +155,7 @@
     <p>
 
     In addition the <em>default</em> escaping mechanism can also be
-    changed.  This can be done at the template by use of the
+    changed.  This can be done at the template level by use of the
     <& code: "<%escape ...%>" &> tag.  For example,
 
     <& _TemplateInclude: "/templates/org/jamon/doc/reference/documentEscape" &>
