@@ -21,6 +21,9 @@
           <filter
                 name="nature"
                 value="org.eclipse.jdt.core.javanature"/>
+          <enabledWhen>
+          	  <instanceof value="org.eclipse.jdt.core.IJavaProject"/>
+          </enabledWhen>
        </page>
     </extension>
     <extension
