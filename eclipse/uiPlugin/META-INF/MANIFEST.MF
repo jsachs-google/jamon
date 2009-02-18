@@ -20,3 +20,4 @@ Eclipse-LazyStart: true
 Bundle-Vendor: jamon.org
 Provide-Package: org.jamon.eclipse;x-friends:="org.jamon.ui.test"
 Bundle-ManifestVersion: 2
+Export-Package: org.jamon.api
