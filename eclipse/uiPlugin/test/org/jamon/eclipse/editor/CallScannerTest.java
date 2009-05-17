@@ -10,11 +10,11 @@ public class CallScannerTest extends AbstractScannerTest
         super.setUp();
         m_styleProvider.setStyle(SyntaxType.CALL, true, false);
         m_styleProvider.setStyle(SyntaxType.CALL_PATH, false, true);
-        m_scanner = new CallScanner(m_styleProvider, "<&", "&>");
     }
 
     public void testAddListener()
     {
+        setScanner(0);
         assertTrue(m_styleProvider.containsListener(
             SyntaxType.CALL, (SyntaxStyleChangeListener) m_scanner));
         assertTrue(m_styleProvider.containsListener(
@@ -29,6 +29,7 @@ public class CallScannerTest extends AbstractScannerTest
 
   public void testSimple()
   {
+    setScanner(0);
     setDocument("<& /a/b/c &>");
     checkToken(2, SyntaxType.CALL);
     skipNTokens(1); //checkToken(1, CallScanner.WHITESPACE);
@@ -38,8 +39,33 @@ public class CallScannerTest extends AbstractScannerTest
     checkDone();
   }
 
+  public void testSimpleWithContent()
+  {
+    setScanner(1);
+    setDocument("<&| /a/b/c &>");
+    checkToken(3, SyntaxType.CALL);
+    skipNTokens(1); //checkToken(1, CallScanner.WHITESPACE);
+    checkToken(6, SyntaxType.CALL_PATH);
+    skipNTokens(1);
+    checkToken(2, SyntaxType.CALL);
+    checkDone();
+  }
+
+  public void testSimpleWithMultiContent()
+  {
+    setScanner(2);
+    setDocument("<&|| /a/b/c &>");
+    checkToken(4, SyntaxType.CALL);
+    skipNTokens(1); //checkToken(1, CallScanner.WHITESPACE);
+    checkToken(6, SyntaxType.CALL_PATH);
+    skipNTokens(1);
+    checkToken(2, SyntaxType.CALL);
+    checkDone();
+  }
+
   public void testWithArgs()
   {
+    setScanner(0);
     setDocument("<& /a/b/c : x => 3; y = \"yes\" &>");
     checkToken(2, SyntaxType.CALL);
     skipNTokens(1); //checkToken(1, CallScanner.WHITESPACE);
@@ -49,8 +75,21 @@ public class CallScannerTest extends AbstractScannerTest
     checkDone();
   }
 
+  public void testWithArgsAndContent()
+  {
+      setScanner(1);
+      setDocument("<&| /a/b/c : x => 3; y = \"yes\" &>");
+      checkToken(3, SyntaxType.CALL);
+      skipNTokens(1); //checkToken(1, CallScanner.WHITESPACE);
+      checkToken(6, SyntaxType.CALL_PATH);
+      skipNTokens(17);
+      checkToken(2, SyntaxType.CALL);
+      checkDone();
+  }
+
   public void testPartial()
   {
+    setScanner(0);
     setDocument("<& /a/b/c  : x => 3 &");
     checkToken(2, SyntaxType.CALL);
     skipNTokens(1); // checkToken(1, CallScanner.WHITESPACE);
@@ -59,4 +98,12 @@ public class CallScannerTest extends AbstractScannerTest
     checkDone();
   }
 
+  private void setScanner(int pipeCount)
+  {
+    StringBuilder openTag = new StringBuilder("<&");
+    for (int i = 0; i < pipeCount; i++) {
+      openTag.append('|');
+    }
+    m_scanner = new CallScanner(m_styleProvider, openTag.toString(), "&>");
+  }
 }

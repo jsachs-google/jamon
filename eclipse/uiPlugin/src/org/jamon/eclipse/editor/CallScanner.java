@@ -54,12 +54,12 @@ public class CallScanner extends AbstractScanner
 
     else if (sawPath)
     {
-      if (lookingAt(limit-2, close))
+      if (lookingAt(limit-close.length, close))
       {
-        if (offset == limit - 2)
+        if (offset == limit - close.length)
         {
-          tokenLength = 2;
-          offset += 2;
+          tokenLength = close.length;
+          offset += close.length;
           return m_tagToken;
         }
       }

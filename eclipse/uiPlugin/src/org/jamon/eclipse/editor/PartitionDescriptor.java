@@ -19,6 +19,7 @@ public class PartitionDescriptor {
         make(true, SimpleScanner.makeFactory(SyntaxType.CLASS), "<%class>", "</%class>", false);
         make(false, SimpleScanner.makeFactory(SyntaxType.ALIAS), "<%alias>", "</%alias>", false);
         make(false, SimpleScanner.makeFactory(SyntaxType.IMPORT),"<%import>", "</%import>", false);
+        make(true, CallScanner.FACTORY, "<&||", "&>", false);
         make(true, CallScanner.FACTORY, "<&|", "&>", false);
         make(true, CallScanner.FACTORY, "<&", "&>", false);
         make(true, SimpleScanner.makeFactory(SyntaxType.FLOW_CONTROL), "<%while", "%>", true);
@@ -46,7 +47,7 @@ public class PartitionDescriptor {
         boolean p_hasStrings,
         DisposableScannerFactory p_disposableScannerFactory,
         String p_openTag,
-        String p_closeTag, 
+        String p_closeTag,
         boolean p_openTagRequiresWhitespace)
     {
         VALUES.add(new PartitionDescriptor(
@@ -58,7 +59,7 @@ public class PartitionDescriptor {
       boolean p_hasStrings,
       DisposableScannerFactory p_disposableScannerFactory,
       String p_openTag,
-      String p_closeTag, 
+      String p_closeTag,
       boolean p_openTagWhitespace)
   {
       m_openTag = p_openTag;
@@ -97,7 +98,7 @@ public class PartitionDescriptor {
   {
     return m_openChars;
   }
-  
+
   public boolean openTagRequiresTrailingWhitespace()
   {
     return m_openTagWhitespace;
