@@ -36,16 +36,6 @@ public class CallScanner extends AbstractScanner
       p_styleProvider.addSyntaxStyleChangeListener(SyntaxType.CALL_PATH, this);
   }
 
-  public char[] open()
-  {
-    return open;
-  }
-
-  public char[] close()
-  {
-      return close;
-  }
-
   public IToken nextToken()
   {
     if (offset >= limit)
@@ -57,8 +47,8 @@ public class CallScanner extends AbstractScanner
     if (initialOffset == offset)
     {
       Assert.isTrue(lookingAt(offset, open));
-      tokenLength = 2;
-      offset += 2;
+      tokenLength = open.length;
+      offset += tokenLength;
       return m_tagToken;
     }
 
