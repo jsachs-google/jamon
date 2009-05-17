@@ -94,7 +94,8 @@ public class JavaMarkerListener implements IResourceChangeListener
 
                 if (message != null && message.length() > 0
                     && !isMarkerProxyImportWarning(p_generatedResource, message)
-                    && !isMarkerIOExceptionNotThrownWarning(message))
+                    && !isMarkerIOExceptionNotThrownWarning(message)
+                    && !isMarkerUnnecessarySuppressWarnings(message))
                 {
                     EclipseUtils.populateProblemMarker(
                         p_generatedResource
@@ -118,6 +119,16 @@ public class JavaMarkerListener implements IResourceChangeListener
           // to not warn about this.
           return message.startsWith(
             "The declared exception IOException is not actually thrown by the method __jamon_innerUnit__");
+        }
+
+        private boolean isMarkerUnnecessarySuppressWarnings(String message) {
+            // It's not uncommon to have an empty method definition in a
+            // parent; since there are no statements, it cannot throw an
+            // IOException, but children might.  Eclipse is not smart enough
+            // to not warn about this.
+            return message.equals("Unnecessary @SuppressWarnings(\"hiding\")")
+            || message.equals("Unnecessary @SuppressWarnings(\"unused\")")
+            || message.equals("Unnecessary @SuppressWarnings(\"unchecked\")");
         }
 
 
