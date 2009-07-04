@@ -33,9 +33,6 @@ public class DocScanner extends AbstractScanner
     };
   }
 
-  public char[] close() { return m_close; }
-  public char[] open() { return m_open; }
-
   public IToken nextToken()
   {
     if (offset >= limit)
