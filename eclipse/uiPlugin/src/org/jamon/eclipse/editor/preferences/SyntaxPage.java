@@ -41,6 +41,7 @@ public class SyntaxPage extends PreferencePage implements IWorkbenchPreferencePa
     private ColorSelector m_foregroundColorSelector = null;
     private ColorSelector m_backgroundColorSelector = null;
     private Button m_backgroundUseDefault = null;
+    private Button m_syntaxHighlightingEnabledCheckbox = null;
     private EnumMap<StyleOption, Button> styleOptionButtons =
         new EnumMap<StyleOption, Button>(StyleOption.class);
 
@@ -68,12 +69,12 @@ public class SyntaxPage extends PreferencePage implements IWorkbenchPreferencePa
                     styleOptionButtons.get(styleOption).setSelection(
                         style.isOptionSet(styleOption));
                 }
-                setEnablement(true);
+                setStyleEnablement(true);
             }
             else
             {
                 m_currentSelectedSyntaxType = null;
-                setEnablement(false);
+                setStyleEnablement(false);
             }
         }
     }
@@ -131,7 +132,8 @@ public class SyntaxPage extends PreferencePage implements IWorkbenchPreferencePa
             checkbox.setText(styleOption.getLabel());
             styleOptionButtons.put(styleOption, checkbox);
         }
-        setEnablement(false);
+        setStyleEnablement(false);
+        setAllOptionsEnablement(m_syntaxPreferences.isHighlightingEnabled());
     }
 
     private GridData makeGridData(int p_horizontalSpan)
@@ -150,6 +152,25 @@ public class SyntaxPage extends PreferencePage implements IWorkbenchPreferencePa
         gridData.grabExcessHorizontalSpace = true;
         composite.setLayoutData(gridData);
         composite.setLayout(new GridLayout(2, false));
+
+        m_syntaxHighlightingEnabledCheckbox = new Button(composite, SWT.CHECK | SWT.LEFT);
+        m_syntaxHighlightingEnabledCheckbox.setText("Use syntax highlighting (only affects newly opened documents)");
+        m_syntaxHighlightingEnabledCheckbox.setSelection(m_syntaxPreferences.isHighlightingEnabled());
+        m_syntaxHighlightingEnabledCheckbox.setLayoutData(makeGridData(2));
+
+        m_syntaxHighlightingEnabledCheckbox.addSelectionListener(new SelectionListener() {
+
+            public void widgetDefaultSelected(SelectionEvent selectionEvent)
+            {
+                widgetSelected(selectionEvent);
+            }
+
+            public void widgetSelected(SelectionEvent selectionEvent)
+            {
+                setAllOptionsEnablement(m_syntaxHighlightingEnabledCheckbox.getSelection());
+            }
+        });
+
         Label elementLabel = new Label(composite, SWT.NONE);
         elementLabel.setText("Element");
 
@@ -176,6 +197,7 @@ public class SyntaxPage extends PreferencePage implements IWorkbenchPreferencePa
     @Override public boolean performOk()
     {
         saveCurrentStyle();
+        m_syntaxPreferences.setHighlightingEnabled(m_syntaxHighlightingEnabledCheckbox.getSelection());
         m_syntaxPreferences.apply();
         return true;
     }
@@ -208,7 +230,7 @@ public class SyntaxPage extends PreferencePage implements IWorkbenchPreferencePa
         }
     }
 
-    private void setEnablement(boolean enabled)
+    private void setStyleEnablement(boolean enabled)
     {
         m_foregroundColorSelector.setEnabled(enabled);
         m_backgroundUseDefault.setEnabled(enabled);
@@ -217,5 +239,11 @@ public class SyntaxPage extends PreferencePage implements IWorkbenchPreferencePa
         {
             button.setEnabled(enabled);
         }
+    }
+
+    private void setAllOptionsEnablement(boolean enabled) {
+        styleList.setEnabled(enabled);
+        setStyleEnablement(false);
+        styleList.setSelection(-1);
     }
 }

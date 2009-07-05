@@ -11,12 +11,14 @@ import org.jamon.eclipse.JamonProjectPlugin;
 public class SyntaxPreferences
 {
     final static String SYNTAX_PREF_BASE = "org.jamon.syntax.";
+    final static String HIGHLIGHTING_ENABLED_KEY = SYNTAX_PREF_BASE + "highlightingEnabled";
     final static String FOREGROUND_PREF_KEY = ".foreground";
     final static String BACKGROUND_PREF_KEY = ".background";
     final static String STYLE_PREF_KEY = ".style";
 
     private final Map<SyntaxType, Style> m_syntaxTypeStyles =
         new EnumMap<SyntaxType, Style>(SyntaxType.class);
+    private Boolean m_useSyntaxHighlighting;
     private static IPreferenceStore s_preferenceStore;
 
     public static Style loadStyle(SyntaxType p_syntaxType)
@@ -28,6 +30,11 @@ public class SyntaxPreferences
         style.setBackground(stringToRgb(
             getPreferenceStore().getString(p_syntaxType.getBackgroundPreferenceKey())));
         return style;
+    }
+
+    public static boolean loadIsHighlightingEnabled()
+    {
+        return getPreferenceStore().getBoolean(HIGHLIGHTING_ENABLED_KEY);
     }
 
     private static Style defaultStyle(SyntaxType p_syntaxType)
@@ -46,6 +53,7 @@ public class SyntaxPreferences
      */
     public void apply()
     {
+        getPreferenceStore().setValue(HIGHLIGHTING_ENABLED_KEY, m_useSyntaxHighlighting);
         for (SyntaxType syntaxType: m_syntaxTypeStyles.keySet())
         {
             final Style style = m_syntaxTypeStyles.get(syntaxType);
@@ -133,8 +141,22 @@ public class SyntaxPreferences
         m_syntaxTypeStyles.put(p_syntaxType, p_style);
     }
 
+    public boolean isHighlightingEnabled()
+    {
+        if (m_useSyntaxHighlighting == null) {
+            m_useSyntaxHighlighting = loadIsHighlightingEnabled();
+        }
+        return m_useSyntaxHighlighting;
+    }
+
+    public void setHighlightingEnabled(boolean p_useSyntaxHighlighting)
+    {
+        m_useSyntaxHighlighting = p_useSyntaxHighlighting;
+    }
+
     public void restoreDefaults()
     {
+        m_useSyntaxHighlighting = true;
         for (SyntaxType syntaxType: SyntaxType.values())
         {
             Style style = new Style();
@@ -152,6 +174,7 @@ public class SyntaxPreferences
         if (s_preferenceStore == null)
         {
             s_preferenceStore = JamonProjectPlugin.getDefault().getPreferenceStore();
+            s_preferenceStore.setDefault(HIGHLIGHTING_ENABLED_KEY, true);
         }
         return s_preferenceStore;
     }

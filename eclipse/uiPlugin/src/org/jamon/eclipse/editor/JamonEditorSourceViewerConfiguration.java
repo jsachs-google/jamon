@@ -33,6 +33,7 @@ import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.text.source.SourceViewerConfiguration;
 import org.jamon.eclipse.JamonAnnotationHover;
 import org.jamon.eclipse.JamonEditor;
+import org.jamon.eclipse.editor.preferences.SyntaxPreferences;
 
 public class JamonEditorSourceViewerConfiguration extends SourceViewerConfiguration
 {
@@ -40,6 +41,8 @@ public class JamonEditorSourceViewerConfiguration extends SourceViewerConfigurat
   private PresentationReconciler m_reconciler;
 
   private Collection<DisposableScanner> m_disposableScanners = new ArrayList<DisposableScanner>();
+
+  private boolean highlightingEnabled = SyntaxPreferences.loadIsHighlightingEnabled();
 
   @Override
   public IAnnotationHover getAnnotationHover(ISourceViewer sourceViewer)
@@ -56,12 +59,18 @@ public class JamonEditorSourceViewerConfiguration extends SourceViewerConfigurat
   @Override
   public String getConfiguredDocumentPartitioning(ISourceViewer sourceViewer)
   {
+    if (!highlightingEnabled) {
+      return super.getConfiguredDocumentPartitioning(sourceViewer);
+    }
     return JamonEditor.JAMON_PARTITIONING;
   }
 
   @Override
   public String[] getConfiguredContentTypes(ISourceViewer sourceViewer)
   {
+    if (!highlightingEnabled) {
+        return super.getConfiguredContentTypes(sourceViewer);
+    }
     String[] result = new String[JamonPartitionScanner.JAMON_PARTITION_TYPES.length + 1];
     System.arraycopy(JamonPartitionScanner.JAMON_PARTITION_TYPES, 0, result, 1, JamonPartitionScanner.JAMON_PARTITION_TYPES.length);
     result[0] = IDocument.DEFAULT_CONTENT_TYPE;
@@ -81,6 +90,10 @@ public class JamonEditorSourceViewerConfiguration extends SourceViewerConfigurat
   @Override
   public IPresentationReconciler getPresentationReconciler(ISourceViewer sourceViewer)
   {
+      if (!highlightingEnabled) {
+          return super.getPresentationReconciler(sourceViewer);
+      }
+
       if (m_reconciler != null)
       {
           return m_reconciler;
