@@ -37,7 +37,7 @@ The code then calls the
 <li>
 Process the template:
 <pre class="tty"
- >java org.jamon.TemplateProcessor --destDir=. HelloTemplate</pre>
+ >java org.jamon.compiler.TemplateProcessor --destDir=. HelloTemplate</pre>
 
 <li>
 Compile everything:
