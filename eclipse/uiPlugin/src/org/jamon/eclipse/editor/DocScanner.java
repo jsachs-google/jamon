@@ -2,7 +2,6 @@ package org.jamon.eclipse.editor;
 
 import org.eclipse.jface.text.rules.IToken;
 import org.eclipse.jface.text.rules.Token;
-import org.eclipse.jface.util.Assert;
 import org.jamon.eclipse.editor.preferences.StyleProvider;
 import org.jamon.eclipse.editor.preferences.SyntaxType;
 

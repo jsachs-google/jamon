@@ -188,7 +188,7 @@ public class TemplateBuilder extends IncrementalProjectBuilder
         {
             deleteProjectMarkers();
             delta.accept(buildVisitor);
-            @SuppressWarnings("unchecked") Set<IPath> changed = buildVisitor.getChanged();
+            Set<IPath> changed = buildVisitor.getChanged();
             IFolder templateDir = getNature().getTemplateSourceFolder();
             for (IPath s: changed)
             {

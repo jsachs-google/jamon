@@ -60,7 +60,7 @@ public class ProjectClassLoader extends URLClassLoader
         {
             return TemplateParser.class.isAssignableFrom(
                 new URLClassLoader(
-                    new URL[] { p_processorJar.toURL() },
+                    new URL[] { p_processorJar.toURI().toURL() },
                     TemplateParser.class.getClassLoader())
                     .loadClass(PARSER_IMPL_NAME));
         }
@@ -112,7 +112,7 @@ public class ProjectClassLoader extends URLClassLoader
         try
         {
             List<URL> urls = classpathUrlsForProject(p_project);
-            urls.add(p_processorJar.toURL());
+            urls.add(p_processorJar.toURI().toURL());
             return urls.toArray(new URL[urls.size()]);
         }
         catch (MalformedURLException e)
@@ -128,7 +128,7 @@ public class ProjectClassLoader extends URLClassLoader
         for (String entry : JavaRuntime.computeDefaultRuntimeClassPath(p_project))
         {
             //TODO - test this with maven dependencies
-            urls.add(new File(entry).toURL());
+            urls.add(new File(entry).toURI().toURL());
         }
         addDependenciesClasspath(p_project, urls);
         return urls;
