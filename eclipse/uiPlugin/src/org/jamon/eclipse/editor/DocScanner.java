@@ -42,9 +42,8 @@ public class DocScanner extends AbstractScanner
 
     tokenOffset = offset;
 
-    if (offset == initialOffset)
+    if (lookingAt(offset, m_open))
     {
-      Assert.isTrue(lookingAt(offset, m_open));
       tokenLength = m_open.length;
       offset += tokenLength;
       return m_docTagToken;

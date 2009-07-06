@@ -219,7 +219,7 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
         {
           // didn't see close
           tokenOffset = offset; // partitionOffset;
-          tokenLength = limit - tokenOffset + 1;
+          tokenLength = limit - tokenOffset;;
           offset = limit;
           return currentContent;
         }
