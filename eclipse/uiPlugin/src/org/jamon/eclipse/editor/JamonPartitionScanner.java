@@ -65,7 +65,7 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
     if (partitionOffset >= 0)
     {
       int delta = offset - partitionOffset;
-      if (delta > 0)
+      if (delta >= 0)
       {
         this.length += delta;
         this.offset = partitionOffset;
@@ -219,7 +219,7 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
         {
           // didn't see close
           tokenOffset = offset; // partitionOffset;
-          tokenLength = limit - tokenOffset;;
+          tokenLength = limit - tokenOffset;
           offset = limit;
           return currentContent;
         }
