@@ -109,11 +109,6 @@ public class JamonProjectPropertyPage extends PropertyPage {
         isJamonListener.setEnabled();
     }
 
-    private class OutputModified implements ModifyListener {
-        public void modifyText(ModifyEvent e) {
-        }
-    }
-
     private void addTemplateSourceInput(Composite composite) {
         Label templateSourceLabel = new Label(composite, SWT.NONE);
         templateSourceLabel.setText("Template source folder:");
@@ -171,7 +166,6 @@ public class JamonProjectPropertyPage extends PropertyPage {
             (templateOutputDir != null)
             ? templateOutputDir
             : JamonNature.DEFAULT_OUTPUT_DIR);
-        templateOutputDirInput.addModifyListener(new OutputModified());
         setDecoratedTextInputLayout(outputField);
         FieldDecoration requiredFieldIndicator = FieldDecorationRegistry.getDefault().
         getFieldDecoration(FieldDecorationRegistry.DEC_REQUIRED);
