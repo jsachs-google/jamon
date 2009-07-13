@@ -9,10 +9,9 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jface.dialogs.IDialogConstants;
-import org.eclipse.jface.fieldassist.DecoratedField;
+import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.fieldassist.FieldDecoration;
 import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
-import org.eclipse.jface.fieldassist.TextControlCreator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -77,8 +76,8 @@ public class JamonProjectPropertyPage extends PropertyPage {
 
         void setEnabled() {
             final boolean enabled = isJamonProjectCheckbox.getSelection();
-            sourceField.getControl().setEnabled(enabled);
-            outputField.getControl().setEnabled(enabled);
+            templateSourceDirInput.setEnabled(enabled);
+            templateOutputDirInput.setEnabled(enabled);
             processorSelector.setEnabled(enabled);
             if (!enabled) {
                 setJarIsValid(true);
@@ -100,8 +99,7 @@ public class JamonProjectPropertyPage extends PropertyPage {
 
     private Text templateSourceDirInput;
     private Text templateOutputDirInput;
-    private DecoratedField sourceField;
-    private DecoratedField outputField;
+    private ControlDecoration sourceField;
     private ProcessorSelector processorSelector = new ProcessorSelector(this);
 
     private void addSecondSection(Composite parent) {
@@ -119,7 +117,10 @@ public class JamonProjectPropertyPage extends PropertyPage {
     private void addTemplateSourceInput(Composite composite) {
         Label templateSourceLabel = new Label(composite, SWT.NONE);
         templateSourceLabel.setText("Template source folder:");
-        sourceField = new DecoratedField(composite, SWT.SINGLE | SWT.BORDER, new TextControlCreator());
+        sourceField = new ControlDecoration(
+            new Text(composite, SWT.SINGLE | SWT.BORDER),
+            SWT.CENTER | SWT.LEFT, 
+            composite);
         templateSourceDirInput = (Text) sourceField.getControl();
         String templateSourceDir = JamonNature.templateSourceFolderName(getProject());
         templateSourceDirInput.setText(
@@ -127,12 +128,7 @@ public class JamonProjectPropertyPage extends PropertyPage {
             ? templateSourceDir
             : JamonNature.DEFAULT_TEMPLATE_SOURCE);
 
-        GridData gd = new GridData(IDialogConstants.ENTRY_FIELD_WIDTH +
-                                   FieldDecorationRegistry.getDefault().getMaximumDecorationWidth(), SWT.DEFAULT);
-        sourceField.getLayoutControl().setLayoutData(gd);
-        FieldDecoration requiredFieldIndicator = FieldDecorationRegistry.getDefault().
-        getFieldDecoration(FieldDecorationRegistry.DEC_REQUIRED);
-        sourceField.addFieldDecoration(requiredFieldIndicator, SWT.CENTER | SWT.LEFT, false);
+        setDecoratedTextInputLayout(sourceField);
         templateSourceDirInput.addModifyListener(new SourceModified());
     }
 
@@ -147,13 +143,17 @@ public class JamonProjectPropertyPage extends PropertyPage {
             catch (CoreException ex) {
                 ex.printStackTrace();
             }
-            FieldDecoration warning = FieldDecorationRegistry.getDefault().
-            getFieldDecoration(FieldDecorationRegistry.DEC_WARNING);
             if (!ok) {
-                sourceField.addFieldDecoration(warning, SWT.CENTER | SWT.RIGHT, false);
+                sourceField.setImage(
+                    FieldDecorationRegistry
+                    .getDefault()
+                    .getFieldDecoration(FieldDecorationRegistry.DEC_WARNING)
+                    .getImage());
+                sourceField.setDescriptionText("Folder does not exist");
+                sourceField.show();
             }
             else {
-                sourceField.hideDecoration(warning);
+                sourceField.hide();
             }
         }
     }
@@ -161,7 +161,10 @@ public class JamonProjectPropertyPage extends PropertyPage {
     private void addTemplateOuputInput(Composite composite) {
         Label templateOutputLabel = new Label(composite, SWT.NONE);
         templateOutputLabel.setText("Template output folder:");
-        outputField = new DecoratedField(composite, SWT.SINGLE | SWT.BORDER, new TextControlCreator());
+        ControlDecoration outputField = new ControlDecoration(
+            new Text(composite, SWT.SINGLE | SWT.BORDER),
+            SWT.CENTER | SWT.LEFT, 
+            composite);
         templateOutputDirInput = (Text) outputField.getControl();
         String templateOutputDir = JamonNature.templateOutputFolderName(getProject());
         templateOutputDirInput.setText(
@@ -169,13 +172,18 @@ public class JamonProjectPropertyPage extends PropertyPage {
             ? templateOutputDir
             : JamonNature.DEFAULT_OUTPUT_DIR);
         templateOutputDirInput.addModifyListener(new OutputModified());
-        GridData gd = new GridData(IDialogConstants.ENTRY_FIELD_WIDTH +
-                                   FieldDecorationRegistry.getDefault().getMaximumDecorationWidth(), SWT.DEFAULT);
-        outputField.getLayoutControl().setLayoutData(gd);
+        setDecoratedTextInputLayout(outputField);
         FieldDecoration requiredFieldIndicator = FieldDecorationRegistry.getDefault().
         getFieldDecoration(FieldDecorationRegistry.DEC_REQUIRED);
-        outputField.addFieldDecoration(requiredFieldIndicator, SWT.CENTER | SWT.LEFT, false);
+        outputField.setImage(requiredFieldIndicator.getImage());
+    }
 
+    private void setDecoratedTextInputLayout(ControlDecoration decoration)
+    {
+        GridData gd = new GridData(IDialogConstants.ENTRY_FIELD_WIDTH +
+            FieldDecorationRegistry.getDefault().getMaximumDecorationWidth(), SWT.DEFAULT);
+        gd.horizontalIndent = FieldDecorationRegistry.getDefault().getMaximumDecorationWidth();
+        decoration.getControl().setLayoutData(gd);
     }
 
     @Override protected Control createContents(Composite parent) {
