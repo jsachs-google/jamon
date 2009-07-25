@@ -6,6 +6,24 @@
 
 <h2><& title &></h2>
 
+<a name="eclipse-2.3.3"/><h3>Eclipse Feature Changes from 2.3.2 to 2.3.3</h3>
+<ul>
+  <&| change &>
+    Oddities in editor with multi-line imports and doc tags fixed.
+  </&>
+  <&| change &>
+    Jamon preference panes only appear on project pref pane.
+  </&>
+</ul>
+
+<a name="processor-2.3.3"/><h3>Processor Changes from 2.3.2 to 2.3.3</h3>
+<ul>
+  <&| change &>
+    Efforts made to generate identical class names for fragments, which should help
+    hot-reload tools such as JavaRebel.
+  </&>
+</ul>
+
 <a name="processor-2.3.2"/><h3>Processor Changes from 2.3.1 to 2.3.2</h3>
 <ul>
   <&| change &>

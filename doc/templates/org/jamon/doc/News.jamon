@@ -8,6 +8,14 @@
 
 <ul>
   <li>
+    2009-07-25: Jamon Processoor 2.3.3 released
+    <a href='<& docRootUrl: "Changes.html#processor-2.3.3" &>'>[changes]</a>
+  </li>
+  <li>
+    2009-07-25: Jamon Eclipse Plugin 2.3.3 released
+    <a href='<& docRootUrl: "Changes.html#eclipse-2.3.3" &>'>[changes]</a>
+  </li>
+  <li>
     2008-01-01: Jamon Processoor 2.3.2 released
     <a href='<& docRootUrl: "Changes.html#processor-2.3.2" &>'>[changes]</a>
   </li>

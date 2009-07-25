@@ -2,7 +2,7 @@
 <%class>
   protected Section currentSection() { return Section.DOC_MAVEN; }
 </%class>
-<%def _version>2.3.0</%def>
+<%def _version>2.3.2</%def>
 <%override title>Using Jamon with Maven</%override>
 
 <h3>Overview</h3>
