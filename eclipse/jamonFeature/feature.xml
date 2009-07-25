@@ -2,7 +2,7 @@
 <feature
       id="org.jamon.feature"
       label="jamon"
-      version="2.3.2"
+      version="2.3.3"
       provider-name="Jamon.org">
 
    <description url="http://www.jamon.org/">
