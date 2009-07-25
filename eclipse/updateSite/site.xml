@@ -21,5 +21,11 @@
    <feature url="features/org.jamon.feature_2.3.2.jar" id="org.jamon.feature" version="2.3.2">
       <category name="Jamon"/>
    </feature>
+   <feature url="features/org.jamon.feature_2.3.3.jar" id="org.jamon.feature" version="2.3.3">
+      <category name="Jamon"/>
+   </feature>
+   <feature url="features/org.jamon.processor_2.3.3.jar" id="org.jamon.processor" version="2.3.3">
+      <category name="Jamon"/>
+   </feature>
    <category-def name="Jamon" label="Jamon"/>
 </site>
