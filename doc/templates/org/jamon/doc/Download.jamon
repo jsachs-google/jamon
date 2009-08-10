@@ -8,7 +8,7 @@
 
 <h4>Current release</h4>
 Available at
-<a href="https://sourceforge.net/project/showfiles.php?group_id=138569">SourceForge</a>.
+<a href="http://sourceforge.net/projects/jamon/files/jamon">SourceForge</a>.
 
 <h4>Eclipse plugin</h4>
 Set the update site to
@@ -19,4 +19,4 @@ Set the update site to
 Subversion access is available. See the instructions at
 <a href="http://sourceforge.net/svn/?group_id=138569">SourceForge</a>.
 The source is also browsable
-<a href="http://svn.sourceforge.net/viewcvs.cgi/jamon/">online at SourceForge</a>.
+<a href="http://jamon.svn.sourceforge.net/viewvc/jamon/">online at SourceForge</a>.
