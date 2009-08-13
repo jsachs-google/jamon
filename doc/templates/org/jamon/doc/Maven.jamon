@@ -26,48 +26,14 @@
 
 <h3>Building with Maven</h3>
 
-The Jamon primary repository is at <code>http://maven.jamon.org/</code>.
-All Jamon artifacts (aside from Eclipse plugins) are deployed there.
+Jamon releases are now mirrored on the primary Maven repository sites
+(<code>http://repo1.maven.org/<code>). All Jamon artifacts (aside from
+Eclipse plugins) should be available there.
 
 Generally, there are three sections of your pom.xml that will need
 to be configured.
 
-<h4>1. Plugin repository</h4>
-
-<pre class="ant"><&| /org/jamon/escape/Html &>
-<pluginRepositories>
-    ...
-    <pluginRepository>
-        <id>jamon plugin</id>
-        <name>jamon plugin</name>
-        <url>http://maven.jamon.org/</url>
-        <snapshots>
-            <enabled>true</enabled>
-        </snapshots>
-    </pluginRepository>
-    ...
-</pluginRepositories>
-</&></pre>
-
-<h4>2. General dependency repository</h4>
-
-<pre class="ant"><&| /org/jamon/escape/Html &>
-  <repositories>
-    ...
-    <repository>
-      <id>jamon</id>
-      <name>jamon primary repository</name>
-      <layout>default</layout>
-      <url>http://maven.jamon.org</url>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </repository>
-    ...
-  </repositories>
-</&></pre>
-
-<h4>3. Compile and runtime dependency</h4>
+<h4>1. Compile and runtime dependency</h4>
 <pre class="ant"><&| /org/jamon/escape/Html &>
 <dependencies>
   <dependency>
@@ -80,7 +46,7 @@ to be configured.
 </dependencies>
 </&></pre>
 
-<h4>4. Hook into project build lifecycle</h4>
+<h4>2. Hook into project build lifecycle</h4>
 
 <pre class="ant"><&| /org/jamon/escape/Html &>
 <build>
@@ -104,9 +70,9 @@ to be configured.
 </build>
 </&></pre>
 
-<h4>5. (Optional) Hook into Eclipse</h4>
+<h4>3. (Optional) Hook into Eclipse</h4>
 
-Yes, this is far from optimal.
+(Yes, this is far from optimal.)
 
 Add the following to the <code>plugins</code> section, ensuring
 the templateSourceDir and templateOutputDir match your project:
