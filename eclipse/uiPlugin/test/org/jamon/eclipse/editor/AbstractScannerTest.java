@@ -3,6 +3,7 @@ package org.jamon.eclipse.editor;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
+import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.TextAttribute;
 import org.eclipse.jface.text.rules.IToken;
 import org.eclipse.jface.text.rules.Token;
@@ -20,9 +21,9 @@ public abstract class AbstractScannerTest extends TestCase
     m_styleProvider = new MockStyleProvider();
   }
 
-  protected void setDocument(String content)
+  protected void setDocument(final String content)
   {
-    MockDocument doc = new MockDocument(content);
+    IDocument doc = DocumentMocker.createMockDocument(content);
     m_scanner.setRange(doc, 0, doc.getLength());
   }
 
