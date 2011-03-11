@@ -4,7 +4,7 @@
     <groupId>org.jamon</groupId>
     <artifactId>jamon-doc</artifactId>
     <name>jamon-doc</name>
-    <version>SNAPSHOT</version>
+    <version>trunk-SNAPSHOT</version>
     <packaging>jar</packaging>
     <description>Jamon site documentation</description>
     <url>http://www.jamon.org/</url>
