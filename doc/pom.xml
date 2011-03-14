@@ -9,7 +9,7 @@
     </parent>
     <artifactId>jamon-doc</artifactId>
     <name>jamon-doc</name>
-    <version>2011.03.13</version>
+    <version>trunk-SNAPSHOT</version>
     <packaging>jar</packaging>
     <description>Jamon site documentation</description>
     <scm>
