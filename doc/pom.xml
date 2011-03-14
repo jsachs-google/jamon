@@ -1,93 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.jamon</groupId>
+    <parent>
+        <groupId>org.jamon</groupId>
+        <artifactId>jamon-parent</artifactId>
+        <version>2.3.1</version>
+        <relativePath>../jamon/jamon-parent</relativePath>
+    </parent>
     <artifactId>jamon-doc</artifactId>
     <name>jamon-doc</name>
     <version>2011.03.13</version>
     <packaging>jar</packaging>
     <description>Jamon site documentation</description>
-    <url>http://www.jamon.org/</url>
-    <issueManagement>
-        <url>http://sourceforge.net/tracker/?group_id=138569</url>
-        <system>SourceForge Tracker</system>
-    </issueManagement>
-    <inceptionYear>2003</inceptionYear>
-    <prerequisites>
-        <maven>2.0.6</maven>
-    </prerequisites>
-    <licenses>
-        <license>
-            <url>http://www.mozilla.org/MPL/MPL-1.1.txt</url>
-            <name>Mozilla Public License Version 1.1</name>
-        </license>
-    </licenses>
-    <mailingLists>
-        <mailingList>
-            <archive>http://sourceforge.net/mailarchive/forum.php?forum_name=jamon-announce</archive>
-            <name>jamon-announce</name>
-            <post>jamon-announce@lists.sourceforge.net</post>
-            <subscribe>http://lists.sourceforge.net/mailman/listinfo/jamon-announce</subscribe>
-            <unsubscribe>http://lists.sourceforge.net/mailman/listinfo/jamon-announce</unsubscribe>
-        </mailingList>
-        <mailingList>
-            <archive>http://sourceforge.net/mailarchive/forum.php?forum_name=jamon-users</archive>
-            <name>jamon-users</name>
-            <post>jamon-users@lists.sourceforge.net</post>
-            <subscribe>http://lists.sourceforge.net/mailman/listinfo/jamon-users</subscribe>
-            <unsubscribe>http://lists.sourceforge.net/mailman/listinfo/jamon-users</unsubscribe>
-        </mailingList>
-        <mailingList>
-            <archive>http://sourceforge.net/mailarchive/forum.php?forum_name=jamon-hackers</archive>
-            <name>jamon-hackers</name>
-            <post>jamon-hackers@lists.sourceforge.net</post>
-            <subscribe>http://lists.sourceforge.net/mailman/listinfo/jamon-hackers</subscribe>
-            <unsubscribe>http://lists.sourceforge.net/mailman/listinfo/jamon-hackers</unsubscribe>
-        </mailingList>
-    </mailingLists>
-    <organization>
-        <name>Jamon developers</name>
-        <url>http://www.jamon.org/</url>
-    </organization>
     <scm>
         <url>http://jamon.svn.sourceforge.net/viewvc/jamon/trunk/doc/</url>
         <connection>scm:svn:https://jamon.svn.sourceforge.net/svnroot/jamon/trunk/doc/</connection>
         <developerConnection>scm:svn:https://jamon.svn.sourceforge.net/svnroot/jamon/trunk/doc/</developerConnection>
     </scm>
     <distributionManagement>
-        <repository>
-            <id>jamon</id>
-            <name>Jamon</name>
-            <url>scpexe://jamon@maven.jamon.org/home/jamon/maven2</url>
-            <uniqueVersion>false</uniqueVersion>
-        </repository>
         <site>
             <id>jamon</id>
             <name>Jamon</name>
             <url>scpexe://jamon@maven.jamon.org/home/jamon/www${stageDir}</url>
         </site>
     </distributionManagement>
-    <repositories>
-        <repository>
-            <id>jamon</id>
-            <name>Jamon</name>
-            <url>http://maven.jamon.org/</url>
-        </repository>
-    </repositories>
-
-    <developers>
-        <developer>
-            <name>Jay Sachs</name>
-            <id>jaysachs</id>
-            <email>jay@jamon.org</email>
-        </developer>
-        <developer>
-            <name>Ian Robertson</name>
-            <id>iroberts</id>
-            <email>ian@red-bean.com</email>
-        </developer>
-    </developers>
-
     <dependencies>
         <dependency>
             <groupId>org.jamon</groupId>
@@ -118,7 +54,7 @@
     <build>
         <resources>
             <resource>
-                <directory>target/www</directory>
+                <directory>${site.dir}</directory>
             </resource>
         </resources>
         <plugins>
@@ -189,15 +125,21 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-release-plugin</artifactId>
+              <configuration>
+                <releaseProfiles>release-perform</releaseProfiles>
+              </configuration>
+            </plugin>
         </plugins>
         <pluginManagement>
           <plugins>
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-release-plugin</artifactId>
-              <version>2.0-beta-9</version>
+              <artifactId>maven-site-plugin</artifactId>
               <configuration>
-                <tagBase>https://jamon.svn.sourceforge.net/svnroot/jamon/releases/${artifactId}</tagBase>
+                <inputDirectory>${project.build.directory}/www</inputDirectory>
               </configuration>
             </plugin>
           </plugins>
@@ -218,5 +160,14 @@
     <properties>
         <stageDir>-stg</stageDir>
         <ant.target>stage</ant.target>
+        <site.dir>${project.build.dir}/www</site.dir>
     </properties>
+    <profiles>
+      <profile>
+        <id>release-perform</id>
+        <properties>
+          <stageDir></stageDir>
+        </properties>
+      </profile>
+    </profiles>
 </project>
