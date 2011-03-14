@@ -12,11 +12,10 @@
   </fileSets>
   <dependencySets>
     <dependencySet>
-      <useTransitiveFiltering>true</useTransitiveFiltering>
       <includes>
-        <include>jamon*</include>
-      </includes>
-      <outputDirectory>/</outputDirectory>
+        <include>org.jamon:*:jar</include>
+     </includes>
+     <outputDirectory>/</outputDirectory>
     </dependencySet>
   </dependencySets>
 </assembly>
