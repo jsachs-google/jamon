@@ -2,7 +2,7 @@
 <%class>
   protected Section currentSection() { return Section.DOC_MAVEN; }
 </%class>
-<%def _version>2.3.2</%def>
+<%def _version>2.3.3</%def>
 <%override title>Using Jamon with Maven</%override>
 
 <h3>Overview</h3>
@@ -12,7 +12,9 @@
   instance of a class specific to that template. In order for your
   program to compile, Jamon templates need to be translated into
   Java source classes, and those generated Java sources need to be
-  included in the build of your project.
+  included in the build of your project.  This is accomplished by the
+  <a href="http://maven.jamon.org/projects/jamon-maven-plugin/<& _version &>/">Jamon
+  Maven Plugin</a>.
 </p>
 
 <h4>Assumptions</h4>
@@ -21,17 +23,20 @@
   tree named '<code>./src/templates</code>'
   <li>Java source files corresponding to Jamon
   templates will be generated into the directory
-  '<code>./tsrc</code>'.
+  '<code>./target/generated-sources</code>'.
 </ul>
 
 <h3>Building with Maven</h3>
 
-Jamon releases are now mirrored on the primary Maven repository sites
-(<code>http://repo1.maven.org/<code>). All Jamon artifacts (aside from
-Eclipse plugins) should be available there.
-
-Generally, there are three sections of your pom.xml that will need
-to be configured.
+<p>
+  Jamon releases are mirrored on the primary Maven repository sites
+  (<code>http://repo1.maven.org/</code>). All Jamon artifacts (aside from
+  Eclipse plugins) should be available there.
+</p>
+<p>
+  Generally, there are three sections of your pom.xml that will need
+  to be configured.
+</p>
 
 <h4>1. Compile and runtime dependency</h4>
 <pre class="ant"><&| /org/jamon/escape/Html &>
@@ -139,4 +144,3 @@ section above. For example, to root your template sources at
     </plugins>
 </build>
 </&></pre>
-
