@@ -8,11 +8,11 @@
 
 <ul>
   <li>
-    2011-03-01: Jamon Processor 2.3.4 released
+    2011-03-13: Jamon Processor 2.3.4 released
     <a href='<& docRootUrl: "Changes.html#processor-2.3.4" &>'>[changes]</a>
   </li>
   <li>
-    2011-03-01: Jamon Maven Plugin 2.3.3 released
+    2011-03-13: Jamon Maven Plugin 2.3.3 released
     <a href='<& docRootUrl: "Changes.html#maven-plugin-2.3.3" &>'>[changes]</a>
   </li>
   <li>
