@@ -54,7 +54,7 @@
     <build>
         <resources>
             <resource>
-                <directory>${site.dir}</directory>
+                <directory>target/www</directory>
             </resource>
         </resources>
         <plugins>
@@ -160,7 +160,6 @@
     <properties>
         <stageDir>-stg</stageDir>
         <ant.target>stage</ant.target>
-        <site.dir>${project.build.dir}/www</site.dir>
     </properties>
     <profiles>
       <profile>
