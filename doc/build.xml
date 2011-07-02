@@ -67,7 +67,7 @@
             <targetfileset refid="build-files"/>
         </dependset>
         <copy file="base.css" todir="${doc.dir}"/>
-        <copy file="overstock.gif" todir="${doc.dir}"/>
+        <copy file="o.co.gif" todir="${doc.dir}"/>
         <copy file="favicon.ico" todir="${doc.dir}"/>
         <copy file="robots.txt" todir="${doc.dir}"/>
 
