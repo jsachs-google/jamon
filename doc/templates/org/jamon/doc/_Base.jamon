@@ -106,7 +106,7 @@
       m_name = p_name;
     }
 
-    public String toString()
+    @Override public String toString()
     {
       return m_name;
     }

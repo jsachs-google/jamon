@@ -1,6 +1,6 @@
 <%extends _TutorialSampleBase>
 <%class>
-  protected int tutorialStage() { return 8; }
+  @Override protected int tutorialStage() { return 8; }
 </%class>
 
 <%override tutorialName>Template Fragments</%override>

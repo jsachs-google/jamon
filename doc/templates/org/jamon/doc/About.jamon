@@ -1,7 +1,7 @@
 <%extends _Base>
 <%override title>About Jamon</%override>
 <%class>
-  protected Section currentSection() { return Section.ABOUT; }
+  @Override protected Section currentSection() { return Section.ABOUT; }
 </%class>
 
 <h2>Jamon in use</h2>

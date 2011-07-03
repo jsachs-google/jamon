@@ -2,7 +2,7 @@
 <%override title>Jamon</%override>
 
 <%class>
-  protected Section currentSection() { return Section.FEATURES; }
+  @Override protected Section currentSection() { return Section.FEATURES; }
 </%class>
 
 

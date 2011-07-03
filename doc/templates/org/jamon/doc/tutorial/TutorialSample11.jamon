@@ -1,14 +1,14 @@
 <%extends _TutorialSampleBase>
 <%class>
-  protected int tutorialStage() { return 11; }
+  @Override protected int tutorialStage() { return 11; }
 </%class>
 
 <%override tutorialName>Jamon Context: Providing data to all templates at once</%override>
 
-All of the examples of dynamic content in templates that we've seen up until now have involved data 
+All of the examples of dynamic content in templates that we've seen up until now have involved data
 that is passed in explicitely to a template.  However, certain kinds of information don't "want" to
-be passed around as arguments from template to template.  For example, suppose you have a utility 
-template to generate your site's logo.  Since some pages on your site might be accessed with either 
+be passed around as arguments from template to template.  For example, suppose you have a utility
+template to generate your site's logo.  Since some pages on your site might be accessed with either
 the <code>http:</code> or <code>https:</code> protocols, you want your image template to be able to
 generate either insecure or secure image urls, depending on the way the page is being accessed.
 As a first stab at this, you might write a template looking something like:
@@ -21,20 +21,20 @@ As a first stab at this, you might write a template looking something like:
 </%LITERAL></&>
 
 Unfortunately, now every component calling this template must be able to tell it whether the page
-is secure or not.  If your site is well factored, you will likely have components calling those 
+is secure or not.  If your site is well factored, you will likely have components calling those
 components as well, and all of them will need to know about security.
 
 <p>
 
-A better solution is to keep track of whether or not the page is secure by using the 
+A better solution is to keep track of whether or not the page is secure by using the
 <code>jamonContext</code> variable.  This is a special variable which can be made available to
-every template in your site, and will automatically be passed between them. To use 
+every template in your site, and will automatically be passed between them. To use
 <code>jamonContext</code>, you first must declare it's type.  Since the type will need to be the
 same accross a number of templates, rather than declaring it in the body of a particular template
-(or requiring every template to declare it), the type is declared by setting the 
+(or requiring every template to declare it), the type is declared by setting the
 <code>org.jamon.contextType</code> property in a special file named <code>jamon.properties</code>;
 placing this in your templates directory will give every template a jamonContext variable of the
-specified type.  The proxy classes will get an additional method, <code>setJamonContext()</code> 
+specified type.  The proxy classes will get an additional method, <code>setJamonContext()</code>
 which you can use to set the context.
 
 <h3>An Example</h3>
@@ -69,12 +69,12 @@ which you can use to set the context.
 <h3>Best Practices</h3>
 For those coming from the JSP world, it might be tempting to use the <code>jamonContext</code>
 in the same way as attributes on the <code>HTTPServletRequest</code> instance are used in JSP pages.
-As a general rule, it's best passing data via <code><% "<%args>" %></code> blocks; 
+As a general rule, it's best passing data via <code><% "<%args>" %></code> blocks;
 <code>jamonContext</code> should be reserved for exceptional cases such as the one described above,
 or locale information, which span the context of an entire application.
 
 <p>
-For writers of jamon template libraries who wish to make use of the <code>jamonContext</code> 
+For writers of jamon template libraries who wish to make use of the <code>jamonContext</code>
 variable, it is strongly encouraged that they choose a Java interface for the context variable type.
 This will clients to provide an implementation of that interface which
 also provides other data needed for client-specific applications.

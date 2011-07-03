@@ -1,6 +1,6 @@
 <%extends _TutorialSampleBase>
 <%class>
-  protected int tutorialStage() { return 10; }
+  @Override protected int tutorialStage() { return 10; }
 </%class>
 
 <%override tutorialName>Template Inheritance: Overriding Inherited Methods/Subtemplates</%override>

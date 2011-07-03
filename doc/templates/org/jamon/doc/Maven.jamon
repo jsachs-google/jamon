@@ -1,6 +1,6 @@
 <%extends _Base>
 <%class>
-  protected Section currentSection() { return Section.DOC_MAVEN; }
+  @Override protected Section currentSection() { return Section.DOC_MAVEN; }
 </%class>
 <%def _version>2.3.3</%def>
 <%override title>Using Jamon with Maven</%override>

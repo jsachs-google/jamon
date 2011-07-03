@@ -1,6 +1,6 @@
 <%extends _Base>
 <%class>
-  protected Section currentSection() { return Section.DOC_USERGUIDE; }
+  @Override protected Section currentSection() { return Section.DOC_USERGUIDE; }
 </%class>
 <%override title>Jamon User's Guide</%override>
 

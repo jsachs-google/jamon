@@ -1,7 +1,7 @@
 <%extends _Base>
 <%override title>Eclipse Plugin for Jamon</%override>
 <%class>
-  protected Section currentSection() { return Section.DOC_ECLIPSE; }
+  @Override protected Section currentSection() { return Section.DOC_ECLIPSE; }
 </%class>
 
 <h2><& title &></h2>

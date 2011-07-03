@@ -1,7 +1,6 @@
 <%import>
   java.io.ByteArrayOutputStream;
   java.io.PrintStream;
-  java.lang.reflect.InvocationTargetException;
   org.jamon.TemplateManagerSource;
   org.jamon.TemplateManager;
   org.jamon.BasicTemplateManager;

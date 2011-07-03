@@ -2,7 +2,7 @@
 <%override title>Jamon</%override>
 
 <%class>
-  protected Section currentSection() { return Section.HOME; }
+  @Override protected Section currentSection() { return Section.HOME; }
 </%class>
 
 <h2><span /></h2>

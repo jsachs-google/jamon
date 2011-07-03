@@ -293,6 +293,7 @@
 
     <target name="spotless" depends="clean"> </target>
 
+
     <target name="compile-servlet" description="Compile the servlet">
         <dependset>
             <srcfileset file="${java.lib.jamon}"/>
@@ -301,7 +302,8 @@
             <targetfileset refid="servlet-build-files"/>
         </dependset>
         <mkdir dir="${build.classes.dir}"/>
-        <javac destdir="${build.classes.dir}" debug="true" deprecation="true" classpath="${java.lib.jamon}:${java.lib.jamon.stdlib}:${java.lib.jamon.anttask}:${java.lib.servlet}" srcdir="${src.dir}" failonerror="true"/>
+        <echo message="compile classpath ${java.lib.servlet}:${cp}"/>
+        <javac destdir="${build.classes.dir}" debug="true" deprecation="true" classpath="${java.lib.servlet}:${cp}" srcdir="${src.dir}" failonerror="true"/>
     </target>
 
     <target name="servlet" depends="init,compile-servlet" description="Run the servlet">

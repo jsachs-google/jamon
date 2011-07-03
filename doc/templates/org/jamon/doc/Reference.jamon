@@ -1,7 +1,7 @@
 <%extends _Base>
 
 <%class>
-  protected Section currentSection() { return Section.DOC_REFERENCE; }
+  @Override protected Section currentSection() { return Section.DOC_REFERENCE; }
 
   static enum SubSection {
     STATIC_CONTENT("Static content", "StaticContent"),
@@ -20,6 +20,7 @@
     FRAGMENT_ARGUMENTS("Fragment arguments", "FragmentArguments"),
     PARAMETRIZED_FRAGMENT_ARGUMENTS("Parametrized fragment arguments", "ParametrizedFragmentArguments"),
     CONTEXT("Context", "Context"),
+    TEMPLATE_REPLACEMENT("Template Replacement", "TemplateReplacement"),
     JAMON_PROPERTIES("jamon.properties", "jamonProperties"),
     GENERICS("Generics", "Generics"),
     PATH_ALIASES("Path aliases", "PathAliases"),
@@ -41,7 +42,7 @@
   escape = /org/jamon/escape;
 </%alias>
 
-<h2>Template Reference Manual</h2>
+<a name="Top"><h2>Template Reference Manual</h2></a>
 <ol>
   <ol>
   <%for final SubSection subsection: SubSection.values() %>
@@ -76,6 +77,9 @@
       <li><& code: "</%generic>" &></li>
       <li><& code: "</%implements>" &></li>
       <li><& code: "</%import>" &></li>
+      <li><& code: "<%extends ...>" &></li>
+      <li><& code: "<%replaceable>" &></li>
+      <li><& code: "<%replaces ...>" &></li>
       <li><& code: "</%java>" &></li>
       <li><& code: "</%xargs>" &></li>
       <li><& code: "<%abstract>" &></li>
@@ -675,6 +679,68 @@ org.jamon.contextType=String
   interface, and still provide any additional context information they might
   need.
 
+  <& subsection: SubSection.TEMPLATE_REPLACEMENT &>
+  <p>
+    A template with a <code><% "<%replaceable>" %></code> tag can be substituted by a replacing
+    template at runtime, provided that the replacing template has a
+    <code><% "<%replacing ... %>" %></code> tag naming the replaced template. The typical way
+    this is accomplished is by providing a <&javadoc: org.jamon.TemplateReplacer.class &> to a
+    TemplateManager which extends <&javadoc: org.jamon.AbstractTemplateManager.class &>.
+    Whenever a templace calls another template, the
+    <code>getReplacement</code> method of the <code>TemplateReplacer</code> will be called to
+    obtain a replacement template, or to simply return the original template if there is no
+    replacement. If the calling template has a
+    <code><&| subsectionLink: SubSection.CONTEXT &>jamonContext</&></code>, then that will be
+    passed to <code>getReplacement</code> along with the template being replaced.
+  </p>
+  <p>
+    For a template <code>Replacement</code> to replace a template <code>Replaced</code>, the
+    following must hold:
+    <ul>
+      <li>
+        <code>Replaced</code> must not be
+        <&| subsectionLink: SubSection.INHERITANCE &>"abstract"</&>
+      </li>
+      <li><code>Replaced</code> must contain a <code><% "<%replaceable>" %></code> tag.</li>
+      <li>
+        <code>Replacing</code> must contain a tag
+        <code><% "<%replacing /path/to/Replacement>" %></code>
+      </li>
+      <li>
+        Each required argument of <code>Replacing</code> must have a corresponding required
+        argument of the same name in <code>Replaced</code>; the type of the argument in
+        <code>Replacing</code> must match or be a supertype of the type of the argument in
+        <code>Replaced</code>
+      </li>
+      <li>
+        Each optional argument of <code>Replacing</code> must have a corresponding optional or
+        required argument of the same name in <code>Replaced</code>; the type of the argument in
+        <code>Replacing</code> must match or be a supertype of the type of the argument in
+        <code>Replaced</code>.
+      </li>
+      <li>
+        Each fragment argument of <code>Replacing</code> must have a corresponding fragment
+        argument of the same name in <code>Replaced</code> taking the same number of parameters.
+        the types of each parameter of the fragment argument of <code>Replacing</code> must match
+         or be a subtype of the type of the corresponding paremeter to the fragment argument in
+        <code>Replaced</code>.
+      </li>
+    </ul>
+  </p>
+  <p>
+    One use for template replacement is to handle situations where, for modularity reasons, the
+    caller of a template lives in a different compliation unit that should not depend on the called
+    template. In this case, a stub template can be placed in the calling template's compilation
+    unit, with the full implementation provided in the called template's compilation unit.
+    <&javadoc: org.jamon.FixedTemplateReplacer.class &> can be useful in this case.
+    for this is to do template subsitution based on locale.
+  </p>
+  <p>
+    Another use for template replacement is for providing different content based on, say, locale.
+    In this case, the <code>jamonContext</code> will need to contain the locale, and the template
+    replacer will need to use that as well as the template proxy to determine replacement.
+  </p>
+
   <& subsection: SubSection.JAMON_PROPERTIES &>
   Certain options in template processing are expressed by properties files.
   If a file called "jamon.properties" is present in the template directory, or
@@ -787,7 +853,7 @@ org.jamon.alais.legal=/attorneys/documents
 
 <%def subsection>
 <%args>SubSection subSection;</%args>
-  <li><a name="<% subSection.label %>"><span class="concept"><% subSection.name %></span></a>
+  <li><a name="<% subSection.label %>"><a href="#Top"><span class="concept"><% subSection.name %></span></a></a>
 </%def>
 
 <%def subsectionLink>
@@ -799,4 +865,16 @@ org.jamon.alais.legal=/attorneys/documents
 <%def templateOutput>
 <%frag content/>
 <pre class="tty"><&| escape//Html &><& content &></&></pre>
+</%def>
+
+<%def javadoc>
+<%args>
+  Class<?> clazz;
+</%args>
+<%java>
+  String className = clazz.getName();
+  String path = className.replaceAll("\\.", "/");
+  String shortName = className.substring(className.lastIndexOf(".") + 1);
+</%java>
+<code><a href="javadoc/index.html?<% path %>.html"><% shortName %></a></code>\
 </%def>
