@@ -1,5 +1,7 @@
 <%extends _Base>
-
+<%import>
+  java.util.Locale;
+</%import>
 <%class>
   @Override protected Section currentSection() { return Section.DOC_REFERENCE; }
 
@@ -331,7 +333,7 @@ This component has been accessed <% pageViews++ %> times.
     <code>setFoo()</code> and <code>makeRenderer()</code>.
     <p>
     For example, given
-    <&| _Template &>
+    <&| _Java &>
 interface RenderableWithInt {
   Renderer makeRenderer(int i);
 }</&>
@@ -739,7 +741,28 @@ org.jamon.contextType=String
     Another use for template replacement is for providing different content based on, say, locale.
     In this case, the <code>jamonContext</code> will need to contain the locale, and the template
     replacer will need to use that as well as the template proxy to determine replacement.
-  </p>
+    For example, if <&| subsectionLink: SubSection.JAMON_PROPERTIES &>"jamon.properties"</&>
+    contains:
+    <& _PropertiesInclude: "/templates/org/jamon/doc/reference/localization/jamon.properties" &>
+    then one can create a <code>LocalizingTemplateReplacer</code> class:
+    <& _JavaInclude:  "/sample/reference/src/i18n/LocalizingTemplateReplacer" &>
+    This template replacer can be installed by calling:
+    <&| _Java &>
+  TemplateManagerSource.setTemplateManager(new BasicTemplateManager(
+    Thread.currentThread().getContextClassLoader(),
+    new LocalizingTemplateReplacer()));</&>
+
+    Now we can have a localizable template <code>Greeting.jamon</code>:
+    <& _TemplateInclude: "/templates/org/jamon/doc/reference/localization/Greeting" &>
+    along with a german localization, <code>Greeting_de</code>:
+    <& _TemplateInclude: "/templates/org/jamon/doc/reference/localization/Greeting_de" &>
+    and a main template, <code>Main.jamon</code>:
+    <& _TemplateInclude: "/templates/org/jamon/doc/reference/localization/Main" &>
+    Calling Main with a jamonContext of <code>Locale.ENGLISH</code> yields
+    <& localizedCall: Locale.ENGLISH &>
+
+    Calling Main with a jamonContext of <code>Locale.GERMAN</code> yields
+    <& localizedCall: Locale.GERMAN &>
 
   <& subsection: SubSection.JAMON_PROPERTIES &>
   Certain options in template processing are expressed by properties files.
@@ -877,4 +900,16 @@ org.jamon.alais.legal=/attorneys/documents
   String shortName = className.substring(className.lastIndexOf(".") + 1);
 </%java>
 <code><a href="javadoc/index.html?<% path %>.html"><% shortName %></a></code>\
+</%def>
+
+<%def localizedCall>
+<%args>Locale locale;</%args>
+<pre class="jamon"><&| /org/jamon/escape/Html &>\
+<%java>
+  new org.jamon.doc.reference.localization.Main(new org.jamon.BasicTemplateManager(
+    Thread.currentThread().getContextClassLoader(), new i18n.LocalizingTemplateReplacer()))
+    .setJamonContext(locale).
+    render(jamonWriter, "world");
+</%java>
+</&></pre>
 </%def>

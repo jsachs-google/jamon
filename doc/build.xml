@@ -125,15 +125,13 @@
         <property name="tutorial.src" value="${tutorial.samples.dir}/src"/>
         <jamon destdir="${work.dir}" srcdir="${tutorial.jamon}"/>
         <jamon destdir="${work.dir}" srcdir="templates"/>
-        <javac destdir="${work.dir}" includes="*.java">
+        <javac destdir="${work.dir}" includes="**/*.java" debug="true">
             <classpath>
                 <path refid="maven.runtime.classpath"/>
             </classpath>
             <src path="${tutorial.src}"/>
             <src path="${overview.samples.dir}/src"/>
             <src path="${work.dir}"/>
-        </javac>
-        <javac destdir="${work.dir}" includes="**/*.java">
             <src path="${samples.dir}/reference/src"/>
         </javac>
     </target>

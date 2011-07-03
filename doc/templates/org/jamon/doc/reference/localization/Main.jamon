@@ -1,0 +1,6 @@
+<%args>String name;</%args>
+<html>
+  <body>
+    <& Greeting: name &>
+  </body>
+</html>
