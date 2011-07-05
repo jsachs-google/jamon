@@ -686,12 +686,12 @@ org.jamon.contextType=String
     A template with a <code><% "<%replaceable>" %></code> tag can be substituted by a replacing
     template at runtime, provided that the replacing template has a
     <code><% "<%replacing ... %>" %></code> tag naming the replaced template. The typical way
-    this is accomplished is by providing a <&javadoc: org.jamon.TemplateReplacer.class &> to a
-    TemplateManager which extends <&javadoc: org.jamon.AbstractTemplateManager.class &>.
+    this is accomplished is by providing a <& _Javadoc: org.jamon.TemplateReplacer.class &> to a
+    TemplateManager which extends <& _Javadoc: org.jamon.AbstractTemplateManager.class &>.
     Whenever a templace calls another template, the
     <code>getReplacement</code> method of the <code>TemplateReplacer</code> will be called to
-    obtain a replacement template, or to simply return the original template if there is no
-    replacement. If the calling template has a
+    obtain a replacement for the called template, or to simply return the original called template
+    if there is no replacement. If the calling template has a
     <code><&| subsectionLink: SubSection.CONTEXT &>jamonContext</&></code>, then that will be
     passed to <code>getReplacement</code> along with the template being replaced.
   </p>
@@ -730,11 +730,25 @@ org.jamon.contextType=String
     </ul>
   </p>
   <p>
+    To aid in creating TemplateReplacers, there are a pair of annotations that are placed on
+    generated proxy classes. If a template has a <code><% "<%replaceable>" %></code> tag,
+    then that template's generated proxy class is annotated with
+    <& _Javadoc: org.jamon.annotations.Replaceable.class &>. If the template has a
+    <code><% "<%replacing /path/to/Template %>" %></code> tag, then that template's generated
+    proxy class is annotated with <& _Javadoc: org.jamon.annotations.Replaces.class &>; the value of
+    the <code>replacedProxy</code> attribute will be the proxy class for the
+    <code>/path/to/Template</code> template, while the value of the
+    <code>replacementConstructor</code> attribute will be a class implementing
+    <& _Javadoc: org.jamon.AbstractTemplateProxy.ReplacementConstructor.class &>. A TemplateReplacer can
+    reflectively create an instance of this ReplacementConstructor once, and then use that instance
+    to create proxy instances without reflection thereafter.
+  </p>
+  <p>
     One use for template replacement is to handle situations where, for modularity reasons, the
     caller of a template lives in a different compliation unit that should not depend on the called
     template. In this case, a stub template can be placed in the calling template's compilation
     unit, with the full implementation provided in the called template's compilation unit.
-    <&javadoc: org.jamon.FixedTemplateReplacer.class &> can be useful in this case.
+    <& _Javadoc: org.jamon.FixedTemplateReplacer.class &> can be useful in this case.
     for this is to do template subsitution based on locale.
   </p>
   <p>
@@ -763,6 +777,7 @@ org.jamon.contextType=String
 
     Calling Main with a jamonContext of <code>Locale.GERMAN</code> yields
     <& localizedCall: Locale.GERMAN &>
+  </p>
 
   <& subsection: SubSection.JAMON_PROPERTIES &>
   Certain options in template processing are expressed by properties files.
@@ -867,8 +882,8 @@ org.jamon.alais.legal=/attorneys/documents
 
     <&| _Template &><%LITERAL><%encoding UTF-8></%LITERAL></&>
 
-    The available encodings are exactly those supported by the JRE in
-    use.
+    The available encodings are exactly those supported by the JRE in use. Whatever encoding is
+    used to read in the template will be the encoding used to write the generated java files.
 
   </li>
 
@@ -882,24 +897,12 @@ org.jamon.alais.legal=/attorneys/documents
 <%def subsectionLink>
 <%args>SubSection subSection;</%args>
 <%frag content/>
-<a href="#<% subSection.label %>"><& content &></a>
+<a href="#<% subSection.label %>"><& content &></a>\
 </%def>
 
 <%def templateOutput>
 <%frag content/>
 <pre class="tty"><&| escape//Html &><& content &></&></pre>
-</%def>
-
-<%def javadoc>
-<%args>
-  Class<?> clazz;
-</%args>
-<%java>
-  String className = clazz.getName();
-  String path = className.replaceAll("\\.", "/");
-  String shortName = className.substring(className.lastIndexOf(".") + 1);
-</%java>
-<code><a href="javadoc/index.html?<% path %>.html"><% shortName %></a></code>\
 </%def>
 
 <%def localizedCall>

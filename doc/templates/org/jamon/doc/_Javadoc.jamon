@@ -1,0 +1,15 @@
+<%args>
+  Class<?> clazz;
+</%args>
+<%java>
+  StringBuilder enclosedPath = new StringBuilder();
+  Class<?> topLevelClass = clazz;
+  while (topLevelClass.getEnclosingClass() != null) {
+    enclosedPath.append(".").append(topLevelClass.getSimpleName());
+    topLevelClass = topLevelClass.getEnclosingClass();
+  }
+  String className = topLevelClass.getName();
+  String path = className.replaceAll("\\.", "/") + enclosedPath.toString();
+  String shortName = className.substring(className.lastIndexOf(".") + 1) + enclosedPath.toString();
+</%java>
+<code><a href="javadoc/index.html?<% path %>.html"><% shortName %></a></code>\
