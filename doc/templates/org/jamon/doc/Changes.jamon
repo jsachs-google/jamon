@@ -51,7 +51,7 @@
   <&| change; incompatible=true &>Jamon now depends on at least version 6 of Java.</&>
 </ul>
 
-<a name="maven-plugin-2.3.4"/><h3>Maven Plugin Changes from 2.3.3 to 2.3.4</h3>
+<a name="maven-plugin-2.4.0"/><h3>Maven Plugin Changes from 2.3.4 to 2.4.0</h3>
 <ul>
   <&| change &>This plugin is now marked as thread safe.</&>
   <&| change &>It is now considered an error if the template source directory is missing.</&>
