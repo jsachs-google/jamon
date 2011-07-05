@@ -128,6 +128,7 @@
         <javac destdir="${work.dir}" includes="**/*.java" debug="true">
             <classpath>
                 <path refid="maven.runtime.classpath"/>
+                <pathelement location="${java.lib.diff}"/>
             </classpath>
             <src path="${tutorial.src}"/>
             <src path="${overview.samples.dir}/src"/>
