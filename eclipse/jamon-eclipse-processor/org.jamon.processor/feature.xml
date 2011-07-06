@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.jamon.processor"
+      label="Jamon Processor Feature"
+      version="2.3.4.qualifier"
+      provider-name="Jamon.org">
+
+   <description url="http://www.jamon.org/">
+      Feature providing a default implementation of the jamon processor
+   </description>
+
+   <license url="http://www.mozilla.org/MPL/">
+      The contents of this feature are subject to the Mozilla Public
+License Version 1.1 (the &quot;License&quot;); you may not use this file
+except in compliance with the License. You may obtain a copy
+of
+the License at http://www.mozilla.org/MPL/
+Software distributed under the License is distributed on an &quot;AS
+IS&quot; basis, WITHOUT WARRANTY OF ANY KIND, either express or
+implied. See the License for the specific language governing
+rights and limitations under the License.
+The Original Code is Jamon code, released February, 2003.
+The Initial Developers of the Original Code are Jay Sachs and
+Ian Robertson.  Portions
+created by Jay Sachs and Ian Robertson are Copyright (C) 2003-2007
+Jay Sachs and Ian Robertson.  All Rights Reserved.
+Contributor(s):
+   </license>
+
+   <plugin
+         id="org.jamon.processor"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+</feature>

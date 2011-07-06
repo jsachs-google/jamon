@@ -1,6 +1,0 @@
-Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-Name: Jamon Processor Plug-in
-Bundle-SymbolicName: org.jamon.processor
-Bundle-Version: 2.3.3
-Bundle-Localization: plugin

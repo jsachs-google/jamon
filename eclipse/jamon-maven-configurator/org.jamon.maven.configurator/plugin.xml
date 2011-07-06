@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.maven.ide.eclipse.projectConfigurators">
+      <configurator
+            class="org.jamon.eclipse.maven.configurator.JamonProjectConfigurator"
+            id="org.jamon.eclipse.maven.configurator.jamonProjectConfigurator"
+            name="Jamon Maven Configurator"
+            generic="true"
+            priority="11">
+      </configurator>
+   </extension>
+
+</plugin>

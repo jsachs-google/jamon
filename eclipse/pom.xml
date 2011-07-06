@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+      <groupId>org.jamon</groupId>
+      <artifactId>jamon-parent</artifactId>
+      <version>trunk-SNAPSHOT</version>
+  </parent>
+  <groupId>org.jamon.eclipse</groupId>
+  <artifactId>jamon-eclipse</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <modules>
+    <module>jamon-editor</module>
+    <module>jamon-eclipse-processor</module>
+    <module>jamon-maven-configurator</module>
+  </modules>
+
+  <prerequisites>
+    <maven>3.0</maven>
+  </prerequisites>
+
+  <properties>
+    <tycho-version>0.10.0</tycho-version>
+    <m2eclipse-core.version>0.10.2.20100623-1649</m2eclipse-core.version>
+    <m2eclipse-core.site>0.10.2/S/${m2eclipse-core.version}</m2eclipse-core.site>
+    <updateSite.dir>../updateSite</updateSite.dir>
+  </properties>
+
+  <scm>
+      <url>http://jamon.svn.sourceforge.net/viewvc/jamon/trunk/eclipse/${project.artifactId}/</url>
+      <connection>scm:svn:https://jamon.svn.sourceforge.net/svnroot/jamon/trunk/eclipse/${project.artifactId}/</connection>
+      <developerConnection>scm:svn:https://jamon.svn.sourceforge.net/svnroot/jamon/trunk/eclipse/${project.artifactId}/</developerConnection>
+  </scm>
+
+  <repositories>
+    <repository>
+       <id>ganymede</id>
+       <layout>p2</layout>
+       <url>http://download.eclipse.org/releases/ganymede</url>
+    </repository>
+    <repository>
+      <id>m2e</id>
+      <layout>p2</layout>
+      <url>http://repository.sonatype.org/content/sites/forge-sites/m2e/${m2eclipse-core.site}</url>
+    </repository>
+    <repository>
+      <id>jamon-eclipse</id>
+      <layout>p2</layout>
+      <url>${project.baseUri}${updateSite.dir}/p2</url>
+    </repository>
+  </repositories>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.sonatype.tycho</groupId>
+        <artifactId>tycho-maven-plugin</artifactId>
+        <version>${tycho-version}</version>
+        <extensions>true</extensions>
+      </plugin>
+      <plugin>
+        <groupId>org.sonatype.tycho</groupId>
+        <artifactId>target-platform-configuration</artifactId>
+        <version>${tycho-version}</version>
+        <configuration>
+          <resolver>p2</resolver>
+          <allowConflictingDependencies>true</allowConflictingDependencies>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.3.2</version>
+        <inherited>true</inherited>
+        <configuration>
+          <source>1.6</source>
+          <target>1.6</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <profiles>
+    <profile>
+      <id>withSite</id>
+      <!--  when releasing, do *not* build the site as part of the main reactor build, since
+            tycho will get flummoxed by having versions of the same feature.  -->
+      <modules>
+        <module>updateSite</module>
+      </modules>
+    </profile>
+  </profiles>
+
+</project>

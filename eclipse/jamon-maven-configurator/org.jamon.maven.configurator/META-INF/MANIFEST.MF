@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Jamon Maven Configurator
+Bundle-SymbolicName: org.jamon.eclipse.maven.configurator;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Require-Bundle: org.eclipse.core.runtime;bundle-version="3.4.0",
+  org.eclipse.core.resources;bundle-version="3.4.0",
+  org.eclipse.jdt.core;bundle-version="3.4.0",
+  org.jamon.project;bundle-version="2.3.3",
+  org.jamon.processor;bundle-version="2.3.3",
+  org.maven.ide.eclipse;bundle-version="0.10.0",
+  org.maven.ide.eclipse.jdt;bundle-version="0.10.0",
+  org.maven.ide.eclipse.maven_embedder;bundle-version="0.10.0"

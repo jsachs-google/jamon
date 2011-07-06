@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Jamon ui test plugin test
+Bundle-SymbolicName: org.jamon.ui.test
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.junit,
+ org.jamon.project;bundle-version="2.3.3",
+ org.eclipse.core.resources,
+ org.eclipse.jdt.core

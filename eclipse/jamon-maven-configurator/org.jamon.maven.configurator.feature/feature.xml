@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.jamon.eclipse.maven.configurator.feature"
+      label="Jamon Maven Configurator"
+      version="1.0.0.qualifier">
+
+   <description url="http://www.example.com/description">
+      Project configurator for the jamon-maven-plugin.
+   </description>
+
+   <copyright url="http://www.example.com/copyright">
+      Copyright 2011 Scott Olcott
+   </copyright>
+
+   <license url="http://www.mozilla.org/MPL/">
+      The contents of this feature are subject to the Mozilla Public
+License Version 1.1 (the &quot;License&quot;); you may not use this file
+except in compliance with the License. You may obtain a copy
+of
+the License at http://www.mozilla.org/MPL/
+Software distributed under the License is distributed on an &quot;AS
+IS&quot; basis, WITHOUT WARRANTY OF ANY KIND, either express or
+implied. See the License for the specific language governing
+rights and limitations under the License.
+The Original Code is Jamon code, released June, 2011.
+The Initial Developers of the Original Code are Scott Olcott.
+Portions created by Scott Olcott are Copyright (C) 2011
+Scott Olcott.  All Rights Reserved.
+Contributor(s): Ian Robertson
+   </license>
+
+   <requires>
+     <import plugin="org.eclipse.core.runtime" version="3.4.0" match="greaterOrEqual"/>
+     <import plugin="org.eclipse.core.resources" version="3.4.0" match="greaterOrEqual"/>
+     <import plugin="org.eclipse.jdt.core" version="3.4.0" match="greaterOrEqual"/>
+     <import plugin="org.maven.ide.eclipse" version="0.10.0" match="greaterOrEqual"/>
+     <import plugin="org.maven.ide.eclipse.jdt" version="0.10.0" match="greaterOrEqual"/>
+     <import plugin="org.maven.ide.eclipse.maven_embedder" version="0.10.0" match="greaterOrEqual"/>
+     <import plugin="org.jamon.project" version="2.3.3" match="greaterOrEqual"/>
+     <import plugin="org.jamon.processor" version="2.3.3" match="greaterOrEqual"/>
+   </requires>
+
+   <plugin
+         id="org.jamon.eclipse.maven.configurator"
+         download-size="0"
+         install-size="0"
+         version="1.0.0.qualifier"
+         unpack="false"/>
+
+</feature>

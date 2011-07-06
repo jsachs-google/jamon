@@ -1,0 +1,22 @@
+Manifest-Version: 1.0
+Bundle-Name: Jamon Project Plug-in
+Bundle-SymbolicName: org.jamon.project;singleton:=true
+Bundle-Version: 2.3.4.qualifier
+Bundle-ClassPath: ., lib/jamon-api-2.3.0.jar
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Activator: org.jamon.eclipse.JamonProjectPlugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.core.resources,
+ org.eclipse.ui.ide,
+ org.eclipse.jdt.core,
+ org.eclipse.jdt.launching,
+ org.eclipse.jface.text,
+ org.eclipse.ui.workbench.texteditor,
+ org.eclipse.ui.editors,
+ org.eclipse.jdt.ui,
+ org.eclipse.ui.forms
+Bundle-ActivationPolicy: lazy
+Bundle-Vendor: jamon.org
+Export-Package: org.jamon.eclipse
+Bundle-ManifestVersion: 2
