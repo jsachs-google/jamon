@@ -8,8 +8,9 @@
 
 <a name="processor-2.4.0"/><h3>Processor Changes from 2.3.4 to 2.4.0</h3>
 <ul>
-  <&| change; incompatible=true &>
-    Support added for <a href="Reference.html#TemplateReplacement">template replacement</a>.
+  <&| change &>
+    Support added for <a href="Reference.html#TemplateReplacement">template replacement</a>,
+    which can be useful for modularization and internationalization.
   </&>
   <&| change &>
     Generated java files are now written using the same encoding as the template source

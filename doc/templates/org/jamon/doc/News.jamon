@@ -8,15 +8,15 @@
 
 <ul>
   <li>
-    2011-07-05: Jamon Runtime 2.4.0 released
+    2011-07-07: Jamon Runtime 2.4.0 released
     <a href='<& docRootUrl: "Changes.html#runtime-2.4.0" &>'>[changes]</a>
   </li>
   <li>
-    2011-07-05: Jamon Processor 2.4.0 released
+    2011-07-07: Jamon Processor 2.4.0 released
     <a href='<& docRootUrl: "Changes.html#processor-2.4.0" &>'>[changes]</a>
   </li>
   <li>
-    2011-07-05: Jamon Maven Plugin 2.4.0 released
+    2011-07-07: Jamon Maven Plugin 2.4.0 released
     <a href='<& docRootUrl: "Changes.html#maven-plugin-2.4.0" &>'>[changes]</a>
   </li>
   <li>
