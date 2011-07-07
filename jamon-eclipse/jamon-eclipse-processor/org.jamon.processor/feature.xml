@@ -2,7 +2,7 @@
 <feature
       id="org.jamon.processor"
       label="Jamon Processor Feature"
-      version="2.3.4.qualifier"
+      version="2.4.0.qualifier"
       provider-name="Jamon.org">
 
    <description url="http://www.jamon.org/">
