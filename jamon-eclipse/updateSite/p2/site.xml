@@ -6,19 +6,25 @@
    <feature url="features/org.jamon.feature_2.0.0.jar" id="org.jamon.feature" version="2.0.0">
       <category name="Jamon"/>
    </feature>
+   <feature url="features/org.jamon.feature_2.1.0.2.jar" id="org.jamon.feature" version="2.1.0.2">
+      <category name="Jamon"/>
+   </feature>
    <feature url="features/org.jamon.feature_2.1.0.1.jar" id="org.jamon.feature" version="2.1.0.1">
       <category name="Jamon"/>
    </feature>
    <feature url="features/org.jamon.feature_2.1.0.2.jar" id="org.jamon.feature" version="2.1.0.2">
       <category name="Jamon"/>
    </feature>
-   <feature url="features/org.jamon.feature_2.1.0.jar" id="org.jamon.feature" version="2.1.0">
-      <category name="Jamon"/>
-   </feature>
    <feature url="features/org.jamon.feature_2.2.0.0.jar" id="org.jamon.feature" version="2.2.0.0">
       <category name="Jamon"/>
    </feature>
    <feature url="features/org.jamon.feature_2.2.1.0.jar" id="org.jamon.feature" version="2.2.1.0">
+      <category name="Jamon"/>
+   </feature>
+   <feature url="features/org.jamon.feature_2.2.2.0.jar" id="org.jamon.feature" version="2.2.2.0">
+      <category name="Jamon"/>
+   </feature>
+   <feature url="features/org.jamon.feature_2.2.2.1.jar" id="org.jamon.feature" version="2.2.2.1">
       <category name="Jamon"/>
    </feature>
    <feature url="features/org.jamon.feature_2.3.0.0.jar" id="org.jamon.feature" version="2.3.0.0">
@@ -30,19 +36,23 @@
    <feature url="features/org.jamon.feature_2.3.1.jar" id="org.jamon.feature" version="2.3.1">
       <category name="Jamon"/>
    </feature>
-   <feature url="features/org.jamon.processor_2.3.1.jar" id="org.jamon.processor" version="2.3.1">
-      <category name="Jamon"/>
-   </feature>
-   <feature url="features/org.jamon.processor_2.3.2.jar" id="org.jamon.processor" version="2.3.2">
-      <category name="Jamon"/>
-   </feature>
    <feature url="features/org.jamon.feature_2.3.2.jar" id="org.jamon.feature" version="2.3.2">
       <category name="Jamon"/>
    </feature>
    <feature url="features/org.jamon.feature_2.3.3.jar" id="org.jamon.feature" version="2.3.3">
       <category name="Jamon"/>
    </feature>
+
+   <feature url="features/org.jamon.processor_2.3.1.jar" id="org.jamon.processor" version="2.3.1">
+      <category name="Jamon"/>
+   </feature>
+   <feature url="features/org.jamon.processor_2.3.2.jar" id="org.jamon.processor" version="2.3.2">
+      <category name="Jamon"/>
+   </feature>
    <feature url="features/org.jamon.processor_2.3.3.jar" id="org.jamon.processor" version="2.3.3">
+      <category name="Jamon"/>
+   </feature>
+   <feature url="features/org.jamon.processor_2.4.0.jar" id="org.jamon.processor" version="2.4.0">
       <category name="Jamon"/>
    </feature>
    <category-def name="Jamon" label="Jamon"/>
