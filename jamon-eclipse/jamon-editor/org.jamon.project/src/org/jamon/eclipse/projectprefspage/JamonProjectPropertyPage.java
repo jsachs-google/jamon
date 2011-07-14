@@ -116,7 +116,7 @@ public class JamonProjectPropertyPage extends PropertyPage {
         templateSourceLabel.setText("Template source folder:");
         sourceField = new ControlDecoration(
             new Text(composite, SWT.SINGLE | SWT.BORDER),
-            SWT.CENTER | SWT.LEFT, 
+            SWT.CENTER | SWT.LEFT,
             composite);
         templateSourceDirInput = (Text) sourceField.getControl();
         String templateSourceDir = JamonNature.templateSourceFolderName(getProject());
@@ -161,7 +161,7 @@ public class JamonProjectPropertyPage extends PropertyPage {
         templateOutputLabel.setText("Template output folder:");
         ControlDecoration outputField = new ControlDecoration(
             new Text(composite, SWT.SINGLE | SWT.BORDER),
-            SWT.CENTER | SWT.LEFT, 
+            SWT.CENTER | SWT.LEFT,
             composite);
         templateOutputDirInput = (Text) outputField.getControl();
         String templateOutputDir = JamonNature.templateOutputFolderName(getProject());
