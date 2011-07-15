@@ -1,44 +1,105 @@
+/*
+ * The contents of this file are subject to the Mozilla Public
+ * License Version 1.1 (the "License"); you may not use this file
+ * except in compliance with the License. You may obtain a copy of
+ * the License at http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS
+ * IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+ * implied. See the License for the specific language governing
+ * rights and limitations under the License.
+ *
+ * The Original Code is Jamon code, released July, 2011.
+ *
+ * The Initial Developer of the Original Code is Scott Olcott.  Portions
+ * created by Scott Olcott are Copyright (C) 2011 Scott Olcott.  All Rights
+ * Reserved.
+ *
+ * Contributor(s): Ian Robertson
+ */
+
 package org.jamon.eclipse.maven.configurator;
 
 import java.io.File;
-import java.util.List;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
-import org.apache.maven.model.Plugin;
-import org.apache.maven.model.PluginExecution;
-import org.apache.maven.project.MavenProject;
-import org.codehaus.plexus.util.StringUtils;
-import org.codehaus.plexus.util.xml.Xpp3Dom;
+import org.apache.maven.artifact.Artifact;
+import org.apache.maven.lifecycle.MavenExecutionPlan;
+import org.apache.maven.plugin.MojoExecution;
+import org.apache.maven.plugin.descriptor.MojoDescriptor;
+import org.codehaus.plexus.configuration.PlexusConfiguration;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.maven.ide.eclipse.embedder.IMaven;
+import org.maven.ide.eclipse.project.IMavenProjectFacade;
 import org.maven.ide.eclipse.project.configurator.ProjectConfigurationRequest;
 
 public class JamonPluginConfiguration {
-  private static final String JAMON_PLUGIN_ARTIFACT_ID = "jamon-maven-plugin";
-
-  private static final String JAMON_GROUP_ID = "org.jamon";
-
   private final String templateOutputDir;
   private final String templateSourceDir;
+  private final Artifact jamonProcessorArtifact;
 
   public static JamonPluginConfiguration forProjectConfigurationRequest(
-    ProjectConfigurationRequest request) {
-    Plugin jamonPlugin = getJamonPlugin(request.getMavenProject());
-    if (jamonPlugin == null) {
-      return null;
+    ProjectConfigurationRequest request, IProgressMonitor monitor, IMaven maven)
+  throws CoreException {
+    IMavenProjectFacade mavenProjectFacade = request.getMavenProjectFacade();
+    MavenExecutionPlan executionPlan = mavenProjectFacade.getExecutionPlan(monitor);
+    for (MojoExecution execution: executionPlan.getMojoExecutions()) {
+      MojoDescriptor mojoDescriptor = execution.getMojoDescriptor();
+      PlexusConfiguration mojoConfiguration = mojoDescriptor.getMojoConfiguration();
+      mojoConfiguration.getName();
+      Object mojo = maven.getConfiguredMojo(request.getMavenSession(), execution, Object.class);
+      if ("org.jamon.maven.JamonMojo".equals(mojo.getClass().getName())) {
+        File templateSourceDir = getFileProperty(mojo, "templateSourceDir");
+        File templateOutputDir = getFileProperty(mojo, "templateOutputDir");
+        Artifact jamonProcessorArtifact = null;
+        for (Artifact artifact : mojoDescriptor.getPluginDescriptor().getArtifacts()) {
+          if ("org.jamon".equals(artifact.getGroupId())
+              && "jamon-processor".equals(artifact.getArtifactId())) {
+            jamonProcessorArtifact = artifact;
+            break;
+          }
+        }
+
+        IProject project = request.getProject();
+        return new JamonPluginConfiguration(
+          getProjectRelativePath(templateSourceDir, project),
+          getProjectRelativePath(templateOutputDir, project),
+          jamonProcessorArtifact);
+      }
     }
-    Xpp3Dom pluginConfiguration = getPluginConfiguration(jamonPlugin);
-    if (pluginConfiguration == null) {
-      return null;
-    }
-    IProject project = request.getProject();
-    return new JamonPluginConfiguration(
-      getConfigurationPathValue(pluginConfiguration, "templateOutputDir", "tsrc", project),
-      getConfigurationPathValue(pluginConfiguration, "templateSourceDir", "src/templates", project));
+    return null;
   }
 
-  private JamonPluginConfiguration(String templateOutputDir, String templateSourceDir) {
-    this.templateOutputDir = templateOutputDir;
+  private static File getFileProperty(Object mojo, String propertyName) throws CoreException {
+    try {
+      Method getTemplateSourceDir = mojo.getClass().getMethod(getter(propertyName));
+      return (File) getTemplateSourceDir.invoke(mojo);
+    }
+    catch (Exception e1) {
+      try {
+        Field field = mojo.getClass().getDeclaredField(propertyName);
+        field.setAccessible(true);
+        return (File) field.get(mojo);
+      }
+      catch (Exception e2) {
+        throw new CoreException(new Status(
+          IStatus.ERROR, JamonProjectConfigurator.PLUGIN_ID, "failure to access " + propertyName, e2));
+      }
+    }
+
+  }
+
+  private JamonPluginConfiguration(
+    String templateSourceDir, String templateOutputDir, Artifact jamonProcessorArtifact) {
     this.templateSourceDir = templateSourceDir;
+    this.templateOutputDir = templateOutputDir;
+    this.jamonProcessorArtifact = jamonProcessorArtifact;
   }
 
   public String getTemplateOutputDir() {
@@ -49,102 +110,19 @@ public class JamonPluginConfiguration {
     return templateSourceDir;
   }
 
-  /**
-   * Gets the Jamon plugin from pom.xml. Returns null if it is not found.
-   *
-   * @param project
-   * @return
-   */
-  private static Plugin getJamonPlugin(MavenProject project) {
-    List<Plugin> plugins = project.getBuildPlugins();
-
-    for (Plugin plugin : plugins) {
-      if (isJamonArtifact(plugin)) {
-        return plugin;
-      }
-    }
-    return null;
-  }
-
-  private static boolean isJamonArtifact(Plugin plugin) {
-    return JAMON_GROUP_ID.equals(plugin.getGroupId())
-      && JAMON_PLUGIN_ARTIFACT_ID.equals(plugin.getArtifactId());
-  }
-
-  /**
-   * Get the jamon plugin configuration section. If it is not found in the main configuration
-   * section it then looks in the configuration section for the generate-sources execution.
-   *
-   * @param plugin
-   * @return configuration - Returns null if not found
-   */
-  private static Xpp3Dom getPluginConfiguration(Plugin plugin) {
-    //TODO - property interpolation
-    Object configuration = plugin.getConfiguration();
-    if (configuration == null) {
-      if (plugin.getExecutions() != null) {
-        configuration = getConfigurationFromGenerateSourcesExecution(plugin);
-      }
-    }
-    if (configuration instanceof Xpp3Dom) {
-      return (Xpp3Dom) configuration;
-    }
-    else {
-      return null;
-    }
-  }
-
-  /**
-   * Gets the configuration section from the generate sources execution. Returns null if it is not
-   * found.
-   *
-   * @param plugin
-   * @return
-   */
-  private static Object getConfigurationFromGenerateSourcesExecution(Plugin plugin) {
-    for (PluginExecution execution : plugin.getExecutions()) {
-      // Assume that we use the configuration that is executed in generate-sources
-      if ("generate-sources".equals(execution.getPhase())) {
-        return execution.getConfiguration();
-      }
-    }
-    return null;
-  }
-
-  /**
-   * Gets a value from the configuration sections. Returns a defaultValue if none is found.
-   *
-   * @param configuration
-   * @param key
-   * @param defaultValue
-   * @return
-   */
-  private static String getConfigurationPathValue(
-    Xpp3Dom configuration, String key, String defaultValue, IProject project) {
-    String value = getConfigurationPathValue(configuration, key);
-    return getProjectRelativePath(StringUtils.isBlank(value) ? defaultValue : value, project);
-  }
-
-  /**
-   * Gets a value from the configuration section. Returns null if it is not found.
-   *
-   * @param configuration
-   * @param key
-   * @return
-   */
-  private static String getConfigurationPathValue(Xpp3Dom configuration, String key) {
-    Xpp3Dom configEntry = configuration.getChild(key);
-    return configEntry == null ? null : configEntry.getValue();
+  public Artifact getJamonProcessorArtifact() {
+    return jamonProcessorArtifact;
   }
 
   /**
    * Gets a path relative to the project
    *
-   * @param path
+   * @param file
    * @param project
    * @return
    */
-  static String getProjectRelativePath(String path, IProject project) {
+  private static String getProjectRelativePath(File file, IProject project) {
+    String path = file.getAbsolutePath();
     IPath projectLocation = project.getLocation();
     String projectLocationString = projectLocation.toOSString() + File.separator;
     if (path.startsWith(projectLocationString)) {
@@ -154,4 +132,13 @@ public class JamonPluginConfiguration {
       return path;
     }
   }
+
+  private static String getter(String property)
+  {
+    StringBuilder builder = new StringBuilder("get");
+    builder.append(Character.toUpperCase(property.charAt(0)));
+    builder.append(property.substring(1));
+    return builder.toString();
+  }
+
 }

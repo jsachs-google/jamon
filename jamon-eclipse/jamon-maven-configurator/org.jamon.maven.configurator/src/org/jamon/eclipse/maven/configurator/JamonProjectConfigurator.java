@@ -1,3 +1,23 @@
+/*
+ * The contents of this file are subject to the Mozilla Public
+ * License Version 1.1 (the "License"); you may not use this file
+ * except in compliance with the License. You may obtain a copy of
+ * the License at http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS
+ * IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+ * implied. See the License for the specific language governing
+ * rights and limitations under the License.
+ *
+ * The Original Code is Jamon code, released July, 2011.
+ *
+ * The Initial Developer of the Original Code is Scott Olcott.  Portions
+ * created by Scott Olcott are Copyright (C) 2011 Scott Olcott.  All Rights
+ * Reserved.
+ *
+ * Contributor(s): Ian Robertson
+ */
+
 package org.jamon.eclipse.maven.configurator;
 
 import org.apache.maven.artifact.Artifact;
@@ -24,15 +44,15 @@ public class JamonProjectConfigurator extends AbstractProjectConfigurator implem
 
   private static final String JAMON_PLUGIN_ARTIFACT_ID = "jamon-maven-plugin";
 
-  private static final String JAMON_PROCESSOR_ARTIFACT_ID = "jamon-processor";
-
   private static final String JAMON_GROUP_ID = "org.jamon";
+
+  static final String PLUGIN_ID = "org.jamon.eclipse.maven.configurator";
 
   @Override
   public void configure(ProjectConfigurationRequest request, IProgressMonitor monitor)
   throws CoreException {
     JamonPluginConfiguration jamonPluginConfiguration =
-      JamonPluginConfiguration.forProjectConfigurationRequest(request);
+      JamonPluginConfiguration.forProjectConfigurationRequest(request, monitor, maven);
     if (jamonPluginConfiguration == null) {
       // Do nothing if there is no plugin configuration
       return;
@@ -47,7 +67,7 @@ public class JamonProjectConfigurator extends AbstractProjectConfigurator implem
     String templateOutputDir = jamonPluginConfiguration.getTemplateOutputDir();
     request.getProject().getFolder(".settings").refreshLocal(IResource.DEPTH_ONE, monitor);
 
-    Artifact jamonProcessorArtifact = getJamonProcessorArtifact(request.getMavenProject());
+    Artifact jamonProcessorArtifact = jamonPluginConfiguration.getJamonProcessorArtifact();
     if (jamonProcessorArtifact != null) {
       JamonNature.addToProject(request.getProject(), templateSourceDir, templateOutputDir,
         new ProcessorJarLocations()
@@ -84,7 +104,7 @@ public class JamonProjectConfigurator extends AbstractProjectConfigurator implem
     IClasspathDescriptor classpath, IProgressMonitor monitor) throws CoreException {
     if (JamonNature.projectHasNature(request.getProject())) {
       JamonPluginConfiguration jamonPluginConfiguration =
-        JamonPluginConfiguration.forProjectConfigurationRequest(request);
+        JamonPluginConfiguration.forProjectConfigurationRequest(request, monitor, maven);
       if (jamonPluginConfiguration != null) {
         IFolder templateDir = request.getProject().getFolder(
           jamonPluginConfiguration.getTemplateOutputDir());
@@ -130,26 +150,6 @@ public class JamonProjectConfigurator extends AbstractProjectConfigurator implem
       }
       folder.create(false, true, monitor);
     }
-  }
-
-  /**
-   * Get the jamon processor artifact from project dependendies. Return null if it is not found
-   *
-   * @param mavenProject
-   * @return artifact
-   */
-  private Artifact getJamonProcessorArtifact(MavenProject mavenProject) {
-    //FIXME - this isn't the right thing to do; the processor generally is not a dependency of
-    // the project, but of the jamon maven plugin.
-    if (mavenProject != null && mavenProject.getArtifacts() != null) {
-      for (Artifact artifact : mavenProject.getArtifacts()) {
-        if (JAMON_GROUP_ID.equals(artifact.getGroupId())
-          && JAMON_PROCESSOR_ARTIFACT_ID.equals(artifact.getArtifactId())) {
-          return artifact;
-        }
-      }
-    }
-    return null;
   }
 
 }
