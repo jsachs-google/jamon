@@ -3,6 +3,8 @@
  */
 package org.jamon.eclipse.projectprefspage;
 
+import java.io.File;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
@@ -18,9 +20,11 @@ class PluginProcessorChooser extends ProcessorChooser {
     protected PluginProcessorChooser(ProcessorSelector processorSelector)
     {
         super(processorSelector, ProcessorSourceType.PLUGIN, "Plugin-provided");
-        // TODO Auto-generated constructor stub
     }
+
     private Label label;
+    private final File pluginProcessorJar = ProcessorJarLocations.getPluginProcessorJar();
+
     @Override public void setEnabled(boolean p_enabled)
     {
         label.setEnabled(p_enabled);
@@ -29,11 +33,21 @@ class PluginProcessorChooser extends ProcessorChooser {
             getProcessorSelector().setJarIsValid(true);
         }
     }
+
+    @Override
+    void setWidgetEnabled(boolean enabled) {
+        // don't enable if there is no processor plugin
+        super.setWidgetEnabled(enabled && pluginProcessorJar != null);
+    }
+
     @Override protected void render(Composite p_parent, ProcessorJarLocations p_jarLocations)
     {
         super.render(p_parent, p_jarLocations);
         label = new Label(p_parent, SWT.NONE);
-        label.setText(ProcessorJarLocations.getPluginProcessorJar().getName());
+        String pluginProcessorJarName = pluginProcessorJar != null
+            ? pluginProcessorJar.getName()
+            : "N/A";
+        label.setText(pluginProcessorJarName);
         GridData gridData = new GridData();
         gridData.horizontalSpan = 2;
         label.setLayoutData(gridData);

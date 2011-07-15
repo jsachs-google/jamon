@@ -44,21 +44,23 @@ public class ProcessorJarLocations
     public static File getPluginProcessorJar()
     {
         Bundle processorPluginBundle = Platform.getBundle("org.jamon.processor");
-        for (
-                @SuppressWarnings("unchecked") Enumeration<URL> matches =
-                    processorPluginBundle.findEntries("/", "jamon-processor*.jar", false);
-                matches.hasMoreElements(); )
+        @SuppressWarnings("unchecked") Enumeration<URL> matches =
+          processorPluginBundle.findEntries("/", "jamon-processor*.jar", false);
+        if (matches != null)
         {
-            URL match = matches.nextElement();
-            try
+            while(matches.hasMoreElements())
             {
-                return new File(
-                    FileLocator.toFileURL(processorPluginBundle.getEntry(match.getPath())).toURI());
-            }
-            catch (Exception e)
-            {
-                EclipseUtils.logError(e);
-                return null;
+                URL match = matches.nextElement();
+                try
+                {
+                    return new File(
+                        FileLocator.toFileURL(processorPluginBundle.getEntry(match.getPath())).toURI());
+                }
+                catch (Exception e)
+                {
+                    EclipseUtils.logError(e);
+                    return null;
+                }
             }
         }
         return null;
