@@ -17,11 +17,13 @@ public class MockStyleProvider implements StyleProvider
 
     private final Map<SyntaxType, Style> m_styles = new EnumMap<SyntaxType, Style>(SyntaxType.class);
 
+    @Override
     public void addStylesChangedListener(StylesChangeListener p_listener)
     {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public void addSyntaxStyleChangeListener(SyntaxType p_syntaxType, SyntaxStyleChangeListener p_listener)
     {
         if (m_listeners.get(p_syntaxType) == null)
@@ -31,6 +33,7 @@ public class MockStyleProvider implements StyleProvider
         m_listeners.get(p_syntaxType).add(p_listener);
     }
 
+    @Override
     public Style getStyle(SyntaxType p_syntaxType)
     {
         return m_styles.get(p_syntaxType);
@@ -44,16 +47,19 @@ public class MockStyleProvider implements StyleProvider
         m_styles.put(p_syntaxType, style);
     }
 
+    @Override
     public void reloadStyles()
     {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public void removeStylesChangedListener(StylesChangeListener p_listener)
     {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public void removeSyntaxStyleChangeListener(
         SyntaxType p_syntaxType, SyntaxStyleChangeListener p_listener)
     {

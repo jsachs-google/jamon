@@ -103,7 +103,7 @@ public class SyntaxPreferences
     }
 
     // package scoped for unit testing.
-    static RGB stringToRgb(String p_string) {
+    public static RGB stringToRgb(String p_string) {
         if (p_string == null || p_string.length() == 0) {
             return null;
         }
@@ -117,7 +117,7 @@ public class SyntaxPreferences
     }
 
     // package scoped for unit testing.
-    static String rgbToString(RGB p_rgb)
+    public static String rgbToString(RGB p_rgb)
     {
         if (p_rgb == null)
         {

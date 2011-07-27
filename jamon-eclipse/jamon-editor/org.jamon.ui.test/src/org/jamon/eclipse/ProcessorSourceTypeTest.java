@@ -1,10 +1,10 @@
 package org.jamon.eclipse;
 
-import static org.junit.Assert.*;
+import junit.framework.TestCase;
 
 import org.junit.Test;
 
-public class ProcessorSourceTypeTest
+public class ProcessorSourceTypeTest extends TestCase
 {
     @Test public void testFromPreferenceValue()
     {

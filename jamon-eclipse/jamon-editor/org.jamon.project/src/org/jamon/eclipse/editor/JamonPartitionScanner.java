@@ -17,7 +17,7 @@ public class JamonPartitionScanner implements IPartitionTokenScanner
   private static final char STRING_ESCAPE_CHAR = '\\';
 
   private static final String JAMON = IDocument.DEFAULT_CONTENT_TYPE;
-  static final IToken JAMON_TOKEN = new Token(JAMON);
+  public static final IToken JAMON_TOKEN = new Token(JAMON);
 
   public static final String[] JAMON_PARTITION_TYPES;
   static
