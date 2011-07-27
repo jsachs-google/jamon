@@ -27,8 +27,7 @@ import java.lang.reflect.Method;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.lifecycle.MavenExecutionPlan;
 import org.apache.maven.plugin.MojoExecution;
-import org.apache.maven.plugin.descriptor.MojoDescriptor;
-import org.codehaus.plexus.configuration.PlexusConfiguration;
+import org.apache.maven.plugin.descriptor.PluginDescriptor;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
@@ -50,27 +49,26 @@ public class JamonPluginConfiguration {
     IMavenProjectFacade mavenProjectFacade = request.getMavenProjectFacade();
     MavenExecutionPlan executionPlan = mavenProjectFacade.getExecutionPlan(monitor);
     for (MojoExecution execution: executionPlan.getMojoExecutions()) {
-      MojoDescriptor mojoDescriptor = execution.getMojoDescriptor();
-      PlexusConfiguration mojoConfiguration = mojoDescriptor.getMojoConfiguration();
-      mojoConfiguration.getName();
-      Object mojo = maven.getConfiguredMojo(request.getMavenSession(), execution, Object.class);
-      if ("org.jamon.maven.JamonMojo".equals(mojo.getClass().getName())) {
-        File templateSourceDir = getFileProperty(mojo, "templateSourceDir");
-        File templateOutputDir = getFileProperty(mojo, "templateOutputDir");
-        Artifact jamonProcessorArtifact = null;
-        for (Artifact artifact : mojoDescriptor.getPluginDescriptor().getArtifacts()) {
-          if ("org.jamon".equals(artifact.getGroupId())
-              && "jamon-processor".equals(artifact.getArtifactId())) {
-            jamonProcessorArtifact = artifact;
-            break;
+      PluginDescriptor pluginDescriptor = execution.getMojoDescriptor().getPluginDescriptor();
+      if ("org.jamon".equals(pluginDescriptor.getGroupId())
+          && "jamon-maven-plugin".equals(pluginDescriptor.getArtifactId())) {
+        Object mojo = maven.getConfiguredMojo(request.getMavenSession(), execution, Object.class);
+        if ("org.jamon.maven.JamonMojo".equals(mojo.getClass().getName())) {
+          Artifact jamonProcessorArtifact = null;
+          for (Artifact artifact : pluginDescriptor.getArtifacts()) {
+            if ("org.jamon".equals(artifact.getGroupId())
+                && "jamon-processor".equals(artifact.getArtifactId())) {
+              jamonProcessorArtifact = artifact;
+              break;
+            }
           }
-        }
 
-        IProject project = request.getProject();
-        return new JamonPluginConfiguration(
-          getProjectRelativePath(templateSourceDir, project),
-          getProjectRelativePath(templateOutputDir, project),
-          jamonProcessorArtifact);
+          IProject project = request.getProject();
+          return new JamonPluginConfiguration(
+            getProjectRelativePath(getFileProperty(mojo, "templateSourceDir"), project),
+            getProjectRelativePath(getFileProperty(mojo, "templateOutputDir"), project),
+            jamonProcessorArtifact);
+        }
       }
     }
     return null;
