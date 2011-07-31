@@ -18,5 +18,6 @@
 
   <properties>
     <updateSite.dir>../../updateSite</updateSite.dir>
+    <m2eclipse-core.site>0.12.0/S/0.12.0.20101115-1102/</m2eclipse-core.site>
   </properties>
 </project>

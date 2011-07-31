@@ -2,22 +2,20 @@ package org.jamon.eclipse;
 
 import junit.framework.TestCase;
 
-import org.junit.Test;
-
 public class ProcessorSourceTypeTest extends TestCase
 {
-    @Test public void testFromPreferenceValue()
+    public void testFromPreferenceValue()
     {
         assertEquals(
             ProcessorSourceType.EXTERNAL, ProcessorSourceType.fromPreferenceValue("EXTERNAL"));
     }
 
-    @Test public void testFromUnknownPreferenceValue()
+    public void testFromUnknownPreferenceValue()
     {
         assertEquals(ProcessorSourceType.PLUGIN, ProcessorSourceType.fromPreferenceValue("FOO"));
     }
 
-    @Test public void testFromNullPreferenceValue()
+    public void testFromNullPreferenceValue()
     {
         assertEquals(ProcessorSourceType.PLUGIN, ProcessorSourceType.fromPreferenceValue(null));
     }
