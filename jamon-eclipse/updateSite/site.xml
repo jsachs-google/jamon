@@ -56,7 +56,7 @@
       <category name="Jamon"/>
    </feature>
 
-   <feature url="features/org.jamon.maven.configurator.feature-1.0.0.jar" id="org.jamon.eclipse.maven.configurator.feature" version="2.4.0">
+   <feature url="features/org.jamon.maven.configurator.feature-1.0.0.jar" id="org.jamon.eclipse.maven.configurator.feature" version="1.0.0">
       <category name="Jamon"/>
    </feature>
 
