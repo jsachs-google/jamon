@@ -73,8 +73,8 @@ from being output, each Jamon line must end with a backslash.
 <li> To process and run the template, execute the following commands:
 <pre class="tty">
     export CLASSPATH=.:/path/to/jamon-runtime.jar:/path/to/jamon-api.jar:/path/to/jamon-processor.jar
-    java org.jamon.TemplateProcessor --destDir=. JamonCallerTemplate SpacerTemplate
-    javac JamonCallerTut6.java JamonCallerTemplate*.java SpacerTemplate*.java
+    java org.jamon.TemplateProcessor --destDir=. JamonCallerTemplate StdPhoneNumberFormat
+    javac JamonCallerTut6.java JamonCallerTemplate*.java StdPhoneNumberFormat*.java
     java JamonCallerTut6
 </pre>
 
