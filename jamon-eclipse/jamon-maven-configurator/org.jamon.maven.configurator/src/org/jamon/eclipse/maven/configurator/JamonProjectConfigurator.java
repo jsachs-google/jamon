@@ -33,11 +33,11 @@ import org.eclipse.jdt.core.JavaCore;
 import org.jamon.eclipse.JamonNature;
 import org.jamon.eclipse.ProcessorJarLocations;
 import org.jamon.eclipse.ProcessorSourceType;
-import org.maven.ide.eclipse.jdt.IClasspathDescriptor;
-import org.maven.ide.eclipse.jdt.IJavaProjectConfigurator;
-import org.maven.ide.eclipse.project.IMavenProjectFacade;
-import org.maven.ide.eclipse.project.configurator.AbstractProjectConfigurator;
-import org.maven.ide.eclipse.project.configurator.ProjectConfigurationRequest;
+import org.eclipse.m2e.jdt.IClasspathDescriptor;
+import org.eclipse.m2e.jdt.IJavaProjectConfigurator;
+import org.eclipse.m2e.core.project.IMavenProjectFacade;
+import org.eclipse.m2e.core.project.configurator.AbstractProjectConfigurator;
+import org.eclipse.m2e.core.project.configurator.ProjectConfigurationRequest;
 
 public class JamonProjectConfigurator extends AbstractProjectConfigurator implements
     IJavaProjectConfigurator {

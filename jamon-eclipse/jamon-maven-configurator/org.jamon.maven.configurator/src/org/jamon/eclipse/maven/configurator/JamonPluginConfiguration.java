@@ -25,7 +25,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import org.apache.maven.artifact.Artifact;
-import org.apache.maven.lifecycle.MavenExecutionPlan;
 import org.apache.maven.plugin.MojoExecution;
 import org.apache.maven.plugin.descriptor.PluginDescriptor;
 import org.eclipse.core.resources.IProject;
@@ -34,9 +33,9 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.maven.ide.eclipse.embedder.IMaven;
-import org.maven.ide.eclipse.project.IMavenProjectFacade;
-import org.maven.ide.eclipse.project.configurator.ProjectConfigurationRequest;
+import org.eclipse.m2e.core.embedder.IMaven;
+import org.eclipse.m2e.core.project.IMavenProjectFacade;
+import org.eclipse.m2e.core.project.configurator.ProjectConfigurationRequest;;
 
 public class JamonPluginConfiguration {
   private final String templateOutputDir;
@@ -47,29 +46,27 @@ public class JamonPluginConfiguration {
     ProjectConfigurationRequest request, IProgressMonitor monitor, IMaven maven)
   throws CoreException {
     IMavenProjectFacade mavenProjectFacade = request.getMavenProjectFacade();
-    MavenExecutionPlan executionPlan = mavenProjectFacade.getExecutionPlan(monitor);
-    for (MojoExecution execution: executionPlan.getMojoExecutions()) {
-      PluginDescriptor pluginDescriptor = execution.getMojoDescriptor().getPluginDescriptor();
-      if ("org.jamon".equals(pluginDescriptor.getGroupId())
-          && "jamon-maven-plugin".equals(pluginDescriptor.getArtifactId())) {
-        Object mojo = maven.getConfiguredMojo(request.getMavenSession(), execution, Object.class);
-        if ("org.jamon.maven.JamonMojo".equals(mojo.getClass().getName())) {
-          Artifact jamonProcessorArtifact = null;
-          for (Artifact artifact : pluginDescriptor.getArtifacts()) {
-            if ("org.jamon".equals(artifact.getGroupId())
-                && "jamon-processor".equals(artifact.getArtifactId())) {
-              jamonProcessorArtifact = artifact;
-              break;
-            }
-          }
 
-          IProject project = request.getProject();
-          return new JamonPluginConfiguration(
-            getProjectRelativePath(getFileProperty(mojo, "templateSourceDir"), project),
-            getProjectRelativePath(getFileProperty(mojo, "templateOutputDir"), project),
-            jamonProcessorArtifact);
+    for (MojoExecution execution: mavenProjectFacade.getMojoExecutions(
+      "org.jamon", "jamon-maven-plugin",monitor, "translate", "translate-tests")) {
+      PluginDescriptor pluginDescriptor = execution.getMojoDescriptor().getPluginDescriptor();
+
+      Object mojo = maven.getConfiguredMojo(request.getMavenSession(), execution, Object.class);
+      Artifact jamonProcessorArtifact = null;
+      for (Artifact artifact : pluginDescriptor.getArtifacts()) {
+        if ("org.jamon".equals(artifact.getGroupId())
+            && "jamon-processor".equals(artifact.getArtifactId())) {
+          jamonProcessorArtifact = artifact;
+          break;
         }
       }
+
+      IProject project = request.getProject();
+      return new JamonPluginConfiguration(
+        getProjectRelativePath(getFileProperty(mojo, "templateSourceDir"), project),
+        getProjectRelativePath(getFileProperty(mojo, "templateOutputDir"), project),
+        jamonProcessorArtifact);
+
     }
     return null;
   }
