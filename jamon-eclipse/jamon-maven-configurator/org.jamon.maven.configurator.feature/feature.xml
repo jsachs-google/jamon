@@ -30,14 +30,14 @@ Contributor(s): Ian Robertson
    </license>
 
    <requires>
-     <import plugin="org.eclipse.core.runtime" version="3.4.0" match="greaterOrEqual"/>
-     <import plugin="org.eclipse.core.resources" version="3.4.0" match="greaterOrEqual"/>
-     <import plugin="org.eclipse.jdt.core" version="3.4.0" match="greaterOrEqual"/>
-     <import plugin="org.maven.ide.eclipse" version="0.10.0" match="greaterOrEqual"/>
-     <import plugin="org.maven.ide.eclipse.jdt" version="0.10.0" match="greaterOrEqual"/>
-     <import plugin="org.maven.ide.eclipse.maven_embedder" version="0.10.0" match="greaterOrEqual"/>
-     <import plugin="org.jamon.project" version="2.3.3" match="greaterOrEqual"/>
-     <import plugin="org.jamon.processor" version="2.3.3" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.core.runtime" version="3.4.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.core.resources" version="3.4.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.jdt.core" version="3.4.0" match="greaterOrEqual"/>
+      <import plugin="org.jamon.project" version="2.3.3" match="greaterOrEqual"/>
+      <import plugin="org.jamon.processor" version="2.3.3" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.m2e.core" version="1.0.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.m2e.jdt" version="1.0.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.m2e.maven.runtime" version="1.0.0" match="greaterOrEqual"/>
    </requires>
 
    <plugin
