@@ -42,14 +42,6 @@
           <run class="org.jamon.eclipse.MarkerUpdaterBuilder"/>
        </builder>
     </extension>
-    <extension
-          id="preferences"
-          name="preferences"
-          point="org.eclipse.core.runtime.preferences">
-       <scope
-             class="org.eclipse.core.internal.resources.ProjectPreferences"
-             name="project"/>
-    </extension>
        <extension
          id="jamonEditor"
          name="Jamon Template Editor"
