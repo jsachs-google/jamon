@@ -35,7 +35,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.m2e.core.embedder.IMaven;
 import org.eclipse.m2e.core.project.IMavenProjectFacade;
-import org.eclipse.m2e.core.project.configurator.ProjectConfigurationRequest;;
+import org.eclipse.m2e.core.project.configurator.ProjectConfigurationRequest;
 
 public class JamonPluginConfiguration {
   private final String templateOutputDir;
