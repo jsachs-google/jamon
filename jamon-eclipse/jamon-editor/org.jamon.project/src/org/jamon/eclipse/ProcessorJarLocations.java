@@ -44,8 +44,8 @@ public class ProcessorJarLocations
     public static File getPluginProcessorJar()
     {
         Bundle processorPluginBundle = Platform.getBundle("org.jamon.processor");
-        @SuppressWarnings("unchecked") Enumeration<URL> matches =
-          processorPluginBundle.findEntries("/", "jamon-processor*.jar", false);
+        Enumeration<URL> matches = 
+            processorPluginBundle.findEntries("/", "jamon-processor*.jar", false);
         if (matches != null)
         {
             while(matches.hasMoreElements())
