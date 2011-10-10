@@ -20,6 +20,7 @@
 
 package org.jamon.eclipse.maven.configurator;
 
+
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.model.Plugin;
 import org.apache.maven.project.MavenProject;
@@ -65,8 +66,12 @@ public class JamonProjectConfigurator extends AbstractProjectConfigurator implem
 
     String templateSourceDir = jamonPluginConfiguration.getTemplateSourceDir();
     String templateOutputDir = jamonPluginConfiguration.getTemplateOutputDir();
+    
+    createFolder(request.getProject(), request.getProject().getFolder(templateOutputDir), monitor);
+
     request.getProject().getFolder(".settings").refreshLocal(IResource.DEPTH_ONE, monitor);
 
+    
     Artifact jamonProcessorArtifact = jamonPluginConfiguration.getJamonProcessorArtifact();
     if (jamonProcessorArtifact != null) {
       JamonNature.addToProject(request.getProject(), templateSourceDir, templateOutputDir,
