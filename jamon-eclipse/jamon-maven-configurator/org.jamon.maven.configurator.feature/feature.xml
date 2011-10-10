@@ -41,7 +41,7 @@ Contributor(s): Ian Robertson
    </requires>
 
    <plugin
-         id="org.jamon.eclipse.maven.configurator"
+         id="org.jamon.maven.configurator"
          download-size="0"
          install-size="0"
          version="1.0.0.qualifier"
