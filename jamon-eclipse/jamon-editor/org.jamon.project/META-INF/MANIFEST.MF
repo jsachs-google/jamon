@@ -18,7 +18,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.ui.forms
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: jamon.org
-Export-Package: org.jamon.eclipse,
+Export-Package: 
+ org.jamon.eclipse;x-friends:="org.jamon.ui.test, org.jamon.maven.configurator, org.jamon.maven.configurator-test",
  org.jamon.eclipse.editor;x-friends:="org.jamon.ui.test",
  org.jamon.eclipse.editor.preferences;x-friends:="org.jamon.ui.test"
 Bundle-ManifestVersion: 2
