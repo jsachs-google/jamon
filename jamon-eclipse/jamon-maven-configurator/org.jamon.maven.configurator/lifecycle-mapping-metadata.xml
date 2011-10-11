@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <lifecycleMappingMetadata>
+  <!--
+    Ideally, we should attach our configurator directly to the jamon-maven-plugin. However,
+    the translate goal runs in the generate-resources phase, while maven-compiler-plugin:compile
+    binds to the compile phase, so instead, we'll need to attach our configurator as
+    a secondary configurator to the maven-compiler-plugin. To keep m2e happy, we'll tell it to
+    ignore jamon-maven-plugin.
+   -->
   <pluginExecutions>
     <pluginExecution>
       <pluginExecutionFilter>
@@ -12,9 +19,7 @@
         </goals>
       </pluginExecutionFilter>
       <action>
-        <configurator>
-          <id>org.jamon.eclipse.maven.configurator.fakeJamonProjectConfigurator</id>
-        </configurator>
+        <ignore/>
       </action>
     </pluginExecution>
     <pluginExecution>
