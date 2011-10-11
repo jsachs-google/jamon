@@ -14,8 +14,8 @@ public class JamonProjectConfiguratorTest extends AbstractMavenProjectTestCase {
   public void test() throws Exception {
     IProject project = importAndBuildProject("basic-jamon-project");
     assertTrue(JamonNature.projectHasNature(project));
-    assertEquals("tsrc", JamonNature.templateSourceFolderName(project));
-    assertEquals("foo", JamonNature.templateOutputFolderName(project));
+    assertEquals("src/main/templates", JamonNature.templateSourceFolderName(project));
+    assertEquals("target/generated-sources/jamon", JamonNature.templateOutputFolderName(project));
   }
 
   private IProject importAndBuildProject(String name) throws Exception {
