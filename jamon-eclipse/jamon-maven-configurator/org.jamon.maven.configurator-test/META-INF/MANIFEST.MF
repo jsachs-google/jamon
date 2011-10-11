@@ -2,13 +2,13 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: MavenAptConfigurator-test
 Bundle-SymbolicName: org.jamon.maven.configurator-test;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 1.1.0.qualifier
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime;bundle-version="3.4.0",
  org.eclipse.jdt.apt.core,
  org.junit,
  org.eclipse.m2e.core;bundle-version="[1.0.0,1.1.0)",
- org.jamon.maven.configurator;bundle-version="1.0.0",
+ org.jamon.maven.configurator,
  org.eclipse.m2e.tests.common;bundle-version="1.0.0",
  org.jamon.project;bundle-version="2.3.4"
 Bundle-ActivationPolicy: lazy

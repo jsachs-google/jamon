@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.jamon.eclipse.maven.configurator.feature"
+      id="org.jamon.maven.configurator.feature"
       label="Jamon Maven Configurator"
-      version="1.0.0.qualifier">
+      version="1.1.0.qualifier">
 
    <description url="http://www.example.com/description">
       Project configurator for the jamon-maven-plugin.
@@ -44,7 +44,7 @@ Contributor(s): Ian Robertson
          id="org.jamon.maven.configurator"
          download-size="0"
          install-size="0"
-         version="1.0.0.qualifier"
+         version="1.1.0.qualifier"
          unpack="false"/>
 
 </feature>

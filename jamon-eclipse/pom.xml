@@ -24,9 +24,10 @@
   </prerequisites>
 
   <properties>
-    <tycho-version>0.10.0</tycho-version>
+    <tycho-version>0.13.0</tycho-version>
     <m2eclipse-core.site>0.10.2/S/0.10.2.20100623-1649</m2eclipse-core.site>
     <updateSite.dir>../updateSite</updateSite.dir>
+    <eclipse.version>ganymede</eclipse.version>
   </properties>
 
   <scm>
@@ -39,7 +40,7 @@
     <repository>
        <id>ganymede</id>
        <layout>p2</layout>
-       <url>http://download.eclipse.org/releases/ganymede</url>
+       <url>http://download.eclipse.org/releases/${eclipse.version}</url>
     </repository>
     <repository>
       <id>m2e</id>
@@ -56,13 +57,13 @@
   <build>
     <plugins>
       <plugin>
-        <groupId>org.sonatype.tycho</groupId>
+        <groupId>org.eclipse.tycho</groupId>
         <artifactId>tycho-maven-plugin</artifactId>
         <version>${tycho-version}</version>
         <extensions>true</extensions>
       </plugin>
       <plugin>
-        <groupId>org.sonatype.tycho</groupId>
+        <groupId>org.eclipse.tycho</groupId>
         <artifactId>target-platform-configuration</artifactId>
         <version>${tycho-version}</version>
         <configuration>
