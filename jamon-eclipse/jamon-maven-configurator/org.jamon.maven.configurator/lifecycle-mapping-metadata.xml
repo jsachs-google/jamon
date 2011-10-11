@@ -13,6 +13,22 @@
       </pluginExecutionFilter>
       <action>
         <configurator>
+          <id>org.jamon.eclipse.maven.configurator.fakeJamonProjectConfigurator</id>
+        </configurator>
+      </action>
+    </pluginExecution>
+    <pluginExecution>
+      <pluginExecutionFilter>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <versionRange>[1.0,)</versionRange>
+        <goals>
+          <goal>compile</goal>
+          <goal>test-compile</goal>
+        </goals>
+      </pluginExecutionFilter>
+      <action>
+        <configurator>
           <id>org.jamon.eclipse.maven.configurator.jamonProjectConfigurator</id>
         </configurator>
       </action>
