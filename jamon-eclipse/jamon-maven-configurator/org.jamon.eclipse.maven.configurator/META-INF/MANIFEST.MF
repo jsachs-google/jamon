@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Jamon Maven Configurator
-Bundle-SymbolicName: org.jamon.maven.configurator;singleton:=true
+Bundle-SymbolicName: org.jamon.eclipse.maven.configurator;singleton:=true
 Bundle-Version: 1.1.0.qualifier
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Require-Bundle: org.eclipse.core.runtime;bundle-version="3.7.0",
