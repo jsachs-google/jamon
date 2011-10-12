@@ -11,11 +11,35 @@ import org.junit.Test;
 public class JamonProjectConfiguratorTest extends AbstractMavenProjectTestCase {
 
   @Test
-  public void test() throws Exception {
+  public void testBasicProject() throws Exception {
     IProject project = importAndBuildProject("basic-jamon-project");
     assertTrue(JamonNature.projectHasNature(project));
     assertEquals("src/main/templates", JamonNature.templateSourceFolderName(project));
     assertEquals("target/generated-sources/jamon", JamonNature.templateOutputFolderName(project));
+  }
+
+  @Test
+  public void testCustomizedProject() throws Exception {
+    IProject project = importAndBuildProject("customized-jamon-project");
+    assertTrue(JamonNature.projectHasNature(project));
+    assertEquals("src/special", JamonNature.templateSourceFolderName(project));
+    assertEquals("tsrc", JamonNature.templateOutputFolderName(project));
+  }
+
+  @Test
+  public void testTestProject() throws Exception {
+    IProject project = importAndBuildProject("jamon-project-in-tests");
+    assertTrue(JamonNature.projectHasNature(project));
+    assertEquals("src/test/templates", JamonNature.templateSourceFolderName(project));
+    assertEquals("target/generated-test-sources/jamon", JamonNature.templateOutputFolderName(project));
+  }
+
+  @Test
+  public void testCustomizedTestProject() throws Exception {
+    IProject project = importAndBuildProject("customized-jamon-project-in-tests");
+    assertTrue(JamonNature.projectHasNature(project));
+    assertEquals("src/test/special", JamonNature.templateSourceFolderName(project));
+    assertEquals("tsrc", JamonNature.templateOutputFolderName(project));
   }
 
   private IProject importAndBuildProject(String name) throws Exception {
