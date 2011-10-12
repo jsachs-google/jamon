@@ -14,6 +14,29 @@
 
   <artifactId>org.jamon.site</artifactId>
   <packaging>eclipse-update-site</packaging>
+  
+  <repositories>
+    <repository>
+      <id>ganymede</id>
+      <layout>p2</layout>
+      <url>${ganymede.url}</url>
+    </repository>
+    <repository>
+      <id>m2e-0.10</id>
+      <layout>p2</layout>
+      <url>${m2e.0.10.url}</url>
+    </repository>
+    <repository>
+      <id>indigo</id>
+      <layout>p2</layout>
+      <url>${indigo.url}</url>
+    </repository>
+    <repository>
+      <id>m2e-1.0</id>
+      <layout>p2</layout>
+      <url>${m2e.1.0.url}</url>
+    </repository>
+  </repositories>
 
   <build>
     <plugins>
