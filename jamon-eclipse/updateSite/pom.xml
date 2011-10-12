@@ -14,7 +14,7 @@
 
   <artifactId>org.jamon.site</artifactId>
   <packaging>eclipse-update-site</packaging>
-  
+
   <repositories>
     <repository>
       <id>ganymede</id>

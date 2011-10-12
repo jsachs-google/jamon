@@ -25,17 +25,17 @@
 
   <properties>
     <tycho-version>0.13.0</tycho-version>
-    
+
     <m2e-core.0.10.site>0.10.2/S/0.10.2.20100623-1649</m2e-core.0.10.site>
     <m2e-core.1.0.site>1.0.0/N/1.0.0.201106061504/</m2e-core.1.0.site>
     <base.m2e.url>http://repository.sonatype.org/content/sites/forge-sites/m2e/</base.m2e.url>
     <m2e.0.10.url>${base.m2e.url}${m2e-core.0.10.site}</m2e.0.10.url>
     <m2e.1.0.url>${base.m2e.url}${m2e-core.1.0.site}</m2e.1.0.url>
-    
+
     <base.eclipse.url>http://download.eclipse.org/releases/</base.eclipse.url>
     <ganymede.url>${base.eclipse.url}ganymede</ganymede.url>
     <indigo.url>${base.eclipse.url}indigo</indigo.url>
-    
+
     <updateSite.dir>../updateSite</updateSite.dir>
   </properties>
 
