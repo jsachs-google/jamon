@@ -57,12 +57,12 @@
       <category name="Jamon"/>
    </feature>
 
-   <feature url="features/org.jamon.eclipse.maven.configurator.feature-1.0.0.jar" 
+   <feature url="features/org.jamon.eclipse.maven.configurator.feature-1.0.0.jar"
             id="org.jamon.eclipse.maven.configurator.feature" version="1.0.0">
       <category name="Jamon-pre-37"/>
    </feature>
-   <feature url="features/org.jamon.maven.configurator.feature-1.1.0.qualifier.jar"
-            id="org.jamon.maven.configurator.feature" version="1.1.0.qualifier">
+   <feature url="features/org.jamon.eclipse.maven.configurator.feature-1.1.0.qualifier.jar"
+            id="org.jamon.eclipse.maven.configurator.feature" version="1.1.0.qualifier">
       <category name="Jamon-37"/>
    </feature>
 
