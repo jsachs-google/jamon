@@ -66,7 +66,17 @@
       <category name="Jamon-37"/>
    </feature>
 
-   <category-def name="Jamon" label="Jamon (all eclipse versions)"/>
-   <category-def name="Jamon-pre-37" label="Jamon (eclipse versions 3.4 - 3.6)"/>
-   <category-def name="Jamon-37" label="Jamon (eclipse versions 3.7+)"/>
+   <category-def name="Jamon" label="Jamon (all eclipse versions)">
+     <description>Plugins for working with the Jamon templating engine</description>
+   </category-def>
+   <category-def name="Jamon-pre-37" label="Jamon Maven support (Eclipse versions 3.4 - 3.6)">
+     <description>
+       Plugins configuring projects based on maven poms, for eclipse versions 3.4 through 3.6
+     </description>
+   </category-def>
+   <category-def name="Jamon-37" label="Jamon Maven support (Eclipse versions 3.7+)">
+     <description>
+       Plugins configuring projects based on maven poms, for eclipse versions 3.7 and later.
+     </description>
+   </category-def>
 </site>
