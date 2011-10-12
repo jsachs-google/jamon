@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
+   <description>Jamon Eclipse Update Site</description>
    <feature url="features/org.jamon.feature_1.9.0.jar" id="org.jamon.feature" version="1.9.0">
       <category name="Jamon"/>
    </feature>
@@ -57,8 +58,14 @@
    </feature>
 
    <feature url="features/org.jamon.maven.configurator.feature-1.0.0.jar" id="org.jamon.eclipse.maven.configurator.feature" version="1.0.0">
-      <category name="Jamon"/>
+      <category name="Jamon-pre-37"/>
+   </feature>
+   <feature url="features/org.jamon.maven.configurator.feature-1.1.0.qualifier.jar"
+            id="org.jamon.maven.configurator.feature" version="1.1.0.qualifier">
+      <category name="Jamon-37"/>
    </feature>
 
-   <category-def name="Jamon" label="Jamon"/>
+   <category-def name="Jamon" label="Jamon (all eclipse versions)"/>
+   <category-def name="Jamon-pre-37" label="Jamon (eclipse versions 3.4 - 3.6)"/>
+   <category-def name="Jamon-37" label="Jamon (eclipse versions 3.7+)"/>
 </site>
