@@ -12,9 +12,9 @@
   <packaging>pom</packaging>
 
   <modules>
-    <module>org.jamon.maven.configurator</module>
-    <module>org.jamon.maven.configurator-test</module>
-    <module>org.jamon.maven.configurator.feature</module>
+    <module>org.jamon.eclipse.maven.configurator</module>
+    <module>org.jamon.eclipse.maven.configurator.test</module>
+    <module>org.jamon.eclipse.maven.configurator.feature</module>
   </modules>
 
   <properties>
