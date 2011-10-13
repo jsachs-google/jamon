@@ -18,7 +18,7 @@
   </modules>
 
   <properties>
-    <updateSite.dir>../updateSite</updateSite.dir>
+    <updateSite.dir>../../updateSite</updateSite.dir>
   </properties>
 
   <repositories>
