@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
+   <description>Jamon Eclipse Update Site</description>
    <feature url="features/org.jamon.feature_1.9.0.jar" id="org.jamon.feature" version="1.9.0">
       <category name="Jamon"/>
    </feature>
@@ -56,9 +57,26 @@
       <category name="Jamon"/>
    </feature>
 
-   <feature url="features/org.jamon.eclipse.maven.configurator.feature_1.0.0.jar" id="org.jamon.eclipse.maven.configurator.feature" version="1.0.0">
-      <category name="Jamon"/>
+   <feature url="features/org.jamon.eclipse.maven.configurator.feature_1.0.0.jar"
+            id="org.jamon.eclipse.maven.configurator.feature" version="1.0.0">
+      <category name="Jamon-pre-37"/>
+   </feature>
+   <feature url="features/org.jamon.eclipse.maven.configurator.feature_1.1.0.jar"
+            id="org.jamon.eclipse.maven.configurator.feature" version="1.1.0">
+      <category name="Jamon-37"/>
    </feature>
 
-   <category-def name="Jamon" label="Jamon"/>
+   <category-def name="Jamon" label="Jamon (all eclipse versions)">
+     <description>Plugins for working with the Jamon templating engine</description>
+   </category-def>
+   <category-def name="Jamon-pre-37" label="Jamon Maven support (Eclipse versions 3.4 - 3.6)">
+     <description>
+       Plugins configuring projects based on maven poms, for eclipse versions 3.4 through 3.6
+     </description>
+   </category-def>
+   <category-def name="Jamon-37" label="Jamon Maven support (Eclipse versions 3.7+)">
+     <description>
+       Plugins configuring projects based on maven poms, for eclipse versions 3.7 and later.
+     </description>
+   </category-def>
 </site>
