@@ -174,7 +174,7 @@ public class TemplateBuilder extends IncrementalProjectBuilder
         HashMap<String, Object> attributes = new HashMap<String, Object>();
         attributes.put(
             IMarker.MESSAGE,
-            "This project is marked as a jamon project, but does not has a jamon-runtime jar on it's classpath");
+            "This project is marked as a jamon project, but does not have a jamon-runtime jar on it's classpath");
         attributes.put(IMarker.SEVERITY, IMarker.SEVERITY_ERROR);
         marker.setAttributes(attributes);
     }
