@@ -6,6 +6,23 @@
 
 <h2><& title &></h2>
 
+<a name="configurator-1.1.0"/>
+<h3>Jamon Maven Configurator Changes from 1.0.0 to 1.1.0</h3>
+<ul>
+  <&| change &>
+    This version supports m2e and eclipse 3.7 (indigo). It
+    does not work with older versions of m2e or eclipse.
+  </&>
+</ul>
+
+<a name="configurator-1.0.0"/>
+<h3>Jamon Maven Configurator 1.0.0</h3>
+<ul>
+  <&| change &>
+    Initial Release.
+  </&>
+</ul>
+
 <a name="processor-2.4.0"/><h3>Processor Changes from 2.3.4 to 2.4.0</h3>
 <ul>
   <&| change &>

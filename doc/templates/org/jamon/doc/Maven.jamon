@@ -77,8 +77,13 @@
 
 <h4>3. (Optional) Hook into Eclipse</h4>
 
-(Yes, this is far from optimal.)
-
+<p>
+If you are using <a href="http://www.eclipse.org/m2e/">m2eclipse</a>,
+simply install the <a href="Eclipse.html">Jamon Maven Configurator</a>, and eclipse will
+automatically configure itself to be Jamon-aware based on the contents
+of your pom.xml.
+</p>
+<p>If you are not using m2eclipse, the solution is far less optimal.
 Add the following to the <code>plugins</code> section, ensuring
 the templateSourceDir and templateOutputDir match your project:
 

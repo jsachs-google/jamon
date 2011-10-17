@@ -8,6 +8,14 @@
 
 <ul>
   <li>
+    2011-10-13: Jamon Maven Configurator 1.1.0 released
+    <a href='<& docRootUrl: "Changes.html#configurator-1.1.0" &>'>[changes]</a>
+  </li>
+  <li>
+    2011-08-05: Jamon Maven Configurator 1.0.0 released
+    <a href='<& docRootUrl: "Changes.html#configurator-1.0.0" &>'>[changes]</a>
+  </li>
+  <li>
     2011-07-07: Jamon Runtime 2.4.0 released
     <a href='<& docRootUrl: "Changes.html#runtime-2.4.0" &>'>[changes]</a>
   </li>
