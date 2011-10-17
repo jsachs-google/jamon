@@ -78,12 +78,12 @@
                         <configuration>
                             <tasks>
                                 <ant dir="." inheritRefs="true" inheritAll="true">
-                                    <property name="basedir" value="${basedir}"/>
-                                    <property name="ignore.svn" value="true"/>
-                                    <property name="user.home" value="${user.home}"/>
-                                    <property name="cp" refid="maven.runtime.classpath"/>
-                                    <property name="distcp" refid="maven.test.classpath"/>
-                                    <target name="${ant.target}"/>
+                                    <property name="basedir" value="${basedir}" />
+                                    <property name="ignore.svn" value="true" />
+                                    <property name="user.home" value="${user.home}" />
+                                    <property name="cp" refid="maven.runtime.classpath" />
+                                    <property name="distcp" refid="maven.test.classpath" />
+                                    <target name="${ant.target}" />
                                 </ant>
                             </tasks>
                         </configuration>
@@ -95,12 +95,12 @@
                         <phase>site</phase>
                         <id>gensite</id>
                         <configuration>
-                            <property name="version" value="${pom.version}"/>
+                            <property name="version" value="${pom.version}" />
                             <tasks>
-                                <unzip src="target/jamon-doc-${version}.jar" dest="target/site"/>
-                                <delete dir="target/site/META-INF"/>
-                                <delete dir="target/css"/>
-                                <delete dir="target/images"/>
+                                <unzip src="target/jamon-doc-${version}.jar" dest="target/site" />
+                                <delete dir="target/site/META-INF" />
+                                <delete dir="target/css" />
+                                <delete dir="target/images" />
                             </tasks>
                         </configuration>
                         <goals>
@@ -162,7 +162,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
                 <reportSets>
-                    <reportSet/>
+                    <reportSet />
                 </reportSets>
             </plugin>
         </plugins>
@@ -175,7 +175,7 @@
       <profile>
         <id>release-perform</id>
         <properties>
-          <stageDir></stageDir>
+          <stageDir />
         </properties>
       </profile>
     </profiles>
