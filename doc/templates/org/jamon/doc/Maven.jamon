@@ -2,7 +2,6 @@
 <%class>
   @Override protected Section currentSection() { return Section.DOC_MAVEN; }
 </%class>
-<%def _version>2.3.3</%def>
 <%override title>Using Jamon with Maven</%override>
 
 <h3>Overview</h3>
@@ -13,7 +12,7 @@
   program to compile, Jamon templates need to be translated into
   Java source classes, and those generated Java sources need to be
   included in the build of your project.  This is accomplished by the
-  <a href="http://maven.jamon.org/projects/jamon-maven-plugin/<& _version &>/">Jamon
+  <a href="http://maven.jamon.org/projects/jamon-maven-plugin/<& _Version: "jamon-maven-plugin" &>/">Jamon
   Maven Plugin</a>.
 </p>
 
@@ -40,15 +39,13 @@
 
 <h4>1. Compile and runtime dependency</h4>
 <pre class="ant"><&| /org/jamon/escape/Html &>
-<dependencies>
-  <dependency>
+  <dependencies>
     <dependency>
       <groupId>org.jamon</groupId>
       <artifactId>jamon-runtime</artifactId>
-      <version>2.3.0</version>
+      <version><& _Version: "jamon-runtime" &></version>
     </dependency>
-  </dependency>
-</dependencies>
+  </dependencies>
 </&></pre>
 
 <h4>2. Hook into project build lifecycle</h4>
@@ -60,7 +57,7 @@
       <plugin>
         <groupId>org.jamon</groupId>
         <artifactId>jamon-maven-plugin</artifactId>
-        <version><& _version &></version>
+        <version><& _Version: "jamon-maven-plugin" &></version>
         <executions>
           <execution>
             <phase>generate-sources</phase>
@@ -131,7 +128,7 @@ section above. For example, to root your template sources at
       <plugin>
         <groupId>org.jamon</groupId>
         <artifactId>jamon-maven-plugin</artifactId>
-        <version><& _version &></version>
+        <version><& _Version: "jamon-maven-plugin" &></version>
         <executions>
           <execution>
             <phase>generate-sources</phase>

@@ -1,0 +1,12 @@
+<%args>
+String artifactId;
+</%args>
+<%import>
+java.util.Properties;
+</%import>
+<%java>
+Properties props = new Properties();
+props.load(getClass().getClassLoader().getResourceAsStream(
+  "META-INF/maven/org.jamon/" + artifactId + "/pom.properties"));
+</%java>
+<% props.getProperty("version") %>\

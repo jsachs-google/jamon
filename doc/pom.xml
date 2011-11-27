@@ -50,6 +50,12 @@
             <artifactId>jamon-junit</artifactId>
             <version>2.4.0</version>
         </dependency>
+        <!-- This dependency included so that we can determine the right version -->
+        <dependency>
+            <groupId>org.jamon</groupId>
+            <artifactId>jamon-maven-plugin</artifactId>
+            <version>2.4.0</version>
+        </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
