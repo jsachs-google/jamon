@@ -6,7 +6,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
@@ -109,9 +112,10 @@ public class ProjectClassLoader extends URLClassLoader
     private static URL[] classpathUrlArray(IJavaProject p_project, File p_processorJar)
     throws CoreException
     {
+        Set<IJavaProject> visitedProjects = new HashSet<IJavaProject>();
         try
         {
-            List<URL> urls = classpathUrlsForProject(p_project);
+            List<URL> urls = classpathUrlsForProject(p_project, visitedProjects);
             urls.add(p_processorJar.toURI().toURL());
             return urls.toArray(new URL[urls.size()]);
         }
@@ -121,20 +125,27 @@ public class ProjectClassLoader extends URLClassLoader
         }
     }
 
-    private static List<URL> classpathUrlsForProject(IJavaProject p_project)
+    private static List<URL> classpathUrlsForProject(
+      IJavaProject p_project, Set<IJavaProject> visitedProjects)
     throws CoreException, MalformedURLException
     {
-        List<URL> urls = new ArrayList<URL>();
-        for (String entry : JavaRuntime.computeDefaultRuntimeClassPath(p_project))
-        {
-            //TODO - test this with maven dependencies
+        if (visitedProjects.add(p_project)) {
+          List<URL> urls = new ArrayList<URL>();
+          for (String entry : JavaRuntime.computeDefaultRuntimeClassPath(p_project))
+          {
             urls.add(new File(entry).toURI().toURL());
+          }
+          addDependenciesClasspath(p_project, urls, visitedProjects);
+          return urls;
         }
-        addDependenciesClasspath(p_project, urls);
-        return urls;
+        else {
+          // Avoid going in circles. See bug 2807733
+          return Collections.emptyList();
+        }
     }
 
-    private static void addDependencyClasspath(IProject p_project, List<URL> urls)
+    private static void addDependencyClasspath(
+        IProject p_project, List<URL> urls, Set<IJavaProject> visitedProjects)
     throws CoreException, MalformedURLException
     {
         if (! p_project.isOpen())
@@ -149,15 +160,17 @@ public class ProjectClassLoader extends URLClassLoader
                 "Dependent project " + p_project.getName() + " not a java project, ignoring");
             return;
         }
-        urls.addAll(classpathUrlsForProject((IJavaProject) p_project.getNature(JavaCore.NATURE_ID)));
+        urls.addAll(classpathUrlsForProject(
+          (IJavaProject) p_project.getNature(JavaCore.NATURE_ID), visitedProjects));
     }
 
-    private static void addDependenciesClasspath(IJavaProject p_project, List<URL> urls)
+    private static void addDependenciesClasspath(
+        IJavaProject p_project, List<URL> urls, Set<IJavaProject> visitedProjects)
     throws CoreException, MalformedURLException
     {
         for (final IProject proj : p_project.getProject().getReferencedProjects())
         {
-            addDependencyClasspath(proj, urls);
+            addDependencyClasspath(proj, urls, visitedProjects);
         }
     }
 
