@@ -11,7 +11,7 @@
   </parent>
   <artifactId>jamon-dist</artifactId>
   <name>jamon-dist</name>
-  <version>2011.07.07</version>
+  <version>2011.12.20</version>
   <packaging>pom</packaging>
   <description>Jamon uber distribution</description>
 
