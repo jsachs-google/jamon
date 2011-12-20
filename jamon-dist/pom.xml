@@ -49,7 +49,7 @@
     <dependency>
       <groupId>org.jamon</groupId>
       <artifactId>jamon-doc</artifactId>
-      <version>2012.12.20</version>
+      <version>2011.12.20</version>
     </dependency>
   </dependencies>
   <build>
