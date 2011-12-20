@@ -12,15 +12,6 @@
     <a href="Reference.html#TemplateReplacement">Replacement Templacements</a> which expect
     a <a href="Reference.html#Context">jamonContext</a> will now receive one. <& issue: 3462561 &>
   </&>
-  <&| change &>
-    Generated java files are now written using the same encoding as the template source
-    file. <& issue: 3307564 &>
-  </&>
-  <&| change &>
-    Templates with constrained type parameters are now processed properly. <& issue: 3300744 &>
-  </&>
-  <&| change &>Generated code presents less warnings in eclipse (version 3.6).</&>
-  <&| change; incompatible=true &>Jamon now depends on at least version 6 of Java.</&>
 </ul>
 
 <a name="configurator-1.1.0"/>
