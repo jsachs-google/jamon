@@ -711,21 +711,27 @@ org.jamon.contextType=String
       <li>
         Each required argument of <code>Replacing</code> must have a corresponding required
         argument of the same name in <code>Replaced</code>; the type of the argument in
-        <code>Replacing</code> must match or be a supertype of the type of the argument in
-        <code>Replaced</code>
+        <code>Replaced</code> must be assignment compatible with the type of the argument in
+        <code>Replacing</code>.
+      </li>
+      <li>
+        If <code>Replacing</code> requires a <code>jamonContext</code>, then <code>Replaced</code>
+        must also require a <code>jamonContext</code> which is of a
+        type assignment compatible with the type of <code>Replacing</code>'s
+        <code>jamonContext</code>.
       </li>
       <li>
         Each optional argument of <code>Replacing</code> must have a corresponding optional or
         required argument of the same name in <code>Replaced</code>; the type of the argument in
-        <code>Replacing</code> must match or be a supertype of the type of the argument in
-        <code>Replaced</code>.
+        <code>Replaced</code> must be assignment compatible with the type of the argument in
+        <code>Replacing</code>.
       </li>
       <li>
         Each fragment argument of <code>Replacing</code> must have a corresponding fragment
-        argument of the same name in <code>Replaced</code> taking the same number of parameters.
-        the types of each parameter of the fragment argument of <code>Replacing</code> must match
-         or be a subtype of the type of the corresponding paremeter to the fragment argument in
-        <code>Replaced</code>.
+        argument of the same name in <code>Replaced</code> taking the same number of parameters;
+        the types of each parameter of the fragment argument of <code>Replacing</code> must be
+        assignment compatible with the type of the corresponding paremeter to the fragment argument 
+        in <code>Replaced</code>.
       </li>
     </ul>
   </p>

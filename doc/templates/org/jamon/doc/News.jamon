@@ -8,6 +8,10 @@
 
 <ul>
   <li>
+    2011-12-20: Jamon Maven Processor 2.4.1 released
+    <a href='<& docRootUrl: "Changes.html#processor-2.4.1" &>'>[changes]</a>
+  </li>
+  <li>
     2011-10-13: Jamon Maven Configurator 1.1.0 released
     <a href='<& docRootUrl: "Changes.html#configurator-1.1.0" &>'>[changes]</a>
   </li>
