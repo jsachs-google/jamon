@@ -2,7 +2,7 @@
 <?artifactRepository version='1.1.0'?>
 <repository name='Jamon Eclipse Update Site' type='org.eclipse.equinox.p2.artifact.repository.simpleRepository' version='1'>
   <properties size='2'>
-    <property name='p2.timestamp' value='1318548422202'/>
+    <property name='p2.timestamp' value='1324422709091'/>
     <property name='p2.compressed' value='true'/>
   </properties>
   <mappings size='3'>
@@ -10,7 +10,7 @@
     <rule filter='(&amp; (classifier=binary))' output='${repoUrl}/binary/${id}_${version}'/>
     <rule filter='(&amp; (classifier=org.eclipse.update.feature))' output='${repoUrl}/features/${id}_${version}.jar'/>
   </mappings>
-  <artifacts size='44'>
+  <artifacts size='46'>
     <artifact classifier='osgi.bundle' id='org.jamon.project' version='2.3.1'>
       <properties size='3'>
         <property name='artifact.size' value='225404'/>
@@ -145,6 +145,13 @@
         <property name='download.contentType' value='application/zip'/>
       </properties>
     </artifact>
+    <artifact classifier='osgi.bundle' id='org.jamon.eclipse.maven.configurator' version='1.1.0'>
+      <properties size='3'>
+        <property name='artifact.size' value='8815'/>
+        <property name='download.size' value='8815'/>
+        <property name='download.md5' value='44c8e61108b58297109c50b3c68e74ea'/>
+      </properties>
+    </artifact>
     <artifact classifier='org.eclipse.update.feature' id='org.jamon.feature' version='2.1.0.1'>
       <properties size='4'>
         <property name='artifact.size' value='785'/>
@@ -161,11 +168,12 @@
         <property name='download.contentType' value='application/zip'/>
       </properties>
     </artifact>
-    <artifact classifier='osgi.bundle' id='org.jamon.eclipse.maven.configurator' version='1.1.0'>
-      <properties size='3'>
-        <property name='artifact.size' value='8815'/>
-        <property name='download.size' value='8815'/>
-        <property name='download.md5' value='44c8e61108b58297109c50b3c68e74ea'/>
+    <artifact classifier='org.eclipse.update.feature' id='org.jamon.processor' version='2.4.1'>
+      <properties size='4'>
+        <property name='artifact.size' value='2271'/>
+        <property name='download.size' value='2271'/>
+        <property name='download.md5' value='8d4590111dc5110a1348cdf5a654587e'/>
+        <property name='download.contentType' value='application/zip'/>
       </properties>
     </artifact>
     <artifact classifier='osgi.bundle' id='org.jamon.processor' version='2.3.1'>
@@ -314,6 +322,13 @@
         <property name='download.size' value='931'/>
         <property name='download.md5' value='f0fde0b03961121901e32f8eaf9e8577'/>
         <property name='download.contentType' value='application/zip'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='org.jamon.processor' version='2.4.1'>
+      <properties size='3'>
+        <property name='artifact.size' value='264328'/>
+        <property name='download.size' value='264328'/>
+        <property name='download.md5' value='2322e408a67f4ab217f7d85e51d477c1'/>
       </properties>
     </artifact>
     <artifact classifier='osgi.bundle' id='org.jamon.project' version='2.3.0.1'>

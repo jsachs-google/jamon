@@ -2,14 +2,14 @@
 <?metadataRepository version='1.1.0'?>
 <repository name='Jamon Eclipse Update Site' type='org.eclipse.equinox.internal.p2.metadata.repository.LocalMetadataRepository' version='1'>
   <properties size='2'>
-    <property name='p2.timestamp' value='1318548422213'/>
+    <property name='p2.timestamp' value='1324422709104'/>
     <property name='p2.compressed' value='true'/>
   </properties>
   <references size='2'>
     <repository uri='http://www.jamon.org/' url='http://www.jamon.org/' type='1' options='0'/>
     <repository uri='http://www.jamon.org/' url='http://www.jamon.org/' type='0' options='0'/>
   </references>
-  <units size='66'>
+  <units size='69'>
     <unit id='org.jamon.eclipse.maven.configurator.feature.feature.group' version='1.1.0' singleton='false'>
       <update id='org.jamon.eclipse.maven.configurator.feature.feature.group' range='[0.0.0,1.1.0)' severity='0'/>
       <properties size='4'>
@@ -257,36 +257,6 @@
       <copyright>
         Copyright 2005-2007 Jay Sachs and Ian Robertson
       </copyright>
-    </unit>
-    <unit id='file:/home/ian/svn/jamon-trunk/jamon-eclipse/updateSite/target/site/site.xml.Jamon' version='1.0.0.828S7WcKpUvE7e'>
-      <properties size='3'>
-        <property name='org.eclipse.equinox.p2.name' value='Jamon (all eclipse versions)'/>
-        <property name='org.eclipse.equinox.p2.description' value='Plugins for working with the Jamon templating engine'/>
-        <property name='org.eclipse.equinox.p2.type.category' value='true'/>
-      </properties>
-      <provides size='1'>
-        <provided namespace='org.eclipse.equinox.p2.iu' name='file:/home/ian/svn/jamon-trunk/jamon-eclipse/updateSite/target/site/site.xml.Jamon' version='1.0.0.828S7WcKpUvE7e'/>
-      </provides>
-      <requires size='17'>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.jamon.feature.feature.group' range='[2.2.1.0,2.2.1.0]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.jamon.feature.feature.group' range='[2.3.1,2.3.1]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.jamon.processor.feature.group' range='[2.4.0,2.4.0]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.jamon.feature.feature.group' range='[2.2.0.0,2.2.0.0]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.jamon.processor.feature.group' range='[2.3.1,2.3.1]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.jamon.feature.feature.group' range='[2.3.3,2.3.3]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.jamon.feature.feature.group' range='[1.9.0,1.9.0]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.jamon.processor.feature.group' range='[2.3.3,2.3.3]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.jamon.feature.feature.group' range='[2.2.2.1,2.2.2.1]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.jamon.feature.feature.group' range='[2.0.0,2.0.0]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.jamon.feature.feature.group' range='[2.2.2.0,2.2.2.0]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.jamon.feature.feature.group' range='[2.3.0.1,2.3.0.1]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.jamon.feature.feature.group' range='[2.3.0.0,2.3.0.0]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.jamon.feature.feature.group' range='[2.1.0.2,2.1.0.2]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.jamon.feature.feature.group' range='[2.3.2,2.3.2]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.jamon.feature.feature.group' range='[2.1.0.1,2.1.0.1]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.jamon.processor.feature.group' range='[2.3.2,2.3.2]'/>
-      </requires>
-      <touchpoint id='null' version='0.0.0'/>
     </unit>
     <unit id='org.jamon.feature.feature.jar' version='2.1.0.1'>
       <properties size='3'>
@@ -1227,6 +1197,31 @@
         Copyright 2005-2007 Jay Sachs and Ian Robertson
       </copyright>
     </unit>
+    <unit id='org.jamon.processor' version='2.4.1' singleton='false'>
+      <update id='org.jamon.processor' range='[0.0.0,2.4.1)' severity='0'/>
+      <properties size='1'>
+        <property name='org.eclipse.equinox.p2.name' value='Jamon Processor Plug-in'/>
+      </properties>
+      <provides size='3'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='org.jamon.processor' version='2.4.1'/>
+        <provided namespace='osgi.bundle' name='org.jamon.processor' version='2.4.1'/>
+        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
+      </provides>
+      <artifacts size='1'>
+        <artifact classifier='osgi.bundle' id='org.jamon.processor' version='2.4.1'/>
+      </artifacts>
+      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+      <touchpointData size='1'>
+        <instructions size='2'>
+          <instruction key='manifest'>
+            Bundle-SymbolicName: org.jamon.processor&#xA;Bundle-Version: 2.4.1&#xA;
+          </instruction>
+          <instruction key='zipped'>
+            true
+          </instruction>
+        </instructions>
+      </touchpointData>
+    </unit>
     <unit id='org.jamon.processor.feature.group' version='2.4.0' singleton='false'>
       <update id='org.jamon.processor.feature.group' range='[0.0.0,2.4.0)' severity='0'/>
       <properties size='5'>
@@ -1723,6 +1718,38 @@
         </instructions>
       </touchpointData>
     </unit>
+    <unit id='org.jamon.processor.feature.jar' version='2.4.1'>
+      <properties size='4'>
+        <property name='org.eclipse.equinox.p2.name' value='Jamon Processor Feature'/>
+        <property name='org.eclipse.equinox.p2.description' value='Feature providing a default implementation of the jamon processor'/>
+        <property name='org.eclipse.equinox.p2.description.url' value='http://www.jamon.org/'/>
+        <property name='org.eclipse.equinox.p2.provider' value='Jamon.org'/>
+      </properties>
+      <provides size='3'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='org.jamon.processor.feature.jar' version='2.4.1'/>
+        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='feature' version='1.0.0'/>
+        <provided namespace='org.eclipse.update.feature' name='org.jamon.processor' version='2.4.1'/>
+      </provides>
+      <filter>
+        (org.eclipse.update.install.features=true)
+      </filter>
+      <artifacts size='1'>
+        <artifact classifier='org.eclipse.update.feature' id='org.jamon.processor' version='2.4.1'/>
+      </artifacts>
+      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+      <touchpointData size='1'>
+        <instructions size='1'>
+          <instruction key='zipped'>
+            true
+          </instruction>
+        </instructions>
+      </touchpointData>
+      <licenses size='1'>
+        <license uri='http://www.mozilla.org/MPL/' url='http://www.mozilla.org/MPL/'>
+          The contents of this feature are subject to the Mozilla Public&#xA;License Version 1.1 (the &quot;License&quot;); you may not use this file&#xA;except in compliance with the License. You may obtain a copy&#xA;of&#xA;the License at http://www.mozilla.org/MPL/&#xA;Software distributed under the License is distributed on an &quot;AS&#xA;IS&quot; basis, WITHOUT WARRANTY OF ANY KIND, either express or&#xA;implied. See the License for the specific language governing&#xA;rights and limitations under the License.&#xA;The Original Code is Jamon code, released February, 2003.&#xA;The Initial Developers of the Original Code are Jay Sachs and&#xA;Ian Robertson.  Portions&#xA;created by Jay Sachs and Ian Robertson are Copyright (C) 2003-2007&#xA;Jay Sachs and Ian Robertson.  All Rights Reserved.&#xA;Contributor(s):
+        </license>
+      </licenses>
+    </unit>
     <unit id='org.jamon.feature.feature.jar' version='2.3.2'>
       <properties size='4'>
         <property name='org.eclipse.equinox.p2.name' value='jamon'/>
@@ -1758,46 +1785,6 @@
         Copyright 2005-2007 Jay Sachs and Ian Robertson
       </copyright>
     </unit>
-    <unit id='org.jamon.project' version='2.3.0.0'>
-      <update id='org.jamon.project' range='[0.0.0,2.3.0.0)' severity='0'/>
-      <properties size='2'>
-        <property name='org.eclipse.equinox.p2.name' value='Jamon Project Plug-in'/>
-        <property name='org.eclipse.equinox.p2.provider' value='jamon.org'/>
-      </properties>
-      <provides size='4'>
-        <provided namespace='org.eclipse.equinox.p2.iu' name='org.jamon.project' version='2.3.0.0'/>
-        <provided namespace='osgi.bundle' name='org.jamon.project' version='2.3.0.0'/>
-        <provided namespace='java.package' name='org.jamon.eclipse' version='0.0.0'/>
-        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
-      </provides>
-      <requires size='11'>
-        <required namespace='osgi.bundle' name='org.eclipse.ui' range='0.0.0'/>
-        <required namespace='osgi.bundle' name='org.eclipse.core.runtime' range='0.0.0'/>
-        <required namespace='osgi.bundle' name='org.eclipse.core.resources' range='0.0.0'/>
-        <required namespace='osgi.bundle' name='org.eclipse.ui.ide' range='0.0.0'/>
-        <required namespace='osgi.bundle' name='org.eclipse.jdt.core' range='0.0.0'/>
-        <required namespace='osgi.bundle' name='org.eclipse.jdt.launching' range='0.0.0'/>
-        <required namespace='osgi.bundle' name='org.eclipse.jface.text' range='0.0.0'/>
-        <required namespace='osgi.bundle' name='org.eclipse.ui.workbench.texteditor' range='0.0.0'/>
-        <required namespace='osgi.bundle' name='org.eclipse.ui.editors' range='0.0.0'/>
-        <required namespace='osgi.bundle' name='org.eclipse.jdt.ui' range='0.0.0'/>
-        <required namespace='osgi.bundle' name='org.eclipse.ui.forms' range='0.0.0'/>
-      </requires>
-      <artifacts size='1'>
-        <artifact classifier='osgi.bundle' id='org.jamon.project' version='2.3.0.0'/>
-      </artifacts>
-      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
-      <touchpointData size='1'>
-        <instructions size='2'>
-          <instruction key='manifest'>
-            Bundle-SymbolicName: org.jamon.project;singleton:=true&#xA;Bundle-Version: 2.3.0.0&#xA;
-          </instruction>
-          <instruction key='zipped'>
-            true
-          </instruction>
-        </instructions>
-      </touchpointData>
-    </unit>
     <unit id='org.jamon.project' version='2.3.1'>
       <update id='org.jamon.project' range='[0.0.0,2.3.1)' severity='0'/>
       <properties size='2'>
@@ -1831,6 +1818,46 @@
         <instructions size='2'>
           <instruction key='manifest'>
             Bundle-SymbolicName: org.jamon.project;singleton:=true&#xA;Bundle-Version: 2.3.1&#xA;
+          </instruction>
+          <instruction key='zipped'>
+            true
+          </instruction>
+        </instructions>
+      </touchpointData>
+    </unit>
+    <unit id='org.jamon.project' version='2.3.0.0'>
+      <update id='org.jamon.project' range='[0.0.0,2.3.0.0)' severity='0'/>
+      <properties size='2'>
+        <property name='org.eclipse.equinox.p2.name' value='Jamon Project Plug-in'/>
+        <property name='org.eclipse.equinox.p2.provider' value='jamon.org'/>
+      </properties>
+      <provides size='4'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='org.jamon.project' version='2.3.0.0'/>
+        <provided namespace='osgi.bundle' name='org.jamon.project' version='2.3.0.0'/>
+        <provided namespace='java.package' name='org.jamon.eclipse' version='0.0.0'/>
+        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
+      </provides>
+      <requires size='11'>
+        <required namespace='osgi.bundle' name='org.eclipse.ui' range='0.0.0'/>
+        <required namespace='osgi.bundle' name='org.eclipse.core.runtime' range='0.0.0'/>
+        <required namespace='osgi.bundle' name='org.eclipse.core.resources' range='0.0.0'/>
+        <required namespace='osgi.bundle' name='org.eclipse.ui.ide' range='0.0.0'/>
+        <required namespace='osgi.bundle' name='org.eclipse.jdt.core' range='0.0.0'/>
+        <required namespace='osgi.bundle' name='org.eclipse.jdt.launching' range='0.0.0'/>
+        <required namespace='osgi.bundle' name='org.eclipse.jface.text' range='0.0.0'/>
+        <required namespace='osgi.bundle' name='org.eclipse.ui.workbench.texteditor' range='0.0.0'/>
+        <required namespace='osgi.bundle' name='org.eclipse.ui.editors' range='0.0.0'/>
+        <required namespace='osgi.bundle' name='org.eclipse.jdt.ui' range='0.0.0'/>
+        <required namespace='osgi.bundle' name='org.eclipse.ui.forms' range='0.0.0'/>
+      </requires>
+      <artifacts size='1'>
+        <artifact classifier='osgi.bundle' id='org.jamon.project' version='2.3.0.0'/>
+      </artifacts>
+      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+      <touchpointData size='1'>
+        <instructions size='2'>
+          <instruction key='manifest'>
+            Bundle-SymbolicName: org.jamon.project;singleton:=true&#xA;Bundle-Version: 2.3.0.0&#xA;
           </instruction>
           <instruction key='zipped'>
             true
@@ -1943,6 +1970,37 @@
           </instruction>
         </instructions>
       </touchpointData>
+    </unit>
+    <unit id='file:/home/ian/svn/jamon-trunk/jamon-eclipse/updateSite/target/site/site.xml.Jamon' version='1.0.0.868a7YcKpUvE7e'>
+      <properties size='3'>
+        <property name='org.eclipse.equinox.p2.name' value='Jamon (all eclipse versions)'/>
+        <property name='org.eclipse.equinox.p2.description' value='Plugins for working with the Jamon templating engine'/>
+        <property name='org.eclipse.equinox.p2.type.category' value='true'/>
+      </properties>
+      <provides size='1'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='file:/home/ian/svn/jamon-trunk/jamon-eclipse/updateSite/target/site/site.xml.Jamon' version='1.0.0.868a7YcKpUvE7e'/>
+      </provides>
+      <requires size='18'>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.jamon.feature.feature.group' range='[2.2.1.0,2.2.1.0]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.jamon.feature.feature.group' range='[2.3.1,2.3.1]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.jamon.processor.feature.group' range='[2.4.0,2.4.0]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.jamon.feature.feature.group' range='[2.2.0.0,2.2.0.0]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.jamon.processor.feature.group' range='[2.3.1,2.3.1]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.jamon.feature.feature.group' range='[2.3.3,2.3.3]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.jamon.feature.feature.group' range='[1.9.0,1.9.0]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.jamon.processor.feature.group' range='[2.3.3,2.3.3]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.jamon.feature.feature.group' range='[2.2.2.1,2.2.2.1]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.jamon.feature.feature.group' range='[2.0.0,2.0.0]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.jamon.feature.feature.group' range='[2.2.2.0,2.2.2.0]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.jamon.feature.feature.group' range='[2.3.0.1,2.3.0.1]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.jamon.feature.feature.group' range='[2.3.0.0,2.3.0.0]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.jamon.feature.feature.group' range='[2.1.0.2,2.1.0.2]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.jamon.feature.feature.group' range='[2.3.2,2.3.2]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.jamon.feature.feature.group' range='[2.1.0.1,2.1.0.1]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.jamon.processor.feature.group' range='[2.3.2,2.3.2]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.jamon.processor.feature.group' range='[2.4.1,2.4.1]'/>
+      </requires>
+      <touchpoint id='null' version='0.0.0'/>
     </unit>
     <unit id='org.jamon.feature.feature.group' version='2.0.0' singleton='false'>
       <update id='org.jamon.feature.feature.group' range='[0.0.0,2.0.0)' severity='0'/>
@@ -2064,41 +2122,6 @@
         </instructions>
       </touchpointData>
     </unit>
-    <unit id='org.jamon.feature.feature.jar' version='2.3.3'>
-      <properties size='4'>
-        <property name='org.eclipse.equinox.p2.name' value='jamon'/>
-        <property name='org.eclipse.equinox.p2.description' value='Feature to assist in working with jamon templates in eclipse'/>
-        <property name='org.eclipse.equinox.p2.description.url' value='http://www.jamon.org/'/>
-        <property name='org.eclipse.equinox.p2.provider' value='Jamon.org'/>
-      </properties>
-      <provides size='3'>
-        <provided namespace='org.eclipse.equinox.p2.iu' name='org.jamon.feature.feature.jar' version='2.3.3'/>
-        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='feature' version='1.0.0'/>
-        <provided namespace='org.eclipse.update.feature' name='org.jamon.feature' version='2.3.3'/>
-      </provides>
-      <filter>
-        (org.eclipse.update.install.features=true)
-      </filter>
-      <artifacts size='1'>
-        <artifact classifier='org.eclipse.update.feature' id='org.jamon.feature' version='2.3.3'/>
-      </artifacts>
-      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
-      <touchpointData size='1'>
-        <instructions size='1'>
-          <instruction key='zipped'>
-            true
-          </instruction>
-        </instructions>
-      </touchpointData>
-      <licenses size='1'>
-        <license uri='http://www.mozilla.org/MPL/' url='http://www.mozilla.org/MPL/'>
-          The contents of this feature are subject to the Mozilla Public&#xA;License Version 1.1 (the &quot;License&quot;); you may not use this file&#xA;except in compliance with the License. You may obtain a copy&#xA;of&#xA;the License at http://www.mozilla.org/MPL/&#xA;Software distributed under the License is distributed on an &quot;AS&#xA;IS&quot; basis, WITHOUT WARRANTY OF ANY KIND, either express or&#xA;implied. See the License for the specific language governing&#xA;rights and limitations under the License.&#xA;The Original Code is Jamon code, released February, 2003.&#xA;The Initial Developers of the Original Code are Jay Sachs and&#xA;Ian Robertson.  Portions&#xA;created by Jay Sachs and Ian Robertson are Copyright (C) 2003-2007&#xA;Jay Sachs and Ian Robertson.  All Rights Reserved.&#xA;Contributor(s):
-        </license>
-      </licenses>
-      <copyright>
-        Copyright 2005-2007 Jay Sachs and Ian Robertson
-      </copyright>
-    </unit>
     <unit id='org.jamon.project' version='2.3.2'>
       <update id='org.jamon.project' range='[0.0.0,2.3.2)' severity='0'/>
       <properties size='2'>
@@ -2139,6 +2162,41 @@
           </instruction>
         </instructions>
       </touchpointData>
+    </unit>
+    <unit id='org.jamon.feature.feature.jar' version='2.3.3'>
+      <properties size='4'>
+        <property name='org.eclipse.equinox.p2.name' value='jamon'/>
+        <property name='org.eclipse.equinox.p2.description' value='Feature to assist in working with jamon templates in eclipse'/>
+        <property name='org.eclipse.equinox.p2.description.url' value='http://www.jamon.org/'/>
+        <property name='org.eclipse.equinox.p2.provider' value='Jamon.org'/>
+      </properties>
+      <provides size='3'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='org.jamon.feature.feature.jar' version='2.3.3'/>
+        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='feature' version='1.0.0'/>
+        <provided namespace='org.eclipse.update.feature' name='org.jamon.feature' version='2.3.3'/>
+      </provides>
+      <filter>
+        (org.eclipse.update.install.features=true)
+      </filter>
+      <artifacts size='1'>
+        <artifact classifier='org.eclipse.update.feature' id='org.jamon.feature' version='2.3.3'/>
+      </artifacts>
+      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+      <touchpointData size='1'>
+        <instructions size='1'>
+          <instruction key='zipped'>
+            true
+          </instruction>
+        </instructions>
+      </touchpointData>
+      <licenses size='1'>
+        <license uri='http://www.mozilla.org/MPL/' url='http://www.mozilla.org/MPL/'>
+          The contents of this feature are subject to the Mozilla Public&#xA;License Version 1.1 (the &quot;License&quot;); you may not use this file&#xA;except in compliance with the License. You may obtain a copy&#xA;of&#xA;the License at http://www.mozilla.org/MPL/&#xA;Software distributed under the License is distributed on an &quot;AS&#xA;IS&quot; basis, WITHOUT WARRANTY OF ANY KIND, either express or&#xA;implied. See the License for the specific language governing&#xA;rights and limitations under the License.&#xA;The Original Code is Jamon code, released February, 2003.&#xA;The Initial Developers of the Original Code are Jay Sachs and&#xA;Ian Robertson.  Portions&#xA;created by Jay Sachs and Ian Robertson are Copyright (C) 2003-2007&#xA;Jay Sachs and Ian Robertson.  All Rights Reserved.&#xA;Contributor(s):
+        </license>
+      </licenses>
+      <copyright>
+        Copyright 2005-2007 Jay Sachs and Ian Robertson
+      </copyright>
     </unit>
     <unit id='org.jamon.eclipse.maven.configurator.feature.feature.group' version='1.0.0' singleton='false'>
       <update id='org.jamon.eclipse.maven.configurator.feature.feature.group' range='[0.0.0,1.0.0)' severity='0'/>
@@ -2202,6 +2260,33 @@
           </instruction>
         </instructions>
       </touchpointData>
+    </unit>
+    <unit id='org.jamon.processor.feature.group' version='2.4.1' singleton='false'>
+      <update id='org.jamon.processor.feature.group' range='[0.0.0,2.4.1)' severity='0'/>
+      <properties size='5'>
+        <property name='org.eclipse.equinox.p2.name' value='Jamon Processor Feature'/>
+        <property name='org.eclipse.equinox.p2.description' value='Feature providing a default implementation of the jamon processor'/>
+        <property name='org.eclipse.equinox.p2.description.url' value='http://www.jamon.org/'/>
+        <property name='org.eclipse.equinox.p2.provider' value='Jamon.org'/>
+        <property name='org.eclipse.equinox.p2.type.group' value='true'/>
+      </properties>
+      <provides size='1'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='org.jamon.processor.feature.group' version='2.4.1'/>
+      </provides>
+      <requires size='2'>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.jamon.processor' range='[2.4.1,2.4.1]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.jamon.processor.feature.jar' range='[2.4.1,2.4.1]'>
+          <filter>
+            (org.eclipse.update.install.features=true)
+          </filter>
+        </required>
+      </requires>
+      <touchpoint id='null' version='0.0.0'/>
+      <licenses size='1'>
+        <license uri='http://www.mozilla.org/MPL/' url='http://www.mozilla.org/MPL/'>
+          The contents of this feature are subject to the Mozilla Public&#xA;License Version 1.1 (the &quot;License&quot;); you may not use this file&#xA;except in compliance with the License. You may obtain a copy&#xA;of&#xA;the License at http://www.mozilla.org/MPL/&#xA;Software distributed under the License is distributed on an &quot;AS&#xA;IS&quot; basis, WITHOUT WARRANTY OF ANY KIND, either express or&#xA;implied. See the License for the specific language governing&#xA;rights and limitations under the License.&#xA;The Original Code is Jamon code, released February, 2003.&#xA;The Initial Developers of the Original Code are Jay Sachs and&#xA;Ian Robertson.  Portions&#xA;created by Jay Sachs and Ian Robertson are Copyright (C) 2003-2007&#xA;Jay Sachs and Ian Robertson.  All Rights Reserved.&#xA;Contributor(s):
+        </license>
+      </licenses>
     </unit>
   </units>
 </repository>

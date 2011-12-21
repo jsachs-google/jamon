@@ -56,6 +56,9 @@
    <feature url="features/org.jamon.processor_2.4.0.jar" id="org.jamon.processor" version="2.4.0">
       <category name="Jamon"/>
    </feature>
+   <feature url="features/org.jamon.processor_2.4.1.jar" id="org.jamon.processor" version="2.4.1">
+      <category name="Jamon"/>
+   </feature>
 
    <feature url="features/org.jamon.eclipse.maven.configurator.feature_1.0.0.jar"
             id="org.jamon.eclipse.maven.configurator.feature" version="1.0.0">
