@@ -13,6 +13,7 @@
     INHERITANCE("Inheritance", "Inheritance"),
     CLASS_CODE("Class code", "ClassCode"),
     COMMENTS("Comments", "Comments"),
+    LITERAL("Literals", "Literals"),
     IMPORTS("Imports", "Imports"),
     IMPLEMENTS("Implements", "Implements"),
     ANNOTATIONS("Annotations", "Annotations"),
@@ -94,13 +95,9 @@
     above tags, you can follow the tag with a backslash and a
     newline; whitespace after that will be emitted.
 
-    <br />
-    <b>Newline escape</b><br />
-
-    One other notable exception is that if a newline is preceded by
-    a backslash, then neither the newline nor the backslash are
-    output.
-
+    <p>
+    <b>Newline escape:</b> If a newline is preceded by a backslash,
+    then neither the newline nor the backslash are output.
   <& subsection: SubSection.EMIT_STATEMENTS &>
 
     The value of a java expression can be emitted by enclosing the
@@ -303,6 +300,12 @@ This component has been accessed <% pageViews++ %> times.
     Any template content between <code><% "<%doc>" %></code> and
     <code><% "</%doc>" %></code> is considered "documentation", and
     ignored by the template processor
+
+  <& subsection: SubSection.LITERAL &>
+
+    To get a literal output of text which includes Jamon syntax, use
+    the <& code: "<%LITERAL>" &> tag. All content until the next
+    <& code: "</%LITERAL>" &> tag will be output literally with no special processing.
 
   <& subsection: SubSection.IMPORTS &>
 
@@ -730,7 +733,7 @@ org.jamon.contextType=String
         Each fragment argument of <code>Replacing</code> must have a corresponding fragment
         argument of the same name in <code>Replaced</code> taking the same number of parameters;
         the types of each parameter of the fragment argument of <code>Replacing</code> must be
-        assignment compatible with the type of the corresponding paremeter to the fragment argument 
+        assignment compatible with the type of the corresponding paremeter to the fragment argument
         in <code>Replaced</code>.
       </li>
     </ul>
