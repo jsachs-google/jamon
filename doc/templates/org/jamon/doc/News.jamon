@@ -13,12 +13,36 @@
 
 <ul>
   <li>
-    2011-12-20: Jamon Maven Processor 2.4.1 released
+    2013-12-28: Jamon Processor 2.4.2 released
+    <a href='<& docRootUrl: "Changes.html#processor-2.4.2" &>'>[changes]</a>
+  </li>
+  <li>
+    2013-12-28: Jamon Runtime 2.4.1 released
+    <a href='<& docRootUrl: "Changes.html#runtime-2.4.1" &>'>[changes]</a>
+  </li>
+  <li>
+    2013-12-28: Jamon Maven Plugin 2.4.2 released
+    <a href='<& docRootUrl: "Changes.html#maven-plugin-2.4.2" &>'>[changes]</a>
+  </li>
+  <li>
+    2013-12-28: Jamon Maven Configurator 1.1.1 released
+    <a href='<& docRootUrl: "Changes.html#configurator-1.1.1" &>'>[changes]</a>
+  </li>
+  <li>
+    2013-12-28: Jamon Eclipse Plugin 2.3.3 released
+    <a href='<& docRootUrl: "Changes.html#eclipse-2.3.4" &>'>[changes]</a>
+  </li>
+  <li>
+    2011-12-20: Jamon Processor 2.4.1 released
     <a href='<& docRootUrl: "Changes.html#processor-2.4.1" &>'>[changes]</a>
   </li>
   <li>
     2011-10-13: Jamon Maven Configurator 1.1.0 released
     <a href='<& docRootUrl: "Changes.html#configurator-1.1.0" &>'>[changes]</a>
+  </li>
+  <li>
+    2011-10-13: Jamon Maven Plugin 2.4.1 released
+    <a href='<& docRootUrl: "Changes.html#maven-plugin-2.4.1" &>'>[changes]</a>
   </li>
   <li>
     2011-08-05: Jamon Maven Configurator 1.0.0 released
