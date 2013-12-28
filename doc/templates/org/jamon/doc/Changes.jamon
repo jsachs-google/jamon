@@ -11,6 +11,61 @@
 
 <h2><& title &></h2>
 
+<a name="processor-2.4.2"/><h3>Processor Changes from 2.4.1 to 2.4.2</h3>
+<ul>
+  <&| change &>
+    Switch from using HashMaps to TreeMaps when generating code, so
+    that iteration order again becomes stable (under Java 7), and
+    generated code will not change without a change to the jamon
+    template.
+  </&>
+  <&| change &>
+    Fix a deadlock issue in RecompilingTemplateManager raised by
+    Philip Zeyliger, related
+    to <a href="http://docs.oracle.com/javase/7/docs/technotes/guides/lang/cl-mt.html">Multithreaded
+    Custom Class Loaders in Java SE 7</a>.
+  </&>
+  <&| change &>
+    Upgrade project license to
+    the <a href="http://www.mozilla.org/MPL/2.0/">Mozilla Public
+    License Version 2.0</a>
+  </&>
+</ul>
+
+<a name="runtime-2.4.1"/><h3>Runtime Changes from 2.4.0 to 2.4.1</h3>
+<ul>
+  <&| change &>
+    Upgrade project license to the <a href="http://www.mozilla.org/MPL/2.0/">Mozilla Public
+    License Version 2.0</a>
+  </&>
+</ul>
+
+<a name="maven-plugin-2.4.1"/>
+<h3>Maven Plugin Changes from 2.4.0.1 to 2.4.1</h3>
+<ul>
+  <&| change &>
+    Upgrade project license to the <a href="http://www.mozilla.org/MPL/2.0/">Mozilla Public
+    License Version 2.0</a>
+  </&>
+</ul>
+
+<a name="configurator-1.1.1"/>
+<h3>Jamon Maven Configurator Changes from 1.1.0 to 1.1.1</h3>
+<ul>
+  <&| change &>
+    Upgrade project license to the <a href="http://www.mozilla.org/MPL/2.0/">Mozilla Public
+    License Version 2.0</a>
+  </&>
+</ul>
+
+<a name="eclipse-2.3.4"/><h3>Eclipse Feature Changes from 2.3.3 to 2.3.4</h3>
+<ul>
+  <&| change &>
+    Upgrade project license to the <a href="http://www.mozilla.org/MPL/2.0/">Mozilla Public
+    License Version 2.0</a>
+  </&>
+</ul>
+
 <a name="processor-2.4.1"/><h3>Processor Changes from 2.4.0 to 2.4.1</h3>
 <ul>
   <&| change &>
@@ -25,6 +80,19 @@
   <&| change &>
     This version supports m2e and eclipse 3.7 (indigo). It
     does not work with older versions of m2e or eclipse.
+  </&>
+</ul>
+
+<a name="maven-plugin-2.4.0.1"/>
+<h3>Maven Plugin Changes from 2.4.0 to 2.4.0.1</h3>
+<ul>
+  <&| change &>
+    Projects which only have templates at the top level are now handled properly. Fixes
+    <a href="http://sourceforge.net/support/tracker.php?aid=3253413">3253413</a>.
+  </&>
+  <&| change &>
+    This plugin inadvertently had a compile-scoped dependency on junit; this has
+    been changed to test scope.
   </&>
 </ul>
 
