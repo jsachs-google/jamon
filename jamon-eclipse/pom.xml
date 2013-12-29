@@ -6,7 +6,7 @@
   <parent>
       <groupId>org.jamon</groupId>
       <artifactId>jamon-parent</artifactId>
-      <version>2.4.0</version>
+      <version>2.4.1</version>
   </parent>
   <groupId>org.jamon.eclipse</groupId>
   <artifactId>jamon-eclipse</artifactId>
@@ -40,9 +40,9 @@
   </properties>
 
   <scm>
-      <url>http://jamon.svn.sourceforge.net/viewvc/jamon/trunk/jamon-eclipse/${project.artifactId}/</url>
-      <connection>scm:svn:https://jamon.svn.sourceforge.net/svnroot/jamon/trunk/jamon-eclipse/${project.artifactId}/</connection>
-      <developerConnection>scm:svn:https://jamon.svn.sourceforge.net/svnroot/jamon/trunk/jamon-eclipse/${project.artifactId}/</developerConnection>
+      <url>http://sourceforge.net/p/jamon/code/HEAD/tree/trunk/jamon-eclipse/${project.artifactId}/</url>
+      <connection>scm:svn:https://svn.code.sf.net/p/jamon/code/trunk/jamon-eclipse/${project.artifactId}/</connection>
+      <developerConnection>scm:svn:https://svn.code.sf.net/p/jamon/code/trunk/jamon-eclipse/${project.artifactId}/</developerConnection>
   </scm>
 
   <repositories>
