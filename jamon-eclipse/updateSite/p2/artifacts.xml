@@ -2,7 +2,7 @@
 <?artifactRepository version='1.1.0'?>
 <repository name='Jamon Eclipse Update Site' type='org.eclipse.equinox.p2.artifact.repository.simpleRepository' version='1'>
   <properties size='2'>
-    <property name='p2.timestamp' value='1324422709091'/>
+    <property name='p2.timestamp' value='1388280638859'/>
     <property name='p2.compressed' value='true'/>
   </properties>
   <mappings size='3'>
@@ -10,35 +10,7 @@
     <rule filter='(&amp; (classifier=binary))' output='${repoUrl}/binary/${id}_${version}'/>
     <rule filter='(&amp; (classifier=org.eclipse.update.feature))' output='${repoUrl}/features/${id}_${version}.jar'/>
   </mappings>
-  <artifacts size='46'>
-    <artifact classifier='osgi.bundle' id='org.jamon.project' version='2.3.1'>
-      <properties size='3'>
-        <property name='artifact.size' value='225404'/>
-        <property name='download.size' value='225404'/>
-        <property name='download.md5' value='f57df02669b7d3ba9db52a4a7886c916'/>
-      </properties>
-    </artifact>
-    <artifact classifier='osgi.bundle' id='org.jamon.eclipse.maven.configurator' version='1.0.0'>
-      <properties size='3'>
-        <property name='artifact.size' value='8204'/>
-        <property name='download.size' value='8204'/>
-        <property name='download.md5' value='23de98394668be24b4c7afb5669bfb1b'/>
-      </properties>
-    </artifact>
-    <artifact classifier='osgi.bundle' id='org.jamon' version='1.9.0'>
-      <properties size='3'>
-        <property name='artifact.size' value='248316'/>
-        <property name='download.size' value='248316'/>
-        <property name='download.md5' value='f4a95e8588508275a445ea2e70f0c95f'/>
-      </properties>
-    </artifact>
-    <artifact classifier='osgi.bundle' id='org.jamon.processor' version='2.4.0'>
-      <properties size='3'>
-        <property name='artifact.size' value='266002'/>
-        <property name='download.size' value='266002'/>
-        <property name='download.md5' value='16302f64086ced2355e02dc4d037085b'/>
-      </properties>
-    </artifact>
+  <artifacts size='52'>
     <artifact classifier='org.eclipse.update.feature' id='org.jamon.feature' version='2.2.2.1'>
       <properties size='4'>
         <property name='artifact.size' value='782'/>
@@ -47,33 +19,12 @@
         <property name='download.contentType' value='application/zip'/>
       </properties>
     </artifact>
-    <artifact classifier='osgi.bundle' id='org.jamon.project' version='2.2.2.0'>
-      <properties size='3'>
-        <property name='artifact.size' value='86527'/>
-        <property name='download.size' value='86527'/>
-        <property name='download.md5' value='892474bd7560f303fd3f783a90ce5309'/>
-      </properties>
-    </artifact>
     <artifact classifier='org.eclipse.update.feature' id='org.jamon.feature' version='2.3.1'>
       <properties size='4'>
         <property name='artifact.size' value='931'/>
         <property name='download.size' value='931'/>
         <property name='download.md5' value='7695398242057a1dd0b5c199b9c16559'/>
         <property name='download.contentType' value='application/zip'/>
-      </properties>
-    </artifact>
-    <artifact classifier='osgi.bundle' id='org.jamon' version='2.2.1.0'>
-      <properties size='3'>
-        <property name='artifact.size' value='256309'/>
-        <property name='download.size' value='256309'/>
-        <property name='download.md5' value='d8bd9d7dcfb8054e6f01b18836b48556'/>
-      </properties>
-    </artifact>
-    <artifact classifier='osgi.bundle' id='org.jamon.project' version='2.3.3'>
-      <properties size='3'>
-        <property name='artifact.size' value='227705'/>
-        <property name='download.size' value='227705'/>
-        <property name='download.md5' value='4d53688e21f0c0617e4bc8d11afa15a7'/>
       </properties>
     </artifact>
     <artifact classifier='org.eclipse.update.feature' id='org.jamon.processor' version='2.3.3'>
@@ -92,11 +43,12 @@
         <property name='download.contentType' value='application/zip'/>
       </properties>
     </artifact>
-    <artifact classifier='osgi.bundle' id='org.jamon.project' version='2.1.0.2'>
-      <properties size='3'>
-        <property name='artifact.size' value='39540'/>
-        <property name='download.size' value='39540'/>
-        <property name='download.md5' value='b3b9aa2fc626a8a96c189cf57178ad28'/>
+    <artifact classifier='org.eclipse.update.feature' id='org.jamon.feature' version='2.3.4'>
+      <properties size='4'>
+        <property name='artifact.size' value='2164'/>
+        <property name='download.size' value='2164'/>
+        <property name='download.md5' value='d364c9741208bb79d94cb2a7dc713ca3'/>
+        <property name='download.contentType' value='application/zip'/>
       </properties>
     </artifact>
     <artifact classifier='org.eclipse.update.feature' id='org.jamon.feature' version='2.2.1.0'>
@@ -112,14 +64,6 @@
         <property name='artifact.size' value='244732'/>
         <property name='download.size' value='244732'/>
         <property name='download.md5' value='8074e10f7e01c13ad229caa3792e6aee'/>
-      </properties>
-    </artifact>
-    <artifact classifier='org.eclipse.update.feature' id='org.jamon.feature' version='2.2.2.0'>
-      <properties size='4'>
-        <property name='artifact.size' value='779'/>
-        <property name='download.size' value='779'/>
-        <property name='download.md5' value='34faea9df3fbbb948470c502e6a95c70'/>
-        <property name='download.contentType' value='application/zip'/>
       </properties>
     </artifact>
     <artifact classifier='osgi.bundle' id='org.jamon.project' version='2.0.0'>
@@ -145,37 +89,6 @@
         <property name='download.contentType' value='application/zip'/>
       </properties>
     </artifact>
-    <artifact classifier='osgi.bundle' id='org.jamon.eclipse.maven.configurator' version='1.1.0'>
-      <properties size='3'>
-        <property name='artifact.size' value='8815'/>
-        <property name='download.size' value='8815'/>
-        <property name='download.md5' value='44c8e61108b58297109c50b3c68e74ea'/>
-      </properties>
-    </artifact>
-    <artifact classifier='org.eclipse.update.feature' id='org.jamon.feature' version='2.1.0.1'>
-      <properties size='4'>
-        <property name='artifact.size' value='785'/>
-        <property name='download.size' value='785'/>
-        <property name='download.md5' value='870a68e51cc25c178e1493bef6e1e331'/>
-        <property name='download.contentType' value='application/zip'/>
-      </properties>
-    </artifact>
-    <artifact classifier='org.eclipse.update.feature' id='org.jamon.feature' version='2.0.0'>
-      <properties size='4'>
-        <property name='artifact.size' value='803'/>
-        <property name='download.size' value='803'/>
-        <property name='download.md5' value='7498b18ad0213a43d2af709f4412ed2f'/>
-        <property name='download.contentType' value='application/zip'/>
-      </properties>
-    </artifact>
-    <artifact classifier='org.eclipse.update.feature' id='org.jamon.processor' version='2.4.1'>
-      <properties size='4'>
-        <property name='artifact.size' value='2271'/>
-        <property name='download.size' value='2271'/>
-        <property name='download.md5' value='8d4590111dc5110a1348cdf5a654587e'/>
-        <property name='download.contentType' value='application/zip'/>
-      </properties>
-    </artifact>
     <artifact classifier='osgi.bundle' id='org.jamon.processor' version='2.3.1'>
       <properties size='3'>
         <property name='artifact.size' value='244937'/>
@@ -190,11 +103,180 @@
         <property name='download.md5' value='ded87480d049222a6912ca0da91de62f'/>
       </properties>
     </artifact>
-    <artifact classifier='osgi.bundle' id='org.jamon' version='2.1.0'>
+    <artifact classifier='osgi.bundle' id='org.jamon.eclipse.maven.configurator' version='1.1.1'>
       <properties size='3'>
-        <property name='artifact.size' value='252396'/>
-        <property name='download.size' value='252396'/>
-        <property name='download.md5' value='d2e01d34c1c708fcb0fcae01aa77b6db'/>
+        <property name='artifact.size' value='8803'/>
+        <property name='download.size' value='8803'/>
+        <property name='download.md5' value='5ce727df71d93c2f86f0913b5bdc19b1'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='org.jamon' version='2.2.0.0'>
+      <properties size='3'>
+        <property name='artifact.size' value='256302'/>
+        <property name='download.size' value='256302'/>
+        <property name='download.md5' value='b35556fe18fb20ad73f5c24ccc0080c3'/>
+      </properties>
+    </artifact>
+    <artifact classifier='org.eclipse.update.feature' id='org.jamon.eclipse.maven.configurator.feature' version='1.1.0'>
+      <properties size='4'>
+        <property name='artifact.size' value='2570'/>
+        <property name='download.size' value='2570'/>
+        <property name='download.md5' value='565fac8ade4b4135b40f0123e160ef14'/>
+        <property name='download.contentType' value='application/zip'/>
+      </properties>
+    </artifact>
+    <artifact classifier='org.eclipse.update.feature' id='org.jamon.processor' version='2.3.2'>
+      <properties size='4'>
+        <property name='artifact.size' value='763'/>
+        <property name='download.size' value='763'/>
+        <property name='download.md5' value='565a4a3f09d7a67262cb8932f15da457'/>
+        <property name='download.contentType' value='application/zip'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='org.jamon' version='2.2.2.1'>
+      <properties size='3'>
+        <property name='artifact.size' value='258847'/>
+        <property name='download.size' value='258847'/>
+        <property name='download.md5' value='7b4833bba616f7816ebb062d48e727d4'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='org.jamon.project' version='2.2.1.0'>
+      <properties size='3'>
+        <property name='artifact.size' value='86661'/>
+        <property name='download.size' value='86661'/>
+        <property name='download.md5' value='6fed8d690e0591732899ab227ae4d66b'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='org.jamon.processor' version='2.4.1'>
+      <properties size='3'>
+        <property name='artifact.size' value='264328'/>
+        <property name='download.size' value='264328'/>
+        <property name='download.md5' value='2322e408a67f4ab217f7d85e51d477c1'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='org.jamon.project' version='2.3.0.1'>
+      <properties size='3'>
+        <property name='artifact.size' value='359702'/>
+        <property name='download.size' value='359702'/>
+        <property name='download.md5' value='093dc6029b87df79f2ebc0a3853743d8'/>
+      </properties>
+    </artifact>
+    <artifact classifier='org.eclipse.update.feature' id='org.jamon.feature' version='2.3.0.1'>
+      <properties size='4'>
+        <property name='artifact.size' value='1084'/>
+        <property name='download.size' value='1084'/>
+        <property name='download.md5' value='d582ecaf71fc2eafea25b724328d92b6'/>
+        <property name='download.contentType' value='application/zip'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='org.jamon.project' version='2.3.1'>
+      <properties size='3'>
+        <property name='artifact.size' value='225404'/>
+        <property name='download.size' value='225404'/>
+        <property name='download.md5' value='f57df02669b7d3ba9db52a4a7886c916'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='org.jamon.eclipse.maven.configurator' version='1.0.0'>
+      <properties size='3'>
+        <property name='artifact.size' value='8204'/>
+        <property name='download.size' value='8204'/>
+        <property name='download.md5' value='23de98394668be24b4c7afb5669bfb1b'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='org.jamon' version='1.9.0'>
+      <properties size='3'>
+        <property name='artifact.size' value='248316'/>
+        <property name='download.size' value='248316'/>
+        <property name='download.md5' value='f4a95e8588508275a445ea2e70f0c95f'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='org.jamon.project' version='2.2.2.0'>
+      <properties size='3'>
+        <property name='artifact.size' value='86527'/>
+        <property name='download.size' value='86527'/>
+        <property name='download.md5' value='892474bd7560f303fd3f783a90ce5309'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='org.jamon.processor' version='2.4.0'>
+      <properties size='3'>
+        <property name='artifact.size' value='266002'/>
+        <property name='download.size' value='266002'/>
+        <property name='download.md5' value='16302f64086ced2355e02dc4d037085b'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='org.jamon' version='2.2.1.0'>
+      <properties size='3'>
+        <property name='artifact.size' value='256309'/>
+        <property name='download.size' value='256309'/>
+        <property name='download.md5' value='d8bd9d7dcfb8054e6f01b18836b48556'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='org.jamon.project' version='2.3.3'>
+      <properties size='3'>
+        <property name='artifact.size' value='227705'/>
+        <property name='download.size' value='227705'/>
+        <property name='download.md5' value='4d53688e21f0c0617e4bc8d11afa15a7'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='org.jamon.project' version='2.1.0.2'>
+      <properties size='3'>
+        <property name='artifact.size' value='39540'/>
+        <property name='download.size' value='39540'/>
+        <property name='download.md5' value='b3b9aa2fc626a8a96c189cf57178ad28'/>
+      </properties>
+    </artifact>
+    <artifact classifier='org.eclipse.update.feature' id='org.jamon.eclipse.maven.configurator.feature' version='1.1.1'>
+      <properties size='4'>
+        <property name='artifact.size' value='2317'/>
+        <property name='download.size' value='2317'/>
+        <property name='download.md5' value='9453eea57aac8a86b61892d8a15b2a8b'/>
+        <property name='download.contentType' value='application/zip'/>
+      </properties>
+    </artifact>
+    <artifact classifier='org.eclipse.update.feature' id='org.jamon.feature' version='2.2.2.0'>
+      <properties size='4'>
+        <property name='artifact.size' value='779'/>
+        <property name='download.size' value='779'/>
+        <property name='download.md5' value='34faea9df3fbbb948470c502e6a95c70'/>
+        <property name='download.contentType' value='application/zip'/>
+      </properties>
+    </artifact>
+    <artifact classifier='org.eclipse.update.feature' id='org.jamon.feature' version='2.0.0'>
+      <properties size='4'>
+        <property name='artifact.size' value='803'/>
+        <property name='download.size' value='803'/>
+        <property name='download.md5' value='7498b18ad0213a43d2af709f4412ed2f'/>
+        <property name='download.contentType' value='application/zip'/>
+      </properties>
+    </artifact>
+    <artifact classifier='org.eclipse.update.feature' id='org.jamon.feature' version='2.1.0.1'>
+      <properties size='4'>
+        <property name='artifact.size' value='785'/>
+        <property name='download.size' value='785'/>
+        <property name='download.md5' value='870a68e51cc25c178e1493bef6e1e331'/>
+        <property name='download.contentType' value='application/zip'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='org.jamon.eclipse.maven.configurator' version='1.1.0'>
+      <properties size='3'>
+        <property name='artifact.size' value='8815'/>
+        <property name='download.size' value='8815'/>
+        <property name='download.md5' value='44c8e61108b58297109c50b3c68e74ea'/>
+      </properties>
+    </artifact>
+    <artifact classifier='org.eclipse.update.feature' id='org.jamon.processor' version='2.4.1'>
+      <properties size='4'>
+        <property name='artifact.size' value='2271'/>
+        <property name='download.size' value='2271'/>
+        <property name='download.md5' value='8d4590111dc5110a1348cdf5a654587e'/>
+        <property name='download.contentType' value='application/zip'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='org.jamon.project' version='2.3.4'>
+      <properties size='3'>
+        <property name='artifact.size' value='237773'/>
+        <property name='download.size' value='237773'/>
+        <property name='download.md5' value='b2579b0c23847c201c64062b568fc4c1'/>
       </properties>
     </artifact>
     <artifact classifier='org.eclipse.update.feature' id='org.jamon.processor' version='2.4.0'>
@@ -203,6 +285,13 @@
         <property name='download.size' value='2269'/>
         <property name='download.md5' value='5dd9de51a2512c6c72dcc56c0087867f'/>
         <property name='download.contentType' value='application/zip'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='org.jamon' version='2.1.0'>
+      <properties size='3'>
+        <property name='artifact.size' value='252396'/>
+        <property name='download.size' value='252396'/>
+        <property name='download.md5' value='d2e01d34c1c708fcb0fcae01aa77b6db'/>
       </properties>
     </artifact>
     <artifact classifier='osgi.bundle' id='org.jamon.project' version='2.3.2'>
@@ -242,11 +331,12 @@
         <property name='download.md5' value='9dc32fb31996922e1971362b2a2471c3'/>
       </properties>
     </artifact>
-    <artifact classifier='osgi.bundle' id='org.jamon' version='2.2.0.0'>
-      <properties size='3'>
-        <property name='artifact.size' value='256302'/>
-        <property name='download.size' value='256302'/>
-        <property name='download.md5' value='b35556fe18fb20ad73f5c24ccc0080c3'/>
+    <artifact classifier='org.eclipse.update.feature' id='org.jamon.feature' version='2.2.0.0'>
+      <properties size='4'>
+        <property name='artifact.size' value='781'/>
+        <property name='download.size' value='781'/>
+        <property name='download.md5' value='746b30e18da213faf7f2238ccee6e2ce'/>
+        <property name='download.contentType' value='application/zip'/>
       </properties>
     </artifact>
     <artifact classifier='osgi.bundle' id='org.jamon' version='2.2.2.0'>
@@ -256,27 +346,11 @@
         <property name='download.md5' value='e33124230778a4264704e83c646d1f2e'/>
       </properties>
     </artifact>
-    <artifact classifier='org.eclipse.update.feature' id='org.jamon.feature' version='2.2.0.0'>
+    <artifact classifier='org.eclipse.update.feature' id='org.jamon.processor' version='2.4.2'>
       <properties size='4'>
-        <property name='artifact.size' value='781'/>
-        <property name='download.size' value='781'/>
-        <property name='download.md5' value='746b30e18da213faf7f2238ccee6e2ce'/>
-        <property name='download.contentType' value='application/zip'/>
-      </properties>
-    </artifact>
-    <artifact classifier='org.eclipse.update.feature' id='org.jamon.eclipse.maven.configurator.feature' version='1.1.0'>
-      <properties size='4'>
-        <property name='artifact.size' value='2570'/>
-        <property name='download.size' value='2570'/>
-        <property name='download.md5' value='565fac8ade4b4135b40f0123e160ef14'/>
-        <property name='download.contentType' value='application/zip'/>
-      </properties>
-    </artifact>
-    <artifact classifier='org.eclipse.update.feature' id='org.jamon.processor' version='2.3.2'>
-      <properties size='4'>
-        <property name='artifact.size' value='763'/>
-        <property name='download.size' value='763'/>
-        <property name='download.md5' value='565a4a3f09d7a67262cb8932f15da457'/>
+        <property name='artifact.size' value='1997'/>
+        <property name='download.size' value='1997'/>
+        <property name='download.md5' value='48870b66b8f891fde03c9ec4313abdf5'/>
         <property name='download.contentType' value='application/zip'/>
       </properties>
     </artifact>
@@ -294,26 +368,12 @@
         <property name='download.md5' value='12830e2ba91e7649c311212a36e44063'/>
       </properties>
     </artifact>
-    <artifact classifier='osgi.bundle' id='org.jamon' version='2.2.2.1'>
-      <properties size='3'>
-        <property name='artifact.size' value='258847'/>
-        <property name='download.size' value='258847'/>
-        <property name='download.md5' value='7b4833bba616f7816ebb062d48e727d4'/>
-      </properties>
-    </artifact>
     <artifact classifier='org.eclipse.update.feature' id='org.jamon.feature' version='2.3.3'>
       <properties size='4'>
         <property name='artifact.size' value='1243'/>
         <property name='download.size' value='1243'/>
         <property name='download.md5' value='8f287ff9a87bac5709c5f96733269af9'/>
         <property name='download.contentType' value='application/zip'/>
-      </properties>
-    </artifact>
-    <artifact classifier='osgi.bundle' id='org.jamon.project' version='2.3.0.0'>
-      <properties size='3'>
-        <property name='artifact.size' value='359651'/>
-        <property name='download.size' value='359651'/>
-        <property name='download.md5' value='0c895c90038591e1a05a750560b7de06'/>
       </properties>
     </artifact>
     <artifact classifier='org.eclipse.update.feature' id='org.jamon.feature' version='2.3.2'>
@@ -324,33 +384,18 @@
         <property name='download.contentType' value='application/zip'/>
       </properties>
     </artifact>
-    <artifact classifier='osgi.bundle' id='org.jamon.processor' version='2.4.1'>
+    <artifact classifier='osgi.bundle' id='org.jamon.project' version='2.3.0.0'>
       <properties size='3'>
-        <property name='artifact.size' value='264328'/>
-        <property name='download.size' value='264328'/>
-        <property name='download.md5' value='2322e408a67f4ab217f7d85e51d477c1'/>
+        <property name='artifact.size' value='359651'/>
+        <property name='download.size' value='359651'/>
+        <property name='download.md5' value='0c895c90038591e1a05a750560b7de06'/>
       </properties>
     </artifact>
-    <artifact classifier='osgi.bundle' id='org.jamon.project' version='2.3.0.1'>
+    <artifact classifier='osgi.bundle' id='org.jamon.processor' version='2.4.2'>
       <properties size='3'>
-        <property name='artifact.size' value='359702'/>
-        <property name='download.size' value='359702'/>
-        <property name='download.md5' value='093dc6029b87df79f2ebc0a3853743d8'/>
-      </properties>
-    </artifact>
-    <artifact classifier='osgi.bundle' id='org.jamon.project' version='2.2.1.0'>
-      <properties size='3'>
-        <property name='artifact.size' value='86661'/>
-        <property name='download.size' value='86661'/>
-        <property name='download.md5' value='6fed8d690e0591732899ab227ae4d66b'/>
-      </properties>
-    </artifact>
-    <artifact classifier='org.eclipse.update.feature' id='org.jamon.feature' version='2.3.0.1'>
-      <properties size='4'>
-        <property name='artifact.size' value='1084'/>
-        <property name='download.size' value='1084'/>
-        <property name='download.md5' value='d582ecaf71fc2eafea25b724328d92b6'/>
-        <property name='download.contentType' value='application/zip'/>
+        <property name='artifact.size' value='264677'/>
+        <property name='download.size' value='264677'/>
+        <property name='download.md5' value='8c585b42ba62a5dfedcc0812541ac4f2'/>
       </properties>
     </artifact>
   </artifacts>

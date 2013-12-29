@@ -43,6 +43,9 @@
    <feature url="features/org.jamon.feature_2.3.3.jar" id="org.jamon.feature" version="2.3.3">
       <category name="Jamon"/>
    </feature>
+   <feature url="features/org.jamon.feature_2.3.4.jar" id="org.jamon.feature" version="2.3.4">
+      <category name="Jamon"/>
+   </feature>
 
    <feature url="features/org.jamon.processor_2.3.1.jar" id="org.jamon.processor" version="2.3.1">
       <category name="Jamon"/>
@@ -59,6 +62,9 @@
    <feature url="features/org.jamon.processor_2.4.1.jar" id="org.jamon.processor" version="2.4.1">
       <category name="Jamon"/>
    </feature>
+   <feature url="features/org.jamon.processor_2.4.2.jar" id="org.jamon.processor" version="2.4.2">
+      <category name="Jamon"/>
+   </feature>
 
    <feature url="features/org.jamon.eclipse.maven.configurator.feature_1.0.0.jar"
             id="org.jamon.eclipse.maven.configurator.feature" version="1.0.0">
@@ -66,6 +72,10 @@
    </feature>
    <feature url="features/org.jamon.eclipse.maven.configurator.feature_1.1.0.jar"
             id="org.jamon.eclipse.maven.configurator.feature" version="1.1.0">
+      <category name="Jamon-37"/>
+   </feature>
+   <feature url="features/org.jamon.eclipse.maven.configurator.feature_1.1.1.jar"
+            id="org.jamon.eclipse.maven.configurator.feature" version="1.1.1">
       <category name="Jamon-37"/>
    </feature>
 
